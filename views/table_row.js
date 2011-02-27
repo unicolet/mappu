@@ -21,7 +21,6 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
 
   willDestroyLayer: function() {
     this.set('content', null); // make sure all observers disconnect from content
-    sc_super();
   },
 
   contentPropertyDidChange: function() {

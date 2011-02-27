@@ -66,7 +66,6 @@ SCTable.TableColumnHeaderView = SC.View.extend(SC.Control, {
   willDestroyLayer: function() {
     this.set('content', null); // make sure all observers disengage.
     this.set('tableDelegate', null);
-    sc_super();
   },
   
   /*
