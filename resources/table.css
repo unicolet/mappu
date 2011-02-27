@@ -1,0 +1,98 @@
+
+/* Table Header */
+
+.sctable-header-scroll-view {
+  background-color: gray;
+}
+
+.sctable-header-view div {
+  position: absolute;
+  overflow: hidden;
+}
+
+/*
+  This is bad, but temporarily overriding Sproutcore's
+  default styling for scroll view borders here.
+
+  FIXME: Don't do this global override
+*/
+body.sc-theme .sc-view.sc-gray-border {
+  border: 0px none;
+}
+
+
+
+/* Column Headers */
+
+.sctable-column-header-view {
+  border-left: 0px;
+  border-bottom: 0px;
+  border-top: 0px;
+  border-right: 1px solid black;
+}
+
+.sctable-column-header-view .col-name {
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  margin-top: 4px;
+  margin-left: 3px;
+}
+
+.sctable-column-header-view .resize-handle {
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 8px;
+  cursor: col-resize;
+}
+
+.sctable-column-header-view .sort-indicator {
+  /*background-color: white;*/
+  top: 6px;
+  right: 6px;
+  width: 16px;
+  height: 16px;
+}
+
+.sctable-column-header-view .sort-indicator.asc {
+  background-color: green;
+}
+
+.sctable-column-header-view .sort-indicator.desc {
+  background-color: red;
+}
+
+.sctable-column-header-view.hover {
+  background-color: #aaa;
+}
+
+
+
+/* Table Rows */
+
+.sctable-row-view div {
+  position: absolute;
+  overflow: hidden;
+}
+
+.sctable-row-view {
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 0px;
+  border-bottom: 1px solid #ccc;
+}
+
+.sctable-row-view .cell {
+  margin-top: 3px;
+  margin-left: 3px;
+}
+
+.sctable-row-view .col-sel {
+  background-color: #ddd;
+}
+
+.sctable-row-view.hover {
+  background-color: #ddd;
+}
