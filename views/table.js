@@ -1,3 +1,9 @@
+// ==========================================================================
+// Project:   SCTable - JavaScript Framework
+// Copyright: ©2011 Jonathan Lewis and contributors.
+// License:   Licensed under MIT license (see license.js)
+// ==========================================================================
+
 /*globals SCTable*/
 
 sc_require('views/table_row');
