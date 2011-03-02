@@ -17,7 +17,7 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   
   classNames: 'sctable-row-view',
   
-  //verbose: NO, // for benchmarking
+  //verbose: YES, // for benchmarking
   
   isMouseOver: NO,
 
@@ -35,6 +35,8 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
 
   // TODO: This render is fast, but make it faster.
   render: function(context, firstTime) {
+    //this.start('row render');
+
     var tableDelegate = this.getPath('displayDelegate.tableDelegate');
     var columns = tableDelegate ? tableDelegate.get('columns') : null;
     var tableWidth = (tableDelegate ? tableDelegate.get('tableWidth') : 0) || 0;
@@ -42,25 +44,23 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
     var content = this.get('content');
     var contentIndex = this.get('contentIndex');
 
-    //console.log('%@.render(firstTime: %@, tableWidth: %@)'.fmt(this, firstTime, tableWidth));
-
     context = context.addClass((contentIndex % 2 === 0) ? 'even' : 'odd');
     context = context.setClass('hover', this.get('isMouseOver'));
-
-    //this.start('render B');
-
+    
     if (columns && columns.isEnumerable) {
       columns.forEach(function(col, index) {
-        //value = content ? content.get(col.get('valueKey')) : null;
+        var iconKey = col.get('iconKey');
+        
         width = col.get('width') || 0;
-        context = context.push('<div class=\"cell col-%@\" style=\"left: %@px; top: 0px; bottom: 0px; width: %@px;\">'.fmt(index, left, width));
+        context = context.push('<div class=\"cell col-%@ %@\" style=\"left: %@px; top: 0px; bottom: 0px; width: %@px;\">'.fmt(index, (iconKey ? 'has-icon' : ''), left, width));
         context = tableDelegate.renderTableCellContent(this, context, content, contentIndex, col, index);
-        context = context.push('</div>');
+        context = iconKey ? context.push('<div class=\"icon %@\"></div></div>'.fmt(content.get(iconKey))) : context.push('</div>');
+
         left += width;
       }, this);
     }
 
-    //this.end('render B');
+    //this.end('row render');
   },
   
   mouseEntered: function(evt) {

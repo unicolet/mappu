@@ -29,6 +29,45 @@ SCTable.Column = {
   valueKey: null,
 
   /*
+    @optional
+    The name of the property on your row objects whose value will provide an
+    icon classname string for this column.  If null, will be ignored and no icon class
+    will be added.
+    
+    If this property is non-null, then an additional icon div will be automatically pushed
+    inside the cell's outer div with the CSS classes 'icon' and whatever other classname string
+    the property referenced by 'iconKey' provides.  In addition, to help with styling, 
+    the 'has-icon' class will also be added to the cell's outer div.
+    
+    Note that this setup lets you specify a unique icon per cell if you wish.  For example, suppose
+    you have two rows:
+    
+      [
+        SC.Object.create({
+          name: 'joe',
+          age: 20
+          nameIcon: 'joe-face'
+        }),
+        SC.Object.create({
+          name: 'maggie',
+          age: 20
+          nameIcon: 'maggie-face'
+        })
+      ]
+    
+    Then your 'name' column setup could be:
+    
+      SC.Object.create(SCTable.Column, {
+        valueKey: 'name',
+        iconKey: 'nameIcon'
+      })
+    
+    And the cell showing Joe's name would get an icon div with classes 'icon joe-face', and the
+    cell holding Maggie's name would get an icon div with classes 'icon maggie-face'.
+  */
+  iconKey: null,
+
+  /*
     The width of the column in pixels.  You can set this property at any
     time to manually resize the column.  This property will be updated whenever
     someone drags to resize the column in the table view as well.
@@ -57,5 +96,5 @@ SCTable.Column = {
     header view, if desired.
   */
   classNames: null
-  
+    
 };
