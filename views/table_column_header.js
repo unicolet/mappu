@@ -87,11 +87,15 @@ SCTable.TableColumnHeaderView = SC.View.extend(SC.Control, {
     if (evt.target.className === 'resize-handle') { // take over the event if we're clicking a resize handle
       this._isDraggingHandle = YES;
       this._mouseDownInfo = {
-        didNotifyBeginResize: NO,
         didMove: NO,
         startPageX: evt.pageX,
         startWidth: this.get('frame').width
       };
+
+      del = this.get('displayDelegate');
+      if (del && del.isTableColumnsDelegate) {
+        del.beginColumnResizeDrag(evt, this.get('content'), this.get('contentIndex'));
+      }
 
       ret = YES;
     }
@@ -107,14 +111,8 @@ SCTable.TableColumnHeaderView = SC.View.extend(SC.Control, {
       del = this.get('displayDelegate');
 
       if (del && del.isTableColumnsDelegate) {
-        if (!this._mouseDownInfo.didNotifyBeginResize) {
-          del.beginColumnResizeDrag();
-          this._mouseDownInfo.didNotifyBeginResize = YES;
-        }
-        else {
-          newWidth = Math.max(this._mouseDownInfo.startWidth + evt.pageX - this._mouseDownInfo.startPageX, this.get('minWidth'));
-          del.updateColumnResizeDrag(evt, this.get('content'), this.get('contentIndex'), newWidth);
-        }
+        newWidth = Math.max(this._mouseDownInfo.startWidth + evt.pageX - this._mouseDownInfo.startPageX, this.get('minWidth'));
+        del.updateColumnResizeDrag(evt, this.get('content'), this.get('contentIndex'), newWidth);
       }
     }
 
@@ -124,13 +122,13 @@ SCTable.TableColumnHeaderView = SC.View.extend(SC.Control, {
   mouseUp: function(evt) {
     var del, newWidth, ret = this._isDraggingHandle;
     
-    if (this._isDraggingHandle && this._mouseDownInfo.didMove) {
+    if (this._isDraggingHandle) {
       newWidth = Math.max(this._mouseDownInfo.startWidth + evt.pageX - this._mouseDownInfo.startPageX, this.get('minWidth'));
-      this.setPath('content.width', newWidth);
+      this.setPathIfChanged('content.width', newWidth);
 
       del = this.get('displayDelegate');
       if (del && del.isTableColumnsDelegate) {
-        del.endColumnResizeDrag();
+        del.endColumnResizeDrag(evt, this.get('content'), this.get('contentIndex'), newWidth);
       }
     }
     
@@ -142,13 +140,15 @@ SCTable.TableColumnHeaderView = SC.View.extend(SC.Control, {
   },
   
   mouseEntered: function() {
-    if (!this._isDraggingHandle) {
-      this.set('isMouseOver', YES);
+    //console.log('..mouse entered %@'.fmt(this.get('contentIndex')));
+    if (!this.getPath('displayDelegate.isResizeDragInProgress')) {
+      this.setIfChanged('isMouseOver', YES);
     }
   },
   
   mouseExited: function() {
-    if (!this._isDraggingHandle) {
+    //console.log('..mouse exited %@'.fmt(this.get('contentIndex')));
+    if (!this.getPath('displayDelegate.isResizeDragInProgress')) {
       this.set('isMouseOver', NO);
     }
   },

@@ -16,10 +16,10 @@ SCTable.TableColumnsDelegate = {
   // PUBLIC PROPERTIES
   
   isTableColumnsDelegate: YES,
-  
+    
   // PUBLIC METHODS
 
-  beginColumnResizeDrag: function() {
+  beginColumnResizeDrag: function(evt, col, colIndex) {
     //console.log('%@.beginResizeDrag()'.fmt(this));
   },
   
@@ -27,7 +27,7 @@ SCTable.TableColumnsDelegate = {
     //console.log('%@.updateResizeDrag()'.fmt(this));
   },
 
-  endColumnResizeDrag: function() {
+  endColumnResizeDrag: function(evt, col, colIndex, newWidth) {
     //console.log('%@.endResizeDrag()'.fmt(this));
   },
   

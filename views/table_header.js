@@ -31,6 +31,12 @@ SCTable.TableHeaderView = SC.CollectionView.extend(SCTable.TableColumnsDelegate,
   ghostActsLikeCursor: YES,
 
   /*
+    @read-only
+    YES while a column edge is being dragged for resizing.
+  */
+  isResizeDragInProgress: NO,
+
+  /*
     YES if we should continually resize a column whose resize handle is being dragged.
     If NO, the column header view itself will only be resized after the drag ends.
   */
@@ -202,6 +208,7 @@ SCTable.TableHeaderView = SC.CollectionView.extend(SCTable.TableColumnsDelegate,
   
   beginColumnResizeDrag: function() {
     //console.log('%@.beginResizeDrag()'.fmt(this));
+    this.set('isResizeDragInProgress', YES);
   },
   
   updateColumnResizeDrag: function(evt, col, colIndex, newWidth) {
@@ -220,7 +227,8 @@ SCTable.TableHeaderView = SC.CollectionView.extend(SCTable.TableColumnsDelegate,
   },
 
   endColumnResizeDrag: function() {
-    //console.log('%@.endResizeDrag()'.fmt(this));
+    console.log('%@.endResizeDrag()'.fmt(this));
+    this.set('isResizeDragInProgress', NO);
     this._resizeData = null; // clean up
   },
   
