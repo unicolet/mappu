@@ -157,7 +157,7 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
 
     bodyScrollView = this.createChildView(SC.ScrollView, {
       classNames: 'sctable-body-scroll-view',
-      layout: { left: 0, right: 0, top: headerHeight, bottom: 0 },
+      layout: { left: 0, right: 0, top: headerHeight + 1, bottom: 0 },
       contentView: SC.ListView.extend({
         layout: { right: 0, minWidth: tableWidth },
         contentBinding: SC.Binding.from('content', this),
@@ -178,7 +178,7 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
 
     headerScrollView = this.createChildView(SC.ScrollView, {
       classNames: 'sctable-header-scroll-view',
-      layout: { left: 0, right: 0, top: 0, height: headerHeight },
+      layout: { left: 1, right: 0, top: 0, height: headerHeight },
       contentView: SCTable.TableHeaderView.extend({
         layout: { right: 0, minWidth: tableWidth },
         exampleView: SCTable.TableColumnHeaderView,

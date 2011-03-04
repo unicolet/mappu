@@ -58,6 +58,7 @@ SCTable.TableColumnHeaderView = SC.View.extend(SC.Control, {
       context = context.addClass(classNames);
     }
 
+    context = context.begin('div').addClass('col-border').end();
     context = context.begin('div').addClass('col-name').text(this.getPath('content.name')).end();
 
     if (this.getPath('content.canSort')) {

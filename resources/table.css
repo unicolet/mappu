@@ -4,12 +4,21 @@
  * License:   Licensed under MIT license (see license.js)
  * ==========================================================================
  */
- 
+
+/* Table */
+
+.sctable-table-view {
+  background-color: #e7e7e7;
+  white-space: nowrap;
+}
+
  
 /* Table Header */
 
 .sctable-header-scroll-view {
-  background-color: gray;
+  background-color: #e7e7e7;
+  border: 0px none !important;
+  border-bottom: 1px solid #d6d6d6 !important;
 }
 
 .sctable-header-view div {
@@ -17,25 +26,20 @@
   overflow: hidden;
 }
 
-/*
-  This is bad, but temporarily overriding Sproutcore's
-  default styling for scroll view borders here.
-
-  FIXME: Don't do this global override
-*/
-body.sc-theme .sc-view.sc-gray-border {
-  border: 0px none;
-}
-
-
 
 /* Column Headers */
 
 .sctable-column-header-view {
-  border-left: 0px;
-  border-bottom: 0px;
-  border-top: 0px;
-  border-right: 1px solid black;
+  background-color: #e7e7e7;
+}
+
+.sctable-column-header-view .col-border {
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  border-left: 1px solid #f7f7f7;
+  border-right: 1px solid #d6d6d6;
 }
 
 .sctable-column-header-view .col-name {
@@ -72,12 +76,19 @@ body.sc-theme .sc-view.sc-gray-border {
 }
 
 .sctable-column-header-view.hover {
-  background-color: #aaa;
+  background-color: #bbb;
+}
+
+.sctable-column-header-view.sel {
+  background-color: #8ba4cc !important;
 }
 
 
-
 /* Table Rows */
+
+.sctable-body-scroll-view {
+  border: 0px none !important;
+}
 
 .sctable-row-view div {
   position: absolute;
@@ -88,18 +99,28 @@ body.sc-theme .sc-view.sc-gray-border {
   border-left: 0px;
   border-right: 0px;
   border-top: 0px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #d6d6d6;
 }
 
 .sctable-row-view .cell {
-  margin-top: 3px;
-  margin-left: 3px;
+  border-right: 1px solid #f2f2f2;
 }
 
-.sctable-row-view .col-sel {
-  background-color: #ddd;
+.sctable-row-view .cell .text {
+  top: 2px;
+  left: 3px;
+}
+
+.sctable-row-view.sel {
+  background-color: #8ba4cc !important;
+  border-right: 0px none;
+  color: black !important;
+}
+
+.sctable-row-view.sel .cell {
+  border-right: 0px none;
 }
 
 .sctable-row-view.hover {
-  background-color: #ddd;
+  background-color: #e7e7e7;
 }

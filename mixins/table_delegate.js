@@ -40,7 +40,7 @@ SCTable.TableDelegate = {
   /*
     This method is called once per cell being rendered, to generate the content of the
     cell's outer div element.  Override it to add custom content.  By default it simply
-    pushes the cell's value as text into the div.
+    pushes an additional div containing the cell's value as text onto the render context.
     
     This method is called quite often, so keep it fast for the best table performance.
     If you're rendering user-saved data, make sure it's safe as well as this function
@@ -50,7 +50,7 @@ SCTable.TableDelegate = {
     function is a subroutine in an existing render() call.
   */
   renderTableCellContent: function(tableView, renderContext, rowContent, rowIndex, column, columnIndex) {
-    return renderContext.text(rowContent ? rowContent.get(column.get('valueKey')) : null);
+    return renderContext.push('<div class=\"text\">%@</div>'.fmt(SC.RenderContext.escapeHTML(rowContent ? rowContent.get(column.get('valueKey')) : null)));
   }
 
 };
