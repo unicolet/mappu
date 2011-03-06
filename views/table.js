@@ -342,6 +342,10 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
     this.invokeOnce('_updateTableLayout');
   }.observes('tableWidth'),
   
+  _tv_frameDidChange: function() {
+    this.invokeOnce('_updateTableLayout'); // forces scroll bars to update
+  }.observes('frame'),
+  
   _updateTableLayout: function() {
     var tableWidth = this.get('tableWidth');
     var visibleWidth = this._bodyScrollView.getPath('containerView.frame').width;

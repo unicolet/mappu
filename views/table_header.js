@@ -227,7 +227,7 @@ SCTable.TableHeaderView = SC.CollectionView.extend(SCTable.TableColumnsDelegate,
   },
 
   endColumnResizeDrag: function() {
-    console.log('%@.endResizeDrag()'.fmt(this));
+    //console.log('%@.endResizeDrag()'.fmt(this));
     this.set('isResizeDragInProgress', NO);
     this._resizeData = null; // clean up
   },
