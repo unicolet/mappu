@@ -23,6 +23,13 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
 
   displayProperties: ['isMouseOver'],
   
+  /*
+    @read-only
+  */
+  tableDelegate: function() {
+    return this.getPath('displayDelegate.tableDelegate');
+  }.property('displayDelegate').cacheable(),
+  
   // PUBLIC METHODS
 
   willDestroyLayer: function() {
@@ -37,31 +44,35 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   render: function(context, firstTime) {
     //this.start('row render');
 
-    var tableDelegate = this.getPath('displayDelegate.tableDelegate');
+    var tableDelegate = this.get('tableDelegate');
     var columns = tableDelegate ? tableDelegate.get('columns') : null;
-    var left = 0, value, width, valueKey;
+    var left = 0, value, width;
     var content = this.get('content');
     var contentIndex = this.get('contentIndex');
-
-    context = context.addClass((contentIndex % 2 === 0) ? 'even' : 'odd');
-    context = context.setClass('hover', this.get('isMouseOver'));
+    var classes = [(contentIndex % 2 === 0) ? 'even' : 'odd'];
     
+    if (this.get('isMouseOver')) {
+      classes.push('hover');
+    }
+
+    context = context.addClass(classes);
+
     if (columns && columns.isEnumerable) {
       columns.forEach(function(col, index) {
         var iconKey = col.get('iconKey');
-        
+
         width = col.get('width') || 0;
         context = context.push('<div class=\"cell col-%@ %@\" style=\"left: %@px; top: 0px; bottom: 0px; width: %@px;\">'.fmt(index, (iconKey ? 'has-icon' : ''), left, width));
         context = tableDelegate.renderTableCellContent(this, context, content, contentIndex, col, index);
         context = iconKey ? context.push('<div class=\"icon %@\"></div></div>'.fmt(content.get(iconKey))) : context.push('</div>');
-
+  
         left += width;
       }, this);
     }
-
+  
     //this.end('row render');
   },
-  
+
   mouseEntered: function(evt) {
     this.set('isMouseOver', YES);
   },
