@@ -39,7 +39,6 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
 
     var tableDelegate = this.getPath('displayDelegate.tableDelegate');
     var columns = tableDelegate ? tableDelegate.get('columns') : null;
-    var tableWidth = (tableDelegate ? tableDelegate.get('tableWidth') : 0) || 0;
     var left = 0, value, width, valueKey;
     var content = this.get('content');
     var contentIndex = this.get('contentIndex');
