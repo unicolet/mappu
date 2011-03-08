@@ -36,31 +36,9 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
     this.set('content', null); // make sure all observers disconnect from content
   },
 
-  contentPropertyDidChange: function() {
-    //console.log('%@.contentPropertyDidChange()'.fmt(this));
+  contentPropertyDidChange: function(target, key) {
     this.displayDidChange();
   },
-
-  // createChildViews: function() {
-  //   var columns = this.getPath('tableDelegate.columns');
-  //   var left = 0, width;
-  //   var content = this.get('content');
-  //   var childViews = [];
-  //   
-  //   if (columns && columns.isEnumerable) {
-  //     columns.forEach(function(col, index) {
-  //       width = col.get('width');
-  //       childViews.push(this.createChildView(SC.LabelView, {
-  //         layout: { left: left, top: 0, bottom: 0, width: width },
-  //         value: content.get(col.get('valueKey'))
-  //       }));
-  // 
-  //       left += width;
-  //     }, this);
-  //   }
-  // 
-  //   this.set('childViews', childViews);
-  // },
 
   // TODO: This render is fast, but make it faster.
   render: function(context, firstTime) {

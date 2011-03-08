@@ -158,8 +158,8 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
     bodyScrollView = this.createChildView(SC.ScrollView, {
       classNames: 'sctable-body-scroll-view',
       layout: { left: 0, right: 0, top: headerHeight + 1, bottom: 0 },
-      contentView: SC.ListView.extend(SC.Benchmark, {
-        verbose: YES, // for benchmarking
+      contentView: SC.ListView.extend(/*SC.Benchmark,*/ {
+        //verbose: YES, // for benchmarking
         layout: { right: 0, minWidth: tableWidth },
         contentBinding: SC.Binding.from('content', this),
         selectionBinding: SC.Binding.from('selection', this),
@@ -169,13 +169,14 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
         tableDelegateBinding: SC.Binding.from('tableDelegate', this).oneWay(),
         showAlternatingRowsBinding: SC.Binding.from('showAlternatingRows', this).oneWay(),
         targetBinding: SC.Binding.from('target', this).oneWay(),
-        actionBinding: SC.Binding.from('action', this).oneWay(),
+        actionBinding: SC.Binding.from('action', this).oneWay()
         
-        reloadIfNeeded: function() {
-          this.start('reloadIfNeeded');
-          sc_super();
-          this.end('reloadIfNeeded');
-        }
+        /* For Benchmarking */
+        // reloadIfNeeded: function() {
+        //   this.start('reloadIfNeeded');
+        //   sc_super();
+        //   this.end('reloadIfNeeded');
+        // }
       }),
 
       isVerticalScrollerVisibleBinding: SC.Binding.from('isVerticalScrollerVisible', this)
