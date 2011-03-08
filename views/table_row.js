@@ -37,13 +37,35 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   },
 
   contentPropertyDidChange: function() {
+    //console.log('%@.contentPropertyDidChange()'.fmt(this));
     this.displayDidChange();
   },
+
+  // createChildViews: function() {
+  //   var columns = this.getPath('tableDelegate.columns');
+  //   var left = 0, width;
+  //   var content = this.get('content');
+  //   var childViews = [];
+  //   
+  //   if (columns && columns.isEnumerable) {
+  //     columns.forEach(function(col, index) {
+  //       width = col.get('width');
+  //       childViews.push(this.createChildView(SC.LabelView, {
+  //         layout: { left: left, top: 0, bottom: 0, width: width },
+  //         value: content.get(col.get('valueKey'))
+  //       }));
+  // 
+  //       left += width;
+  //     }, this);
+  //   }
+  // 
+  //   this.set('childViews', childViews);
+  // },
 
   // TODO: This render is fast, but make it faster.
   render: function(context, firstTime) {
     //this.start('row render');
-
+  
     var tableDelegate = this.get('tableDelegate');
     var columns = tableDelegate ? tableDelegate.get('columns') : null;
     var left = 0, value, width;
@@ -54,13 +76,13 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
     if (this.get('isMouseOver')) {
       classes.push('hover');
     }
-
+  
     context = context.addClass(classes);
-
+  
     if (columns && columns.isEnumerable) {
       columns.forEach(function(col, index) {
         var iconKey = col.get('iconKey');
-
+  
         width = col.get('width') || 0;
         context = context.push('<div class=\"cell col-%@ %@\" style=\"left: %@px; top: 0px; bottom: 0px; width: %@px;\">'.fmt(index, (iconKey ? 'has-icon' : ''), left, width));
         context = tableDelegate.renderTableCellContent(this, context, content, contentIndex, col, index);
@@ -81,4 +103,8 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
     this.set('isMouseOver', NO);
   }
 
+});
+
+SCTable.TableRowView.mixin({
+  isReusableInCollections: YES
 });
