@@ -17,8 +17,6 @@
 
 .sctable-header-scroll-view {
   background-color: #e7e7e7;
-  border: 0px none !important;
-  border-bottom: 1px solid #d6d6d6 !important;
 }
 
 .sctable-header-view div {
@@ -62,7 +60,6 @@
 }
 
 .sctable-column-header-view .sort-indicator {
-  /*background-color: white;*/
   top: 6px;
   right: 10px;
   width: 16px;
@@ -80,21 +77,15 @@
 }
 
 .sctable-column-header-view.hover {
-  /*background-color: #dddddd;*/
   background-color: #efefef;
 }
 
 .sctable-column-header-view.sel {
-  /*background-color: #8ba4cc !important;*/
   background-color: #ffffff !important;
 }
 
 
 /* Table Rows */
-
-.sctable-body-scroll-view {
-  border: 0px none !important;
-}
 
 .sctable-row-view div {
   position: absolute;
