@@ -153,7 +153,6 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
     var childViews = [], headerScrollView, bodyScrollView;
     var headerHeight = this.get('headerHeight');
     var tableWidth = this.get('tableWidth');
-    var tableDelegate = this.get('tableDelegate');
 
     bodyScrollView = this.createChildView(SC.ScrollView, {
       classNames: 'sctable-body-scroll-view',
@@ -163,6 +162,7 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
         //verbose: YES, // for benchmarking
         layout: { right: 0, minWidth: tableWidth },
         contentBinding: SC.Binding.from('content', this),
+        columnsBinding: SC.Binding.from('columns', this),
         selectionBinding: SC.Binding.from('selection', this),
         contentValueKey: 'name',
         exampleView: SCTable.TableRowView,
@@ -336,6 +336,11 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
   _isVerticalScrollerVisibleDidChange: function() {
     this.invokeOnce('_updateTableLayout');
   }.observes('isVerticalScrollerVisible'),
+
+  _tableDelegateDidChange: function() {
+    //console.log('%@._tableDelegateDidChange(%@)'.fmt(this, this.get('tableDelegate')));
+    this.invokeOnce('reload');
+  }.observes('tableDelegate'),
 
   /*
     Since this is an observer, don't do any actual work, but invalidate the

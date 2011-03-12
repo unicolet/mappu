@@ -51,6 +51,13 @@ SCTable.TableDelegate = {
   */
   renderTableCellContent: function(tableView, renderContext, rowContent, rowIndex, column, columnIndex) {
     return renderContext.push('<div class=\"text\">%@</div>'.fmt(SC.RenderContext.escapeHTML(rowContent ? rowContent.get(column.get('valueKey')) : null)));
+  },
+  
+  /*
+    Called when a mouse-down occurs on a table row view.  'evt' is the original mouse event, so you can
+    query it for the actual DOM target that was hit if desired.
+  */
+  mouseDownOnTableRow: function(tableView, rowView, evt) {
   }
 
 };

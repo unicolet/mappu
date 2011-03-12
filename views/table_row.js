@@ -43,9 +43,9 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   // TODO: This render is fast, but make it faster.
   render: function(context, firstTime) {
     //this.start('row render');
-  
+    
     var tableDelegate = this.get('tableDelegate');
-    var columns = tableDelegate ? tableDelegate.get('columns') : null;
+    var columns = this.getPath('displayDelegate.columns');
     var left = 0, value, width;
     var content = this.get('content');
     var contentIndex = this.get('contentIndex');
@@ -71,6 +71,16 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
     }
   
     //this.end('row render');
+  },
+
+  mouseDown: function(evt) {
+    var del = this.get('tableDelegate');
+    
+    if (del) {
+      del.mouseDownOnTableRow(this.get('displayDelegate'), this, evt);
+    }
+    
+    return NO;
   },
 
   mouseEntered: function(evt) {
