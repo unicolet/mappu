@@ -46,7 +46,7 @@ SCTable.TableHeaderView = SC.CollectionView.extend(SCTable.TableColumnsDelegate,
     View class definition for showing the insertion point for reorder dragging.
   */
   insertionPointView: SC.View.extend({
-    backgroundColor: 'red',
+    backgroundColor: '#57647F',
     layout: { left: 0, top: 0, bottom: 0, width: 2 },
     render: function(context, firstTime) {
       if (firstTime) {
