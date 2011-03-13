@@ -123,11 +123,17 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
   
   /*
     @read-only
-    For internal use.
+    For internal use.  The various components of the table view query this
+    property for a delegate object mixing in SCTable.TableDelegate.  This property
+    tries several possibilities in this order:
+    
+      1. The 'delegate' property above
+      2. The 'content' property above (this would usually be via a content-providing array controller having the mixin)
+      3. This TableView itself, which always has the mixin as a last resort.
   */
   tableDelegate: function() {
     var del = this.get('delegate'), content = this.get('content');
-    return this.delegateFor('isTableDelegate', del, content);
+    return this.delegateFor('isTableDelegate', del, content); // defaults to 'this' if neither 'del' or 'content' have the SCTable.TableDelegate mixin
   }.property('delegate', 'content').cacheable(),
 
   /*
