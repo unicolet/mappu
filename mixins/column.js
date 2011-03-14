@@ -20,7 +20,7 @@ SCTable.Column = {
   /*
     The name of the column -- will be shown in this column's header view.
   */
-  name: "Column Name",
+  name: null,
 
   /*
     The name of the property on your row objects whose value should be
