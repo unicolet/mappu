@@ -21,7 +21,7 @@ Current Limitations:
 #Demo App
 
 Check out a demo app project here [http://www.github.com/jslewis/sctable-demo](http://www.github.com/jslewis/sctable-demo).
-And a build of it you can play with here [http://jslewis.github.com/sctable-demo](http://jslewis.github.com/sctable-demo).
+And a build you can play with here [http://sctable-demo.strobeapp.com](http://sctable-demo.strobeapp.com).
 
 #How to Use
 
