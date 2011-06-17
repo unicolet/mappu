@@ -1,0 +1,88 @@
+.feature-view {}
+
+.feature-details-title {}
+.feature-view table {padding:0;margin:0;line-height:1;border:0;width:100%;}
+.feature-details-row {padding:0;margin:0;line-height: 1;}
+td.feature-details-key {padding:0.2em;margin:0;line-height: 1;border:0;}
+td.feature-details-value {padding:0.2em;margin:0;line-height: 1;border:0;}
+td.even {background-color: #F2F2F2;color: black;}
+td.odd {background-color: #C3C3C3;color: black;}
+
+div.no-feature-details {padding:0.7em;line-height:1.6;font-style:italic;color:#333333;}
+
+div.extra-small span.sc-button-inner {min-width:0px;}
+div.extra-small img {margin:0; left:0; top:0; right:0; bottom:0; }
+
+div.sc-main.sc-pane.sc-main {background: static_url('images/paper_tile.jpg') repeat;}
+
+/*div.sc-toolbar-view {background:transparent static_url('images/torn_paper.png') top right no-repeat;}*/
+div.sc-toolbar-view {background:transparent top right no-repeat;}
+
+#olmap, .maps-drop-shadow {
+	border: 1px solid #4D5567;
+	-moz-box-shadow: 0px 0px 3px 3px #AC8947;
+	-webkit-box-shadow: 0px 0px 3px 3px #AC8947;
+	box-shadow: 0px 0px 3px 3px #AC8947;
+}
+
+div.sc-label-view.maps_black {
+	text-shadow: white 0px 1px 0px;
+	color: black;
+}
+
+div.maps-chkbox-starred .sc-list-item-view .sc-checkbox-view.sel span.button { background: transparent static_url('images/starred.png') top right no-repeat; }
+
+div.maps-chkbox-starred .sc-list-item-view .sc-checkbox-view span.button { background: transparent static_url('images/unstarred.png') top right no-repeat; }
+
+/* Link ListItemView */
+
+.link-summary-view {
+  position: relative;
+  height: 40px;
+}
+
+div.link-summary-view-url {
+  position: absolute;
+  top: 0px;
+  left: 5px;
+  height: 20px;
+  margin: 2px;
+}
+
+div.link-summary-view-desc {
+  position: absolute;
+  top: 20px;
+  left: 5px;
+  height: 20px;
+  margin: 2px;
+  font-style:italic;
+}
+
+/* End of Link ListItemView */
+
+div.sc-pane.sc-panel.sc-picker.fix-transparency {
+	background-color: #EAEAEA;
+}
+
+div.sc-pane.sc-panel.sc-picker.fix-transparency .sc-list-item-view label {
+	white-space: normal;
+	overflow: visible;
+	top: 20px;
+	height: 60px;
+}
+
+div.maps-dropview {
+	font-style:italic;
+	vertical-align: middle;
+	padding-top: 10px;
+}
+
+.drag-entered {
+	border: 1px solid green;	
+}
+
+.sc-theme .sc-pane.sc-panel.maps-panel > .top-right-edge {
+    background: static_url('images/maps-sprite-x.png') no-repeat -40px -120px;
+    z-index: 1;
+}
+

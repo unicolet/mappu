@@ -1,0 +1,149 @@
+/*
+==========================================================================
+ Project: Greenhouse - Epic Tear-Off Pickers
+ Author: Matt Grantham - @MattGrantham
+==========================================================================
+*/
+
+
+/* Pointers */ 
+.gh-picker.sc-pane.sc-panel.sc-palette.sc-picker .perfectBottom {
+  width: 25px;
+  height: 15px;
+  top: -15px;
+  left: 50%;
+  margin-left: -13px;
+  background: static_url('images/picker/pointer-top.png') no-repeat;
+}
+.gh-picker.sc-pane.sc-panel.sc-palette.sc-picker .perfectTop {
+  width: 21px;
+  height: 11px;
+  bottom: -15px;
+  left: 50%;
+  margin-left: -11px;
+  background: static_url('images/picker/pointer-bottom.png') no-repeat;
+}
+.gh-picker.sc-pane.sc-panel.sc-palette.sc-picker .perfectLeft {
+  width: 12px;
+  height: 22px;
+  right: -13px;
+  top: 22%;
+  background: static_url('images/picker/pointer-right.png') no-repeat;
+}
+.gh-picker.sc-pane.sc-panel.sc-palette.sc-picker .perfectRight {
+  width: 12px;
+  height: 22px;
+  left: -13px;
+  top: 22%;
+  background: static_url('images/picker/pointer-left.png') no-repeat;
+}
+
+/* Edges */
+.gh-picker.sc-pane.sc-panel.sc-palette .top-left-edge {
+  height: 15px;
+  left: -10px;
+  top: -8px;
+  width: 15x;
+  margin-left: -px;
+  background: static_url('images/picker/top-left.png') no-repeat;
+}
+
+.gh-picker.sc-pane.sc-panel.sc-palette .top-edge {
+  left: 2px;
+  right: 5px;
+  height: 15px;
+  top: -9px;
+  background: static_url('images/picker/top.png') repeat-x;
+}
+
+.gh-picker.sc-pane.sc-panel.sc-palette .top-right-edge{
+  height: 15px;
+  right: -10px;
+  top: -8px;
+  width: 15px;
+  margin-left: -px;
+  background: static_url('images/picker/top-right.png') no-repeat;
+}
+
+.gh-picker.sc-pane.sc-panel.sc-palette .right-edge{
+  bottom: 4px;
+  width: 15px;
+  right: -10px;
+  top: 4px;
+  background: static_url('images/picker/right.png') repeat-y;
+}
+
+.gh-picker.sc-pane.sc-panel.sc-palette .bottom-right-edge {
+  bottom: -9px;
+  height: 13px;
+  right: -10px;
+  width: 15px;
+  margin-left: -px;
+  background: static_url('images/picker/bottom-right.png') no-repeat;
+}
+
+.gh-picker.sc-pane.sc-panel.sc-palette .bottom-edge {
+  bottom: -10px;
+  height: 15px;
+  left: 5px;
+  right: 5px;
+  background: static_url('images/picker/bottom.png') repeat-x;
+}
+
+.gh-picker.sc-pane.sc-panel.sc-palette .bottom-left-edge {
+  bottom: -9px;
+  height: 13px;
+  left: -10px;
+  width: 15px;
+  margin-left: -px;
+  background: static_url('images/picker/bottom-left.png') no-repeat;
+}
+
+.gh-picker.sc-pane.sc-panel.sc-palette .left-edge {
+  bottom: 4px;
+  width: 15px;
+  left: -10px;
+  top: 4px;
+  background: static_url('images/picker/left.png') repeat-y;
+}
+
+/*.gh-picker.sc-pane.sc-panel > .sc-view {
+  background: none;
+}*/
+
+/* List Styling 
+.gh-picker.sc-pane.sc-panel .content .sc-list-view,
+.gh-picker.sc-pane.sc-panel .content {
+  background: #ebebeb;
+  border: none;
+}
+
+
+.sc-theme.focus .sc-panel.sc-palette .sc-collection-view.focus .sc-collection-item.sel {
+  background: #A4BE49;
+  color: #000;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+body.sc-theme .gh-picker .sc-view.library-list.sc-gray-border {
+  border-bottom: 1px dashed #aaa;
+}
+*/
+
+/* Teared State
+---------------------------------------------- */
+
+.gh-picker.sc-pane.sc-panel.sc-palette .close-button {
+  background: static_url('images/picker/close.png') no-repeat;
+  z-index: 12;
+}
+.gh-picker.sc-pane.sc-panel.sc-palette .close-button.active {
+  background: static_url('images/picker/close-active.png') no-repeat;
+}
+
+
+.gh-picker.sc-pane.sc-panel > .sc-view {
+	background-color: #1e1e1e;
+	color: #f9f9f9;
+	text-shadow: dark-grey 0px 1px 0px;
+}
