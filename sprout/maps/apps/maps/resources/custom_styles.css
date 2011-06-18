@@ -13,9 +13,9 @@ div.no-feature-details {padding:0.7em;line-height:1.6;font-style:italic;color:#3
 div.extra-small span.sc-button-inner {min-width:0px;}
 div.extra-small img {margin:0; left:0; top:0; right:0; bottom:0; }
 
-div.sc-main.sc-pane.sc-main {background: static_url('images/paper_tile.jpg') repeat;}
+/*div.sc-main.sc-pane.sc-main {background: static_url('images/paper_tile.jpg') repeat;}*/
 
-/*div.sc-toolbar-view {background:transparent static_url('images/torn_paper.png') top right no-repeat;}*/
+/*div.sc-toolbar-view {background:transparent static_url('images/torn_paper.png') top right no-repeat;}
 div.sc-toolbar-view {background:transparent top right no-repeat;}
 
 #olmap, .maps-drop-shadow {
@@ -24,10 +24,11 @@ div.sc-toolbar-view {background:transparent top right no-repeat;}
 	-webkit-box-shadow: 0px 0px 3px 3px #AC8947;
 	box-shadow: 0px 0px 3px 3px #AC8947;
 }
+*/
 
 div.sc-label-view.maps_black {
-	text-shadow: white 0px 1px 0px;
-	color: black;
+	text-shadow: gray 0px 1px 0px;
+	color: white;
 }
 
 div.maps-chkbox-starred .sc-list-item-view .sc-checkbox-view.sel span.button { background: transparent static_url('images/starred.png') top right no-repeat; }

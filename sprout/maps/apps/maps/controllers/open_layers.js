@@ -144,6 +144,7 @@ Maps.openLayersController = SC.ArrayController.create(
 	installOpenLayersControl: function(key) {
 		if( this.get("content").status == SC.Record.READY_CLEAN) {
 			var options = {
+                tileSize: new OpenLayers.Size(512,512),
                 projection: new OpenLayers.Projection("EPSG:900913"),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"),
                 units: "m",
@@ -441,7 +442,7 @@ Maps.openLayersController = SC.ArrayController.create(
     layerSearch: function() {
         var palette=this.get("layerSearchPane")
         if(!palette) {
-            var palette = SC.PickerPane.design({
+            palette = SC.PickerPane.design({
                       //classNames: ['gh-picker'],
                       nextResponder: Maps.MAIN_RESPONDER,
                       layout: { height: 200, width: 400},

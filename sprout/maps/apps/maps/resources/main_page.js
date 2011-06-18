@@ -56,12 +56,12 @@ Maps.mainPage = SC.Page.design({
 
         openlayers: Maps.OpenLayers.design({
             layerId: 'olmap',
-            layout: { top: 36, left: 10, bottom:10, right: 225 }
+            layout: { top: 37, left: 0, bottom:0, right: 224 }
         }),
 
         resultsView: SC.ScrollView.design({
             classNames: ["maps-drop-shadow"],
-            layout: { top: 36, width: 205, height:250, right: 10 },
+            layout: { top: 37, width: 223, height:250, right: -1 },
             hasHorizontalScroller: NO,
             backgroundColor: 'white',
             contentView: SC.ListView.design({
@@ -76,7 +76,7 @@ Maps.mainPage = SC.Page.design({
         }),
         featureView: SC.ScrollView.design({
             classNames: ["maps-drop-shadow"],
-            layout: { top: 296, bottom: 10, width: 205, right: 10 },
+            layout: { top: 296, bottom: -1, width: 223, right: -1 },
             backgroundColor: 'white',
             contentView: Maps.FeatureView.design({
                 useStaticLayout: YES,
