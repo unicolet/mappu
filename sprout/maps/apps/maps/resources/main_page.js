@@ -26,7 +26,7 @@ Maps.mainPage = SC.Page.design({
                 layout: { centerY: 0, height: 24, right: 630, width: 160 },
                 items : [
                     {title: 'Layers', action: 'LAYERS'},
-                    {title: 'Search', action: 'SEARCH'},
+                    {title: 'Search', action: 'SEARCH'}
                 ],
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
@@ -40,7 +40,7 @@ Maps.mainPage = SC.Page.design({
                     {title: 'Move', action: 'toolMove'},
                     {title: 'Area', action: 'toolArea'},
                     {title: 'Length', action: 'toolLength'},
-                    {title: 'Geo Tools', action: 'toolGeo'},
+                    {title: 'Geo Tools', action: 'toolGeo'}
                 ],
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
@@ -60,7 +60,6 @@ Maps.mainPage = SC.Page.design({
         }),
 
         resultsView: SC.ScrollView.design({
-            classNames: ["maps-drop-shadow"],
             layout: { top: 37, width: 223, height:250, right: -1 },
             hasHorizontalScroller: NO,
             backgroundColor: 'white',
@@ -75,7 +74,6 @@ Maps.mainPage = SC.Page.design({
             })
         }),
         featureView: SC.ScrollView.design({
-            classNames: ["maps-drop-shadow"],
             layout: { top: 296, bottom: -1, width: 223, right: -1 },
             backgroundColor: 'white',
             contentView: Maps.FeatureView.design({
@@ -169,18 +167,16 @@ Maps.mainPage = SC.Page.design({
             classNames: ["maps-dropview"],
             dropTargetProperty: "feature2"
         }),
-        operation: SC.SelectButtonView.design({
+        operation: SC.SelectView.design({
             layout: {top: 97, left:5, right:5, height:36},
-            title: "Operation...",
-            objects: [
-                { title: "Intersection"},
-                { title: "Union", pos: 1 },
-                { title: "Buffer", pos: 2 }
+            items: [
+                { title: "Intersection", pos: 1},
+                { title: "Union", pos: 2 },
+                { title: "Buffer", pos: 3 }
             ],
-            theme: "square",
-            nameKey: 'title',
-            valueKey: 'title',
-            sortKey: 'pos',
+            itemTitleKey: 'title',
+            itemValueKey: 'title',
+            itemSortKey: 'pos',
             checkboxEnabled: YES,
             valueBinding: "Maps.featureInfoController.operation"
         }),
@@ -188,7 +184,8 @@ Maps.mainPage = SC.Page.design({
             layout: {top: 128, left:5, right:5, height:36},
             items: [
                 {title: "OK", action:"performGeoOperation"},
-                {title: "Clear", action:"performGeoClear"}
+                {title: "Clear", action:"performGeoClear"},
+                {title: "Close", action:"performGeoClose"}
             ],
             itemTitleKey: "title",
             itemActionKey: "action"
@@ -232,6 +229,7 @@ Maps.mainPage = SC.Page.design({
         }),
         queryList: SC.ScrollView.design({
             layout: {bottom:5, top:36, left:5, right:5},
+            backgroundColor: 'white',
             contentView: SC.ListView.design({
                 rowHeight:24,
                 contentBinding: 'Maps.layerQueryController.arrangedObjects',

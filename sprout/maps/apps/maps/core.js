@@ -22,7 +22,7 @@ Maps = SC.Application.create(
   // to any fixtures you define.
   store: SC.Store.create({commitRecordsAutomatically: YES}).from('Maps.LayerDataSource'),
   featuresStore: SC.Store.create({commitRecordsAutomatically: YES}).from('Maps.FeatureDataSource'),
-  
+
   // TODO: Add global constants or singleton objects needed by your app here.
   first_time:YES,
 

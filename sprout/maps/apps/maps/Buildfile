@@ -1,0 +1,4 @@
+
+
+config :maps, :css_theme => 'ace.maps'
+

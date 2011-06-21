@@ -54,11 +54,10 @@ Maps.openLayersController = SC.ArrayController.create(
                     this.get("geotools").append();
                 }
 			} else {
-				var geotools = SC.PalettePane.create(Maps.ClosableMixin, {
-                    classNames: ["maps-panel"],
+				var geotools = SC.PalettePane.create({
                     // Se this to route events to our responder
                     nextResponder: Maps.MAIN_RESPONDER,
-					layout: { width: 104, height: 159, left: 200, top: 100 },
+					layout: { width: 144, height: 159, left: 200, top: 100 },
 					contentView: Maps.mainPage.geoTools
 				}).append();
 				this.set("geotools", geotools);
@@ -141,7 +140,7 @@ Maps.openLayersController = SC.ArrayController.create(
 		}
 	},
 	
-	installOpenLayersControl: function(key) {
+	installOpenLayersControl: function() {
 		if( this.get("content").status == SC.Record.READY_CLEAN) {
 			var options = {
                 tileSize: new OpenLayers.Size(512,512),

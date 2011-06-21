@@ -27,6 +27,11 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
         }).popup(layout, SC.PICKER_POINTER);
     },
 
+
+    performGeoClose:function() {
+        Maps.openLayersController.get("geotools").remove();
+    },
+
     saveTags: function() {
         var guid = Maps.featureInfoController.get("selection").firstObject().attributes()['social'];
         Maps.socialController.saveTags(guid);
