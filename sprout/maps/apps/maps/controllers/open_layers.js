@@ -24,17 +24,19 @@ Maps.openLayersController = SC.ArrayController.create(
 	layerPalette : null,
 	wms : null,
 	measureControls: null,
-	measure: null,
+	measure: '',
 	FEATURE_INFO_LAYER:null,
 	GEOTOOLS_LAYER:null,
 	MARKERS_LAYER:null,
 	geotools: null,
-	
-	react : function() {
-		var tool = Maps.mainPage.mainPane.toolbar.tools.get("value");
-		//console.log("%@ value=%@".fmt(this,tool));
+
+    tools: "toolMove".w(),
+	toolsDidChange : function() {
+		var tool = this.get("tools");
+		
 		if (tool=='toolMove') {
 			this.toolMove();
+            // clear last measure
 			Maps.openLayersController.set('measure', '');
 		}
 		if (tool=='toolArea') {
@@ -62,9 +64,9 @@ Maps.openLayersController = SC.ArrayController.create(
 				}).append();
 				this.set("geotools", geotools);
 			}
-			Maps.mainPage.mainPane.toolbar.tools.set("value","toolMove");
+			this.set("tools","toolMove");
 		}
-	}.observes("Maps.mainPage.mainPane.toolbar.tools.value"),
+	}.observes(".tools"),
 
     clearGeoToolsSelection: function() {
         Maps.featureInfoController.set("feature1", null);
@@ -143,7 +145,7 @@ Maps.openLayersController = SC.ArrayController.create(
 	installOpenLayersControl: function() {
 		if( this.get("content").status == SC.Record.READY_CLEAN) {
 			var options = {
-                tileSize: new OpenLayers.Size(512,512),
+                tileSize: new OpenLayers.Size(256,256),
                 projection: new OpenLayers.Projection("EPSG:900913"),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"),
                 units: "m",
@@ -186,7 +188,7 @@ Maps.openLayersController = SC.ArrayController.create(
 			for(var item in layerGroups) {
 				var wms = new OpenLayers.Layer.WMS(
 											item,
-											"/geoserver/wms",
+											"/geoserver/gwc/service/wms",
 											 {
 											 	 layers: layerGroups[item].length!=0 ? layerGroups[item].join(',') : null,
 											 	 'transparent':'true'
@@ -372,7 +374,7 @@ Maps.openLayersController = SC.ArrayController.create(
 		} else {
 			out += "Area: " + measure.toFixed(3) + " " + units + "<sup>2</sup>";
 		}	
-		//console.log(out);
+		
 		Maps.openLayersController.set('measure', out);
 	},
 	
@@ -381,9 +383,10 @@ Maps.openLayersController = SC.ArrayController.create(
 		var map = this.get("olmap");
 		map.setBaseLayer(map.getLayersByName(newBaseLayer)[0]);
 	},
-	
+
+    layersAndSearch: null,
 	toggleLayers: function() {
-		var selected = Maps.mainPage.mainPane.toolbar.layers.get("value");
+		var selected = this.get("layersAndSearch");
 		
 		// make selected always an array
 		if (! $.isArray(selected)) {
@@ -394,7 +397,6 @@ Maps.openLayersController = SC.ArrayController.create(
 		if ( selected.find(function(i,j,l){return i=="LAYERS"}) ) {
 			if (!palette) {
 				palette = SC.PickerPane.extend({
-				  //classNames: ['gh-picker'],
                   nextResponder: Maps.MAIN_RESPONDER,
 				  layout: { top: 100, right: 50, width: 200, height: 300 },
 				  contentView: Maps.mainPage.layersPane
@@ -414,19 +416,18 @@ Maps.openLayersController = SC.ArrayController.create(
         } else {
             this.hideLayerSearch();
         }
-	}.observes("Maps.mainPage.mainPane.toolbar.layers.value"),
+	}.observes(".layersAndSearch"),
 	
 	checkLayerPaneHidden: function() {
 		if(!this.get("layerPalette").isVisibleInWindow) {
-			//console.log("Toggle the button");
-			Maps.mainPage.mainPane.toolbar.layers.set("value","".w());
+			this.set("layersAndSearch","".w());
 		}
 	}.observes(".layerPalette.isVisibleInWindow"),
 
     checkLayerSearchHidden: function() {
 		if(!this.get("layerSearchPane").isVisibleInWindow) {
 			//console.log("Toggle the button");
-			Maps.mainPage.mainPane.toolbar.layers.set("value","".w());
+			this.set("layersAndSearch","".w());
 		}
 	}.observes(".layerSearchPane.isVisibleInWindow"),
 
@@ -442,7 +443,6 @@ Maps.openLayersController = SC.ArrayController.create(
         var palette=this.get("layerSearchPane")
         if(!palette) {
             palette = SC.PickerPane.design({
-                      //classNames: ['gh-picker'],
                       nextResponder: Maps.MAIN_RESPONDER,
                       layout: { height: 200, width: 400},
                       contentView: SC.SceneView.design({

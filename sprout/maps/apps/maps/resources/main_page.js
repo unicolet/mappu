@@ -30,7 +30,7 @@ Maps.mainPage = SC.Page.design({
                 ],
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
-                value : ''.w(),
+                valueBinding: "Maps.openLayersController.layersAndSearch",
                 allowsEmptySelection: YES,
                 allowsMultipleSelection: YES
             }),
@@ -44,7 +44,7 @@ Maps.mainPage = SC.Page.design({
                 ],
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
-                value : 'toolMove'.w()
+                valueBinding: "Maps.openLayersController.tools"
             }),
             label : SC.LabelView.design({
                 classNames: ['maps_black'],

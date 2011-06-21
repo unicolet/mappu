@@ -13,10 +13,6 @@
 Maps.OpenLayers = SC.View.extend(
 /** @scope Maps.OpenLayers.prototype */ {
 
-    layers: null,
-
-    displayProperties:["layers"],
-
 	render: function(context, firstTime) {
 	  sc_super();
 	}

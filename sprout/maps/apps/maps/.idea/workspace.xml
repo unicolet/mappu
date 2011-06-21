@@ -26,7 +26,7 @@
       <file leaf-file-name="main_page.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/main_page.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="186" column="30" selection-start="7440" selection-end="7445" vertical-scroll-proportion="0.0">
+            <state line="32" column="74" selection-start="1415" selection-end="1415" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -44,7 +44,7 @@
       <file leaf-file-name="open_layers.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="142" column="4" selection-start="4113" selection-end="4113" vertical-scroll-proportion="-0.22900763">
+            <state line="147" column="53" selection-start="4208" selection-end="4208" vertical-scroll-proportion="0.16393442">
               <folding />
             </state>
           </provider>
@@ -53,7 +53,7 @@
       <file leaf-file-name="open_layers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="33" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
+            <state line="14" column="0" selection-start="381" selection-end="381" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -130,9 +130,9 @@
         <option value="$PROJECT_DIR$/data_sources/layer.js" />
         <option value="$PROJECT_DIR$/mixins/closable.js" />
         <option value="$PROJECT_DIR$/resources/custom_styles.css" />
-        <option value="$PROJECT_DIR$/resources/main_page.js" />
         <option value="$PROJECT_DIR$/responders/results.js" />
         <option value="$PROJECT_DIR$/views/open_layers.js" />
+        <option value="$PROJECT_DIR$/resources/main_page.js" />
         <option value="$PROJECT_DIR$/controllers/open_layers.js" />
       </list>
     </option>
@@ -402,9 +402,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="381" selection-end="381" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/main_page.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="30" selection-start="7440" selection-end="7445" vertical-scroll-proportion="0.0">
+        <state line="32" column="74" selection-start="1415" selection-end="1415" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -416,16 +423,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/open_layers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="33" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="4" selection-start="4113" selection-end="4113" vertical-scroll-proportion="-0.22900763">
+        <state line="147" column="53" selection-start="4208" selection-end="4208" vertical-scroll-proportion="0.16393442">
           <folding />
         </state>
       </provider>
