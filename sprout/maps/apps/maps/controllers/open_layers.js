@@ -57,8 +57,6 @@ Maps.openLayersController = SC.ArrayController.create(
                 }
 			} else {
 				var geotools = SC.PalettePane.create({
-                    // Se this to route events to our responder
-                    nextResponder: Maps.MAIN_RESPONDER,
 					layout: { width: 144, height: 159, left: 200, top: 100 },
 					contentView: Maps.mainPage.geoTools
 				}).append();

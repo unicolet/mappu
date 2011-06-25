@@ -25,7 +25,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
   fetch: function(store, query) {
 
 	if (query === Maps.LAYERS_QUERY ) {
-	  SC.Request.getUrl('/geoserver/wms?service=WMS&version=1.1.0&request=GetCapabilities')
+	  SC.Request.getUrl('/geoserver/wms?service=WMS&version=1.1.1&request=GetCapabilities')
 	  .notify(this, 'didFetchLayers', store, query)
 	  .send();
 	  return YES;
@@ -34,7 +34,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
   },
   
   didFetchLayers: function(response, store, query) {
-	//alert('in didFetchLayers');
+	console.log('in didFetchLayers');
 	if (SC.ok(response)) {
 		var records = [];
 		var content = response.get('body');
@@ -63,6 +63,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
 		var storeKeys = store.loadRecords(Maps.Layer, records);
 		store.loadQueryResults(query, storeKeys);
 	} else {
+        console.log('response has errors');
+        console.log(response);
 		store.dataSourceDidErrorQuery(query, response);
 	}
   },
