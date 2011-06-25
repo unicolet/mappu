@@ -300,7 +300,7 @@ Maps.openLayersController = SC.ArrayController.create(
 				map.addControl(infoControls[i]); 
             }
 
-            map.addControl(new OpenLayers.Control.LayerSwitcher());
+            //map.addControl(new OpenLayers.Control.LayerSwitcher());
             infoControls.click.activate();
             // end get geature info section
             
@@ -397,7 +397,7 @@ Maps.openLayersController = SC.ArrayController.create(
 		if ( selected.find(function(i,j,l){return i=="LAYERS"}) ) {
 			if (!palette) {
 				palette = SC.PickerPane.extend({
-                  nextResponder: Maps.MAIN_RESPONDER,
+                  //nextResponder: Maps.MAIN_RESPONDER,
 				  layout: { top: 100, right: 50, width: 200, height: 300 },
 				  contentView: Maps.mainPage.layersPane
 				}).create();
@@ -443,7 +443,7 @@ Maps.openLayersController = SC.ArrayController.create(
         var palette=this.get("layerSearchPane")
         if(!palette) {
             palette = SC.PickerPane.design({
-                      nextResponder: Maps.MAIN_RESPONDER,
+                      //nextResponder: Maps.MAIN_RESPONDER,
                       layout: { height: 200, width: 400},
                       contentView: SC.SceneView.design({
                           layout: {top:0,bottom:0,left:0,right:0},

@@ -74,7 +74,7 @@ Maps.mainPage = SC.Page.design({
             })
         }),
         featureView: SC.ScrollView.design({
-            layout: { top: 296, bottom: -1, width: 223, right: -1 },
+            layout: { top: 327, bottom: -1, width: 223, right: -1 },
             backgroundColor: 'white',
             contentView: Maps.FeatureView.design({
                 useStaticLayout: YES,
