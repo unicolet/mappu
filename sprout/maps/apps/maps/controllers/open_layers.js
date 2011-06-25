@@ -286,7 +286,9 @@ Maps.openLayersController = SC.ArrayController.create(
             // get geature info handlers
             var infoControls = {
 				click: new OpenLayers.Control.WMSGetFeatureInfo({
-					url: '/geoserver/wms', 
+					url: '/geoserver/wms',
+                    // make featureinfo requests work even with geo web cache
+                    layerUrls: ["/geoserver/gwc/service/wms"],
 					title: 'Identify features by clicking',
 					layers: null, // use null for ALL layers
 					queryVisible: true,
