@@ -48,7 +48,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
 					var theName = $(this).find('Name').text();
 					if (theName!="blank:blank") {
 						var theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
-						console.log(theName + "'s icon " + theLegendIcon);
+						//console.log(theName + "'s icon " + theLegendIcon);
 						var record={
 							guid: index,
 							name: theName,
@@ -64,7 +64,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
 		store.loadQueryResults(query, storeKeys);
 	} else {
         console.log('response has errors');
-        console.log(response);
+        //console.log(response);
 		store.dataSourceDidErrorQuery(query, response);
 	}
   },

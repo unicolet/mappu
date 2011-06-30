@@ -22,5 +22,7 @@ proxy "/geoserver", :to => "localhost:8080"
 
 proxy "/mapsocial", :to => "localhost:8000"
 
+proxy "/geocache", :to => "localhost:80"
+
 
 

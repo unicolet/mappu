@@ -21,7 +21,6 @@ Maps.openLayersController = SC.ArrayController.create(
 /** @scope Maps.openLayersController.prototype */ {
 
 	olmap : null,
-	layerPalette : null,
 	wms : null,
 	measureControls: null,
 	measure: '',
@@ -75,7 +74,7 @@ Maps.openLayersController = SC.ArrayController.create(
 
 	toolMove : function() {
 		var measureControls = this.get('measureControls');
-		for(key in measureControls) {
+		for(var key in measureControls) {
                 var control = measureControls[key];
                 if('none' == key ) {
                     control.activate();
@@ -88,7 +87,7 @@ Maps.openLayersController = SC.ArrayController.create(
 	
 	toolArea : function() {
 		var measureControls = this.get('measureControls');
-		for(key in measureControls) {
+		for(var key in measureControls) {
                 var control = measureControls[key];
                 if('polygon' == key ) {
                     control.activate();
@@ -101,7 +100,7 @@ Maps.openLayersController = SC.ArrayController.create(
 
 	toolLength : function() {
 		var measureControls = this.get('measureControls');
-		for(key in measureControls) {
+		for(var key in measureControls) {
                 var control = measureControls[key];
                 if('line' == key ) {
                     control.activate();
@@ -113,31 +112,8 @@ Maps.openLayersController = SC.ArrayController.create(
 	},
 
 	toggleLayer: function(layer, status) {
-		var olLayer=this.get('olmap').getLayersByName(layer.split(':')[0])[0];
-		var layers=[];
-		if(olLayer.params['LAYERS']) {
-			layers = olLayer.params['LAYERS'].split(',');
-		}
-		
-		if (!status) {
-			layers = SC.$.grep(
-				layers,
-				function(value) {return value != layer;}
-				);
-		} else {
-			layers.push(layer);
-		}
-		
-		if(layers.length!=0) {
-			olLayer.mergeNewParams({'layers':layers.join(',')});
-			olLayer.setVisibility(true);
-			olLayer.redraw();
-			//console.log("layer "+layer+" requested redraw.");
-		} else {
-			olLayer.mergeNewParams({'layers':null});
-			olLayer.setVisibility(false);
-			//console.log("layer "+layer+" hid group.");
-		}
+        var olLayer=this.get('olmap').getLayersByName(layer)[0];
+        olLayer.setVisibility(status);
 	},
 	
 	installOpenLayersControl: function() {
@@ -170,36 +146,26 @@ Maps.openLayersController = SC.ArrayController.create(
 			map.addLayer(googleStreets);
 			map.addLayer(googleHybrid);			
 			
-			//var layerList=this.get("content").filterProperty('isVisible').getEach("name");			
-			var layerList=this.get("content");			
+			var layerList=this.get("content");
 			var layerGroups=new Object();
 			layerList.forEach(function(item, i, e) {
-					var groupName = item.get("name").split(':')[0];
-					var layerName = item.get("name");
-					if(!layerGroups[groupName]) {
-						layerGroups[groupName]=[];
-					}
-					if (item.get("isVisible")) {
-						layerGroups[groupName].push(layerName);
-					}
-			});
-			for(var item in layerGroups) {
 				var wms = new OpenLayers.Layer.WMS(
-											item,
+											item.get('name'),
 											"/geoserver/gwc/service/wms",
 											 {
-											 	 layers: layerGroups[item].length!=0 ? layerGroups[item].join(',') : null,
+											 	 layers: item.get('name'),
 											 	 'transparent':'true'
 											 },
 											 {
 											 	 'opacity': 0.7,
-											 	 visibility: layerGroups[item].length!=0,
+											 	 visibility: item.get('isVisible'),
 											 	 'isBaseLayer': false,
 											 	 'wrapDateLine': true
 											 }
 											);
 				map.addLayer(wms);
-			}
+			});
+
 			var featureInfoLayer = new OpenLayers.Layer.Vector("Feature Info Layer", {
 					displayInLayerSwitcher: false, 
 					isBaseLayer: false,
@@ -377,13 +343,15 @@ Maps.openLayersController = SC.ArrayController.create(
 		
 		Maps.openLayersController.set('measure', out);
 	},
-	
-	changeGoogle: function() {
-		var newBaseLayer = "Google " + this.get("layerPalette").contentView.googleView.get('value'); 
+
+    whichGoogleLayer: "Streets",
+	switchGoogleLayer: function() {
+		var newBaseLayer = "Google " + this.get("whichGoogleLayer");
 		var map = this.get("olmap");
 		map.setBaseLayer(map.getLayersByName(newBaseLayer)[0]);
-	},
+	}.observes(".whichGoogleLayer"),
 
+    // layersAndSearch is bound to the Layers/Search combo buttons on the toolbar
     layersAndSearch: null,
 	toggleLayers: function() {
 		var selected = this.get("layersAndSearch");
@@ -392,82 +360,39 @@ Maps.openLayersController = SC.ArrayController.create(
 		if (! $.isArray(selected)) {
 			selected = (selected+"").w();
 		}
-		
-		var palette = this.get("layerPalette");
-		if ( selected.find(function(i,j,l){return i=="LAYERS"}) ) {
-			if (!palette) {
-				palette = SC.PickerPane.extend({
-                  //nextResponder: Maps.MAIN_RESPONDER,
-				  layout: { top: 100, right: 50, width: 200, height: 300 },
-				  contentView: Maps.mainPage.layersPane
-				}).create();
 
-				palette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-				this.set("layerPalette",palette);
-				palette.addObserver('contentView.googleView.value',this,this.changeGoogle);
-			} else {
-				palette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-			}
+		if ( selected.find(function(i,j,l){return i=="LAYERS"}) ) {
+            Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
 		} else {
-			this.hideLayerPane();
+			Maps.mainPage.layerPalette.remove();
 		}
         if ( selected.find(function(i,j,l){return i=="SEARCH"}) ) {
-            this.layerSearch();
+            Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+            this.goToListQuery();
         } else {
-            this.hideLayerSearch();
+            Maps.mainPage.layerSearchPane.remove();
         }
 	}.observes(".layersAndSearch"),
-	
-	checkLayerPaneHidden: function() {
-		if(!this.get("layerPalette").isVisibleInWindow) {
-			this.set("layersAndSearch","".w());
-		}
-	}.observes(".layerPalette.isVisibleInWindow"),
 
-    checkLayerSearchHidden: function() {
-		if(!this.get("layerSearchPane").isVisibleInWindow) {
-			//console.log("Toggle the button");
-			this.set("layersAndSearch","".w());
-		}
-	}.observes(".layerSearchPane.isVisibleInWindow"),
-
-    hideLayerPane: function() {
-        var palette = this.get("layerPalette");
-        if (palette) palette.remove();
-    },
-
-    layerSearchPane:null,
-    layerSearchNowShowing:null,
-
-    layerSearch: function() {
-        var palette=this.get("layerSearchPane")
-        if(!palette) {
-            palette = SC.PickerPane.design({
-                      //nextResponder: Maps.MAIN_RESPONDER,
-                      layout: { height: 200, width: 400},
-                      contentView: SC.SceneView.design({
-                          layout: {top:0,bottom:0,left:0,right:0},
-                          scenes: ["Maps.mainPage.queryListPane", "Maps.mainPage.queryEditPane"],
-                          nowShowingBinding: "Maps.openLayersController.layerSearchNowShowing"
-                      })
-                    }).create();
-            this.set("layerSearchPane",palette);
+    /*
+        Keep button state and panel visibility in sync
+       */
+    didPickerPaneRemove: function() {
+        if ( ( !Maps.mainPage.layerSearchPane.get("isVisibleInWindow") )
+             &&
+             ( !Maps.mainPage.layerPalette.get("isVisibleInWindow") )
+            ) {
+            this.set("layersAndSearch","".w());
         }
-        palette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-        this.goToListQuery();
-    },
+	}.observes("Maps.mainPage.layerSearchPane.isVisibleInWindow","Maps.mainPage.layerPalette.isVisibleInWindow"),
 
+    // this is bound to the sceneView nowShowing property
+    layerSearchNowShowing:null,
     goToEditQuery: function() {
         this.set("layerSearchNowShowing","Maps.mainPage.queryEditPane");
     },
 
     goToListQuery: function() {
         this.set("layerSearchNowShowing","Maps.mainPage.queryListPane");
-    },
-
-    hideLayerSearch: function() {
-        var palette = this.get("layerSearchPane");
-        if (palette) palette.remove();
     }
-    
 }) ;

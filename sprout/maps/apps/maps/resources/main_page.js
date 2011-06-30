@@ -4,8 +4,6 @@
 // ==========================================================================
 /*globals Maps */
 
-//SC.Request.getUrl('http://localhost:8080/geoserver/wms?service=WMS&version=1.1.0&request=GetCapabilities').xml().send();
-
 // This page describes the main user interface for your application.  
 Maps.mainPage = SC.Page.design({
 
@@ -193,33 +191,6 @@ Maps.mainPage = SC.Page.design({
         })
     }),
 
-    layersPane: SC.View.extend({
-        layout: {top: 0, left: 0, right: 0, bottom: 0},
-        childViews: 'googleView layerView'.w(),
-        googleView: SC.RadioView.design({
-            layout: {top: 10, left: 5, right: 5, height: 30},
-            items: 'Streets Satellite'.w(),
-            value: 'Streets',
-            height: 24,
-            layoutDirection: SC.LAYOUT_HORIZONTAL
-        }),
-        layerView: SC.ScrollView.design({
-            hasHorizontalScroller: NO,
-            layout: { top: 40, bottom: 5, left: 5, right: 5 },
-            backgroundColor: 'white',
-            contentView: SC.ListView.design({
-                rowHeight: 24,
-                contentBinding: 'Maps.openLayersController.arrangedObjects',
-                selectionBinding: 'Maps.openLayersController.selection',
-                contentValueKey: "name",
-                contentCheckboxKey: "isVisible",
-                contentIconKey: "legendIcon",
-                hasContentIcon: YES,
-                action:"layerSearch"
-            })
-        })
-    }),
-
     queryListPane: SC.View.design({
         layout: {top:10, bottom:10, right:10, left:10},
         childViews: "label queryList".w(),
@@ -269,5 +240,45 @@ Maps.mainPage = SC.Page.design({
             title: "Run",
             action: "layerQueryRun"
         })
-    })
+    }),
+
+    layerSearchPane : SC.PickerPane.design({
+      layout: { height: 200, width: 400},
+      contentView: SC.SceneView.design({
+          layout: {top:0,bottom:0,left:0,right:0},
+          scenes: ["Maps.mainPage.queryListPane", "Maps.mainPage.queryEditPane"],
+          nowShowingBinding: "Maps.openLayersController.layerSearchNowShowing"
+      })
+    }).create(),
+
+    layerPalette : SC.PickerPane.extend({
+      layout: { width: 200, height: 300 },
+      contentView: SC.View.extend({
+            layout: {top: 0, left: 0, right: 0, bottom: 0},
+            childViews: 'googleView layerView'.w(),
+            googleView: SC.RadioView.design({
+                layout: {top: 10, left: 5, right: 5, height: 30},
+                items: 'Streets Satellite'.w(),
+                valueBinding: "Maps.openLayersController.whichGoogleLayer",
+                height: 24,
+                layoutDirection: SC.LAYOUT_HORIZONTAL
+            }),
+            layerView: SC.ScrollView.design({
+                hasHorizontalScroller: NO,
+                layout: { top: 40, bottom: 5, left: 5, right: 5 },
+                backgroundColor: 'white',
+                contentView: SC.ListView.design({
+                    rowHeight: 24,
+                    contentBinding: 'Maps.openLayersController.arrangedObjects',
+                    selectionBinding: 'Maps.openLayersController.selection',
+                    contentValueKey: "name",
+                    contentCheckboxKey: "isVisible",
+                    contentIconKey: "legendIcon",
+                    hasContentIcon: YES,
+                    action:"layerSearch"
+                })
+            })
+        })
+    }).create()
+
 });
