@@ -18,5 +18,6 @@ Maps.Layer = SC.Record.extend(
 	name: SC.Record.attr(String),
 	isVisible: SC.Record.attr(Boolean),
 	legendIcon: SC.Record.attr(String),
+    order: SC.Record.attr(Number)
 
 }) ;

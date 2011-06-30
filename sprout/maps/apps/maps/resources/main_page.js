@@ -275,7 +275,9 @@ Maps.mainPage = SC.Page.design({
                     contentCheckboxKey: "isVisible",
                     contentIconKey: "legendIcon",
                     hasContentIcon: YES,
-                    action:"layerSearch"
+                    action:"layerSearch",
+                    canReorderContent: YES,
+                    isEditable: YES//,dragDataTypes: [Maps.Layer]
                 })
             })
         })

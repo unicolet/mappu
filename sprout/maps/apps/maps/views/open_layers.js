@@ -14,7 +14,7 @@ Maps.OpenLayers = SC.View.extend(
 /** @scope Maps.OpenLayers.prototype */ {
 
 	render: function(context, firstTime) {
-	  sc_super();
+	    sc_super();
 	}
 
 });

@@ -13,7 +13,9 @@
 
 sc_require('models/layer');
 
-Maps.LAYERS_QUERY = SC.Query.remote(Maps.Layer, {orderBy: 'name,visible'});
+// made this a local query as this is a recommended best practice in SC 16
+Maps.LAYERS_QUERY = SC.Query.local(Maps.Layer, {orderBy: 'order'});
+Maps.LAYERS_QUERY.set("isEditable",YES);
 
 Maps.LayerDataSource = SC.DataSource.extend(
 /** @scope Maps.LayerDataSource.prototype */ {
@@ -50,6 +52,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
 						var theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
 						//console.log(theName + "'s icon " + theLegendIcon);
 						var record={
+                            order: index,
 							guid: index,
 							name: theName,
 							isVisible : $(this).find("keyword:contains(visible)").length!=0,
@@ -61,7 +64,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
 				}
 			});
 		var storeKeys = store.loadRecords(Maps.Layer, records);
-		store.loadQueryResults(query, storeKeys);
+        store.dataSourceDidFetchQuery(query);
 	} else {
         console.log('response has errors');
         //console.log(response);
