@@ -11,12 +11,6 @@
  @extends SC.Object
  */
 
-var size = new OpenLayers.Size(21, 25);
-var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-var iconSelected = new OpenLayers.Icon(sc_static('/images/pin_selected.png'), size, offset);
-var icon = new OpenLayers.Icon(sc_static('/images/pin.png'), size, offset);
-var currentMarker = null;
-
 Maps.openLayersController = SC.ArrayController.create(
     SC.CollectionViewDelegate,
     /** @scope Maps.openLayersController.prototype */ {
@@ -49,18 +43,10 @@ Maps.openLayersController = SC.ArrayController.create(
                 this.toggleLayers();
             }
             if (tool == 'toolGeo') {
-                if (this.get("geotools")) {
-                    this.clearGeoToolsSelection();
-                    // reset
-                    if (!this.get("geotools").isVisibleInWindow) {
-                        this.get("geotools").append();
-                    }
-                } else {
-                    var geotools = SC.PalettePane.create({
-                        layout: { width: 144, height: 159, left: 200, top: 100 },
-                        contentView: Maps.mainPage.geoTools
-                    }).append();
-                    this.set("geotools", geotools);
+                this.clearGeoToolsSelection();
+                // reset
+                if (!Maps.mainPage.geotools.isVisibleInWindow) {
+                    Maps.mainPage.geotools.append();
                 }
                 this.set("tools", "toolMove");
             }
@@ -118,7 +104,6 @@ Maps.openLayersController = SC.ArrayController.create(
         },
 
         installOpenLayersControl: function() {
-            console.log("LAYERS status=" + this.get("content").status);
             if (this.get("content").status == SC.Record.READY_CLEAN) {
                 var options = {
                     tileSize: new OpenLayers.Size(256, 256),

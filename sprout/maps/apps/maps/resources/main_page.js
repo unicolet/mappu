@@ -144,53 +144,6 @@ Maps.mainPage = SC.Page.design({
         })
     }),
 
-    geoTools:  SC.View.extend({
-        layout:{top:0,bottom:0,left:0,right:0},
-        childViews: "feature1 feature2 operation go".w(),
-        feature1: Maps.DropView.design({
-            layout: {top: 5, left:5, right:5, height:36},
-            valueBinding: "Maps.featureInfoController.feature1descr",
-            //content: "Maps.featureInfoController",
-            //contentValueKey: "feature1descr",
-            textAlign: SC.ALIGN_CENTER,
-            classNames: ["maps-dropview"],
-            dropTargetProperty: "feature1"
-        }),
-        feature2: Maps.DropView.design({
-            layout: {top: 46, left:5, right:5, height:36},
-            valueBinding: "Maps.featureInfoController.feature2descr",
-            //content: "Maps.featureInfoController",
-            //contentValueKey: "feature2descr",
-            textAlign: SC.ALIGN_CENTER,
-            classNames: ["maps-dropview"],
-            dropTargetProperty: "feature2"
-        }),
-        operation: SC.SelectView.design({
-            layout: {top: 97, left:5, right:5, height:36},
-            items: [
-                { title: "Intersection", pos: 1},
-                { title: "Union", pos: 2 },
-                { title: "Buffer", pos: 3 }
-            ],
-            itemTitleKey: 'title',
-            itemValueKey: 'title',
-            itemSortKey: 'pos',
-            checkboxEnabled: YES,
-            valueBinding: "Maps.featureInfoController.operation"
-        }),
-        go: SC.SegmentedView.design({
-            layout: {top: 128, left:5, right:5, height:36},
-            items: [
-                {title: "OK", action:"performGeoOperation"},
-                {title: "Clear", action:"performGeoClear"},
-                {title: "Close", action:"performGeoClose"}
-            ],
-            itemTitleKey: "title",
-            itemActionKey: "action"
-            //action: "performGeoOperation"
-        })
-    }),
-
     queryListPane: SC.View.design({
         layout: {top:10, bottom:10, right:10, left:10},
         childViews: "label queryList".w(),
@@ -243,17 +196,17 @@ Maps.mainPage = SC.Page.design({
     }),
 
     layerSearchPane : SC.PickerPane.design({
-      layout: { height: 200, width: 400},
-      contentView: SC.SceneView.design({
-          layout: {top:0,bottom:0,left:0,right:0},
-          scenes: ["Maps.mainPage.queryListPane", "Maps.mainPage.queryEditPane"],
-          nowShowingBinding: "Maps.openLayersController.layerSearchNowShowing"
-      })
+        layout: { height: 200, width: 400},
+        contentView: SC.SceneView.design({
+            layout: {top:0,bottom:0,left:0,right:0},
+            scenes: ["Maps.mainPage.queryListPane", "Maps.mainPage.queryEditPane"],
+            nowShowingBinding: "Maps.openLayersController.layerSearchNowShowing"
+        })
     }).create(),
 
     layerPalette : SC.PickerPane.extend({
-      layout: { width: 200, height: 300 },
-      contentView: SC.View.extend({
+        layout: { width: 200, height: 300 },
+        contentView: SC.View.extend({
             layout: {top: 0, left: 0, right: 0, bottom: 0},
             childViews: 'googleView layerView'.w(),
             googleView: SC.RadioView.design({
@@ -281,6 +234,51 @@ Maps.mainPage = SC.Page.design({
                 })
             })
         })
-    }).create()
+    }).create(),
+
+    geotools : SC.PalettePane.create({
+        layout: { width: 144, height: 159, left: 200, top: 100 },
+        contentView: SC.View.extend({
+            layout:{top:0,bottom:0,left:0,right:0},
+            childViews: "feature1 feature2 operation go".w(),
+            feature1: Maps.DropView.design({
+                layout: {top: 5, left:5, right:5, height:36},
+                valueBinding: "Maps.featureInfoController.feature1descr",
+                textAlign: SC.ALIGN_CENTER,
+                classNames: ["maps-dropview"],
+                dropTargetProperty: "feature1"
+            }),
+            feature2: Maps.DropView.design({
+                layout: {top: 46, left:5, right:5, height:36},
+                valueBinding: "Maps.featureInfoController.feature2descr",
+                textAlign: SC.ALIGN_CENTER,
+                classNames: ["maps-dropview"],
+                dropTargetProperty: "feature2"
+            }),
+            operation: SC.SelectView.design({
+                layout: {top: 97, left:5, right:5, height:36},
+                items: [
+                    { title: "Intersection", pos: 1},
+                    { title: "Union", pos: 2 },
+                    { title: "Buffer", pos: 3 }
+                ],
+                itemTitleKey: 'title',
+                itemValueKey: 'title',
+                itemSortKey: 'pos',
+                checkboxEnabled: YES,
+                valueBinding: "Maps.featureInfoController.operation"
+            }),
+            go: SC.SegmentedView.design({
+                layout: {top: 128, left:5, right:5, height:36},
+                items: [
+                    {title: "OK", action:"performGeoOperation"},
+                    {title: "Clear", action:"performGeoClear"},
+                    {title: "Close", action:"performGeoClose"}
+                ],
+                itemTitleKey: "title",
+                itemActionKey: "action"
+            })
+        })
+    })
 
 });

@@ -21,7 +21,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
                 items: [
                     {title: "Tags", tab: "Maps.mainPage.tagsTab"},
                     {title: "Comments", tab: "Maps.mainPage.commentsTab"},
-                    {title: "Links", tab: "Maps.mainPage.linksTab"},
+                    {title: "Links", tab: "Maps.mainPage.linksTab"}
                 ]
             })
         }).popup(layout, SC.PICKER_POINTER);
@@ -29,7 +29,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
 
 
     performGeoClose:function() {
-        Maps.openLayersController.get("geotools").remove();
+        Maps.mainPage.geotools.remove();
     },
 
     saveTags: function() {
