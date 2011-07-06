@@ -15,14 +15,11 @@ Maps.openLayersController = SC.ArrayController.create(
     SC.CollectionViewDelegate,
     /** @scope Maps.openLayersController.prototype */ {
 
-        olmap : null,
-        wms : null,
-        measureControls: null,
         measure: '',
-        FEATURE_INFO_LAYER:null,
-        GEOTOOLS_LAYER:null,
-        MARKERS_LAYER:null,
-        geotools: null,
+
+        getOLMAP: function() {
+            return Maps.mainPage.mainPane.openlayers.get("olmap");
+        },
 
         tools: "toolMove".w(),
         toolsDidChange : function() {
@@ -99,42 +96,15 @@ Maps.openLayersController = SC.ArrayController.create(
         },
 
         toggleLayer: function(layer, status) {
-            var olLayer = this.get('olmap').getLayersByName(layer)[0];
-            olLayer.setVisibility(status);
+            //var olLayer = this.getOLMAP().getLayersByName(layer)[0];
+            //olLayer.setVisibility(status);
         },
 
-        installOpenLayersControl: function() {
+        /*installOpenLayersControl: function() {
             if (this.get("content").status == SC.Record.READY_CLEAN) {
-                var options = {
-                    tileSize: new OpenLayers.Size(256, 256),
-                    projection: new OpenLayers.Projection("EPSG:900913"),
-                    displayProjection: new OpenLayers.Projection("EPSG:4326"),
-                    units: "m",
-                    numZoomLevels: 18,
-                    maxResolution: 156543.0339,
-                    maxExtent: new OpenLayers.Bounds(-20037508, -20037508,
-                        20037508, 20037508.34)
-                };
-
-                // create Google Mercator layers
-                var googleStreets = new OpenLayers.Layer.Google(
-                    "Google Streets",
-                    {'sphericalMercator': true}
-                );
-                var googleHybrid = new OpenLayers.Layer.Google(
-                    "Google Satellite",
-                    {'type': google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true}
-                );
-
-                var map = new OpenLayers.Map(options);
-                map.Z_INDEX_BASE = { BaseLayer: 0, Overlay: 5, Feature: 10, Popup: 15, Control: 20 };
-                //map.addControl(new OpenLayers.Control.LayerSwitcher());
-                map.addControl(new OpenLayers.Control.MousePosition());
-                map.addLayer(googleStreets);
-                map.addLayer(googleHybrid);
-
                 var layerList = this.get("content");
                 var layerGroups = new Object();
+                var WmsLayers=new Array();
                 layerList.forEach(function(item, i, e) {
                     var wms = new OpenLayers.Layer.WMS(
                         item.get('name'),
@@ -150,124 +120,11 @@ Maps.openLayersController = SC.ArrayController.create(
                             'wrapDateLine': true
                         }
                     );
-                    map.addLayer(wms);
+                    WmsLayers.push(wms);
                 });
-
-                var featureInfoLayer = new OpenLayers.Layer.Vector("Feature Info Layer", {
-                    displayInLayerSwitcher: false,
-                    isBaseLayer: false,
-                    visibility: true
-                });
-                map.addLayer(featureInfoLayer);
-                this.set('FEATURE_INFO_LAYER', featureInfoLayer);
-
-                var geoStyleMap = new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults(
-                    {fillColor: "green", fillOpacity: 0.7, strokeColor: "black"},
-                    OpenLayers.Feature.Vector.style["default"]));
-                var geoToolsLayer = new OpenLayers.Layer.Vector("Geo Tools Layer", {
-                    displayInLayerSwitcher: false,
-                    isBaseLayer: false,
-                    visibility: true,
-                    styleMap:geoStyleMap});
-                map.addLayer(geoToolsLayer);
-                this.set('GEOTOOLS_LAYER', geoToolsLayer);
-                var markers = new OpenLayers.Layer.Markers("Markers");
-                map.addLayer(markers);
-                this.set('MARKERS_LAYER', markers);
-
-                // style the sketch fancy
-                var sketchSymbolizers = {
-                    "Point": {
-                        pointRadius: 4,
-                        graphicName: "square",
-                        fillColor: "white",
-                        fillOpacity: 1,
-                        strokeWidth: 1,
-                        strokeOpacity: 1,
-                        strokeColor: "#333333"
-                    },
-                    "Line": {
-                        strokeWidth: 3,
-                        strokeOpacity: 1,
-                        strokeColor: "#666666",
-                        strokeDashstyle: "dash"
-                    },
-                    "Polygon": {
-                        strokeWidth: 2,
-                        strokeOpacity: 1,
-                        strokeColor: "#666666",
-                        fillColor: "white",
-                        fillOpacity: 0.3
-                    }
-                };
-                var style = new OpenLayers.Style();
-                style.addRules([
-                    new OpenLayers.Rule({symbolizer: sketchSymbolizers})
-                ]);
-                var styleMap = new OpenLayers.StyleMap({"default": style});
-
-                measureControls = {
-                    line: new OpenLayers.Control.Measure(
-                        OpenLayers.Handler.Path, {
-                            persist: true,
-                            handlerOptions: {
-                                layerOptions: {styleMap: styleMap}
-                            }
-                        }
-                    ),
-                    polygon: new OpenLayers.Control.Measure(
-                        OpenLayers.Handler.Polygon, {
-                            persist: true,
-                            handlerOptions: {
-                                layerOptions: {styleMap: styleMap}
-                            }
-                        }
-                    )
-                };
-
-                var control;
-                for (var key in measureControls) {
-                    control = measureControls[key];
-                    control.events.on({
-                        "measure": this.handleMeasurements,
-                        "measurepartial": this.handleMeasurements
-                    });
-                    map.addControl(control);
-                }
-                this.set('measureControls', measureControls);
-
-                // get geature info handlers
-                var infoControls = {
-                    click: new OpenLayers.Control.WMSGetFeatureInfo({
-                        url: '/geoserver/wms',
-                        // make featureinfo requests work even with geo web cache
-                        layerUrls: ["/geoserver/gwc/service/wms"],
-                        title: 'Identify features by clicking',
-                        layers: null, // use null for ALL layers
-                        queryVisible: true,
-                        infoFormat: 'application/vnd.ogc.gml',
-                        srs: 'EPSG:900913'
-                    })};
-                for (var i in infoControls) {
-                    infoControls[i].events.register("getfeatureinfo", this, this.showInfo);
-                    map.addControl(infoControls[i]);
-                }
-
-                //map.addControl(new OpenLayers.Control.LayerSwitcher());
-                infoControls.click.activate();
-                // end get geature info section
-
-                map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
-                // some brutal z-index hacking
-                map.layerContainerDiv.style.zIndex = map.Z_INDEX_BASE['Popup'] - 1;
-                // render to the specified HTML Element
-                map.render('olmap');
-                // touch support for openlayers
-                // does not work well, so I'll disable it for now
-                //var touchHandler=new TouchHandler( map, 4 );
-                this.set('olmap', map);
+                Maps.mainPage.mainPane.openlayers.addWMSLayers(WmsLayers);
             }
-        }.observes("*content.status"),
+        }.observes("*content.status"),*/
 
         showInfo: function(event) {
             if (event.features && event.features.length) {
@@ -334,7 +191,7 @@ Maps.openLayersController = SC.ArrayController.create(
         whichGoogleLayer: "Streets",
         switchGoogleLayer: function() {
             var newBaseLayer = "Google " + this.get("whichGoogleLayer");
-            var map = this.get("olmap");
+            var map = this.getOLMAP();
             map.setBaseLayer(map.getLayersByName(newBaseLayer)[0]);
         }.observes(".whichGoogleLayer"),
 
@@ -456,7 +313,7 @@ Maps.openLayersController = SC.ArrayController.create(
             // Suspend notifications for bulk changes to properties
             content.beginPropertyChanges();
 
-            var map = this.get("olmap")
+            var map = this.getOLMAP();
 
             // Actual re-ordering
             var oldIndex = record.get('order') - 1;  // -1 to convert from ranking # to index
@@ -466,18 +323,18 @@ Maps.openLayersController = SC.ArrayController.create(
                     this.objectAt(i).set('order', i + 1 + 1);  // add 1 to convert from ranking to sequence #
                     // update map layers accordingly
 
-                    map.setLayerIndex(map.getLayersByName(this.objectAt(i).get('name'))[0], i + 1);
+                    //map.setLayerIndex(map.getLayersByName(this.objectAt(i).get('name'))[0], i + 1);
                 }
             } else {
                 // Move down list
                 for (var i = oldIndex + 1; i <= proposedInsertionIndex; i++) {
                     this.objectAt(i).set('order', i - 1 + 1);  // add 1 to convert from ranking to sequence #
 
-                    map.setLayerIndex(map.getLayersByName(this.objectAt(i).get('name'))[0], i - 1);
+                    //map.setLayerIndex(map.getLayersByName(this.objectAt(i).get('name'))[0], i - 1);
                 }
             }
             record.set('order', proposedInsertionIndex + 1);
-            map.setLayerIndex(map.getLayersByName(record.get('name'))[0], proposedInsertionIndex);
+            //map.setLayerIndex(map.getLayersByName(record.get('name'))[0], proposedInsertionIndex);
 
             // Restart notifications
             content.endPropertyChanges();

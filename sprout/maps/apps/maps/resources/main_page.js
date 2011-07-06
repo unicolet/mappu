@@ -54,7 +54,9 @@ Maps.mainPage = SC.Page.design({
 
         openlayers: Maps.OpenLayers.design({
             layerId: 'olmap',
-            layout: { top: 37, left: 0, bottom:0, right: 224 }
+            layout: { top: 37, left: 0, bottom:0, right: 224 },
+            contentBinding: "Maps.openLayersController.content",
+            exampleView: Maps.OpenLayersLayer
         }),
 
         resultsView: SC.ScrollView.design({
@@ -225,7 +227,7 @@ Maps.mainPage = SC.Page.design({
                     contentBinding: 'Maps.openLayersController.arrangedObjects',
                     selectionBinding: 'Maps.openLayersController.selection',
                     contentValueKey: "name",
-                    contentCheckboxKey: "isVisible",
+                    contentCheckboxKey: "visible",
                     contentIconKey: "legendIcon",
                     hasContentIcon: YES,
                     action:"layerSearch",

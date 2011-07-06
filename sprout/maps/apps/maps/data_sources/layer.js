@@ -55,7 +55,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                             order: index,
 							guid: index,
 							name: theName,
-							isVisible : $(this).find("keyword:contains(visible)").length!=0,
+							visible : $(this).find("keyword:contains(visible)").length!=0,
 							legendIcon : theLegendIcon
 						};
 						//records[index-1]=record;
@@ -86,7 +86,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
   
   updateRecord: function(store, storeKey) {
 	  var dataHash   = store.readDataHash(storeKey);
-	  Maps.openLayersController.toggleLayer(dataHash['name'], dataHash['isVisible']);
+	  //Maps.openLayersController.toggleLayer(dataHash['name'], dataHash['isVisible']);
 	  store.dataSourceDidComplete(storeKey, null) ;
       return YES ;
   },
