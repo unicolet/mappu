@@ -80,9 +80,6 @@ Maps.openLayersController = SC.ArrayController.create(
         * It's a really ugly piece of code because it mixes controller, datasource and view
         * instructions.
         * Until I don't come up with a better solution it has to stay this way though.
-        *
-        * ATTENTION: this function is called by openlayers and this is actually set to the
-        * openlayers view, not this controller!!
         * 
         */
         showInfo: function(event) {
@@ -90,15 +87,8 @@ Maps.openLayersController = SC.ArrayController.create(
                 var gaussBoagaProj = new OpenLayers.Projection('EPSG:3003');
                 var googleProj = new OpenLayers.Projection('EPSG:900913');
 
-                /* ugly hack to handle both cases when 'this' is an Openlayers object
-                * and a SC object */
-                var highlightLayer = this.get('FEATURE_INFO_LAYER');
-                var markersLayer = this.get('MARKERS_LAYER');
-                if (!highlightLayer)
-                    highlightLayer = this.getFeatureInfoLayer();
-                if (!markersLayer)
-                    markersLayer = this.getMarkersLayer();
-                /* end of ugly hack, sanity restored */
+                var highlightLayer = this.getFeatureInfoLayer();
+                var markersLayer = this.getMarkersLayer();
 
                 // remove all previous marker and hilit features
                 while (markersLayer.markers.length > 0) {

@@ -174,7 +174,7 @@ Maps.OpenLayers = SC.CollectionView.extend(
                     srs: 'EPSG:900913'
                 })};
             for (var i in infoControls) {
-                infoControls[i].events.register("getfeatureinfo", this, Maps.openLayersController.showInfo);
+                infoControls[i].events.register("getfeatureinfo", Maps.openLayersController, Maps.openLayersController.showInfo);
                 map.addControl(infoControls[i]);
             }
 
