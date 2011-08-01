@@ -27,16 +27,22 @@ Maps.openLayersController = SC.ArrayController.create(
 
         getFeatureInfoLayer: function() {
             var olview = this.getOLView();
+            if (!olview.get("FEATURE_INFO_LAYER"))
+                olview.addUtilityLayers(this.getOLMAP());
             return olview.get("FEATURE_INFO_LAYER");
         },
 
         getMarkersLayer: function() {
             var olview = this.getOLView();
+            if (!olview.get("MARKERS_LAYER"))
+                olview.addUtilityLayers(this.getOLMAP());
             return olview.get("MARKERS_LAYER");
         },
 
         getGeotoolsLayer: function() {
             var olview = this.getOLView();
+            if (!olview.get("GEOTOOLS_LAYER"))
+                olview.addUtilityLayers(this.getOLMAP());
             return olview.get("GEOTOOLS_LAYER");
         },
 

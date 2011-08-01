@@ -41,7 +41,6 @@ Maps.OpenLayers = SC.CollectionView.extend(
         // here we only init the openlayers object. Actual rendering has been moved
         // to a function observing the layer member (see below renderOpenLayersMap)
         didAppendToDocument: function() {
-            console.log("didAppendToDocument - Initializing OL");
             this.initOpenLayers();
         },
 
@@ -63,21 +62,20 @@ Maps.OpenLayers = SC.CollectionView.extend(
                     20037508, 20037508.34)
             };
             var map = new OpenLayers.Map(options);
-            map.Z_INDEX_BASE = { BaseLayer: 0, Overlay: 5, Feature: 10, Popup: 15, Control: 20 };
 
             this.addGoogleLayers(map);
-            this.addUtilityLayers(map);
+            /*
+             * Utility layers will be lazy-added at first use, see
+             * Maps.openLayersController.getFeatureInfoLayer
+             *
+             * This to both reduce startup time and ensure that they
+             * are added at the bottom of the layer list.
+             *
+             * */
+            //this.addUtilityLayers(map);
             this.addControls(map);
 
             map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
-            // some brutal z-index hacking
-            map.layerContainerDiv.style.zIndex = map.Z_INDEX_BASE['Popup'] - 1;
-            // render to the specified HTML Element
-            // deferred
-            //map.render('olmap');
-            // touch support for openlayers
-            // does not work well, so I'll disable it for now
-            //var touchHandler=new TouchHandler( map, 4 );
             this.set('olmap', map);
         },
 
@@ -178,13 +176,12 @@ Maps.OpenLayers = SC.CollectionView.extend(
                 map.addControl(infoControls[i]);
             }
 
-            //map.addControl(new OpenLayers.Control.LayerSwitcher());
             infoControls.click.activate();
             // end get geature info section
         },
 
         addUtilityLayers: function(map) {
-            /* this layer is use to highlight currently selected features */
+            /* this layer is used to highlight currently selected features */
             var featureInfoLayer = new OpenLayers.Layer.Vector(this.FEATURE_INFO_LAYER_NAME, {
                 displayInLayerSwitcher: false,
                 isBaseLayer: false,
