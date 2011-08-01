@@ -26,6 +26,9 @@ Maps.OpenLayers = SC.CollectionView.extend(
         FEATURE_INFO_LAYER:null,
         GEOTOOLS_LAYER:null,
         MARKERS_LAYER:null,
+        FEATURE_INFO_LAYER_NAME:"_FEATURE_INFO",
+        GEOTOOLS_LAYER_NAME:"_GEOTOOLS",
+        MARKERS_LAYER_NAME:"_MARKERS",
         olmap: null,
 
         render: function(context) {
@@ -63,6 +66,7 @@ Maps.OpenLayers = SC.CollectionView.extend(
             map.Z_INDEX_BASE = { BaseLayer: 0, Overlay: 5, Feature: 10, Popup: 15, Control: 20 };
 
             this.addGoogleLayers(map);
+            this.addUtilityLayers(map);
             this.addControls(map);
 
             map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
@@ -180,7 +184,8 @@ Maps.OpenLayers = SC.CollectionView.extend(
         },
 
         addUtilityLayers: function(map) {
-            var featureInfoLayer = new OpenLayers.Layer.Vector("Feature Info Layer", {
+            /* this layer is use to highlight currently selected features */
+            var featureInfoLayer = new OpenLayers.Layer.Vector(this.FEATURE_INFO_LAYER_NAME, {
                 displayInLayerSwitcher: false,
                 isBaseLayer: false,
                 visibility: true
@@ -188,19 +193,76 @@ Maps.OpenLayers = SC.CollectionView.extend(
             map.addLayer(featureInfoLayer);
             this.set('FEATURE_INFO_LAYER', featureInfoLayer);
 
+            /* this layer is used to display intersection/union/etc results */
             var geoStyleMap = new OpenLayers.StyleMap(OpenLayers.Util.applyDefaults(
                 {fillColor: "green", fillOpacity: 0.7, strokeColor: "black"},
                 OpenLayers.Feature.Vector.style["default"]));
-            var geoToolsLayer = new OpenLayers.Layer.Vector("Geo Tools Layer", {
+            var geoToolsLayer = new OpenLayers.Layer.Vector(this.GEOTOOLS_LAYER_NAME, {
                 displayInLayerSwitcher: false,
                 isBaseLayer: false,
                 visibility: true,
                 styleMap:geoStyleMap});
             map.addLayer(geoToolsLayer);
             this.set('GEOTOOLS_LAYER', geoToolsLayer);
-            var markers = new OpenLayers.Layer.Markers("Markers");
+
+            /* this is used to display pins */
+            var markers = new OpenLayers.Layer.Markers(this.MARKERS_LAYER_NAME);
             map.addLayer(markers);
-            this.set('MARKERS_LAYER', markers);
+            this.set("MARKERS_LAYER", markers);
+        },
+
+        toolMove : function() {
+            var measureControls = this.get('measureControls');
+            for (var key in measureControls) {
+                var control = measureControls[key];
+                if ('none' == key) {
+                    control.activate();
+                } else {
+                    control.deactivate();
+                }
+            }
+            return "Move";
+        },
+
+        toolArea : function() {
+            var measureControls = this.get('measureControls');
+            for (var key in measureControls) {
+                var control = measureControls[key];
+                if ('polygon' == key) {
+                    control.activate();
+                } else {
+                    control.deactivate();
+                }
+            }
+            return "Area";
+        },
+
+        toolLength : function() {
+            var measureControls = this.get('measureControls');
+            for (var key in measureControls) {
+                var control = measureControls[key];
+                if ('line' == key) {
+                    control.activate();
+                } else {
+                    control.deactivate();
+                }
+            }
+            return "Length";
+        },
+
+        handleMeasurements: function(event) {
+            var geometry = event.geometry;
+            var units = event.units;
+            var order = event.order;
+            var measure = event.measure;
+            var out = "";
+            if (order == 1) {
+                out += "Length: " + measure.toFixed(3) + " " + units;
+            } else {
+                out += "Area: " + measure.toFixed(3) + " " + units + "<sup>2</sup>";
+            }
+
+            Maps.openLayersController.set('measure', out);
         }
     });
 

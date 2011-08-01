@@ -43,7 +43,7 @@ Maps.DropView = SC.LabelView.extend(SC.DropTarget, {
 		var record = selectionSet.firstObject();
 		Maps.featureInfoController.set(this.get("dropTargetProperty"),record.attributes()["name"]);
 		
-		var marker = Maps.openLayersController.get('MARKERS_LAYER').markers[Maps.featureInfoController.indexOf(record)];
+		var marker = Maps.openLayersController.getMarkersLayer().markers[Maps.featureInfoController.indexOf(record)];
 		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom",marker.data.feature.geometry.clone());
 		
 		ret=SC.DRAG_LINK;

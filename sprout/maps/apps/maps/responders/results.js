@@ -64,8 +64,8 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
             var WKTParser = new OpenLayers.Format.WKT();
             var features = WKTParser.read(payload);
             if (features) {
-                Maps.openLayersController.get('GEOTOOLS_LAYER').removeAllFeatures();
-                Maps.openLayersController.get('GEOTOOLS_LAYER').addFeatures(features);
+                Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
+                Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
             }
         } else {
             SC.AlertPane.warn("The requested operation failed", response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
@@ -74,7 +74,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
 
     performGeoClear: function() {
         Maps.openLayersController.clearGeoToolsSelection();
-        Maps.openLayersController.get('GEOTOOLS_LAYER').removeAllFeatures();
+        Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
     },
 
     layerSearch: function() {

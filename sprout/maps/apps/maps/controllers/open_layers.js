@@ -21,20 +21,39 @@ Maps.openLayersController = SC.ArrayController.create(
             return Maps.mainPage.mainPane.openlayers.get("olmap");
         },
 
+        getOLView: function() {
+            return Maps.mainPage.mainPane.openlayers;
+        },
+
+        getFeatureInfoLayer: function() {
+            var olview = this.getOLView();
+            return olview.get("FEATURE_INFO_LAYER");
+        },
+
+        getMarkersLayer: function() {
+            var olview = this.getOLView();
+            return olview.get("MARKERS_LAYER");
+        },
+
+        getGeotoolsLayer: function() {
+            var olview = this.getOLView();
+            return olview.get("GEOTOOLS_LAYER");
+        },
+
         tools: "toolMove".w(),
         toolsDidChange : function() {
             var tool = this.get("tools");
 
             if (tool == 'toolMove') {
-                this.toolMove();
+                this.getOLView().toolMove();
                 // clear last measure
                 Maps.openLayersController.set('measure', '');
             }
             if (tool == 'toolArea') {
-                this.toolArea();
+                this.getOLView().toolArea();
             }
             if (tool == 'toolLength') {
-                this.toolLength();
+                this.getOLView().toolLength();
             }
             if (tool == 'toggleLayers') {
                 this.toggleLayers();
@@ -56,83 +75,30 @@ Maps.openLayersController = SC.ArrayController.create(
             Maps.featureInfoController.set("feature2geom", null);
         },
 
-        toolMove : function() {
-            var measureControls = this.get('measureControls');
-            for (var key in measureControls) {
-                var control = measureControls[key];
-                if ('none' == key) {
-                    control.activate();
-                } else {
-                    control.deactivate();
-                }
-            }
-            return "Move";
-        },
-
-        toolArea : function() {
-            var measureControls = this.get('measureControls');
-            for (var key in measureControls) {
-                var control = measureControls[key];
-                if ('polygon' == key) {
-                    control.activate();
-                } else {
-                    control.deactivate();
-                }
-            }
-            return "Area";
-        },
-
-        toolLength : function() {
-            var measureControls = this.get('measureControls');
-            for (var key in measureControls) {
-                var control = measureControls[key];
-                if ('line' == key) {
-                    control.activate();
-                } else {
-                    control.deactivate();
-                }
-            }
-            return "Length";
-        },
-
-        toggleLayer: function(layer, status) {
-            //var olLayer = this.getOLMAP().getLayersByName(layer)[0];
-            //olLayer.setVisibility(status);
-        },
-
-        /*installOpenLayersControl: function() {
-            if (this.get("content").status == SC.Record.READY_CLEAN) {
-                var layerList = this.get("content");
-                var layerGroups = new Object();
-                var WmsLayers=new Array();
-                layerList.forEach(function(item, i, e) {
-                    var wms = new OpenLayers.Layer.WMS(
-                        item.get('name'),
-                        "/geoserver/gwc/service/wms",
-                        {
-                            layers: item.get('name'),
-                            'transparent':'true'
-                        },
-                        {
-                            'opacity': 0.7,
-                            visibility: item.get('isVisible'),
-                            'isBaseLayer': false,
-                            'wrapDateLine': true
-                        }
-                    );
-                    WmsLayers.push(wms);
-                });
-                Maps.mainPage.mainPane.openlayers.addWMSLayers(WmsLayers);
-            }
-        }.observes("*content.status"),*/
-
+        /*
+        * This function is called by the OpenLayers featureInfo control.
+        * It's a really ugly piece of code because it mixes controller, datasource and view
+        * instructions.
+        * Until I don't come up with a better solution it has to stay this way though.
+        *
+        * ATTENTION: this function is called by openlayers and this is actually set to the
+        * openlayers view, not this controller!!
+        * 
+        */
         showInfo: function(event) {
             if (event.features && event.features.length) {
                 var gaussBoagaProj = new OpenLayers.Projection('EPSG:3003');
                 var googleProj = new OpenLayers.Projection('EPSG:900913');
 
+                /* ugly hack to handle both cases when 'this' is an Openlayers object
+                * and a SC object */
                 var highlightLayer = this.get('FEATURE_INFO_LAYER');
                 var markersLayer = this.get('MARKERS_LAYER');
+                if (!highlightLayer)
+                    highlightLayer = this.getFeatureInfoLayer();
+                if (!markersLayer)
+                    markersLayer = this.getMarkersLayer();
+                /* end of ugly hack, sanity restored */
 
                 // remove all previous marker and hilit features
                 while (markersLayer.markers.length > 0) {
@@ -164,28 +130,15 @@ Maps.openLayersController = SC.ArrayController.create(
                     Maps.features.refresh();
                 }
                 if (Maps.first_time == YES) {
-                    Maps.mainPage.mainPane.toolbar.layers.set("value", "RESULTS");
+                    //Maps.mainPage.mainPane.toolbar.layers.set("value", "RESULTS");
                     Maps.first_time = NO;
                 }
                 SC.RunLoop.end();
+
             } else {
+                // TODO: make this information visible
                 console.log("No features returned by get feature info");
             }
-        },
-
-        handleMeasurements: function(event) {
-            var geometry = event.geometry;
-            var units = event.units;
-            var order = event.order;
-            var measure = event.measure;
-            var out = "";
-            if (order == 1) {
-                out += "Length: " + measure.toFixed(3) + " " + units;
-            } else {
-                out += "Area: " + measure.toFixed(3) + " " + units + "<sup>2</sup>";
-            }
-
-            Maps.openLayersController.set('measure', out);
         },
 
         whichGoogleLayer: "Streets",

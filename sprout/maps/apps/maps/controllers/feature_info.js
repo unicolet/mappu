@@ -37,10 +37,10 @@ Maps.featureInfoController = SC.ArrayController.create(
 	},
 	
 	toggleMarkerWhenSelectionChanges: function() {
-		var highlightLayer = Maps.openLayersController.get('FEATURE_INFO_LAYER');
+		var highlightLayer = Maps.openLayersController.getFeatureInfoLayer();
         var marker = null;
         if (this.get("selection").firstObject())
-        	marker = Maps.openLayersController.get('MARKERS_LAYER').markers[this.indexOf(this.get("selection").firstObject())];
+        	marker = Maps.openLayersController.getMarkersLayer().markers[this.indexOf(this.get("selection").firstObject())];
 		this.toggleMarker(null,marker,highlightLayer);
 	}.observes("selection"),
 	

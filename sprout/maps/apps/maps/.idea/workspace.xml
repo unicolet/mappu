@@ -26,34 +26,61 @@
       <file leaf-file-name="open_layers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="51" selection-start="2831" selection-end="2831" vertical-scroll-proportion="0.0">
+            <state line="141" column="10" selection-start="5509" selection-end="5509" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="open_layers.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/views/open_layers.js">
+      <file leaf-file-name="social.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/social.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="211" column="51" selection-start="7843" selection-end="7843" vertical-scroll-proportion="0.4473684">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Map.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file:///var/www/api/OpenLayers/Map.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="735" column="4" selection-start="26437" selection-end="26437" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="results.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="results.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/responders/results.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="91" selection-start="323" selection-end="346" vertical-scroll-proportion="0.0">
+            <state line="76" column="52" selection-start="3295" selection-end="3295" vertical-scroll-proportion="-0.055762082">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="feature_info.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/feature_info.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="32" selection-start="802" selection-end="802" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layer_query_controller.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/layer_query_controller.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="link.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/link.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="open_layers.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/open_layers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="211" column="10" selection-start="8090" selection-end="8090" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -62,7 +89,16 @@
       <file leaf-file-name="main_page.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/main_page.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="44" selection-start="2291" selection-end="2291" vertical-scroll-proportion="0.0">
+            <state line="246" column="32" selection-start="9927" selection-end="9927" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/views.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="105" column="3" selection-start="3701" selection-end="3701" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -91,7 +127,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/models/layer_query.js" />
         <option value="$PROJECT_DIR$/views/feature.js" />
         <option value="$PROJECT_DIR$/controllers/layer_query_controller.js" />
         <option value="$PROJECT_DIR$/data_sources/feature.js" />
@@ -99,14 +134,15 @@
         <option value="$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/testing/jquery.js" />
         <option value="$PROJECT_DIR$/mixins/closable.js" />
         <option value="$PROJECT_DIR$/resources/custom_styles.css" />
-        <option value="$PROJECT_DIR$/views/views.js" />
         <option value="$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/datastore/system/query.js" />
-        <option value="$PROJECT_DIR$/responders/results.js" />
         <option value="$PROJECT_DIR$/models/layer.js" />
-        <option value="$PROJECT_DIR$/controllers/open_layers.js" />
         <option value="$PROJECT_DIR$/data_sources/layer.js" />
         <option value="$PROJECT_DIR$/resources/main_page.js" />
+        <option value="$PROJECT_DIR$/controllers/feature_info.js" />
+        <option value="$PROJECT_DIR$/controllers/open_layers.js" />
         <option value="$PROJECT_DIR$/views/open_layers.js" />
+        <option value="$PROJECT_DIR$/views/views.js" />
+        <option value="$PROJECT_DIR$/responders/results.js" />
       </list>
     </option>
   </component>
@@ -136,6 +172,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -240,8 +278,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -297,9 +333,9 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27452472" sideWeight="0.5735786" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2836502" sideWeight="0.583612" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27452472" sideWeight="0.41304347" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2836502" sideWeight="0.40301004" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -355,54 +391,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.5.0/lib/frameworks/sproutcore/frameworks/datastore/system/record_array.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="16" selection-start="5621" selection-end="5621" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_sources/feature.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="29" selection-start="359" selection-end="359" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/feature_info.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="28" selection-start="3148" selection-end="3148" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/views.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="58" selection-start="1309" selection-end="1309" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.5.0/lib/frameworks/sproutcore/frameworks/core_foundation/views/view/base.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="15" selection-end="15" vertical-scroll-proportion="0.054446463" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/foundation/views/view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="980" column="2" selection-start="32770" selection-end="32770" vertical-scroll-proportion="0.33271375" />
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/desktop/views/list.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="635" column="0" selection-start="21191" selection-end="21191" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/responders/results.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="91" selection-start="323" selection-end="346" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="44" selection-start="2291" selection-end="2291" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_sources/layer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="0" selection-start="2291" selection-end="2291" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/datastore/system/store.js">
@@ -412,31 +403,92 @@
     </entry>
     <entry file="file://$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/desktop/views/collection.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2120" column="23" selection-start="73189" selection-end="73189" vertical-scroll-proportion="-6.84">
-          <folding />
-        </state>
+        <state line="2120" column="23" selection-start="73189" selection-end="73189" vertical-scroll-proportion="-6.84" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.5.0/lib/frameworks/sproutcore/frameworks/core_foundation/views/view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="652" column="42" selection-start="21767" selection-end="21767" vertical-scroll-proportion="-16.44">
-          <folding />
-        </state>
+        <state line="652" column="42" selection-start="21767" selection-end="21767" vertical-scroll-proportion="-16.44" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_sources/layer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="0" selection-start="2291" selection-end="2291" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file:///var/www/api/OpenLayers/Map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="735" column="4" selection-start="26437" selection-end="26437" vertical-scroll-proportion="0.0" />
+        <state line="735" column="4" selection-start="26437" selection-end="26437" vertical-scroll-proportion="0.02631579">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
+    <entry file="file://$PROJECT_DIR$/controllers/layer_query_controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="51" selection-start="2831" selection-end="2831" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/link.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///var/www/api/OpenLayers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1004" column="3376" selection-start="374074" selection-end="374074" vertical-scroll-proportion="27.992565">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/open_layers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="211" column="51" selection-start="7843" selection-end="7843" vertical-scroll-proportion="0.4473684">
+        <state line="211" column="10" selection-start="8090" selection-end="8090" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/social.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="141" column="10" selection-start="5509" selection-end="5509" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/feature_info.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="32" selection-start="802" selection-end="802" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="246" column="32" selection-start="9927" selection-end="9927" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/views.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="105" column="3" selection-start="3701" selection-end="3701" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/responders/results.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="52" selection-start="3295" selection-end="3295" vertical-scroll-proportion="-0.055762082">
           <folding />
         </state>
       </provider>

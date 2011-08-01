@@ -73,6 +73,7 @@ Maps.mainPage = SC.Page.design({
                 action: "dblclick"
             })
         }),
+        
         featureView: SC.ScrollView.design({
             layout: { top: 327, bottom: -1, width: 223, right: -1 },
             backgroundColor: 'white',
