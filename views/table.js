@@ -226,6 +226,8 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
     this._headerView = headerScrollView.get('contentView');
 
     this.set('childViews', [bodyScrollView, headerScrollView]);
+
+    this._updateColumnObservers();
   },
   
   /*
@@ -360,6 +362,7 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
   }.observes('*columns.[]'),
 
   _tableWidthDidChange: function() {
+    //console.log('%@._columnsDidChange()'.fmt(this));
     this.invokeOnce('_updateTableLayout');
   }.observes('tableWidth'),
   
