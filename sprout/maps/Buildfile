@@ -6,11 +6,11 @@
 
 # Add initial buildfile information here
 #config :all, :required => [:sproutcore, 'sproutcore/animation']
-config :all, :required => :sproutcore
+config :all, :required => [:sproutcore, 'sctable']
 
 
 config :all do |c|
-	c[:javascript_libs] = ['http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false', 'http://www.openlayers.org/api/OpenLayers.js']
+	c[:javascript_libs] = ['http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false', 'http://localhost/OpenLayers-2.11/OpenLayers.js']
 	#c[:javascript_libs] = ['http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false', 'http://www.openlayers.org/api/OpenLayers.js', 'http://code.jquery.com/jquery-1.6.1.min.js']
 end
 
@@ -22,7 +22,7 @@ proxy "/geoserver", :to => "localhost:8080"
 
 proxy "/mapsocial", :to => "localhost:8000"
 
-proxy "/geocache", :to => "localhost:80"
+proxy "/geocache", :to => "localhost:8080"
 
 
 

@@ -89,6 +89,7 @@ Maps.openLayersController = SC.ArrayController.create(
         * 
         */
         showInfo: function(event) {
+            console.log("handling featureInfo in showInfo: n. of features="+event.features.length);
             if (event.features && event.features.length) {
                 var gaussBoagaProj = new OpenLayers.Projection('EPSG:3003');
                 var googleProj = new OpenLayers.Projection('EPSG:900913');

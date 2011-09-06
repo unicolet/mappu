@@ -1,14 +1,12 @@
-sc_require('controllers/feature_info');
 
 Maps.featureInfoAttributesController = SC.ArrayController.create(SCTable.TableDelegate,{
 
-    content: SC.Binding.transform(
-        function(v,b){
-            if(v && v.firstObject()) {
-                return v.firstObject().attributes();
-            } else {
-                return {};
-            }
-        }).from('Maps.featureInfoController.selection')
+    whenSelectionChanges: function() {
+        if(Maps.featureInfoController.selection().firstObject()) {
+            var guid = Maps.featureInfoController.selection().firstObject().get('guid');
+            Maps.ATTRIBUTES_QUERY.parameters.id=guid;
+            this.content.refresh();
+        }
+    }.observes("Maps.featureInfoController.selection")
 
 });

@@ -160,8 +160,7 @@ Maps.OpenLayers = SC.CollectionView.extend(
             this.set('measureControls', measureControls);
 
             // get geature info handlers
-            var infoControls = {
-                click: new OpenLayers.Control.WMSGetFeatureInfo({
+            var featureInfoControl = new OpenLayers.Control.WMSGetFeatureInfo({
                     url: '/geoserver/wms',
                     // make featureinfo requests work even with geo web cache
                     layerUrls: ["/geoserver/gwc/service/wms"],
@@ -170,13 +169,11 @@ Maps.OpenLayers = SC.CollectionView.extend(
                     queryVisible: true,
                     infoFormat: 'application/vnd.ogc.gml',
                     srs: 'EPSG:900913'
-                })};
-            for (var i in infoControls) {
-                infoControls[i].events.register("getfeatureinfo", Maps.openLayersController, Maps.openLayersController.showInfo);
-                map.addControl(infoControls[i]);
-            }
+                });
+            featureInfoControl.events.register("getfeatureinfo", Maps.openLayersController, Maps.openLayersController.showInfo);
+            map.addControl(featureInfoControl);
 
-            infoControls.click.activate();
+            featureInfoControl.activate();
             // end get geature info section
         },
 

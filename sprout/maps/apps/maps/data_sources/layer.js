@@ -43,7 +43,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
 		// XMLDocument in Firefox, null in Chrome?
 		SC.$('Layer', content).each(
 			function(index) {
-                console.log('layer n.'+index);
+                //console.log('layer n.'+index);
 				// saltiamo il primo layer 'contenitore'
 				// e il layer posticcio blank
 				if ( index!=0 && $(this).attr('queryable')!="0" ) {

@@ -73,8 +73,27 @@ Maps.mainPage = SC.Page.design({
                 action: "dblclick"
             })
         }),
-        
-        featureView: SC.ScrollView.design({
+
+        featureView: SCTable.TableView.design({
+          layout: { top: 327, bottom: -1, width: 223, right: -1 },
+
+          contentBinding: 'Maps.featureInfoAttributesController',
+
+          columns: [SC.Object.create(SCTable.Column, {
+                name: "Property",
+                valueKey: 'property',
+                width: 50,
+                canSort: YES
+              }),
+              SC.Object.create(SCTable.Column, {
+                name: "Value",
+                valueKey: 'value',
+                width: 170,
+                canSort: YES
+              })]
+        }),
+
+        featureView_ORIG: SC.ScrollView.design({
             layout: { top: 327, bottom: -1, width: 223, right: -1 },
             backgroundColor: 'white',
             contentView: Maps.FeatureView.design({

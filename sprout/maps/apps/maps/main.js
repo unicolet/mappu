@@ -21,6 +21,9 @@ Maps.main = function main() {
     var queries = Maps.featuresStore.find(Maps.LAYERQUERY_QUERY);
     Maps.layerQueryController.set('content', queries);
 
+    var attributes = Maps.featuresStore.find(Maps.ATTRIBUTES_QUERY);
+    Maps.featureInfoAttributesController.set('content', attributes);
+
     Maps.makeFirstResponder(Maps.MAIN_RESPONDER);
 
 };
