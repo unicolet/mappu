@@ -263,28 +263,21 @@ Maps.openLayersController = SC.ArrayController.create(
             // Suspend notifications for bulk changes to properties
             content.beginPropertyChanges();
 
-            var map = this.getOLMAP();
-
             // Actual re-ordering
-            var oldIndex = record.get('order') - 1;  // -1 to convert from ranking # to index
+            var oldIndex = record.get('order');  // -1 to convert from ranking # to index
+            console.log("reordering: from "+oldIndex+" to "+proposedInsertionIndex);
             if (proposedInsertionIndex < oldIndex) {
                 // Move up list
                 for (var i = proposedInsertionIndex; i < oldIndex; i++) {
-                    this.objectAt(i).set('order', i + 1 + 1);  // add 1 to convert from ranking to sequence #
-                    // update map layers accordingly
-
-                    //map.setLayerIndex(map.getLayersByName(this.objectAt(i).get('name'))[0], i + 1);
+                    this.objectAt(i).set('order', i+1);  // add 1 to convert from ranking to sequence #
                 }
             } else {
                 // Move down list
-                for (var i = oldIndex + 1; i <= proposedInsertionIndex; i++) {
-                    this.objectAt(i).set('order', i - 1 + 1);  // add 1 to convert from ranking to sequence #
-
-                    //map.setLayerIndex(map.getLayersByName(this.objectAt(i).get('name'))[0], i - 1);
+                for (var i = oldIndex; i < proposedInsertionIndex; i++) {
+                    this.objectAt(i).set('order', i-1);  // add 1 to convert from ranking to sequence #
                 }
             }
-            record.set('order', proposedInsertionIndex + 1);
-            //map.setLayerIndex(map.getLayersByName(record.get('name'))[0], proposedInsertionIndex);
+            record.set('order', proposedInsertionIndex);
 
             // Restart notifications
             content.endPropertyChanges();

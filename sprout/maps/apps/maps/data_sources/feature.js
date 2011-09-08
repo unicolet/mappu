@@ -19,6 +19,7 @@ sc_require("models/attribute");
 
 Maps.FEATURE_QUERY = SC.Query.remote(Maps.Feature, {});
 Maps.COMMENT_QUERY = SC.Query.remote(Maps.Comment, "social = {social}", {social: ""});
+Maps.COMMENT_QUERY.set("isEditable",YES);
 Maps.LINK_QUERY = SC.Query.remote(Maps.Link, null, {layer: "zto2004", layerGroup: "prg"});
 Maps.LAYERQUERY_QUERY = SC.Query.remote(Maps.LayerQuery, {});
 Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null,{id:-1});

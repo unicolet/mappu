@@ -42,5 +42,9 @@ Maps.Feature = SC.Record.extend(
   whenSocialLoaded: function() {
   	  if (this.getPath('social.status')==SC.Record.READY_CLEAN)
   	  	  this.notifyPropertyChange('isStarred', this.get('isStarred'));
-  }.observes('*social.status')
+  }.observes('*social.status'),
+
+  getSocialID: function() {
+      return this.attributes()['social'];
+  }
 }) ;

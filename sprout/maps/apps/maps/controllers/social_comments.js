@@ -21,25 +21,31 @@ Maps.socialCommentsController = SC.ArrayController.create(
 		var records = indexes.map(function(idx) {return this.objectAt(idx);}, this);
 		records.invoke('destroy');
 		
-		this.deselectObjects(this.get('selection' ));
+		this.deselectObjects(this.get('selection'));
 		
 		this.invokeLater(function(){this.get("content").refresh()});
     },
 
 	addComment: function() {
-		var guid = Maps.featureInfoController.get("selection").firstObject().attributes()["social"];
+		var guid = Maps.featureInfoController.get("selection").firstObject().getSocialID();
 		
-		if (guid) {
+		if (guid!=null && guid!=undefined) {
+            console.log("Adding comment to guid: "+guid);
 			var comment = Maps.featuresStore.createRecord(Maps.Comment, {"social": guid, "text" : ""} );
-			
-			this.invokeLater(function(){this.get("content").refresh()});
+			this.addObject(comment);
+
+            this.selectObject(comment);
+			//var list = Maps.mainPage.getPath('commentsTab.comments.contentView');
+			//var listItem = list.itemViewForContentIndex(this.length() - 1);
+			//listItem.beginEditing();
+
 			this.set("isAdding",YES);
 		}
 	 
 		return YES;
-	  },
+	  }
 	  
-	  editNewComment: function() {
+	  /*editNewComment: function() {
 	  	  if ( this.get("isAdding") && this.get("content").status == SC.Record.READY_CLEAN ) {
 	  	  	this.set("isAdding",NO);  
 	  	  	
@@ -54,5 +60,5 @@ Maps.socialCommentsController = SC.ArrayController.create(
 			  
 			});
 	  	  }
-	  }.observes("*content.status")
+	  }.observes("*content.status")*/
 });

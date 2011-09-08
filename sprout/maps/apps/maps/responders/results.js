@@ -3,7 +3,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
     // called when the user dblclicks an item in list view
     dblclick: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
-        console.log(selectedFeature.get("social"));
+        
         if (selectedFeature.get("social")) {
             var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
             var view = Maps.mainPage.mainPane.splitview.bottomRightView.resultsView.contentView.itemViewForContentIndex(selectionIndex);
@@ -14,7 +14,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
 
             SC.PickerPane.create({
                 // allow events to bubble up to this responder
-                nextResponder: Maps.MAIN_RESPONDER,
+                //nextResponder: Maps.MAIN_RESPONDER,
                 classNames: ["fix-transparency"],
                 layout: { width: 400, height: 300 },
                 contentView: SC.TabView.extend({

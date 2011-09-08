@@ -100,9 +100,9 @@ Maps.mainPage = SC.Page.design({
                     columns: [SC.Object.create(SCTable.Column, {
                         name: "Property",
                         valueKey: 'property',
-                        width: 50,
+                        width: 70,
                         canSort: YES
-                    }),
+                        }),
                         SC.Object.create(SCTable.Column, {
                             name: "Value",
                             valueKey: 'value',
