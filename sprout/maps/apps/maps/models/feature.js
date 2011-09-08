@@ -20,19 +20,22 @@ Maps.Feature = SC.Record.extend(
   name: SC.Record.attr(String),
 
   isStarred: function(k,v) {
-  	  if ( v != undefined ) {
-  	  	  // setting
-  	  	  if (this.getPath("social.status")!=SC.Record.ERROR) {
-  	  	  	  this.get("social").set("starred", v);
-  	  	  } else {
-			  var social = Maps.featuresStore.createRecord(Maps.Social, { guid: this.attributes()["social"], starred: v });
-			  this.set("social", social);
-  	  	  }
-  	  } else {
-  	  	  // getting
-		  var starred = this.getPath("social.starred");
-		  return starred ? YES : NO;
-	  }
+      // if the feature has no social attribute, then no use...
+      if(this.attributes()["social"] && this.attributes()["social"] != undefined) {
+          if ( v != undefined ) {
+              // setting
+              if (this.get("social") && this.getPath("social.status")!=SC.Record.ERROR) {
+                  this.get("social").set("starred", v);
+              } else {
+                  var social = Maps.featuresStore.createRecord(Maps.Social, { guid: this.attributes()["social"], starred: v });
+                  this.set("social", social);
+              }
+          } else {
+              // getting
+              var starred = this.getPath("social.starred");
+              return starred ? YES : NO;
+          }
+      }
   }.property('social'),
   
   /* hack to notify the view when the relation has ended loading */

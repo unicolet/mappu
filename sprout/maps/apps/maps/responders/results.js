@@ -2,29 +2,36 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
 
     // called when the user dblclicks an item in list view
     dblclick: function() {
-        var selectionIndex = Maps.featureInfoController.indexOf(Maps.featureInfoController.get("selection").firstObject());
-        var layout = Maps.mainPage.mainPane.resultsView.contentView.itemViewForContentIndex(selectionIndex);
+        var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
+        console.log(selectedFeature.get("social"));
+        if (selectedFeature.get("social")) {
+            var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
+            var view = Maps.mainPage.mainPane.splitview.bottomRightView.resultsView.contentView.itemViewForContentIndex(selectionIndex);
 
-        Maps.socialController.set("content", Maps.featureInfoController.get("selection").firstObject().get("social"));
-        Maps.socialCommentsController.set("content", Maps.featureInfoController.findComments());
-        Maps.linkController.set("content", Maps.featureInfoController.findLinks());
+            Maps.socialController.set("content", selectedFeature.get("social"));
+            Maps.socialCommentsController.set("content", Maps.featureInfoController.findComments());
+            Maps.linkController.set("content", Maps.featureInfoController.findLinks());
 
-        SC.PickerPane.create({
-            // allow events to bubble up to this responder
-            nextResponder: Maps.MAIN_RESPONDER,
-            classNames: ["fix-transparency"],
-            layout: { width: 400, height: 300 },
-            contentView: SC.TabView.extend({
-                layout: {top: 5, left: 5, right: 5, bottom: 5},
-                itemTitleKey: "title",
-                itemValueKey: "tab",
-                items: [
-                    {title: "Tags", tab: "Maps.mainPage.tagsTab"},
-                    {title: "Comments", tab: "Maps.mainPage.commentsTab"},
-                    {title: "Links", tab: "Maps.mainPage.linksTab"}
-                ]
-            })
-        }).popup(layout, SC.PICKER_POINTER);
+            SC.PickerPane.create({
+                // allow events to bubble up to this responder
+                nextResponder: Maps.MAIN_RESPONDER,
+                classNames: ["fix-transparency"],
+                layout: { width: 400, height: 300 },
+                contentView: SC.TabView.extend({
+                    layout: {top: 5, left: 5, right: 5, bottom: 5},
+                    itemTitleKey: "title",
+                    itemValueKey: "tab",
+                    items: [
+                        {title: "Tags", tab: "Maps.mainPage.tagsTab"},
+                        {title: "Comments", tab: "Maps.mainPage.commentsTab"},
+                        {title: "Links", tab: "Maps.mainPage.linksTab"}
+                    ]
+                })
+            }).popup(view, SC.PICKER_POINTER);
+        } else {
+            SC.AlertPane.warn("L'oggetto non ha un attributo ID", "Poiche' l'oggetto non ha un attributo ID che lo identifichi univocamente non e' possibile associargli informazioni.",
+                "Se possibile richiedere al gestore del livello di attribuire un ID a ciascuna feature del livello : "+selectedFeature.get("LAYER"),this);
+        }
     },
 
 
@@ -92,7 +99,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
 
     layerQueryRun: function() {
         var wfs = new OpenLayers.Protocol.HTTP({
-            url:"http://localhost:4020/geoserver/wfs?service=wfs&version=1.0&request=GetFeature&typename=" + Maps.layerQueryController.getTypeName(),
+            url:"/geoserver/wfs?service=wfs&version=1.0&request=GetFeature&typename=" + Maps.layerQueryController.getTypeName(),
             format: new OpenLayers.Format.GML.v3({})
         });
 

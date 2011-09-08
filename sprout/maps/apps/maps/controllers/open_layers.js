@@ -18,11 +18,11 @@ Maps.openLayersController = SC.ArrayController.create(
         measure: '',
 
         getOLMAP: function() {
-            return Maps.mainPage.mainPane.openlayers.get("olmap");
+            return Maps.mainPage.mainPane.splitview.topLeftView.get("olmap");
         },
 
         getOLView: function() {
-            return Maps.mainPage.mainPane.openlayers;
+            return Maps.mainPage.mainPane.splitview.topLeftView;
         },
 
         getFeatureInfoLayer: function() {

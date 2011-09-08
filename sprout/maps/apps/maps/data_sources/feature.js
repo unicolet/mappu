@@ -221,6 +221,8 @@ transformOLFeaturesInFeatures: function(features, store) {
             record['LAYER'] = features[i].gml.featureType;
             if (features[i].data['ID'])
                 record['social'] = features[i].gml.featureNSPrefix + ':' + features[i].gml.featureType + ':' + features[i].data['ID'] + ':' + '0';
+            else
+                record['social'] = null;
             records[records.length] = record;
         }
     }

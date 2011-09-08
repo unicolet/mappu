@@ -11,7 +11,7 @@ Maps.mainPage = SC.Page.design({
     // Add childViews to this pane for views to display immediately on page
     // load.
     mainPane: SC.MainPane.design({
-        childViews: 'toolbar openlayers resultsView featureView'.w(),
+        childViews: 'toolbar splitview'.w(),
 
         defaultResponder: 'Maps',
 
@@ -52,45 +52,65 @@ Maps.mainPage = SC.Page.design({
             })
         }),
 
-        openlayers: Maps.OpenLayers.design({
-            layerId: 'olmap',
-            layout: { top: 37, left: 0, bottom:0, right: 224 },
-            contentBinding: "Maps.openLayersController.content",
-            exampleView: Maps.OpenLayersLayer
-        }),
+        splitview : SC.SplitView.design({
+            layout: { top: 37, left: 0, bottom:0, right: 0 },
+            layoutDirection: SC.LAYOUT_HORIZONTAL,
 
-        resultsView: SC.ScrollView.design({
-            layout: { top: 37, width: 223, height:250, right: -1 },
-            hasHorizontalScroller: NO,
-            backgroundColor: 'white',
-            contentView: SC.ListView.design({
-                classNames: ["maps-chkbox-starred"],
-                rowHeight: 24,
-                contentBinding: 'Maps.featureInfoController.arrangedObjects',
-                selectionBinding: 'Maps.featureInfoController.selection',
-                contentValueKey: "name",
-                contentCheckboxKey: "isStarred",
-                action: "dblclick"
+            bottomRightMinThickness: 200,
+            bottomRightMinThickness: 0.8,
+            defaultThickness: 0.8,
+
+            topLeftView: Maps.OpenLayers.design({
+                minThickness: 200,
+                maxThickness: 0.8,
+                layout: { top: 37, left: 0, bottom:0, right: 224 },
+
+                layerId: 'olmap',
+
+                contentBinding: "Maps.openLayersController.content",
+                exampleView: Maps.OpenLayersLayer
+            }),
+
+            bottomRightView: SC.View.design({
+                layout: { top: 37, width: 223, bottom:0, right: 0 },
+                minThickness: 0.6,
+                maxThickness: 0.8,
+
+                childViews: "resultsView featureView".w(),
+                resultsView: SC.ScrollView.design({
+                    layout: { top: 0, left: 0, height:250, right: -1 },
+                    hasHorizontalScroller: NO,
+                    backgroundColor: 'white',
+                    contentView: SC.ListView.design({
+                        classNames: ["maps-chkbox-starred"],
+                        rowHeight: 24,
+                        contentBinding: 'Maps.featureInfoController.arrangedObjects',
+                        selectionBinding: 'Maps.featureInfoController.selection',
+                        contentValueKey: "name",
+                        contentCheckboxKey: "isStarred",
+                        action: "dblclick"
+                    })
+                }),
+
+                featureView: SCTable.TableView.design({
+                    layout: { top: 251, bottom: -1, left:0, right: -1 },
+
+                    contentBinding: 'Maps.featureInfoAttributesController',
+
+                    columns: [SC.Object.create(SCTable.Column, {
+                        name: "Property",
+                        valueKey: 'property',
+                        width: 50,
+                        canSort: YES
+                    }),
+                        SC.Object.create(SCTable.Column, {
+                            name: "Value",
+                            valueKey: 'value',
+                            width: 170,
+                            canSort: YES
+                        })]
+                })
             })
-        }),
-
-        featureView: SCTable.TableView.design({
-          layout: { top: 327, bottom: -1, width: 223, right: -1 },
-
-          contentBinding: 'Maps.featureInfoAttributesController',
-
-          columns: [SC.Object.create(SCTable.Column, {
-                name: "Property",
-                valueKey: 'property',
-                width: 50,
-                canSort: YES
-              }),
-              SC.Object.create(SCTable.Column, {
-                name: "Value",
-                valueKey: 'value',
-                width: 170,
-                canSort: YES
-              })]
         }),
 
         featureView_ORIG: SC.ScrollView.design({
