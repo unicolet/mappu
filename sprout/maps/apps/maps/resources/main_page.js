@@ -100,7 +100,7 @@ Maps.mainPage = SC.Page.design({
                     columns: [SC.Object.create(SCTable.Column, {
                         name: "Property",
                         valueKey: 'property',
-                        width: 70,
+                        width: 100,
                         canSort: YES
                         }),
                         SC.Object.create(SCTable.Column, {
@@ -147,6 +147,7 @@ Maps.mainPage = SC.Page.design({
             layout: {left: 10, top:15, right: 10, bottom: 50 },
             backgroundColor: 'white',
             contentView: SC.ListView.design({
+                themeName: "comments",
                 rowHeight: 75,
                 showAlternatingRows: YES,
                 isSelectable: YES,

@@ -13,9 +13,7 @@
 Maps.socialCommentsController = SC.ArrayController.create(
 	SC.CollectionViewDelegate,
 /** @scope Maps.socialCommentsController.prototype */ {
-	
-	isAdding: NO,
-	
+
 	collectionViewDeleteContent: function(view, content, indexes) {
 		// destroy the records
 		var records = indexes.map(function(idx) {return this.objectAt(idx);}, this);
@@ -38,27 +36,8 @@ Maps.socialCommentsController = SC.ArrayController.create(
 			//var list = Maps.mainPage.getPath('commentsTab.comments.contentView');
 			//var listItem = list.itemViewForContentIndex(this.length() - 1);
 			//listItem.beginEditing();
-
-			this.set("isAdding",YES);
 		}
 	 
 		return YES;
 	  }
-	  
-	  /*editNewComment: function() {
-	  	  if ( this.get("isAdding") && this.get("content").status == SC.Record.READY_CLEAN ) {
-	  	  	this.set("isAdding",NO);  
-	  	  	
-			// activate inline editor once UI can repaint
-			this.invokeLater(function() {
-			  // select last object
-			  var contentIndex = this.length() - 1;
-			  this.selectObject(this.objectAt(contentIndex));
-			  var list = Maps.mainPage.getPath('commentsTab.comments.contentView');
-			  var listItem = list.itemViewForContentIndex(contentIndex);
-			  listItem.beginEditing();
-			  
-			});
-	  	  }
-	  }.observes("*content.status")*/
 });

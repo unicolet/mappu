@@ -30,3 +30,15 @@ div.maps-dropview {
 .sc-pane.sc-panel > .sc-view {
     background-color: transparent;
 }
+
+
+@theme(comments) {
+    $theme.sc-list-item-view label {
+        top: 25%;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+    }
+}
