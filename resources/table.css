@@ -109,7 +109,7 @@
 }
 
 .sctable-row-view.sel {
-  background-color: #CDDBF6 !important;
+  background-color: #CDDBF6;
   border-right: 0px none;
   color: black !important;
 }
