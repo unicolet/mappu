@@ -3,7 +3,7 @@
 // Copyright: ©2011 My Company, Inc.
 // ==========================================================================
 function Maps_print() {
-        var map = Maps.openLayersController.get("olmap");
+        var map = Maps.openLayersController.getOLMAP();
         // go through all layers, and collect a list of objects
         // each object is a tile's URL and the tile's pixel location relative to the viewport
         var size = map.getSize();

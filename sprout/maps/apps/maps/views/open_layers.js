@@ -47,7 +47,9 @@ Maps.OpenLayers = SC.CollectionView.extend(
         renderOpenLayersMap: function() {
             var layer = this.get("layer"),
                 map   = this.get("olmap");
-            if (layer && map) map.render(layer);
+            if (layer && map) {
+                map.render(layer);
+            }
         }.observes("layer"),
 
         initOpenLayers: function() {
