@@ -101,7 +101,11 @@ Maps.mainPage = SC.Page.design({
                 featureView: SCTable.TableView.design({
                     layout: { top: 251, bottom: -1, left:0, right: -1 },
 
-                    contentBinding: 'Maps.featureInfoAttributesController',
+                    contentBinding: 'Maps.featureInfoAttributesController.arrangedObjects',
+                    selectionBinding: 'Maps.featureInfoAttributesController.selection',
+
+                    action: "onAttributeDoubleClick",
+                    target: "Maps.featureInfoAttributesController",
 
                     columns: [SC.Object.create(SCTable.Column, {
                         name: "Property",
@@ -139,7 +143,7 @@ Maps.mainPage = SC.Page.design({
     }),
 
     commentsTab: SC.View.design({
-        childViews: "comments addComment".w(),
+        childViews: "comments newComment addComment".w(),
         comments: SC.ScrollView.design({
             layout: {left: 10, top:15, right: 10, bottom: 50 },
             backgroundColor: 'white',
@@ -156,9 +160,14 @@ Maps.mainPage = SC.Page.design({
                 canDeleteContent: YES
             })
         }),
+        newComment: SC.TextFieldView.design({
+            layout: {bottom: 10, left:10, width: 295, height: 25 },
+            valueBinding: "Maps.socialCommentsController.newCommentText",
+            hint: "Aggiungi un commento..."
+        }),
         addComment: SC.ButtonView.design({
-            layout: {bottom: 10, right:10, width: 130, height: 30 },
-            title: "Add comment...",
+            layout: {bottom: 10, right:10, width: 70, height: 25},
+            title: "Add...",
             action: "addComment"
         })
     }),

@@ -14,6 +14,8 @@ Maps.socialCommentsController = SC.ArrayController.create(
 	SC.CollectionViewDelegate,
 /** @scope Maps.socialCommentsController.prototype */ {
 
+    newCommentText: "",
+
 	collectionViewDeleteContent: function(view, content, indexes) {
 		// destroy the records
 		var records = indexes.map(function(idx) {return this.objectAt(idx);}, this);
@@ -25,19 +27,24 @@ Maps.socialCommentsController = SC.ArrayController.create(
     },
 
 	addComment: function() {
-		var guid = Maps.featureInfoController.get("selection").firstObject().getSocialID();
-		
-		if (guid!=null && guid!=undefined) {
-            console.log("Adding comment to guid: "+guid);
-			var comment = Maps.featuresStore.createRecord(Maps.Comment, {"social": guid, "text" : ""} );
-			this.addObject(comment);
+        if(this.get("newCommentText")=="") {
+            this.content.refresh();
+        } else {
+            var guid = Maps.featureInfoController.get("selection").firstObject().getSocialID();
 
-            this.selectObject(comment);
-			//var list = Maps.mainPage.getPath('commentsTab.comments.contentView');
-			//var listItem = list.itemViewForContentIndex(this.length() - 1);
-			//listItem.beginEditing();
-		}
-	 
-		return YES;
+            if (guid!=null && guid!=undefined) {
+                console.log("Adding comment to guid: "+guid);
+                var comment = Maps.featuresStore.createRecord(Maps.Comment, {"social": guid, "text" : this.get("newCommentText")} );
+
+                this.content.add(comment);
+
+                this.invokeLater(function(){
+                    this.content.refresh();
+                    Maps.mainPage.commentsTab.comments.scrollDownPage();
+                });
+
+                this.set("newCommentText","");
+            }
+        }
 	  }
 });

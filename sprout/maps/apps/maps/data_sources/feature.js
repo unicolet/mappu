@@ -81,7 +81,12 @@ Maps.FeatureDataSource = SC.DataSource.extend(
     didFetchComments: function(response, store, query) {
         if (SC.ok(response)) {
             var storeKeys = store.loadRecords(Maps.Comment, response.get('body').content);
-            store.loadQueryResults(query, storeKeys);
+            if(query.isLocal()) {
+                store.dataSourceDidFetchQuery(query);
+            } else {
+                // this is for remote queries
+                store.loadQueryResults(query, storeKeys);
+            }
         } else {
             store.dataSourceDidErrorQuery(query, response);
         }

@@ -32,6 +32,9 @@ Maps.Comment = SC.Record.extend(
   		} else {
   			if (this.get("dateCreated"))
   				return "At "+this.get("dateCreated").toFormattedString('%Y-%m-%d %H:%M:%S')+": "+this.get("text");
+            else if(this.get("text")=="")
+                return "Doppio-click per editare il commento";
+            return "Poco fa: "+this.get("text");
   		}
   	}.property("text","dateCreated").cacheable()
 }) ;
