@@ -184,6 +184,15 @@ Maps.openLayersController = SC.ArrayController.create(
             }
         }.observes("Maps.mainPage.layerSearchPane.isVisibleInWindow", "Maps.mainPage.layerPalette.isVisibleInWindow"),
 
+
+        // a layer has been selected on the layer list
+        onLayerSelected: function() {
+            var layer = SC.getPath('Maps.openLayersController.selection.firstObject');
+            if(layer) {
+                Maps.layerController.set("content", layer);
+            }
+        },
+
         // this is bound to the sceneView nowShowing property
         layerSearchNowShowing:null,
         goToEditQuery: function() {

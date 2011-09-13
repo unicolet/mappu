@@ -1,5 +1,4 @@
 Maps.MAIN_RESPONDER = SC.Responder.create({
-
     // called when the user dblclicks an item in list view
     dblclick: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();

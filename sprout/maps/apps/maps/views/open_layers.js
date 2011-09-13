@@ -265,7 +265,7 @@ Maps.OpenLayersLayer = SC.View.extend({
 
     content: null,
 
-    displayProperties: ["content", "content.visible"],
+    displayProperties: ["content", "content.visible", "content.opacity"],
 
     render: function(context, firstTime) {
         this.createOrUpdateWMSLayer();
@@ -291,7 +291,7 @@ Maps.OpenLayersLayer = SC.View.extend({
                     'transparent':'true'
                 },
                 {
-                    'opacity': 0.7,
+                    'opacity': layer.get('opacity')/10,
                     'visibility': layer.get('visible'),
                     'isBaseLayer': false,
                     'wrapDateLine': true
@@ -300,6 +300,7 @@ Maps.OpenLayersLayer = SC.View.extend({
             map.addLayer(wms);
         } else {
             wms.setVisibility(layer.get('visible'));
+            wms.setOpacity(layer.get('opacity')/10);
             map.setLayerIndex(wms, layer.get("order")-1);
         }
     }

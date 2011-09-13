@@ -49,16 +49,20 @@ Maps.LayerDataSource = SC.DataSource.extend(
 				if ( index!=0 && $(this).attr('queryable')!="0" ) {
 					var theName = $(this).find('Name').text();
 					if (theName!="blank:blank") {
-						var theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
+                        var theLegendIcon = null;
+                        try {
+						    theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
+                        } catch(e) {};
 						//console.log(theName + "'s icon " + theLegendIcon);
 						var record={
                             order: index,
 							guid: index,
 							name: theName,
 							visible : $(this).find("keyword:contains(visible)").length!=0,
-							legendIcon : theLegendIcon
+							legendIcon : theLegendIcon,
+                            opacity: 10,
+                            description: $(this).find('Abstract').text()
 						};
-						//records[index-1]=record;
 						records[records.length]=record;
 					}
 				}
@@ -67,7 +71,6 @@ Maps.LayerDataSource = SC.DataSource.extend(
         store.dataSourceDidFetchQuery(query);
 	} else {
         console.log('response has errors');
-        //console.log(response);
 		store.dataSourceDidErrorQuery(query, response);
 	}
   },

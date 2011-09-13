@@ -4,6 +4,12 @@
 // ==========================================================================
 /*globals Maps */
 
+SC.Binding.labelPrefix = function(prefix) {
+  return this.transform(function(value, binding) {
+    return prefix + " " + (value ? value : "n/a");
+  }) ;
+} ;
+
 // This page describes the main user interface for your application.  
 Maps.mainPage = SC.Page.design({
 
@@ -110,15 +116,6 @@ Maps.mainPage = SC.Page.design({
                             canSort: YES
                         })]
                 })
-            })
-        }),
-
-        featureView_ORIG: SC.ScrollView.design({
-            layout: { top: 327, bottom: -1, width: 223, right: -1 },
-            backgroundColor: 'white',
-            contentView: Maps.FeatureView.design({
-                useStaticLayout: YES,
-                contentBinding: 'Maps.featureInfoController.selection'
             })
         })
     }),
@@ -248,10 +245,10 @@ Maps.mainPage = SC.Page.design({
     }).create(),
 
     layerPalette : SC.PickerPane.extend({
-        layout: { width: 200, height: 300 },
+        layout: { width: 500, height: 300 },
         contentView: SC.View.extend({
             layout: {top: 0, left: 0, right: 0, bottom: 0},
-            childViews: 'googleView layerView'.w(),
+            childViews: 'googleView layerView layerDetailView'.w(),
             googleView: SC.RadioView.design({
                 layout: {top: 10, left: 5, right: 5, height: 30},
                 items: 'Streets Satellite'.w(),
@@ -261,7 +258,7 @@ Maps.mainPage = SC.Page.design({
             }),
             layerView: SC.ScrollView.design({
                 hasHorizontalScroller: NO,
-                layout: { top: 40, bottom: 5, left: 5, right: 5 },
+                layout: { top: 40, bottom: 5, left: 5, width: 200 },
                 backgroundColor: 'white',
                 contentView: SC.ListView.design({
                     rowHeight: 24,
@@ -273,7 +270,38 @@ Maps.mainPage = SC.Page.design({
                     hasContentIcon: YES,
                     action:"layerSearch",
                     canReorderContent: YES,
-                    isEditable: YES//,dragDataTypes: [Maps.Layer]
+                    isEditable: YES,
+                    action: "onLayerSelected",
+                    target: "Maps.openLayersController",
+                    actOnSelect: YES
+                })
+            }),
+            layerDetailView: SC.View.design({
+                layout: { top: 40, bottom: 5, right: 10, width: 270 },
+                childViews: "title name description opacitylbl opacity".w(),
+                title: SC.LabelView.design({
+                    value: "Informazioni",
+                    controlSize: SC.LARGE_CONTROL_SIZE,
+                    layout: {top: 0, right:5, height: 20, left:5}
+                }),
+                name: SC.LabelView.design({
+                    valueBinding: SC.Binding.from('Maps.layerController.name').labelPrefix("Nome:"),
+                    layout: {top: 25, right:5, height: 20, left:5}
+                }),
+                opacitylbl: SC.LabelView.design({
+                    layout: {top: 50, right:5, height: 20, left:5},
+                    value: "Trasparenza:"
+                }),
+                opacity:SC.SliderView.design({
+                    layout: {top: 70, right:10, height: 20, left:10},
+                    valueBinding: 'Maps.layerController.opacity',
+                    maximum: 10,
+                    minimum: 0,
+                    step: 1
+                }),
+                description: SC.LabelView.design({
+                    valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("Descrizione:"),
+                    layout: {top: 110, right:5, bottom: 50, left:5}
                 })
             })
         })
