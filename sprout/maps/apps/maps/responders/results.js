@@ -115,5 +115,11 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
         var gml = new OpenLayers.Format.GML({extractAttributes: true});
         response.features = gml.read(response.priv.responseXML);
         Maps.openLayersController.showInfo(response);
+    },
+
+    doRemoveFilter: function() {
+        var layer=Maps.openLayersController.get("selection").firstObject();
+        if(layer)
+                layer.set("cql_filter",null);
     }
 });

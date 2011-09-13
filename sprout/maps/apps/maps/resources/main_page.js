@@ -276,7 +276,9 @@ Maps.mainPage = SC.Page.design({
                     contentValueKey: "name",
                     contentCheckboxKey: "visible",
                     contentIconKey: "legendIcon",
+                    contentRightIconKey: "filterIcon",
                     hasContentIcon: YES,
+                    hasContentRightIcon: YES,
                     action:"layerSearch",
                     canReorderContent: YES,
                     isEditable: YES,
@@ -287,7 +289,8 @@ Maps.mainPage = SC.Page.design({
             }),
             layerDetailView: SC.View.design({
                 layout: { top: 40, bottom: 5, right: 10, width: 270 },
-                childViews: "title name description opacitylbl opacity".w(),
+                isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
+                childViews: "title name description opacitylbl opacity toggleFilter".w(),
                 title: SC.LabelView.design({
                     value: "Informazioni",
                     controlSize: SC.LARGE_CONTROL_SIZE,
@@ -311,6 +314,12 @@ Maps.mainPage = SC.Page.design({
                 description: SC.LabelView.design({
                     valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("Descrizione:"),
                     layout: {top: 110, right:5, bottom: 50, left:5}
+                }),
+                toggleFilter: SC.ButtonView.design({
+                    layout: {bottom: 10, left:5, height: 25, right:5},
+                    titleBinding: SC.Binding.labelPrefix("Rimuovi filtro").from("Maps.layerController.cql_filter"),
+                    action: "doRemoveFilter",
+                    isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
                 })
             })
         })

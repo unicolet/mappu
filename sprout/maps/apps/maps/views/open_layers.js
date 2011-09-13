@@ -267,7 +267,7 @@ Maps.OpenLayersLayer = SC.View.extend({
 
     content: null,
 
-    displayProperties: ["content", "content.visible", "content.opacity"],
+    displayProperties: ["content", "content.visible", "content.opacity", "content.cql_filter"],
 
     render: function(context, firstTime) {
         this.createOrUpdateWMSLayer();
@@ -304,6 +304,14 @@ Maps.OpenLayersLayer = SC.View.extend({
             wms.setVisibility(layer.get('visible'));
             wms.setOpacity(layer.get('opacity')/10);
             map.setLayerIndex(wms, layer.get("order")-1);
+            if(layer.get("cql_filter")!=null) {
+                wms.mergeNewParams({"cql_filter": layer.get("cql_filter")});
+                wms.url="/geoserver/wms";
+            } else {
+                wms.mergeNewParams({"cql_filter": null});
+                wms.url="/geoserver/gwc/service/wms";
+            }
+            wms.redraw();
         }
     }
 });

@@ -61,7 +61,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
 							visible : $(this).find("keyword:contains(visible)").length!=0,
 							legendIcon : theLegendIcon,
                             opacity: 10,
-                            description: $(this).find('Abstract').text()
+                            description: $(this).find('Abstract').text(),
+                            cql_filter: null
 						};
 						records[records.length]=record;
 					}
