@@ -80,11 +80,6 @@
   background-color: #efefef;
 }
 
-.sctable-column-header-view.sel {
-  background-color: #ffffff !important;
-}
-
-
 /* Table Rows */
 
 .sctable-row-view div {
