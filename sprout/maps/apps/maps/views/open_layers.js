@@ -296,7 +296,9 @@ Maps.OpenLayersLayer = SC.View.extend({
                     'opacity': layer.get('opacity')/10,
                     'visibility': layer.get('visible'),
                     'isBaseLayer': false,
-                    'wrapDateLine': true
+                    'wrapDateLine': true,
+                    'buffer': 0,
+                    'tileSize': new OpenLayers.Size(512, 512)
                 }
             );
             map.addLayer(wms);
