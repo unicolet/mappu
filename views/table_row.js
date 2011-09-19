@@ -22,7 +22,14 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   isMouseOver: NO,
 
   displayProperties: ['isMouseOver'],
-  
+
+  /*
+    Set this property to YES (default) to disable the re-rendering of rows when the mouse
+    moves over.
+    On slower computers (i.e. my 2006 dual core mac mini) this is quite slow.
+   */
+  fastRendering: YES,
+
   /*
     @read-only
   */
@@ -84,11 +91,13 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   },
 
   mouseEntered: function(evt) {
-    this.set('isMouseOver', YES);
+    if(!this.get("fastRendering"))
+        this.set('isMouseOver', YES);
   },
   
   mouseExited: function(evt) {
-    this.set('isMouseOver', NO);
+    if(!this.get("fastRendering"))
+        this.set('isMouseOver', NO);
   }
 
 });
