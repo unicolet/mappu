@@ -39,12 +39,20 @@ Maps.socialCommentsController = SC.ArrayController.create(
                 this.content.add(comment);
 
                 this.invokeLater(function(){
-                    this.content.refresh();
+                    Maps.mainPage.commentsTab.comments.contentView.computeLayout();
                     Maps.mainPage.commentsTab.comments.scrollDownPage();
                 });
 
                 this.set("newCommentText","");
             }
         }
-	  }
+	  },
+
+    delComment: function() {
+        var comment=this.get("selection").firstObject();
+        if(comment) {
+            this.content.remove(comment);
+            comment.destroy();
+        }
+    }
 });

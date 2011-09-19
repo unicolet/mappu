@@ -47,6 +47,10 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
         Maps.socialCommentsController.addComment();
     },
 
+    delComment: function() {
+        Maps.socialCommentsController.delComment();
+    },
+
     performGeoOperation: function() {
         var op = Maps.featureInfoController.get("operation");
         var geom1 = Maps.featureInfoController.get("feature1geom");

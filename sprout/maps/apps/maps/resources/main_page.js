@@ -143,7 +143,7 @@ Maps.mainPage = SC.Page.design({
     }),
 
     commentsTab: SC.View.design({
-        childViews: "comments newComment addComment".w(),
+        childViews: "comments newComment addComment delComment".w(),
         comments: SC.ScrollView.design({
             layout: {left: 10, top:15, right: 10, bottom: 50 },
             backgroundColor: 'white',
@@ -154,10 +154,10 @@ Maps.mainPage = SC.Page.design({
                 isSelectable: YES,
                 contentBinding: 'Maps.socialCommentsController.arrangedObjects',
                 selectionBinding: 'Maps.socialCommentsController.selection',
-                contentValueKey: "readable",
+                contentValueKey: "readable"
                 //exampleView: Maps.CommentView,
-                canEditContent: YES,
-                canDeleteContent: YES
+                //canEditContent: YES,
+                //canDeleteContent: YES
             })
         }),
         newComment: SC.TextFieldView.design({
@@ -166,9 +166,18 @@ Maps.mainPage = SC.Page.design({
             hint: "Aggiungi un commento..."
         }),
         addComment: SC.ButtonView.design({
-            layout: {bottom: 10, right:10, width: 70, height: 25},
-            title: "Add...",
-            action: "addComment"
+            layout: {bottom: 10, right:55, width: 25, height: 25},
+            title: "+",
+            action: "addComment",
+            isEnabledBinding: SC.Binding.bool().from("Maps.socialCommentsController.newCommentText")
+        }),
+        delComment: SC.ButtonView.design({
+            layout: {bottom: 10, right:10, width: 25, height: 25},
+            title: "-",
+            action: "delComment",
+            isEnabledBinding: SC.Binding.transform(function(value, binding) {
+                return (value && value.length()>0) ? true : false;
+              }).from("Maps.socialCommentsController.selection")
         })
     }),
 
@@ -235,7 +244,8 @@ Maps.mainPage = SC.Page.design({
         back: SC.ButtonView.design({
             layout: {right:100, bottom: 10, width: 80, height: 25},
             title: "Back",
-            action: "layerQueryBack"
+            action: "layerQueryBack",
+            themeName: "point-left"
         }),
         send: SC.ButtonView.design({
             layout: {right:10, bottom: 10, width: 80, height: 25},

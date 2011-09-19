@@ -148,6 +148,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
     },
 
     didCreateRecord: function(response, store, storeKey) {
+        console.log("Did create record");
         if (SC.ok(response)) {
             var dataHash = response.get('body').content;
             store.dataSourceDidComplete(storeKey, null, dataHash.guid);
