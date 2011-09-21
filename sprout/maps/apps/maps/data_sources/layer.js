@@ -40,18 +40,33 @@ Maps.LayerDataSource = SC.DataSource.extend(
 	if (SC.ok(response)) {
 		var records = [];
 		var content = response.get('body');
-		// XMLDocument in Firefox, null in Chrome?
+        // God mess IE
+        if(SC.$.browser.msie) {
+            var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            var parsed=xmlDoc.loadXML(content);
+            if(!parsed) {
+                var myErr = xmlDoc.parseError;
+                alert(myErr.reason);
+            } else {
+                content=xmlDoc;
+            }
+        }
+
 		SC.$('Layer', content).each(
 			function(index) {
                 //console.log('layer n.'+index);
 				// saltiamo il primo layer 'contenitore'
 				// e il layer posticcio blank
 				if ( index!=0 && $(this).attr('queryable')!="0" ) {
-					var theName = $(this).find('Name').text();
+					var theName = $(this).find('Name:first').text();
 					if (theName!="blank:blank") {
                         var theLegendIcon = null;
                         try {
-						    theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
+                            if(SC.$.browser.msie) {
+                                theLegendIcon = $(this.find("Style:first OnlineResource")).attr('xlink:href');
+                            } else {
+						        theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
+                            }
                         } catch(e) {};
 						//console.log(theName + "'s icon " + theLegendIcon);
 						var record={
