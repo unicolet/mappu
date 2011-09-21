@@ -381,3 +381,10 @@ Maps.mainPage = SC.Page.design({
     })
 
 });
+
+Maps.loginPane = SC.Pane.design({
+    childViews: 'label'.w(),
+    label: SC.LabelView.design({
+        value: "Please login"
+    })
+}).create();

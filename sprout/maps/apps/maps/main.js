@@ -13,21 +13,15 @@
 //
 Maps.main = function main() {
 
-    Maps.getPath('mainPage.mainPane').append();
 
-    var layers = Maps.store.find(Maps.LAYERS_QUERY);
-    Maps.openLayersController.set('content', layers);
-
-    var queries = Maps.featuresStore.find(Maps.LAYERQUERY_QUERY);
-    Maps.layerQueryController.set('content', queries);
-
-    var attributes = Maps.featuresStore.find(Maps.ATTRIBUTES_QUERY);
-    Maps.featureInfoAttributesController.set('content', attributes);
-
-    Maps.makeFirstResponder(Maps.MAIN_RESPONDER);
+    //Maps.makeFirstResponder(Maps.MainResponder);
 
 };
 
-function main() {
-    Maps.main();
-}
+//function main() {
+//    Maps.main();
+//}
+
+SC.ready(function() {
+  Maps.statechart.initStatechart();
+});

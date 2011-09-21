@@ -1,4 +1,4 @@
-Maps.MAIN_RESPONDER = SC.Responder.create({
+Maps.MainResponder = SC.Responder.create({
     // called when the user dblclicks an item in list view
     dblclick: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
@@ -13,7 +13,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
 
             SC.PickerPane.create({
                 // allow events to bubble up to this responder
-                //nextResponder: Maps.MAIN_RESPONDER,
+                //nextResponder: Maps.MainResponder,
                 classNames: ["fix-transparency"],
                 layout: { width: 400, height: 300 },
                 contentView: SC.TabView.extend({
@@ -115,7 +115,7 @@ Maps.MAIN_RESPONDER = SC.Responder.create({
     },
 
     didFetchWfsFeatures : function(response, options) {
-        //console.log("Maps.MAIN_RESPONDER.didFetchWfsFeatures");
+        //console.log("Maps.MainResponder.didFetchWfsFeatures");
         var gml = new OpenLayers.Format.GML({extractAttributes: true});
         response.features = gml.read(response.priv.responseXML);
         Maps.openLayersController.showInfo(response);
