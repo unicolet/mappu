@@ -98,6 +98,7 @@ Maps.openLayersController = SC.ArrayController.create(
         */
         showInfo: function(event) {
             if (event.features && event.features.length) {
+                this.set("measure","");
 
                 var highlightLayer = this.getFeatureInfoLayer();
                 var markersLayer = this.getMarkersLayer();
@@ -138,8 +139,7 @@ Maps.openLayersController = SC.ArrayController.create(
                 SC.RunLoop.end();
 
             } else {
-                // TODO: make this information visible
-                //console.log("No features returned by get feature info");
+                this.set("measure","Nessun risultato");
             }
         },
 
