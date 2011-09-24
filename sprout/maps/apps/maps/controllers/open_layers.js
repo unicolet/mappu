@@ -89,7 +89,6 @@ Maps.openLayersController = SC.ArrayController.create(
         * 
         */
         showInfo: function(event) {
-            console.log("handling featureInfo in showInfo: n. of features="+event.features.length);
             if (event.features && event.features.length) {
 
                 var highlightLayer = this.getFeatureInfoLayer();
@@ -132,7 +131,7 @@ Maps.openLayersController = SC.ArrayController.create(
 
             } else {
                 // TODO: make this information visible
-                console.log("No features returned by get feature info");
+                //console.log("No features returned by get feature info");
             }
         },
 

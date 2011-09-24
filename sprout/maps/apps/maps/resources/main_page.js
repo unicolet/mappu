@@ -19,7 +19,7 @@ Maps.mainPage = SC.Page.design({
     mainPane: SC.MainPane.design({
         childViews: 'toolbar splitview'.w(),
 
-        defaultResponder: 'Maps',
+        defaultResponder: 'Maps.MainResponder',
 
         toolbar : SC.ToolbarView.design({
             layout: { top: 0, left: 0, right: 0, height: 36 },
