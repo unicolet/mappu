@@ -13,7 +13,6 @@
 //
 Maps.main = function main() {
 
-
     //Maps.makeFirstResponder(Maps.MainResponder);
 
 };
@@ -23,5 +22,7 @@ Maps.main = function main() {
 //}
 
 SC.ready(function() {
-  Maps.statechart.initStatechart();
+    Maps.initProjections();
+
+    Maps.statechart.initStatechart();
 });

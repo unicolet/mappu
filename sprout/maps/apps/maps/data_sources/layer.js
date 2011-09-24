@@ -68,7 +68,11 @@ Maps.LayerDataSource = SC.DataSource.extend(
 						        theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
                             }
                         } catch(e) {};
-						//console.log(theName + "'s icon " + theLegendIcon);
+                        
+                        // now for the BoundingBox
+                        var bbox=$(this).find('BoundingBox:first');
+                        var bounds = new OpenLayers.Bounds(bbox.attr('minx'),bbox.attr('miny'),bbox.attr('maxx'),bbox.attr('maxy'));
+
 						var record={
                             order: index,
 							guid: index,
@@ -77,7 +81,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
 							legendIcon : theLegendIcon,
                             opacity: 10,
                             description: $(this).find('Abstract').text(),
-                            cql_filter: null
+                            cql_filter: null,
+                            maxExtent: bounds.transform(Maps.gaussBoagaProj, Maps.googleProj)
 						};
 						records[records.length]=record;
 					}

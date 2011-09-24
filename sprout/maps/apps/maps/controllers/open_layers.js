@@ -91,8 +91,6 @@ Maps.openLayersController = SC.ArrayController.create(
         showInfo: function(event) {
             console.log("handling featureInfo in showInfo: n. of features="+event.features.length);
             if (event.features && event.features.length) {
-                var gaussBoagaProj = new OpenLayers.Projection('EPSG:3003');
-                var googleProj = new OpenLayers.Projection('EPSG:900913');
 
                 var highlightLayer = this.getFeatureInfoLayer();
                 var markersLayer = this.getMarkersLayer();
@@ -105,9 +103,9 @@ Maps.openLayersController = SC.ArrayController.create(
 
                 for (var i = 0; i < event.features.length; i++) {
                     var feature = event.features[i];
-                    var c = feature.geometry.getCentroid().transform(gaussBoagaProj, googleProj);
+                    var c = feature.geometry.getCentroid().transform(Maps.gaussBoagaProj, Maps.googleProj);
                     var marker = new OpenLayers.Marker(new OpenLayers.LonLat(c.x, c.y), icon.clone());
-                    feature.geometry = feature.geometry.transform(gaussBoagaProj, googleProj);
+                    feature.geometry = feature.geometry.transform(Maps.gaussBoagaProj, Maps.googleProj);
                     marker.data = {'feature':feature, 'idx':i};
                     markersLayer.addMarker(marker);
                     marker.events.register(

@@ -296,9 +296,11 @@ Maps.OpenLayersLayer = SC.View.extend({
                     'opacity': layer.get('opacity')/10,
                     'visibility': layer.get('visible'),
                     'isBaseLayer': false,
-                    'wrapDateLine': true,
+                    //'wrapDateLine': true,
                     'buffer': 0,
-                    'tileSize': new OpenLayers.Size(512, 512)
+                    'tileSize': new OpenLayers.Size(512, 512),
+                    'maxExtent': layer.get('maxExtent'),
+                    'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
                 }
             );
             map.addLayer(wms);
