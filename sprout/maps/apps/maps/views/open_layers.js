@@ -38,17 +38,15 @@ Maps.OpenLayers = SC.CollectionView.extend(
             return jquery;
         },
 
-        // here we only init the openlayers object. Actual rendering has been moved
-        // to a function observing the layer member (see below renderOpenLayersMap)
-        didAppendToDocument: function() {
-            this.initOpenLayers();
-        },
-
         renderOpenLayersMap: function() {
             var layer = this.get("layer"),
                 map   = this.get("olmap");
             if (layer && map) {
+                ///console.log("OL renderOpenLayersMap::render");
                 map.render(layer);
+            } else if(!map && layer) {
+                //console.log("OL renderOpenLayersMap::init");
+                this.initOpenLayers();
             }
         }.observes("layer"),
 

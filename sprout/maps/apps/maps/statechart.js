@@ -71,6 +71,12 @@ Maps.statechart = SC.Statechart.create({
 
             exitState: function() {
                 Maps.getPath('mainPage.mainPane').remove();
+                
+                Maps.openLayersController.set('content', null);
+                Maps.layerQueryController.set('content', null);
+                Maps.featureInfoAttributesController.set('content', null);
+
+                Maps.openLayersController.destroyOpenLayersMap();
             }
         })
     })

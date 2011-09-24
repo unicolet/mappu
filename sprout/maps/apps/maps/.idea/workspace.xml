@@ -23,10 +23,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="layer.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="layer.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_sources/layer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="41" selection-start="2685" selection-end="2685" vertical-scroll-proportion="1.9043478">
+            <state line="26" column="33" selection-start="754" selection-end="754" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main_page.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/main_page.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="63" column="0" selection-start="2549" selection-end="2549" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -44,7 +53,7 @@
       <file leaf-file-name="results.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/responders/results.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="4" selection-start="47" selection-end="5232" vertical-scroll-proportion="0.0">
+            <state line="2" column="26" selection-start="128" selection-end="128" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -53,7 +62,7 @@
       <file leaf-file-name="statechart.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/statechart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="198" column="14" selection-start="8290" selection-end="8290" vertical-scroll-proportion="0.0">
+            <state line="73" column="16" selection-start="2344" selection-end="2344" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -62,7 +71,7 @@
       <file leaf-file-name="core.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="12" selection-start="1271" selection-end="1271" vertical-scroll-proportion="0.0">
+            <state line="7" column="0" selection-start="246" selection-end="246" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -71,34 +80,16 @@
       <file leaf-file-name="open_layers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="302" column="31" selection-start="10894" selection-end="10894" vertical-scroll-proportion="0.0">
+            <state line="47" column="18" selection-start="1464" selection-end="1464" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="open_layers.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="open_layers.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="107" column="71" selection-start="4020" selection-end="4020" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EPSG900913.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/defs/EPSG900913.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="395" selection-end="395" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EPSG3003.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/defs/EPSG3003.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="15" column="55" selection-start="467" selection-end="467" vertical-scroll-proportion="0.31304348">
               <folding />
             </state>
           </provider>
@@ -124,16 +115,16 @@
         <option value="$PROJECT_DIR$/controllers/feature_info_attributes.js" />
         <option value="$PROJECT_DIR$/data_sources/feature.js" />
         <option value="$PROJECT_DIR$/controllers/social_comments.js" />
-        <option value="$PROJECT_DIR$/responders/results.js" />
-        <option value="$PROJECT_DIR$/resources/main_page.js" />
         <option value="$PROJECT_DIR$/../../../../../../../a.html" />
-        <option value="$PROJECT_DIR$/statechart.js" />
         <option value="$PROJECT_DIR$/resources/defs/GOOGLE.js" />
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/core.js" />
-        <option value="$PROJECT_DIR$/controllers/open_layers.js" />
-        <option value="$PROJECT_DIR$/views/open_layers.js" />
         <option value="$PROJECT_DIR$/data_sources/layer.js" />
+        <option value="$PROJECT_DIR$/responders/results.js" />
+        <option value="$PROJECT_DIR$/resources/main_page.js" />
+        <option value="$PROJECT_DIR$/controllers/open_layers.js" />
+        <option value="$PROJECT_DIR$/statechart.js" />
+        <option value="$PROJECT_DIR$/views/open_layers.js" />
       </list>
     </option>
   </component>
@@ -408,41 +399,6 @@
         <state line="43" column="0" selection-start="1530" selection-end="1530" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="372" column="53" selection-start="15754" selection-end="15754" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/responders/results.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="4" selection-start="47" selection-end="5232" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/statechart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="198" column="14" selection-start="8290" selection-end="8290" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="21" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="12" selection-start="1271" selection-end="1271" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/defs/EPSG3003.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -457,20 +413,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="71" selection-start="4020" selection-end="4020" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/open_layers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="302" column="31" selection-start="10894" selection-end="10894" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/layer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="38" selection-start="357" selection-end="357" vertical-scroll-proportion="0.27877697">
@@ -480,7 +422,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data_sources/layer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="41" selection-start="2685" selection-end="2685" vertical-scroll-proportion="1.9043478">
+        <state line="26" column="33" selection-start="754" selection-end="754" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="21" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/responders/results.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="26" selection-start="128" selection-end="128" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="246" selection-end="246" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="0" selection-start="2549" selection-end="2549" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statechart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="16" selection-start="2344" selection-end="2344" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="18" selection-start="1464" selection-end="1464" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="55" selection-start="467" selection-end="467" vertical-scroll-proportion="0.31304348">
           <folding />
         </state>
       </provider>

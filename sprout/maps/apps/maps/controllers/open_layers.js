@@ -17,6 +17,14 @@ Maps.openLayersController = SC.ArrayController.create(
 
         measure: '',
 
+        destroyOpenLayersMap: function() {
+            var olmap=this.getOLMAP();
+            if(olmap) {
+                olmap.destroy();
+                Maps.mainPage.mainPane.splitview.topLeftView.set("olmap",null);
+            }
+        },
+
         getOLMAP: function() {
             return Maps.mainPage.mainPane.splitview.topLeftView.get("olmap");
         },
