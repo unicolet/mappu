@@ -23,8 +23,6 @@ Maps.authenticationManager=SC.ObjectController.create({
     },
 
     attemptLogin: function(username, password){
-        console.log("Loggin in: "+username+"/"+password);
-        console.log("Loggin in: "+this.get("inputPassword"));
         if(username==password) {
             Maps.statechart.sendEvent('loginSuccessful', {id:1,'username':username});
         } else {

@@ -52,4 +52,9 @@ div.maps-dropview {
         color: #dddddd;
         font-weight: bold;
     }
+
+    $theme.loginmessage {
+        color: #FF7F50;
+        font-weight: bold;
+    }
 }

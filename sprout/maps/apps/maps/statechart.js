@@ -14,11 +14,11 @@ Maps.statechart = SC.Statechart.create({
 
         enterState: function() {
             Maps.authenticationManager.reset();
-            Maps.loginPane.append();
+            Maps.getPath('loginPage.mainPane').append();
         },
 
         exitState: function() {
-            Maps.loginPane.remove();
+            Maps.getPath('loginPage.mainPane').remove();
         },
 
 
