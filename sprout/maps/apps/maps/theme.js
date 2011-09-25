@@ -27,3 +27,4 @@ SC.Theme.addTheme(Maps.Theme);
 SC.defaultTheme = 'maps';
 
 Maps.Theme.Comment = Maps.Theme.subtheme('comments');
+Maps.Theme.LoginPane = Maps.Theme.subtheme('loginPane');

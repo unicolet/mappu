@@ -42,3 +42,14 @@ div.maps-dropview {
         -ms-text-overflow: ellipsis;
     }
 }
+
+@theme(loginPane) {
+    $theme.sc-pane {
+        background: transparent static_url('images/main-bg.png');
+    }
+
+    $theme.formlabel {
+        color: #dddddd;
+        font-weight: bold;
+    }
+}

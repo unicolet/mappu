@@ -7,13 +7,13 @@
  */
 
 Maps.statechart = SC.Statechart.create({
-    initialState: 'loggedIn',
+    initialState: 'notLoggedIn',
 
     notLoggedIn: SC.State.extend({
         initialSubstate: 'awaitingUserInput',
 
         enterState: function() {
-            //Maps.userController.set('content', null);
+            Maps.authenticationManager.reset();
             Maps.loginPane.append();
         },
 
@@ -24,7 +24,7 @@ Maps.statechart = SC.Statechart.create({
 
         awaitingUserInput: SC.State.extend({
             login: function(userName, password) {
-                this.goState('authenticatingUser', {userName: userName, password: password});
+                this.gotoState('authenticatingUser', {userName: userName, password: password});
             }
         }),
 
@@ -34,29 +34,27 @@ Maps.statechart = SC.Statechart.create({
             },
 
             loginSuccessful: function(user) {
-                Maps.userController.set('content', user);
-                this.goState('loggedIn', user);
+                Maps.authenticationManager.set('content', user);
+                this.gotoState('loggedIn', user);
             },
 
             loginFailed: function(errorMessage) {
-                Maps.authenticationController.loginFailed(errorMessage);
-                this.goState('awaitingUserInput');
+                Maps.authenticationManager.loginFailed(errorMessage);
+                this.gotoState('awaitingUserInput');
             }
         })
     }),
 
     loggedIn: SC.State.extend({
 
-        initialSubstate: 'viewingDashboard',
+        initialSubstate: 'viewingMap',
 
         logout: function() {
-            //Maps.authenticationController.newLoginSession();
-            this.goState('notLoggedIn');
+            this.gotoState('notLoggedIn');
         },
 
-        viewingDashboard: SC.State.extend({
+        viewingMap: SC.State.extend({
             enterState: function() {
-                console.log("In state: viewingDashboard");
                 Maps.getPath('mainPage.mainPane').append();
 
                 var layers = Maps.store.find(Maps.LAYERS_QUERY);
