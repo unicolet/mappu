@@ -16,6 +16,19 @@ Maps.socialCommentsController = SC.ArrayController.create(
 
     newCommentText: "",
 
+    findComments: function() {
+		Maps.COMMENT_QUERY.parameters={social: Maps.featureInfoController.get("selection").firstObject().getSocialID()};
+        var comments=this.get("content");
+		if (comments == null) {
+			comments = Maps.featuresStore.find(Maps.COMMENT_QUERY);
+            this.set("content",comments);
+		} else {
+			comments.refresh();
+		}
+
+		return Maps.comments;
+	},
+
 	collectionViewDeleteContent: function(view, content, indexes) {
 		// destroy the records
 		var records = indexes.map(function(idx) {return this.objectAt(idx);}, this);

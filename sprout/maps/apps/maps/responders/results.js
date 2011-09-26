@@ -2,14 +2,16 @@ Maps.MainResponder = SC.Responder.create({
     // called when the user dblclicks an item in list view
     dblclick: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
-        var hasSocial=selectedFeature.get("social")!=null;
+        var hasSocial=selectedFeature.get("social");
         var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
         var view = Maps.mainPage.mainPane.splitview.bottomRightView.resultsView.contentView.itemViewForContentIndex(selectionIndex);
 
         if(hasSocial) {
             Maps.socialController.set("content", selectedFeature.get("social"));
-            Maps.socialCommentsController.set("content", Maps.featureInfoController.findComments());
-            Maps.linkController.set("content", Maps.featureInfoController.findLinks());
+            Maps.socialCommentsController.findComments();
+        } else {
+            // always fetch links
+            Maps.linkController.findLinks();
         }
         
         SC.PickerPane.create({

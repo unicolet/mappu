@@ -17,6 +17,10 @@ div.maps-chkbox-starred .sc-list-item-view .sc-checkbox-view.sel span.button { b
 
 div.maps-chkbox-starred .sc-list-item-view .sc-checkbox-view span.button { background: transparent static_url('images/unstarred.png') top right no-repeat; }
 
+div.link-summary-view {
+    margin: 0.2em;
+}
+
 div.maps-dropview {
 	font-style:italic;
 	vertical-align: middle;

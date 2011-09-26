@@ -44,30 +44,6 @@ Maps.featureInfoController = SC.ArrayController.create(
 		this.toggleMarker(null,marker,highlightLayer);
 	}.observes("selection"),
 	
-	findComments: function() {
-		Maps.COMMENT_QUERY.parameters={social: this.get("selection").firstObject().getSocialID()};
-		if (Maps.comments == null) {
-			Maps.comments = Maps.featuresStore.find(Maps.COMMENT_QUERY);
-		} else {
-			Maps.comments.refresh();
-		}
-		
-		return Maps.comments;
-	},
-
-	findLinks: function() {
-		var fa = this.get("selection").firstObject().attributes();
-		Maps.LINK_QUERY.parameters={featureId: this.get("selection").firstObject().getSocialID(), layer: fa["LAYER"], layerGroup: fa["GROUP"]};
-		if (Maps.links == null) {
-			Maps.links = Maps.featuresStore.find(Maps.LINK_QUERY);
-		} else {
-			Maps.links.refresh();
-		}
-		
-		return Maps.links;
-	},
-	
-	
 	feature1: null,
 	feature2: null,
 	
