@@ -183,6 +183,18 @@ Maps.mainPage = SC.Page.design({
         })
     }),
 
+    nosocialTab: SC.View.design({
+        childViews: "icon explanation".w(),
+        icon: SC.ImageView.design({
+            layout: {centerY:0, left: 10, width:24, height:24},
+            value: "sc-icon-alert-24"
+        }),
+        explanation: SC.LabelView.design({
+            layout: {centerY:0, left: 54, right:10, height: 80},
+            value: "La feature che hai selezionato non ha un attributo ID, quindi non e' possibile associarvi alcuna informazione. E' possibile chiedere al gestore del sito di aggiungere un attributo ID al livello corrente."
+        })
+    }),
+
     linksTab: SC.View.design({
         childViews: "links description".w(),
         links: SC.ScrollView.design({

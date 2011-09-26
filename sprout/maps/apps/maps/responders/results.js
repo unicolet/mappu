@@ -2,35 +2,31 @@ Maps.MainResponder = SC.Responder.create({
     // called when the user dblclicks an item in list view
     dblclick: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
+        var hasSocial=selectedFeature.get("social")!=null;
+        var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
+        var view = Maps.mainPage.mainPane.splitview.bottomRightView.resultsView.contentView.itemViewForContentIndex(selectionIndex);
 
-        if (selectedFeature.get("social")) {
-            var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
-            var view = Maps.mainPage.mainPane.splitview.bottomRightView.resultsView.contentView.itemViewForContentIndex(selectionIndex);
-
+        if(hasSocial) {
             Maps.socialController.set("content", selectedFeature.get("social"));
             Maps.socialCommentsController.set("content", Maps.featureInfoController.findComments());
             Maps.linkController.set("content", Maps.featureInfoController.findLinks());
-
-            SC.PickerPane.create({
-                // allow events to bubble up to this responder
-                //nextResponder: Maps.MainResponder,
-                classNames: ["fix-transparency"],
-                layout: { width: 400, height: 300 },
-                contentView: SC.TabView.extend({
-                    layout: {top: 5, left: 5, right: 5, bottom: 5},
-                    itemTitleKey: "title",
-                    itemValueKey: "tab",
-                    items: [
-                        {title: "Tags", tab: "Maps.mainPage.tagsTab"},
-                        {title: "Comments", tab: "Maps.mainPage.commentsTab"},
-                        {title: "Links", tab: "Maps.mainPage.linksTab"}
-                    ]
-                })
-            }).popup(view, SC.PICKER_POINTER);
-        } else {
-            SC.AlertPane.warn("L'oggetto non ha un attributo ID", "Poiche' l'oggetto non ha un attributo ID che lo identifichi univocamente non e' possibile associargli informazioni.",
-                "Se possibile richiedere al gestore del livello di attribuire un ID a ciascuna feature del livello : "+selectedFeature.get("LAYER"),this);
         }
+        
+        SC.PickerPane.create({
+            // allow events to bubble up to this responder
+            //nextResponder: Maps.MainResponder,
+            layout: { width: 400, height: 300 },
+            contentView: SC.TabView.extend({
+                layout: {top: 5, left: 5, right: 5, bottom: 5},
+                itemTitleKey: "title",
+                itemValueKey: "tab",
+                items: [
+                    {title: "Tags", tab: ( hasSocial ? "Maps.mainPage.tagsTab" : "Maps.mainPage.nosocialTab" ) },
+                    {title: "Comments", tab: ( hasSocial ? "Maps.mainPage.commentsTab" : "Maps.mainPage.nosocialTab" )},
+                    {title: "Links", tab: "Maps.mainPage.linksTab"}
+                ]
+            })
+        }).popup(view, SC.PICKER_POINTER);
     },
 
 
