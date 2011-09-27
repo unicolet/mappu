@@ -24,12 +24,18 @@ Maps.mainPage = SC.Page.design({
         defaultResponder: 'Maps.MainResponder',
 
         toolbar : SC.ToolbarView.design({
-            layout: { top: 0, left: 0, right: 0, height: 36 },
+            layout: { top: 0, left: 0, right: 0, height: 44 },
             anchorLocation: SC.ANCHOR_TOP,
-            childViews : 'layers tools label'.w(),
+            childViews : 'logo layers tools label'.w(),
 
+            logo: SC.LabelView.design({
+                layout: {centerY:0, left:20, height:24, width: 300},
+                value: "Comune di Mirano",
+                classNames: "app-logo".w()
+            }),
             layers : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 24, right: 630, width: 160 },
+                layout: { centerY: 0, height: 30, right: 630, width: 160 },
+                controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: 'Layers', action: 'LAYERS'},
                     {title: 'Search', action: 'SEARCH'}
@@ -41,7 +47,8 @@ Maps.mainPage = SC.Page.design({
                 allowsMultipleSelection: YES
             }),
             tools : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 24, right: 370, width: 270 },
+                layout: { centerY: 0, height: 30, right: 370, width: 270 },
+                controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: 'Move', action: 'toolMove'},
                     {title: 'Area', action: 'toolArea'},
@@ -54,23 +61,19 @@ Maps.mainPage = SC.Page.design({
             }),
             label : SC.LabelView.design({
                 classNames: ['maps_black'],
-                layout: { centerY: 0, height: 24, right: 230, width: 130 },
+                controlSize: SC.LARGE_CONTROL_SIZE,
+                layout: { centerY: 0, height: 25, right: 160, width: 190 },
                 escapeHTML: NO,
                 valueBinding: "Maps.openLayersController.measure"
             })
         }),
 
         splitview : SC.SplitView.design({
-            layout: { top: 37, left: 0, bottom:0, right: 0 },
+            layout: { top: 45, left: 0, bottom:0, right: 0 },
             layoutDirection: SC.LAYOUT_HORIZONTAL,
+            childViews: 'topLeftView bottomRightView'.w(),
 
-            bottomRightMinThickness: 200,
-            bottomRightMinThickness: 0.8,
-            defaultThickness: 0.8,
-
-            topLeftView: Maps.OpenLayers.design({
-                minThickness: 200,
-                maxThickness: 0.8,
+            topLeftView: Maps.OpenLayers.design(SC.SplitChild,{
                 layout: { top: 37, left: 0, bottom:0, right: 224 },
 
                 layerId: 'olmap',
@@ -79,10 +82,9 @@ Maps.mainPage = SC.Page.design({
                 exampleView: Maps.OpenLayersLayer
             }),
 
-            bottomRightView: SC.View.design({
+            bottomRightView: SC.View.design(SC.SplitChild,{
+                size: 200,
                 layout: { top: 37, width: 223, bottom:0, right: 0 },
-                minThickness: 0.6,
-                maxThickness: 0.8,
 
                 childViews: "resultsView featureView".w(),
                 resultsView: SC.ScrollView.design({
@@ -398,8 +400,8 @@ Maps.mainPage = SC.Page.design({
 
 Maps.loginPage = SC.Page.design({
     mainPane: SC.MainPane.design({
-        layout:{top:0,bottom:0,left:0,right:0},
         themeName: "loginPane",
+        layout:{top:0,bottom:0,left:0,right:0},
         childViews: "logo loginform".w(),
         logo: SC.ImageView.design({
             layout:{centerY:0, left:80, width: 373, height: 96},
@@ -407,37 +409,42 @@ Maps.loginPage = SC.Page.design({
             canLoadInBackground: YES
         }),
         loginform:SC.View.design({
-            layout: {width: 300, height: 180, left: 600, centerY: 0},
+            layout: {width: 500, height: 300, left: 600, centerY: 0},
             classNames:"loginform".w(),
 
             childViews: 'labelU login labelP password button message'.w(),
             labelU: SC.LabelView.design({
-                layout: {top:25, width:100, left:15, height:20},
+                layout: {top:45, width:200, left:15, height:50},
                 value: "Username: ",
-                classNames:"formlabel".w()
+                classNames:"formlabel".w(),
+                controlSize: SC.HUGE_CONTROL_SIZE
             }),
             login: SC.TextFieldView.design({
-                layout: {top:25, right:25, left:105, height:20},
-                valueBinding: "Maps.authenticationManager.inputUsername"
+                layout: {top:45, right:25, left:155, height:50},
+                valueBinding: "Maps.authenticationManager.inputUsername",
+                controlSize: SC.HUGE_CONTROL_SIZE
             }),
             labelP: SC.LabelView.design({
-                layout: {top:65, width:100, left:15, height:20},
+                layout: {top:105, width:200, left:15, height:50},
                 value: "Password: ",
-                classNames:"formlabel".w()
+                classNames:"formlabel".w(),
+                controlSize: SC.HUGE_CONTROL_SIZE
             }),
             password: SC.TextFieldView.design({
-                layout: {top:65, right:25, left:105, height:20},
+                layout: {top:105, right:25, left:155, height:50},
                 valueBinding: "Maps.authenticationManager.inputPassword",
-                isPassword: YES
+                isPassword: YES,
+                controlSize: SC.HUGE_CONTROL_SIZE
             }),
             message: SC.LabelView.design({
-                layout: {top:100, right:25, left:15, height:20},
+                layout: {top:165, right:25, left:15, height:50},
                 valueBinding: "Maps.authenticationManager.message",
                 isVisibleBinding: "Maps.authenticationManager.message",
-                classNames:"loginmessage".w()
+                classNames:"loginmessage".w(),
+                controlSize: SC.HUGE_CONTROL_SIZE
             }),
             button: SC.ButtonView.design({
-                layout: {top:130, right:35, width:55, height:30},
+                layout: {top:220, right:35, width:55, height:30},
                 title:"Login",
                 controlSize:SC.HUGE_CONTROL_SIZE,
                 themeName: 'round',

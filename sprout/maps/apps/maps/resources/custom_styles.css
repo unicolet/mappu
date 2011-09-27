@@ -35,6 +35,10 @@ div.maps-dropview {
     background-color: transparent;
 }
 
+.sc-label-view.sc-regular-size.app-logo {
+    font-family: 'Holtwood One SC', serif;
+}
+
 
 @theme(comments) {
     $theme.sc-list-item-view label {
@@ -49,23 +53,23 @@ div.maps-dropview {
 
 @theme(loginPane) {
     $theme.sc-pane {
-        background: transparent static_url('images/main-bg.png');
-    }
+        font-size: 30px;
 
-    $theme.formlabel {
-        color: #dddddd;
-        font-weight: bold;
-    }
+        .loginform {
+            -moz-border-radius: 15px;
+            border-radius: 15px;
+            background-color: #dddddd;
 
-    $theme.loginmessage {
-        color: #FF7F50;
-        font-weight: bold;
-    }
+            .formlabel {
+                color: black;
+                font-family: 'Pacifico', cursive;
+            }
 
-    $theme.loginform {
-        -moz-border-radius: 15px;
-        border-radius: 15px;
-        border: 1px solid #dddddd;
-        background-color: #555555;
+            .loginmessage {
+                color: #FF7F50;
+                font-weight: bold;
+                cont-family: arial, helvetica;
+            }
+        }
     }
 }
