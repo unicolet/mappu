@@ -9,11 +9,10 @@ Maps.MainResponder = SC.Responder.create({
         if(hasSocial) {
             Maps.socialController.set("content", selectedFeature.get("social"));
             Maps.socialCommentsController.findComments();
-        } else {
-            // always fetch links
-            Maps.linkController.findLinks();
         }
-        
+        // always fetch links
+        Maps.linkController.findLinks();
+
         SC.PickerPane.create({
             // allow events to bubble up to this responder
             //nextResponder: Maps.MainResponder,
