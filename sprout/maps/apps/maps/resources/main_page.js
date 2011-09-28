@@ -29,7 +29,7 @@ Maps.mainPage = SC.Page.design({
             childViews : 'logo layers tools label'.w(),
 
             logo: SC.LabelView.design({
-                layout: {centerY:0, left:20, height:24, width: 300},
+                layout: {centerY:0, left:20, height:24, width: 500},
                 value: "Comune di Mirano",
                 classNames: "app-logo".w()
             }),
