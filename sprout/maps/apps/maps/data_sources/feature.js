@@ -32,7 +32,14 @@ Maps.FeatureDataSource = SC.DataSource.extend(
     rawFeatures:[],
 
     fetch: function(store, query) {
-        if (query.recordType == Maps.LayerQuery) {
+        if (query.recordType == Maps.User) {
+            //console.log("Maps.FeatureDataSource.fetch() - Maps.LayerQuery");
+            SC.Request.postUrl('/mapsocial/j_spring_security_check', $.param(query.parameters))
+                    .header('Content-Type', 'application/x-www-form-urlencoded')
+                    .notify(this, 'didFetchUser', store, query)
+                    .send();
+            return YES;
+        } else if (query.recordType == Maps.LayerQuery) {
             //console.log("Maps.FeatureDataSource.fetch() - Maps.LayerQuery");
             SC.Request.getUrl('/mapsocial/layerQuery/?')
                     .set('isJSON', YES)
@@ -66,6 +73,29 @@ Maps.FeatureDataSource = SC.DataSource.extend(
             return YES;
         }
         return NO;
+    },
+
+    didFetchUser : function(response, store, query) {
+        if (SC.ok(response)) {
+            var r=null;
+            if(!response.isJSON())
+                r=SC.$.parseJSON(response.get('body'));
+            else
+                r=response.get('body');
+            
+            if(r.success) {
+                var storeKeys = store.loadRecords(Maps.User, [{guid:1, username: r.username, authenticated: true}]);
+                store.loadQueryResults(query, storeKeys);
+                Maps.statechart.sendEvent('loginSuccessful', {id:1,'username':r.username});
+            } else {
+                // auth failed
+                var storeKeys = store.loadRecords(Maps.User, [{guid:-1, username: "anonymous", authenticated: false}]);
+                store.loadQueryResults(query, storeKeys);
+                Maps.statechart.sendEvent('loginFailed', "Utente o password errata");
+            }
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
     },
 
     didFetchLayerQueries : function(response, store, query) {

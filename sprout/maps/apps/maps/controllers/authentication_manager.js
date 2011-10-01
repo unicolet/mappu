@@ -14,6 +14,8 @@ Maps.authenticationManager=SC.ObjectController.create({
     inputUsername:'',
     inputPassword:'',
 
+    users:'',
+
     /* called to reinitialize this object and prepare for a new session */
     reset: function() {
         this.beginPropertyChanges();
@@ -23,10 +25,17 @@ Maps.authenticationManager=SC.ObjectController.create({
     },
 
     attemptLogin: function(username, password){
-        if(username==password) {
-            Maps.statechart.sendEvent('loginSuccessful', {id:1,'username':username});
-        } else {
-            Maps.statechart.sendEvent('loginFailed', "Utente o password errata");
+        var authQuery=SC.Query.remote(Maps.User, null,
+            {
+                j_username: this.get("inputUsername"),
+                j_password: this.get("inputPassword")
+            });
+        this.set("users", Maps.featuresStore.find(authQuery));
+    },
+
+    onResponseReceived: function() {
+        if(this.getPath("users.status")==SC.Record.READY) {
+
         }
     },
 

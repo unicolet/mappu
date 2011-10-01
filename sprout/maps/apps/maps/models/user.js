@@ -6,5 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 Maps.User=SC.Record.extend({
-    username: SC.Record.attr(String)
+    username: SC.Record.attr(String),
+    authenticated: SC.Record.attr(Boolean)
 });
