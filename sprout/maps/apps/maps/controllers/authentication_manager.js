@@ -14,7 +14,15 @@ Maps.authenticationManager=SC.ObjectController.create({
     inputUsername:'',
     inputPassword:'',
 
-    users:'',
+    content:null,
+
+    currentUsername: function() {
+        return this.content.username;
+    },
+
+    currentUserId: function() {
+        this.content.id;
+    },
 
     /* called to reinitialize this object and prepare for a new session */
     reset: function() {
@@ -24,20 +32,30 @@ Maps.authenticationManager=SC.ObjectController.create({
         this.endPropertyChanges();
     },
 
-    attemptLogin: function(username, password){
+    attemptLogin: function(){
         var authQuery=SC.Query.remote(Maps.User, null,
             {
                 j_username: this.get("inputUsername"),
                 j_password: this.get("inputPassword")
             });
-        this.set("users", Maps.featuresStore.find(authQuery));
+        Maps.featuresStore.find(authQuery);
     },
 
-    onResponseReceived: function() {
-        if(this.getPath("users.status")==SC.Record.READY) {
-
+    whenLoggedIn: function() {
+        console.log("in whenLoggedIn: "+this.get("content"));
+        var content=this.get("content");
+        if( content && content.get("status")==SC.Record.READY_CLEAN) {
+            console.log("User has been loaded");
+            if(this.getPath("content.authenticated")) {
+                console.log("User is authenticated");
+                Maps.statechart.sendEvent('userLoaded');
+            } else {
+                console.log("User is NOT authenticated");
+                // anonymous, aka not logged in
+                Maps.statechart.sendEvent('noLoginSession');
+            }
         }
-    },
+    }.observes("content"),
 
     loginFailed: function(msg) {
         this.set("inputPassword",'');

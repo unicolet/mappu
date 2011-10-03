@@ -84,14 +84,18 @@ Maps.FeatureDataSource = SC.DataSource.extend(
                 r=response.get('body');
             
             if(r.success) {
-                var storeKeys = store.loadRecords(Maps.User, [{guid:1, username: r.username, authenticated: true}]);
+                var storeKeys = store.loadRecords(Maps.User, [{guid:r.guid, username: r.username, authenticated: true}]);
                 store.loadQueryResults(query, storeKeys);
-                Maps.statechart.sendEvent('loginSuccessful', {id:1,'username':r.username});
+
+                // Load actual user data and trigger state change
+                Maps.statechart.sendEvent('loginSuccessful', {id:r.guid});
+
             } else {
                 // auth failed
                 var storeKeys = store.loadRecords(Maps.User, [{guid:-1, username: "anonymous", authenticated: false}]);
                 store.loadQueryResults(query, storeKeys);
-                Maps.statechart.sendEvent('loginFailed', "Utente o password errata");
+                
+                Maps.statechart.sendEvent('loginFailed', r.error);
             }
         } else {
             store.dataSourceDidErrorQuery(query, response);
@@ -131,11 +135,19 @@ Maps.FeatureDataSource = SC.DataSource.extend(
     },
 
     retrieveRecord: function(store, storeKey, id) {
-        console.log("in Maps.FeatureDataSource.retrieveRecord() id=" + id);
+        //console.log("in Maps.FeatureDataSource.retrieveRecord() id=" + id);
         var recordType = SC.Store.recordTypeFor(storeKey);
         if (recordType == 'Maps.Social') {
             SC.Request.getUrl('/mapsocial/social/' + id + '?alt=json').set('isJSON', YES)
                     .notify(this, this.didRetrieveRecord, {
+                store: store,
+                storeKey: storeKey
+            }).send();
+            return YES;
+        }
+        if (recordType == 'Maps.User') {
+            SC.Request.getUrl('/mapsocial/login/userInfo?alt=json').set('isJSON', YES)
+                    .notify(this, this.didRetrieveUser, {
                 store: store,
                 storeKey: storeKey
             }).send();
@@ -146,7 +158,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
 
     didRetrieveRecord: function(response, params) {
         var store = params.store,
-                storeKey = params.storeKey;
+            storeKey = params.storeKey;
 
         if (SC.ok(response)) {
             var dataHash = response.get('body').content;
@@ -156,8 +168,30 @@ Maps.FeatureDataSource = SC.DataSource.extend(
         }
     },
 
+    didRetrieveUser: function(response, params) {
+        var store = params.store,
+            storeKey = params.storeKey;
+
+        if (SC.ok(response)) {
+            var r=null;
+            if(!response.isJSON())
+                r=SC.$.parseJSON(response.get('body'));
+            else
+                r=response.get('body');
+
+            var dataHash = r;
+            if(r.success) {
+                store.dataSourceDidComplete(storeKey, dataHash);
+            } else {
+                store.dataSourceDidComplete(storeKey, {guid:-1, username: "anonymous", authenticated: false});
+            }
+        } else {
+            store.dataSourceDidError(storeKey, response.get('body'));
+        }
+    },
+
     createRecord: function(store, storeKey) {
-        console.log("in Maps.FeatureDataSource.createRecord() for " + store.idFor(storeKey));
+        //console.log("in Maps.FeatureDataSource.createRecord() for " + store.idFor(storeKey));
         var url = null;
         if(SC.kindOf(store.recordTypeFor(storeKey), Maps.Attribute)) {
             // fictional record, only serves the UI
@@ -177,7 +211,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
     },
 
     didCreateRecord: function(response, store, storeKey) {
-        console.log("Did create record");
+        //console.log("Did create record");
         if (SC.ok(response)) {
             var dataHash = response.get('body').content;
             store.dataSourceDidComplete(storeKey, null, dataHash.guid);
@@ -185,7 +219,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
     },
 
     updateRecord: function(store, storeKey, params) {
-        console.log("in Maps.FeatureDataSource.updateRecord() for " + store.idFor(storeKey));
+        //console.log("in Maps.FeatureDataSource.updateRecord() for " + store.idFor(storeKey));
         var url = null;
         if(SC.kindOf(store.recordTypeFor(storeKey), Maps.Attribute) || SC.kindOf(store.recordTypeFor(storeKey), Maps.Feature)) {
             // only used in the UI
@@ -213,7 +247,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
     },
 
     destroyRecord: function(store, storeKey, params) {
-        console.log("in Maps.FeatureDataSource.destroyRecord() " + store.idFor(storeKey));
+        //console.log("in Maps.FeatureDataSource.destroyRecord() " + store.idFor(storeKey));
         var url = null;
         if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Social)) {
             url = '/mapsocial/social/' + store.idFor(storeKey) + '?alt=json';
@@ -256,7 +290,7 @@ transformOLFeaturesInFeatures: function(features, store) {
             record['GROUP'] = features[i].gml.featureNSPrefix;
             record['LAYER'] = features[i].gml.featureType;
             if (features[i].data['ID'])
-                record['social'] = features[i].gml.featureNSPrefix + ':' + features[i].gml.featureType + ':' + features[i].data['ID'] + ':' + '0';
+                record['social'] = features[i].gml.featureNSPrefix + ':' + features[i].gml.featureType + ':' + features[i].data['ID'] + ':' + Maps.authenticationManager.currentUserId();
             else
                 record['social'] = null;
             records[records.length] = record;

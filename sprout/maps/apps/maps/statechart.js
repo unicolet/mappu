@@ -7,7 +7,28 @@
  */
 
 Maps.statechart = SC.Statechart.create({
-    initialState: 'notLoggedIn',
+    initialState: 'checkingLoginSession',
+
+    checkingLoginSession: SC.State.extend({
+        enterState: function() {
+            // try to load user data from existing server session
+            console.log("Checking server-side session");
+            Maps.authenticationManager.set("content",Maps.featuresStore.find(Maps.User, Math.random()));
+        },
+
+        exitState: function() {
+            // do nothing
+        },
+
+        noLoginSession: function() {
+            this.gotoState("notLoggedIn");
+        },
+
+        userLoaded: function() {
+            console.log("in userLoaded");
+            this.gotoState('loggedIn');
+        }
+    }),
 
     notLoggedIn: SC.State.extend({
         initialSubstate: 'awaitingUserInput',
@@ -24,23 +45,27 @@ Maps.statechart = SC.Statechart.create({
 
         awaitingUserInput: SC.State.extend({
             login: function(userName, password) {
-                this.gotoState('authenticatingUser', {userName: userName, password: password});
+                this.gotoState('authenticatingUser');
             }
         }),
 
         authenticatingUser: SC.State.extend({
             enterState: function(userInformation) {
-                Maps.authenticationManager.attemptLogin(userInformation.userName, userInformation.password);
+                Maps.authenticationManager.attemptLogin();
             },
 
             loginSuccessful: function(user) {
-                Maps.authenticationManager.set('content', user);
-                this.gotoState('loggedIn', user);
+                Maps.authenticationManager.set('content', Maps.featuresStore.find(Maps.User, user.id));
             },
 
             loginFailed: function(errorMessage) {
                 Maps.authenticationManager.loginFailed(errorMessage);
                 this.gotoState('awaitingUserInput');
+            },
+
+            userLoaded: function() {
+                console.log("in userLoaded");
+                this.gotoState('loggedIn');
             }
         })
     }),
