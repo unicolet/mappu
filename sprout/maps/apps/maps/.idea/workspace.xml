@@ -23,55 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="custom_styles.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/custom_styles.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="42" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_page.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/main_page.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="42" selection-start="1259" selection-end="1259" vertical-scroll-proportion="0.5178366">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="theme.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/theme.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="2" selection-start="543" selection-end="543" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/views.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="49" selection-start="793" selection-end="810" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="results.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/responders/results.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="36" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="feature_info.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/feature_info.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="28" selection-start="1520" selection-end="1520" vertical-scroll-proportion="0.0">
+            <state line="15" column="0" selection-start="732" selection-end="732" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,16 +35,7 @@
       <file leaf-file-name="social_comments.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/social_comments.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="29" selection-start="332" selection-end="356" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="link.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controllers/link.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="9" selection-start="854" selection-end="854" vertical-scroll-proportion="0.0">
+            <state line="26" column="9" selection-start="848" selection-end="848" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,7 +44,34 @@
       <file leaf-file-name="feature.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_sources/feature.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="52" selection-start="1004" selection-end="1004" vertical-scroll-proportion="0.0">
+            <state line="90" column="74" selection-start="3950" selection-end="3950" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="statechart.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/statechart.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="69" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.68586385">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="authentication_manager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers/authentication_manager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="50" column="46" selection-start="1458" selection-end="1458" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/user.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="3" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -107,7 +80,7 @@
       <file leaf-file-name="core.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="8" selection-start="827" selection-end="827" vertical-scroll-proportion="0.0">
+            <state line="23" column="92" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -132,17 +105,17 @@
         <option value="$PROJECT_DIR$/data_sources/layer.js" />
         <option value="$PROJECT_DIR$/views/open_layers.js" />
         <option value="$PROJECT_DIR$/controllers/open_layers.js" />
-        <option value="$PROJECT_DIR$/models/user.js" />
         <option value="$PROJECT_DIR$/theme.js" />
-        <option value="$PROJECT_DIR$/statechart.js" />
-        <option value="$PROJECT_DIR$/controllers/authentication_manager.js" />
         <option value="$PROJECT_DIR$/controllers/link.js" />
         <option value="$PROJECT_DIR$/controllers/feature_info.js" />
         <option value="$PROJECT_DIR$/controllers/social_comments.js" />
-        <option value="$PROJECT_DIR$/responders/results.js" />
-        <option value="$PROJECT_DIR$/data_sources/feature.js" />
         <option value="$PROJECT_DIR$/resources/custom_styles.css" />
         <option value="$PROJECT_DIR$/resources/main_page.js" />
+        <option value="$PROJECT_DIR$/responders/results.js" />
+        <option value="$PROJECT_DIR$/models/user.js" />
+        <option value="$PROJECT_DIR$/data_sources/feature.js" />
+        <option value="$PROJECT_DIR$/controllers/authentication_manager.js" />
+        <option value="$PROJECT_DIR$/statechart.js" />
       </list>
     </option>
   </component>
@@ -283,8 +256,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="web-ide.project.structure" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../.." />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -326,22 +299,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1920" height="1056" extended-state="0" />
+    <frame x="115" y="81" width="1540" height="938" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22792937" sideWeight="0.36373627" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21826729" sideWeight="0.3989899" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22792937" sideWeight="0.6274725" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21826729" sideWeight="0.59090906" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.63076925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6304348" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -397,24 +370,19 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/models/user.js">
+    <entry file="file://$PROJECT_DIR$/resources/custom_styles.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="162" selection-end="171" vertical-scroll-proportion="0.0" />
+        <state line="39" column="20" selection-start="1309" selection-end="1309" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/open_layers.js">
+    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="18" selection-start="1464" selection-end="1464" vertical-scroll-proportion="0.0" />
+        <state line="14" column="70" selection-start="528" selection-end="528" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
+    <entry file="file://$PROJECT_DIR$/theme.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="126" column="35" selection-start="4716" selection-end="4716" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/social.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="4" selection-start="900" selection-end="900" vertical-scroll-proportion="0.0" />
+        <state line="14" column="2" selection-start="543" selection-end="543" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/views.js">
@@ -422,67 +390,70 @@
         <state line="24" column="49" selection-start="793" selection-end="810" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/responders/results.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="36" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/feature_info.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="44" column="28" selection-start="1520" selection-end="1520" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/social_comments.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="29" selection-start="332" selection-end="356" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/link.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="9" selection-start="854" selection-end="854" vertical-scroll-proportion="0.0" />
+        <state line="21" column="54" selection-start="772" selection-end="772" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_sources/feature.js">
+    <entry file="file://$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/datastore/system/query.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="52" selection-start="1004" selection-end="1004" vertical-scroll-proportion="0.0" />
+        <state line="1539" column="2" selection-start="47431" selection-end="47431" vertical-scroll-proportion="0.3321234" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-5.269517" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.gem/ruby/1.8/gems/sproutcore-1.4.5/lib/frameworks/sproutcore/frameworks/foundation/system/response.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="2" selection-start="2369" selection-end="2369" vertical-scroll-proportion="0.3321234" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/responders/results.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="0" selection-start="732" selection-end="732" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/social_comments.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="9" selection-start="848" selection-end="848" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="8" selection-start="827" selection-end="827" vertical-scroll-proportion="0.0" />
+        <state line="23" column="92" selection-start="911" selection-end="911" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
+    <entry file="file://$PROJECT_DIR$/data_sources/feature.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="2" selection-start="436" selection-end="436" vertical-scroll-proportion="0.10204082">
+        <state line="90" column="74" selection-start="3950" selection-end="3950" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Buildfile">
+    <entry file="file://$PROJECT_DIR$/controllers/authentication_manager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="50" column="46" selection-start="1458" selection-end="1458" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/theme.js">
+    <entry file="file://$PROJECT_DIR$/models/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="2" selection-start="543" selection-end="543" vertical-scroll-proportion="0.0">
+        <state line="10" column="3" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/custom_styles.css">
+    <entry file="file://$PROJECT_DIR$/statechart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="42" selection-start="1288" selection-end="1288" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="42" selection-start="1259" selection-end="1259" vertical-scroll-proportion="0.5178366">
+        <state line="61" column="69" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.68586385">
           <folding />
         </state>
       </provider>
