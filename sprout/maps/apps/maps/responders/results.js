@@ -22,9 +22,9 @@ Maps.MainResponder = SC.Responder.create({
                 itemTitleKey: "title",
                 itemValueKey: "tab",
                 items: [
-                    {title: "Tags", tab: ( hasSocial ? "Maps.mainPage.tagsTab" : "Maps.mainPage.nosocialTab" ) },
-                    {title: "Comments", tab: ( hasSocial ? "Maps.mainPage.commentsTab" : "Maps.mainPage.nosocialTab" )},
-                    {title: "Links", tab: "Maps.mainPage.linksTab"}
+                    {title: "_tags".loc(), tab: ( hasSocial ? "Maps.mainPage.tagsTab" : "Maps.mainPage.nosocialTab" ) },
+                    {title: "_comments".loc(), tab: ( hasSocial ? "Maps.mainPage.commentsTab" : "Maps.mainPage.nosocialTab" )},
+                    {title: "_links".loc(), tab: "Maps.mainPage.linksTab"}
                 ]
             })
         }).popup(view, SC.PICKER_POINTER);

@@ -47,8 +47,8 @@ Maps.featureInfoController = SC.ArrayController.create(
 	feature1: null,
 	feature2: null,
 	
-	feature1descr: "Drop here",
-	feature2descr: "Drop here",
+	feature1descr: "_drop_here".loc(),
+	feature2descr: "_drop_here".loc(),
 	
 	feature1geom: null,
 	feature2geom: null,

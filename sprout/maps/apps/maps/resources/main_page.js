@@ -30,15 +30,15 @@ Maps.mainPage = SC.Page.design({
 
             logo: SC.LabelView.design({
                 layout: {centerY:0, left:20, height:24, width: 500},
-                value: "Comune di Mirano",
+                value: "_appName".loc(),
                 classNames: "app-logo".w()
             }),
             layers : SC.SegmentedView.design({
                 layout: { centerY: 0, height: 30, right: 630, width: 160 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
-                    {title: 'Layers', action: 'LAYERS'},
-                    {title: 'Search', action: 'SEARCH'}
+                    {title: "_layers".loc(), action: 'LAYERS'},
+                    {title: "_search".loc(), action: 'SEARCH'}
                 ],
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
@@ -50,10 +50,10 @@ Maps.mainPage = SC.Page.design({
                 layout: { centerY: 0, height: 30, right: 370, width: 270 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
-                    {title: 'Move', action: 'toolMove'},
-                    {title: 'Area', action: 'toolArea'},
-                    {title: 'Length', action: 'toolLength'},
-                    {title: 'Geo Tools', action: 'toolGeo'}
+                    {title: "_pan".loc(), action: 'toolMove'},
+                    {title: "_area".loc(), action: 'toolArea'},
+                    {title: "_length".loc(), action: 'toolLength'},
+                    {title: "_geotools".loc(), action: 'toolGeo'}
                 ],
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
@@ -112,13 +112,13 @@ Maps.mainPage = SC.Page.design({
                     target: "Maps.featureInfoAttributesController",
 
                     columns: [SC.Object.create(SCTable.Column, {
-                        name: "Property",
-                        valueKey: 'property',
-                        width: 100,
-                        canSort: YES
+                            name: "_property".loc(),
+                            valueKey: 'property',
+                            width: 100,
+                            canSort: YES
                         }),
                         SC.Object.create(SCTable.Column, {
-                            name: "Value",
+                            name: "_value".loc(),
                             valueKey: 'value',
                             width: 170,
                             canSort: YES
@@ -140,11 +140,11 @@ Maps.mainPage = SC.Page.design({
         }),
         tagsHelp: SC.LabelView.design({
             layout: {top: 115, left: 10, width: 300},
-            value: "Digitare i tag separati da virgola (,)"
+            value: "_howtotypetags".loc()
         }),
         saveTags: SC.ButtonView.design({
-            layout: {top: 115, right: 10, width: 50},
-            title: "Save",
+            layout: {top: 115, right: 10, width: 70},
+            title: "_save".loc(),
             action: "saveTags",
             titleMinWidth: 40
         })
@@ -168,7 +168,7 @@ Maps.mainPage = SC.Page.design({
         newComment: SC.TextFieldView.design({
             layout: {bottom: 10, left:10, width: 295, height: 25 },
             valueBinding: "Maps.socialCommentsController.newCommentText",
-            hint: "Aggiungi un commento..."
+            hint: "_addcomment_tip"
         }),
         addComment: SC.ButtonView.design({
             layout: {bottom: 10, right:55, width: 25, height: 25},
@@ -194,7 +194,7 @@ Maps.mainPage = SC.Page.design({
         }),
         explanation: SC.LabelView.design({
             layout: {centerY:0, left: 54, right:10, height: 80},
-            value: "La feature che hai selezionato non ha un attributo ID, quindi non e' possibile associarvi alcuna informazione. E' possibile chiedere al gestore del sito di aggiungere un attributo ID al livello corrente."
+            value: "_nosocial_expl".loc()
         })
     }),
 
@@ -214,7 +214,7 @@ Maps.mainPage = SC.Page.design({
             })
         }),
         description: SC.LabelView.design({
-            title: "Links",
+            title: "_links".loc(),
             layout: {bottom: 10, right:10, width: 130, height: 30 }
         })
     }),
@@ -224,7 +224,7 @@ Maps.mainPage = SC.Page.design({
         childViews: "label queryList".w(),
         label:SC.LabelView.design({
             layout: {top:5, left:5, right:5},
-            value: "Double click to choose one of the available queries"
+            value: "_query_howto".loc()
         }),
         queryList: SC.ScrollView.design({
             layout: {bottom:5, top:36, left:5, right:5},
@@ -260,13 +260,13 @@ Maps.mainPage = SC.Page.design({
         }),
         back: SC.ButtonView.design({
             layout: {right:100, bottom: 10, width: 80, height: 25},
-            title: "Back",
+            title: "_back".loc(),
             action: "layerQueryBack",
             themeName: "point-left"
         }),
         send: SC.ButtonView.design({
             layout: {right:10, bottom: 10, width: 80, height: 25},
-            title: "Run",
+            title: "_run".loc(),
             action: "layerQueryRun"
         })
     }),
@@ -287,7 +287,7 @@ Maps.mainPage = SC.Page.design({
             childViews: 'googleView layerView layerDetailView'.w(),
             googleView: SC.RadioView.design({
                 layout: {top: 10, left: 5, right: 5, height: 30},
-                items: 'Streets Satellite'.w(),
+                items: '_streets_satellite'.loc().w(),
                 valueBinding: "Maps.openLayersController.whichGoogleLayer",
                 height: 24,
                 layoutDirection: SC.LAYOUT_HORIZONTAL
@@ -319,7 +319,7 @@ Maps.mainPage = SC.Page.design({
                 isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
                 childViews: "title name description opacitylbl opacity toggleFilter".w(),
                 title: SC.LabelView.design({
-                    value: "Informazioni",
+                    value: "_info",
                     controlSize: SC.LARGE_CONTROL_SIZE,
                     layout: {top: 0, right:5, height: 20, left:5}
                 }),
@@ -329,7 +329,7 @@ Maps.mainPage = SC.Page.design({
                 }),
                 opacitylbl: SC.LabelView.design({
                     layout: {top: 50, right:5, height: 20, left:5},
-                    value: "Trasparenza:"
+                    value: "_opacity:"
                 }),
                 opacity:SC.SliderView.design({
                     layout: {top: 70, right:10, height: 20, left:10},
@@ -374,12 +374,12 @@ Maps.mainPage = SC.Page.design({
             operation: SC.SelectView.design({
                 layout: {top: 97, left:5, right:5, height:36},
                 items: [
-                    { title: "Intersection", pos: 1},
-                    { title: "Union", pos: 2 },
-                    { title: "Buffer", pos: 3 }
+                    { title: "_intersection", value: "Intersection", pos: 1},
+                    { title: "_union", value: "Union", pos: 2 },
+                    { title: "_buffer", value: "Buffer", pos: 3 }
                 ],
                 itemTitleKey: 'title',
-                itemValueKey: 'title',
+                itemValueKey: 'value',
                 itemSortKey: 'pos',
                 checkboxEnabled: YES,
                 valueBinding: "Maps.featureInfoController.operation"
@@ -388,8 +388,8 @@ Maps.mainPage = SC.Page.design({
                 layout: {top: 128, left:5, right:5, height:36},
                 items: [
                     {title: "OK", action:"performGeoOperation"},
-                    {title: "Clear", action:"performGeoClear"},
-                    {title: "Close", action:"performGeoClose"}
+                    {title: "_clear", action:"performGeoClear"},
+                    {title: "_close", action:"performGeoClose"}
                 ],
                 itemTitleKey: "title",
                 itemActionKey: "action"
@@ -416,7 +416,7 @@ Maps.loginPage = SC.Page.design({
             childViews: 'labelU login labelP password button message'.w(),
             labelU: SC.LabelView.design({
                 layout: {top:45, width:200, left:15, height:50},
-                value: "Username: ",
+                value: "_username".loc(),
                 classNames:"formlabel".w(),
                 controlSize: SC.HUGE_CONTROL_SIZE
             }),
