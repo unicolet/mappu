@@ -67,6 +67,7 @@ div.maps-dropview {
             }
 
             .loginmessage {
+                font-size: 16px;
                 color: #FF7F50;
                 font-weight: bold;
                 cont-family: arial, helvetica;

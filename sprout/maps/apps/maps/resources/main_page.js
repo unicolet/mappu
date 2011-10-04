@@ -62,7 +62,7 @@ Maps.mainPage = SC.Page.design({
             label : SC.LabelView.design({
                 classNames: ['maps_black'],
                 controlSize: SC.LARGE_CONTROL_SIZE,
-                layout: { centerY: 0, height: 25, right: 160, width: 190 },
+                layout: { centerY: 0, height: 24, right: 160, width: 190 },
                 escapeHTML: NO,
                 valueBinding: "Maps.openLayersController.measure"
             })
@@ -128,18 +128,22 @@ Maps.mainPage = SC.Page.design({
         })
     }),
     tagsTab: SC.View.design({
-        childViews: "star tags saveTags".w(),
+        childViews: "star tags tagsHelp saveTags".w(),
         star: SC.LabelView.design({
-            layout: {left: 10, top:10, width: 350, height: 30 },
+            layout: {left: 10, top:15, width: 350, height: 30 },
             valueBinding: 'Maps.socialController.starredAsText'
         }),
         tags: SC.TextFieldView.design({
             isTextArea: YES,
-            layout: {left: 10, top: 35, right: 10, height: 60 },
+            layout: {left: 10, top: 50, right: 10, height: 50 },
             valueBinding: 'Maps.socialController.tags'
         }),
+        tagsHelp: SC.LabelView.design({
+            layout: {top: 115, left: 10, width: 300},
+            value: "Digitare i tag separati da virgola (,)"
+        }),
         saveTags: SC.ButtonView.design({
-            layout: {top: 110, right: 10, width: 50},
+            layout: {top: 115, right: 10, width: 50},
             title: "Save",
             action: "saveTags",
             titleMinWidth: 40
@@ -159,9 +163,6 @@ Maps.mainPage = SC.Page.design({
                 contentBinding: 'Maps.socialCommentsController.arrangedObjects',
                 selectionBinding: 'Maps.socialCommentsController.selection',
                 contentValueKey: "readable"
-                //exampleView: Maps.CommentView,
-                //canEditContent: YES,
-                //canDeleteContent: YES
             })
         }),
         newComment: SC.TextFieldView.design({

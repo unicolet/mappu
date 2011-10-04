@@ -47,7 +47,11 @@ Maps.socialCommentsController = SC.ArrayController.create(
 
             if (guid!=null && guid!=undefined) {
                 console.log("Adding comment to guid: "+guid);
-                var comment = Maps.featuresStore.createRecord(Maps.Comment, {"social": guid, "text" : this.get("newCommentText")} );
+                var comment = Maps.featuresStore.createRecord(
+                    Maps.Comment, {
+                        "social": guid,
+                        username: Maps.authenticationManager.currentUsername(),
+                        "text" : this.get("newCommentText")} );
 
                 this.content.add(comment);
 

@@ -36,7 +36,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
   },
   
   didFetchLayers: function(response, store, query) {
-	console.log('in didFetchLayers');
+	//console.log('in didFetchLayers');
 	if (SC.ok(response)) {
 		var records = [];
 		var content = response.get('body');

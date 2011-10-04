@@ -17,6 +17,7 @@ Maps.Comment = SC.Record.extend(
 	dateCreated: SC.Record.attr(SC.DateTime),
 	text: SC.Record.attr(String),
 	social: SC.Record.attr(String),
+    username: SC.Record.attr(String),
 
   	readable: function(k,v) {
   		if (v!=null) {
@@ -31,10 +32,10 @@ Maps.Comment = SC.Record.extend(
   			this.set("text",v);	
   		} else {
   			if (this.get("dateCreated"))
-  				return "At "+this.get("dateCreated").toFormattedString('%Y-%m-%d %H:%M:%S')+": "+this.get("text");
+  				return "["+this.get("username")+"] alle "+this.get("dateCreated").toFormattedString('%Y-%m-%d %H:%M:%S')+": "+this.get("text");
             else if(this.get("text")=="")
-                return "Doppio-click per editare il commento";
-            return "Poco fa: "+this.get("text");
+                return "";
+            return "["+this.get("username")+"] poco fa: "+this.get("text");
   		}
-  	}.property("text","dateCreated").cacheable()
+  	}.property("text","dateCreated","username").cacheable()
 }) ;

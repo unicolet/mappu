@@ -12,7 +12,6 @@ Maps.statechart = SC.Statechart.create({
     checkingLoginSession: SC.State.extend({
         enterState: function() {
             // try to load user data from existing server session
-            console.log("Checking server-side session");
             Maps.authenticationManager.set("content",Maps.featuresStore.find(Maps.User, Math.random()));
         },
 
@@ -25,7 +24,6 @@ Maps.statechart = SC.Statechart.create({
         },
 
         userLoaded: function() {
-            console.log("in userLoaded");
             this.gotoState('loggedIn');
         }
     }),
@@ -64,7 +62,6 @@ Maps.statechart = SC.Statechart.create({
             },
 
             userLoaded: function() {
-                console.log("in userLoaded");
                 this.gotoState('loggedIn');
             }
         })
