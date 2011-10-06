@@ -276,44 +276,63 @@ Maps.OpenLayersLayer = SC.View.extend({
         this.createOrUpdateWMSLayer();
     },
 
+    wmsLayersCache: [],
+
     createOrUpdateWMSLayer: function() {
         var map   = this.parentView.get("olmap");
         var layer = this.get("content");
-        var wmsLayerWithName = map.getLayersByName(layer.get("name"));
-        var wms = (wmsLayerWithName.length ? wmsLayerWithName[0] : null);
-        if (!wms) {
-            // now build the WMS layer
-            wms = new OpenLayers.Layer.WMS(
-                layer.get('name'),
-                "/geoserver/gwc/service/wms",
-                {
-                    layers: layer.get('name'),
-                    'transparent':'true'
-                },
-                {
-                    'opacity': layer.get('opacity')/10,
-                    'visibility': layer.get('visible'),
-                    'isBaseLayer': false,
-                    //'wrapDateLine': true,
-                    'buffer': 0,
-                    'tileSize': new OpenLayers.Size(512, 512),
-                    'maxExtent': layer.get('maxExtent'),
-                    'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
-                }
-            );
-            map.addLayer(wms);
-        } else {
-            wms.setVisibility(layer.get('visible'));
-            wms.setOpacity(layer.get('opacity')/10);
-            map.setLayerIndex(wms, layer.get("order")-1);
-            if(layer.get("cql_filter")!=null) {
-                wms.mergeNewParams({"cql_filter": layer.get("cql_filter")});
-                wms.url="/geoserver/wms";
+        //var wmsLayerWithName = map.getLayersByName(layer.get("name"));
+        //var wms = (wmsLayerWithName.length ? wmsLayerWithName[0] : null);
+        var wms = this.wmsLayersCache[layer.get("name")];
+        if(layer.get('visible')) {
+            if (!wms) {
+                // now build the WMS layer
+                wms = new OpenLayers.Layer.WMS(
+                    layer.get('name'),
+                    "/geoserver/gwc/service/wms",
+                    {
+                        layers: layer.get('name'),
+                        'transparent':'true'
+                    },
+                    {
+                        'opacity': layer.get('opacity')/10,
+                        'visibility': layer.get('visible'),
+                        'isBaseLayer': false,
+                        //'wrapDateLine': true,
+                        'buffer': 0,
+                        'tileSize': new OpenLayers.Size(512, 512),
+                        'maxExtent': layer.get('maxExtent'),
+                        'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
+                    }
+                );
+                // add to the map, the set index to preserve ordering
+                map.addLayer(wms);
+                map.setLayerIndex(wms, layer.get("order")-1);
+                // save it into the cache
+                this.wmsLayersCache[layer.get("name")]=wms;
             } else {
-                wms.mergeNewParams({"cql_filter": null});
-                wms.url="/geoserver/gwc/service/wms";
+                wms.setVisibility(layer.get('visible'));
+                wms.setOpacity(layer.get('opacity')/10);
+
+                if(layer.get("cql_filter")!=null) {
+                    wms.mergeNewParams({"cql_filter": layer.get("cql_filter")});
+                    wms.url="/geoserver/wms";
+                } else {
+                    wms.mergeNewParams({"cql_filter": null});
+                    wms.url="/geoserver/gwc/service/wms";
+                }
+                // if removed, re-add it
+                if(map.getLayersByName(layer.get("name")).length==0) {
+                    map.addLayer(wms);
+                }
+                map.setLayerIndex(wms, layer.get("order")-1);
+                wms.redraw();
             }
-            wms.redraw();
+        } else {
+            // if on the map, remove layer from map
+            if(map.getLayersByName(layer.get("name")).length>0) {
+                map.removeLayer(wms);
+            }
         }
     }
 });
