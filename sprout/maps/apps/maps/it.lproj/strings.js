@@ -38,5 +38,8 @@ SC.stringsFor('it', {
   "_username" : "Utente :",
   "_drop_here" : "Trascina qui",
   "_tags" : "Etichette",
-  "_comments" : "Commenti"
+  "_comments" : "Commenti",
+  "_missing_params" : "Parametri mancanti",
+  "_select_features" : "Seleziona degli oggetti e trascinali nelle aree di drop prima di eseguire l'operazione ",
+  "_op_failed" : "L'operazione richiesta e' fallita "
 }) ;

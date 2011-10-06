@@ -319,7 +319,7 @@ Maps.mainPage = SC.Page.design({
                 isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
                 childViews: "title name description opacitylbl opacity toggleFilter".w(),
                 title: SC.LabelView.design({
-                    value: "_info",
+                    value: "_info".loc(),
                     controlSize: SC.LARGE_CONTROL_SIZE,
                     layout: {top: 0, right:5, height: 20, left:5}
                 }),
@@ -329,7 +329,7 @@ Maps.mainPage = SC.Page.design({
                 }),
                 opacitylbl: SC.LabelView.design({
                     layout: {top: 50, right:5, height: 20, left:5},
-                    value: "_opacity:"
+                    value: "_opacity".loc()
                 }),
                 opacity:SC.SliderView.design({
                     layout: {top: 70, right:10, height: 20, left:10},

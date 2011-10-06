@@ -38,6 +38,9 @@ SC.stringsFor('en', {
   "_username" : "Username :",
   "_drop_here" : "Drop here",
   "_tags" : "Tags",
-  "_comments" : "Comments"
+  "_comments" : "Comments",
+  "_missing_params" : "Missing Parameters",
+  "_select_features" : "Select features and drop them in the drop doxes before attempting a",
+  "_op_failed" : "The requested operation failed"
 
 }) ;

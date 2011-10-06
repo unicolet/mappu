@@ -53,7 +53,7 @@ Maps.MainResponder = SC.Responder.create({
         var geom1 = Maps.featureInfoController.get("feature1geom");
         var geom2 = Maps.featureInfoController.get("feature2geom");
         if (!geom1 && !geom2) {
-            SC.AlertPane.warn("Missing Parameters", "Select features and drop them in the drop doxes before attempting a " + op, "", "OK", this);
+            SC.AlertPane.warn("_missing_params".loc(), "_select_features".loc() + op, "", "OK", this);
         } else {
             if (!geom2) {
                 geom2 = "";
@@ -75,7 +75,7 @@ Maps.MainResponder = SC.Responder.create({
                 Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
             }
         } else {
-            SC.AlertPane.warn("The requested operation failed", response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
+            SC.AlertPane.warn("_op_failed".loc(), response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
         }
     },
 
