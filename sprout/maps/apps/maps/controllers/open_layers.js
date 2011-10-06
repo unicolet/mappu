@@ -76,7 +76,12 @@ Maps.openLayersController = SC.ArrayController.create(
                 this.clearGeoToolsSelection();
                 // reset
                 if (!Maps.mainPage.geotools.isVisibleInWindow) {
+                    // make invisible w/o animation
+                    Maps.mainPage.geotools.adjust("opacity", 0).updateStyle();
+                    // append
                     Maps.mainPage.geotools.append();
+                    // animate appearance
+                    Maps.mainPage.geotools.adjust("opacity", 1);
                 }
                 this.set("tools", "toolMove");
             }

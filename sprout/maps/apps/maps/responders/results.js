@@ -32,7 +32,10 @@ Maps.MainResponder = SC.Responder.create({
 
 
     performGeoClose:function() {
-        Maps.mainPage.geotools.remove();
+        // animation
+        Maps.mainPage.geotools.adjust("opacity", 0);
+        // now remove it
+        setTimeout(function(){Maps.mainPage.geotools.remove();}, 1000);
     },
 
     saveTags: function() {

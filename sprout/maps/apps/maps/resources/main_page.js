@@ -5,12 +5,13 @@
 /*globals Maps */
 
 SC.Binding.labelPrefix = function(prefix) {
-  return this.transform(function(value, binding) {
-    return prefix + " " + (value ? value : "n/a");
-  }) ;
+    return this.transform(function(value, binding) {
+        return prefix + " " + (value ? value : "n/a");
+    });
 };
 
-var app_logo_huge=static_url('images/app-logo-huge.png');
+var app_logo_huge = static_url('images/app-logo-huge.png');
+var icon_tools_16 = static_url('sc-icon-tools-16');
 
 // This page describes the main user interface for your application.  
 Maps.mainPage = SC.Page.design({
@@ -37,9 +38,10 @@ Maps.mainPage = SC.Page.design({
                 layout: { centerY: 0, height: 30, right: 630, width: 160 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
-                    {title: "_layers".loc(), action: 'LAYERS'},
-                    {title: "_search".loc(), action: 'SEARCH'}
+                    {title: "_layers".loc(), action: 'LAYERS', icon: "sc-icon-options-16"},
+                    {title: "_search".loc(), action: 'SEARCH', icon: "sc-icon-bookmark-16"}
                 ],
+                itemIconKey: 'icon',
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
                 valueBinding: "Maps.openLayersController.layersAndSearch",
@@ -50,11 +52,12 @@ Maps.mainPage = SC.Page.design({
                 layout: { centerY: 0, height: 30, right: 370, width: 270 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
-                    {title: "_pan".loc(), action: 'toolMove'},
-                    {title: "_area".loc(), action: 'toolArea'},
-                    {title: "_length".loc(), action: 'toolLength'},
-                    {title: "_geotools".loc(), action: 'toolGeo'}
+                    {title: "_pan".loc(), action: 'toolMove', icon:""},
+                    {title: "_area".loc(), action: 'toolArea', icon:""},
+                    {title: "_length".loc(), action: 'toolLength', icon:""},
+                    {title: "_geotools".loc(), action: 'toolGeo', icon: icon_tools_16}
                 ],
+                itemIconKey: 'icon',
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
                 valueBinding: "Maps.openLayersController.tools"
@@ -73,7 +76,7 @@ Maps.mainPage = SC.Page.design({
             layoutDirection: SC.LAYOUT_HORIZONTAL,
             childViews: 'topLeftView bottomRightView'.w(),
 
-            topLeftView: Maps.OpenLayers.design(SC.SplitChild,{
+            topLeftView: Maps.OpenLayers.design(SC.SplitChild, {
                 layout: { top: 37, left: 0, bottom:0, right: 224 },
 
                 layerId: 'olmap',
@@ -82,7 +85,7 @@ Maps.mainPage = SC.Page.design({
                 exampleView: Maps.OpenLayersLayer
             }),
 
-            bottomRightView: SC.View.design(SC.SplitChild,{
+            bottomRightView: SC.View.design(SC.SplitChild, {
                 size: 200,
                 layout: { top: 37, width: 223, bottom:0, right: 0 },
 
@@ -112,11 +115,11 @@ Maps.mainPage = SC.Page.design({
                     target: "Maps.featureInfoAttributesController",
 
                     columns: [SC.Object.create(SCTable.Column, {
-                            name: "_property".loc(),
-                            valueKey: 'property',
-                            width: 100,
-                            canSort: YES
-                        }),
+                        name: "_property".loc(),
+                        valueKey: 'property',
+                        width: 100,
+                        canSort: YES
+                    }),
                         SC.Object.create(SCTable.Column, {
                             name: "_value".loc(),
                             valueKey: 'value',
@@ -180,9 +183,10 @@ Maps.mainPage = SC.Page.design({
             layout: {bottom: 10, right:10, width: 25, height: 25},
             title: "-",
             action: "delComment",
-            isEnabledBinding: SC.Binding.transform(function(value, binding) {
-                return (value && value.length()>0) ? true : false;
-              }).from("Maps.socialCommentsController.selection")
+            isEnabledBinding: SC.Binding.transform(
+                function(value, binding) {
+                    return (value && value.length() > 0) ? true : false;
+                }).from("Maps.socialCommentsController.selection")
         })
     }),
 
@@ -352,8 +356,11 @@ Maps.mainPage = SC.Page.design({
         })
     }).create(),
 
-    geotools : SC.PalettePane.create({
+    geotools : SC.PalettePane.create(SC.Animatable, {
         layout: { width: 144, height: 159, left: 200, top: 100 },
+        transitions: {
+            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }, // CSS-transition-only timing function (JavaScript gets linear)
+        },
         contentView: SC.View.extend({
             layout:{top:0,bottom:0,left:0,right:0},
             childViews: "feature1 feature2 operation go".w(),
