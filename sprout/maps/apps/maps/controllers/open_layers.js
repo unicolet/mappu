@@ -168,8 +168,16 @@ Maps.openLayersController = SC.ArrayController.create(
             if (selected.find(function(i, j, l) {
                 return i == "LAYERS"
             })) {
+                // prepare animation
+                Maps.mainPage.layerPalette.disableAnimation();
+                Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
+                // append
                 Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerPalette.enableAnimation();
+                // perform animation
+                Maps.mainPage.layerPalette.adjust("opacity", 1);
             } else {
+                // can't animate pp removal, sob
                 Maps.mainPage.layerPalette.remove();
             }
             if (selected.find(function(i, j, l) {

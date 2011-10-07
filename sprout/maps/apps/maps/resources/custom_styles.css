@@ -35,6 +35,10 @@ div.maps-dropview {
     background-color: transparent;
 }
 
+div.ace.dark.popover.maps.sc-view.popover_content_background {
+    background: #F2F2F2;
+}
+
 .sc-label-view.sc-regular-size.app-logo {
     font-family: 'Holtwood One SC', serif;
     font-size: 25px;

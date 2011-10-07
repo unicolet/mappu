@@ -19,8 +19,12 @@ Maps.mainPage = SC.Page.design({
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
-    mainPane: SC.MainPane.design({
+    mainPane: SC.MainPane.design(SC.Animatable,{
         childViews: 'toolbar splitview'.w(),
+
+        transitions: {
+            opacity: { duration: 1.5, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT } // CSS-transition-only timing function (JavaScript gets linear)
+        },
 
         defaultResponder: 'Maps.MainResponder',
 
@@ -284,73 +288,86 @@ Maps.mainPage = SC.Page.design({
         })
     }).create(),
 
-    layerPalette : SC.PickerPane.extend({
+    layerPalette : SC.PickerPane.extend(SC.Animatable,{
+        themeName: 'popover',
+
+        transitions: {
+            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
+        },
+        
         layout: { width: 500, height: 300 },
-        contentView: SC.View.extend({
-            layout: {top: 0, left: 0, right: 0, bottom: 0},
-            childViews: 'googleView layerView layerDetailView'.w(),
-            googleView: SC.RadioView.design({
-                layout: {top: 10, left: 5, right: 5, height: 30},
-                items: '_streets_satellite'.loc().w(),
-                valueBinding: "Maps.openLayersController.whichGoogleLayer",
-                height: 24,
-                layoutDirection: SC.LAYOUT_HORIZONTAL
-            }),
-            layerView: SC.ScrollView.design({
-                hasHorizontalScroller: NO,
-                layout: { top: 40, bottom: 5, left: 5, width: 200 },
-                backgroundColor: 'white',
-                contentView: SC.ListView.design({
-                    rowHeight: 24,
-                    contentBinding: 'Maps.openLayersController.arrangedObjects',
-                    selectionBinding: 'Maps.openLayersController.selection',
-                    contentValueKey: "name",
-                    contentCheckboxKey: "visible",
-                    contentIconKey: "legendIcon",
-                    contentRightIconKey: "filterIcon",
-                    hasContentIcon: YES,
-                    hasContentRightIcon: YES,
-                    action:"layerSearch",
-                    canReorderContent: YES,
-                    isEditable: YES,
-                    action: "onLayerSelected",
-                    target: "Maps.openLayersController",
-                    actOnSelect: YES
-                })
-            }),
-            layerDetailView: SC.View.design({
-                layout: { top: 40, bottom: 5, right: 10, width: 270 },
-                isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
-                childViews: "title name description opacitylbl opacity toggleFilter".w(),
-                title: SC.LabelView.design({
-                    value: "_info".loc(),
-                    controlSize: SC.LARGE_CONTROL_SIZE,
-                    layout: {top: 0, right:5, height: 20, left:5}
+        contentView: SC.WorkspaceView.extend({
+            topToolbar: null,
+            bottomToolbar: null,
+
+            contentView:SC.View.extend({
+                classNames: 'popover_content_background'.w(),
+                layout: {top: 0, left: 0, right: 0, bottom: 0},
+                childViews: 'googleView layerView layerDetailView'.w(),
+                googleView: SC.RadioView.design({
+                    layout: {top: 15, left: 30, width:200, height: 30},
+                    items: '_streets_satellite'.loc().w(),
+                    valueBinding: "Maps.openLayersController.whichGoogleLayer",
+                    height: 24,
+                    layoutDirection: SC.LAYOUT_HORIZONTAL
                 }),
-                name: SC.LabelView.design({
-                    valueBinding: SC.Binding.from('Maps.layerController.name').labelPrefix("Nome:"),
-                    layout: {top: 25, right:5, height: 20, left:5}
+                layerView: SC.ScrollView.design({
+                    hasHorizontalScroller: NO,
+                    layout: { top: 40, bottom: 0, left: 0, width: 210 },
+                    backgroundColor: 'white',
+                    contentView: SC.ListView.design({
+                        rowHeight: 30,
+                        contentBinding: 'Maps.openLayersController.arrangedObjects',
+                        selectionBinding: 'Maps.openLayersController.selection',
+                        contentValueKey: "name",
+                        contentCheckboxKey: "visible",
+                        contentIconKey: "legendIcon",
+                        contentRightIconKey: "filterIcon",
+                        hasContentIcon: YES,
+                        hasContentRightIcon: YES,
+                        action:"layerSearch",
+                        canReorderContent: YES,
+                        isEditable: YES,
+                        action: "onLayerSelected",
+                        target: "Maps.openLayersController",
+                        actOnSelect: YES,
+                        showAlternatingRows: YES
+                    })
                 }),
-                opacitylbl: SC.LabelView.design({
-                    layout: {top: 50, right:5, height: 20, left:5},
-                    value: "_opacity".loc()
-                }),
-                opacity:SC.SliderView.design({
-                    layout: {top: 70, right:10, height: 20, left:10},
-                    valueBinding: 'Maps.layerController.opacity',
-                    maximum: 10,
-                    minimum: 0,
-                    step: 1
-                }),
-                description: SC.LabelView.design({
-                    valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("Descrizione:"),
-                    layout: {top: 110, right:5, bottom: 50, left:5}
-                }),
-                toggleFilter: SC.ButtonView.design({
-                    layout: {bottom: 10, left:5, height: 25, right:5},
-                    titleBinding: SC.Binding.labelPrefix("Rimuovi filtro").from("Maps.layerController.cql_filter"),
-                    action: "doRemoveFilter",
-                    isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
+                layerDetailView: SC.View.design({
+                    layout: { top: 40, bottom: 5, right: 10, width: 270 },
+                    isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
+                    childViews: "title name description opacitylbl opacity toggleFilter".w(),
+                    title: SC.LabelView.design({
+                        value: "_info".loc(),
+                        controlSize: SC.LARGE_CONTROL_SIZE,
+                        layout: {top: 0, right:5, height: 20, left:5}
+                    }),
+                    name: SC.LabelView.design({
+                        valueBinding: SC.Binding.from('Maps.layerController.name').labelPrefix("Nome:"),
+                        layout: {top: 25, right:5, height: 20, left:5}
+                    }),
+                    opacitylbl: SC.LabelView.design({
+                        layout: {top: 50, right:5, height: 20, left:5},
+                        value: "_opacity".loc()
+                    }),
+                    opacity:SC.SliderView.design({
+                        layout: {top: 70, right:10, height: 20, left:10},
+                        valueBinding: 'Maps.layerController.opacity',
+                        maximum: 10,
+                        minimum: 0,
+                        step: 1
+                    }),
+                    description: SC.LabelView.design({
+                        valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("Descrizione:"),
+                        layout: {top: 110, right:5, bottom: 50, left:5}
+                    }),
+                    toggleFilter: SC.ButtonView.design({
+                        layout: {bottom: 10, left:5, height: 25, right:5},
+                        titleBinding: SC.Binding.labelPrefix("Rimuovi filtro").from("Maps.layerController.cql_filter"),
+                        action: "doRemoveFilter",
+                        isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
+                    })
                 })
             })
         })
@@ -359,7 +376,7 @@ Maps.mainPage = SC.Page.design({
     geotools : SC.PalettePane.create(SC.Animatable, {
         layout: { width: 144, height: 159, left: 200, top: 100 },
         transitions: {
-            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }, // CSS-transition-only timing function (JavaScript gets linear)
+            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT } // CSS-transition-only timing function (JavaScript gets linear)
         },
         contentView: SC.View.extend({
             layout:{top:0,bottom:0,left:0,right:0},

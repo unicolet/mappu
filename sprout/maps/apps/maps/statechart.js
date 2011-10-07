@@ -77,7 +77,15 @@ Maps.statechart = SC.Statechart.create({
 
         viewingMap: SC.State.extend({
             enterState: function() {
-                Maps.getPath('mainPage.mainPane').append();
+                var page=Maps.getPath('mainPage.mainPane');
+                // prepare animation
+                page.disableAnimation();
+                page.adjust("opacity", 0).updateStyle();
+                // append
+                page.append();
+                page.enableAnimation();
+                // perform animation
+                page.adjust("opacity", 1);
 
                 var layers = Maps.store.find(Maps.LAYERS_QUERY);
                 Maps.openLayersController.set('content', layers);
@@ -90,8 +98,12 @@ Maps.statechart = SC.Statechart.create({
             },
 
             exitState: function() {
-                Maps.getPath('mainPage.mainPane').remove();
-                
+                var page=Maps.getPath('mainPage.mainPane');
+                // prepare animation
+                page.adjust("opacity", 0);
+                // append
+                setTimeout(function(){page.remove();},1500);
+
                 Maps.openLayersController.set('content', null);
                 Maps.layerQueryController.set('content', null);
                 Maps.featureInfoAttributesController.set('content', null);
