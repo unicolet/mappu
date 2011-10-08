@@ -316,6 +316,7 @@ Maps.mainPage = SC.Page.design({
                     layout: { top: 40, bottom: 0, left: 0, width: 210 },
                     backgroundColor: 'white',
                     contentView: SC.ListView.design({
+			layout:{top:0,bottom:0,right:0,left:8},
                         rowHeight: 30,
                         contentBinding: 'Maps.openLayersController.arrangedObjects',
                         selectionBinding: 'Maps.openLayersController.selection',
@@ -331,7 +332,7 @@ Maps.mainPage = SC.Page.design({
                         action: "onLayerSelected",
                         target: "Maps.openLayersController",
                         actOnSelect: YES,
-                        showAlternatingRows: YES
+                        //showAlternatingRows: YES
                     })
                 }),
                 layerDetailView: SC.View.design({
