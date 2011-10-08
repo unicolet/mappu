@@ -27,12 +27,34 @@ Maps.authenticationManager=SC.ObjectController.create({
     },
 
     attemptLogin: function(){
-        var authQuery=SC.Query.remote(Maps.User, null,
-            {
-                j_username: this.get("inputUsername"),
-                j_password: this.get("inputPassword")
-            });
-        Maps.featuresStore.find(authQuery);
+        SC.Request.postUrl('/mapsocial/j_spring_security_check',
+            $.param({j_username: this.get("inputUsername"),j_password: this.get("inputPassword")}))
+            .header('Content-Type', 'application/x-www-form-urlencoded')
+            .notify(this, 'didCheckCredentials', null, null)
+            .send();
+    },
+
+    didCheckCredentials: function(response, store, query) {
+        if (SC.ok(response)) {
+            var r = null;
+            if (!response.isJSON())
+                r = SC.$.parseJSON(response.get('body'));
+            else
+                r = response.get('body');
+
+            if (r.success) {
+
+                // login successful
+                Maps.statechart.sendEvent('loginSuccessful', {id:r.guid});
+
+            } else {
+
+                // login failed
+                Maps.statechart.sendEvent('loginFailed', r.error);
+            }
+        } else {
+            store.dataSourceDidErrorQuery(query, response);
+        }
     },
 
     whenUserLoaded: function() {
