@@ -20,7 +20,7 @@ Maps.socialCommentsController = SC.ArrayController.create(
 		Maps.COMMENT_QUERY.parameters={social: Maps.featureInfoController.get("selection").firstObject().getSocialID()};
         var comments=this.get("content");
 		if (comments == null) {
-			comments = Maps.featuresStore.find(Maps.COMMENT_QUERY);
+			comments = Maps.store.find(Maps.COMMENT_QUERY);
             this.set("content",comments);
 		} else {
 			comments.refresh();
@@ -47,7 +47,7 @@ Maps.socialCommentsController = SC.ArrayController.create(
 
             if (guid!=null && guid!=undefined) {
                 console.log("Adding comment to guid: "+guid);
-                var comment = Maps.featuresStore.createRecord(
+                var comment = Maps.store.createRecord(
                     Maps.Comment, {
                         "social": guid,
                         username: Maps.authenticationManager.currentUsername(),

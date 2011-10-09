@@ -12,7 +12,7 @@ Maps.statechart = SC.Statechart.create({
     checkingLoginSession: SC.State.extend({
         enterState: function() {
             // try to load user data from existing server session
-            Maps.authenticationManager.set("content",Maps.featuresStore.find(Maps.User, Math.random()));
+            Maps.authenticationManager.set("content",Maps.store.find(Maps.User, Math.random()));
         },
 
         exitState: function() {
@@ -53,7 +53,7 @@ Maps.statechart = SC.Statechart.create({
             },
 
             loginSuccessful: function(user) {
-                Maps.authenticationManager.set('content', Maps.featuresStore.find(Maps.User, user.id));
+                Maps.authenticationManager.set('content', Maps.store.find(Maps.User, user.id));
             },
 
             loginFailed: function(errorMessage) {
@@ -87,13 +87,13 @@ Maps.statechart = SC.Statechart.create({
                 // perform animation
                 page.adjust("opacity", 1);
 
-                var layers = Maps.store.find(Maps.LAYERS_QUERY);
+                var layers = Maps.wmsStore.find(Maps.LAYERS_QUERY);
                 Maps.openLayersController.set('content', layers);
 
-                var queries = Maps.featuresStore.find(Maps.LAYERQUERY_QUERY);
+                var queries = Maps.store.find(Maps.LAYERQUERY_QUERY);
                 Maps.layerQueryController.set('content', queries);
 
-                var attributes = Maps.featuresStore.find(Maps.ATTRIBUTES_QUERY);
+                var attributes = Maps.store.find(Maps.ATTRIBUTES_QUERY);
                 Maps.featureInfoAttributesController.set('content', attributes);
             },
 

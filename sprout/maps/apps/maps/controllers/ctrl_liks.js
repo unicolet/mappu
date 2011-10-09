@@ -19,7 +19,7 @@ Maps.linkController = SC.ArrayController.create(
         var links=this.get('content');
 		Maps.LINK_QUERY.parameters={featureId: Maps.featureInfoController.get("selection").firstObject().getSocialID(), layer: fa["LAYER"], layerGroup: fa["GROUP"]};
 		if (links == null) {
-			links = Maps.featuresStore.find(Maps.LINK_QUERY);
+			links = Maps.store.find(Maps.LINK_QUERY);
             this.set('content', links);
 		} else {
 			links.refresh();

@@ -130,9 +130,9 @@ Maps.openLayersController = SC.ArrayController.create(
                 }
                 markersLayer.redraw();
                 SC.RunLoop.begin();
-                Maps.FeatureDataSource.rawFeatures = event.features;
+                Maps.MapsDataSource.rawFeatures = event.features;
                 if (!Maps.features) {
-                    Maps.features = Maps.featuresStore.find(Maps.FEATURE_QUERY);
+                    Maps.features = Maps.store.find(Maps.FEATURE_QUERY);
                     Maps.featureInfoController.set('content', Maps.features);
                 } else {
                     Maps.features.refresh();

@@ -35,7 +35,7 @@ Maps.socialController = SC.ObjectController.create(
 		if (status!=SC.Record.ERROR) {
 			this.get("content").set("tags", this.get("tags"));
 		} else {
-			var social = Maps.featuresStore.createRecord(
+			var social = Maps.store.createRecord(
 				Maps.Social,
 				{ guid: the_guid, tags: this.get("tags") }
 				);

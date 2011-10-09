@@ -27,39 +27,39 @@ Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null, {id:-1});
 /* global variables */
 Maps.comments = null;
 
-Maps.FeatureDataSource = SC.DataSource.extend(
-    /** @scope Maps.FeatureDataSource.prototype */ {
+Maps.MapsDataSource = SC.DataSource.extend(
+    /** @scope Maps.MapsDataSource.prototype */ {
         rawFeatures:[],
 
         fetch: function(store, query) {
             if (query.recordType == Maps.LayerQuery) {
-                //console.log("Maps.FeatureDataSource.fetch() - Maps.LayerQuery");
+                //console.log("Maps.MapsDataSource.fetch() - Maps.LayerQuery");
                 SC.Request.getUrl('/mapsocial/layerQuery/?')
                     .set('isJSON', YES)
                     .notify(this, 'didFetchLayerQueries', store, query)
                     .send();
                 return YES;
             } else if (query.recordType == Maps.Link) {
-                //console.log("Maps.FeatureDataSource.fetch() - Maps.Link for " + $.param(query.parameters));
+                //console.log("Maps.MapsDataSource.fetch() - Maps.Link for " + $.param(query.parameters));
                 SC.Request.getUrl('/mapsocial/link/?' + $.param(query.parameters))
                     .set('isJSON', YES)
                     .notify(this, 'didFetchLinks', store, query)
                     .send();
                 return YES;
             } else if (query.recordType == Maps.Comment) {
-                //console.log("Maps.FeatureDataSource.fetch() - Maps.Comment for id=" + query.parameters['social']);
+                //console.log("Maps.MapsDataSource.fetch() - Maps.Comment for id=" + query.parameters['social']);
                 SC.Request.getUrl('/mapsocial/social/' + query.parameters['social'] + '/comments')
                     .set('isJSON', YES)
                     .notify(this, 'didFetchComments', store, query)
                     .send();
                 return YES;
             } else if (query.recordType == Maps.Attribute) {
-                var records = this.loadFeatureAttributes(Maps.FeatureDataSource.rawFeatures, store, query.parameters['id']);
+                var records = this.loadFeatureAttributes(Maps.MapsDataSource.rawFeatures, store, query.parameters['id']);
                 var storeKeys = store.loadRecords(Maps.Attribute, records);
                 store.loadQueryResults(query, storeKeys);
                 return YES;
             } else if (query.recordType == Maps.Feature) {
-                var records = this.transformOLFeaturesInFeatures(Maps.FeatureDataSource.rawFeatures, store);
+                var records = this.transformOLFeaturesInFeatures(Maps.MapsDataSource.rawFeatures, store);
                 var storeKeys = store.loadRecords(Maps.Feature, records);
                 store.loadQueryResults(query, storeKeys);
 
@@ -101,7 +101,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
         },
 
         retrieveRecord: function(store, storeKey, id) {
-            //console.log("in Maps.FeatureDataSource.retrieveRecord() id=" + id);
+            //console.log("in Maps.MapsDataSource.retrieveRecord() id=" + id);
             var recordType = SC.Store.recordTypeFor(storeKey);
             if (recordType == 'Maps.Social') {
                 SC.Request.getUrl('/mapsocial/social/' + id + '?alt=json').set('isJSON', YES)
@@ -157,7 +157,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
         },
 
         createRecord: function(store, storeKey) {
-            //console.log("in Maps.FeatureDataSource.createRecord() for " + store.idFor(storeKey));
+            //console.log("in Maps.MapsDataSource.createRecord() for " + store.idFor(storeKey));
             var url = null;
             if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Attribute)) {
                 // fictional record, only serves the UI
@@ -185,7 +185,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
         },
 
         updateRecord: function(store, storeKey, params) {
-            //console.log("in Maps.FeatureDataSource.updateRecord() for " + store.idFor(storeKey));
+            //console.log("in Maps.MapsDataSource.updateRecord() for " + store.idFor(storeKey));
             var url = null;
             if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Attribute) || SC.kindOf(store.recordTypeFor(storeKey), Maps.Feature)) {
                 // only used in the UI
@@ -213,7 +213,7 @@ Maps.FeatureDataSource = SC.DataSource.extend(
         },
 
         destroyRecord: function(store, storeKey, params) {
-            //console.log("in Maps.FeatureDataSource.destroyRecord() " + store.idFor(storeKey));
+            //console.log("in Maps.MapsDataSource.destroyRecord() " + store.idFor(storeKey));
             var url = null;
             if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Social)) {
                 url = '/mapsocial/social/' + store.idFor(storeKey) + '?alt=json';

@@ -13,8 +13,6 @@
 //
 Maps.main = function main() {
 
-    //Maps.makeFirstResponder(Maps.MainResponder);
-
 };
 
 //function main() {
