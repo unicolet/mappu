@@ -1,10 +1,9 @@
 /**
- * Created by JetBrains WebStorm.
- * User: unicoletti
- * Date: 9/12/11
- * Time: 5:22 PM
- * To change this template use File | Settings | File Templates.
- */
+  *  Mappu : yet another web gis (with social taste).
+  *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
+  *
+  *  Licensed under the LGPL.
+*/
 Maps.layerController = SC.ObjectController.create({
 
 });

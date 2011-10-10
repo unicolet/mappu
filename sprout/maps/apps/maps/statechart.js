@@ -1,10 +1,9 @@
 /**
- * Created by JetBrains WebStorm.
- * User: unicoletti
- * Date: 9/21/11
- * Time: 2:53 PM
- * To change this template use File | Settings | File Templates.
- */
+  *  Mappu : yet another web gis (with social taste).
+  *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
+  *
+  *  Licensed under the LGPL.
+*/
 
 Maps.statechart = SC.Statechart.create({
     initialState: 'checkingLoginSession',

@@ -1,7 +1,10 @@
-// ==========================================================================
-// Project:   Maps.Feature
-// Copyright: ©2010 My Company, Inc.
-// ==========================================================================
+/**
+  *  Mappu : yet another web gis (with social taste).
+  *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
+  *
+  *  Licensed under the LGPL.
+*/
+
 /*globals Maps */
 
 /** @class

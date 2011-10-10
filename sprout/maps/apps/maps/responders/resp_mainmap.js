@@ -1,3 +1,9 @@
+/**
+  *  Mappu : yet another web gis (with social taste).
+  *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
+  *
+  *  Licensed under the LGPL.
+*/
 Maps.MainResponder = SC.Responder.create({
     // called when the user dblclicks an item in list view
     dblclick: function() {
