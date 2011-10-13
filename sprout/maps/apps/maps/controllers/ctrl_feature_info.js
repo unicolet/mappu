@@ -6,7 +6,7 @@
 */
 /*globals Maps */
 
-sc_require("views/feature");
+sc_require("views/v_feature");
 
 /** @class
 
