@@ -11,7 +11,7 @@ SC.stringsFor('it', {
   "_search" : "Query",
   "_pan"    : "Sposta",
   "_area"   : "Area",
-  "_length" : "Lunghezza",
+  "_length" : "Misura",
   "_geotools" : "Strumenti",
   "_property" : "Proprieta'",
   "_value"    : "Valore",
