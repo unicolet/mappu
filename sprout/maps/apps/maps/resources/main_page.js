@@ -231,7 +231,7 @@ Maps.mainPage = SC.Page.design({
     }),
 
     queryListPane: SC.View.design({
-        layout: {top:10, bottom:10, right:10, left:10},
+        layout: {top:0, bottom:0, right:0, left:0},
         childViews: "label queryList".w(),
         label:SC.LabelView.design({
             layout: {top:5, left:5, right:5},
@@ -282,12 +282,24 @@ Maps.mainPage = SC.Page.design({
         })
     }),
 
-    layerSearchPane : SC.PickerPane.design({
+    layerSearchPane : SC.PickerPane.design(SC.Animatable,{
+        themeName: 'popover',
+
+        transitions: {
+            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
+        },
+
         layout: { height: 200, width: 400},
-        contentView: SC.SceneView.design({
-            layout: {top:0,bottom:0,left:0,right:0},
-            scenes: ["Maps.mainPage.queryListPane", "Maps.mainPage.queryEditPane"],
-            nowShowingBinding: "Maps.openLayersController.layerSearchNowShowing"
+        contentView: SC.WorkspaceView.extend({
+            topToolbar: null,
+            bottomToolbar: null,
+
+            contentView: SC.SceneView.design({
+                classNames: 'popover_content_background'.w(),
+                layout: {top:0,bottom:0,left:0,right:0},
+                scenes: ["Maps.mainPage.queryListPane", "Maps.mainPage.queryEditPane"],
+                nowShowingBinding: "Maps.openLayersController.layerSearchNowShowing"
+            })
         })
     }).create(),
 

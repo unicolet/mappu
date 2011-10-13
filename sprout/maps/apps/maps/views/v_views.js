@@ -76,14 +76,14 @@ Maps.FormView = SC.View.extend({
     render: function(context, firstTime) {
 
 		var filterString = Maps.layerQueryController.get("selection").firstObject().get("filterString");
-        console.log("Maps.FormView.filterString="+filterString);
+        //console.log("Maps.FormView.filterString="+filterString);
         if (filterString) {
             var params=new Object();
             for (var i=0;i<10;i++) {
                 params["INPUT"+i]="<input type=\"text\" name=\"input"+i+"\" style=\"width:auto;\" size=\"4\" onclick=\"this.focus()\">";
             }
             var form_text = Mustache.to_html(filterString, params);
-            console.log("Maps.FormView.formText="+form_text);
+            //console.log("Maps.FormView.formText="+form_text);
 
             context = context.begin('div').addClass('maps-form-view');
             //context = context.begin('div').addClass('maps-form-view-url').begin('a').attr('href',url).attr('target','_mapslink').push(title).end().end();

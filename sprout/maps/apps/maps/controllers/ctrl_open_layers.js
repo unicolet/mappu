@@ -186,7 +186,14 @@ Maps.openLayersController = SC.ArrayController.create(
             if (selected.find(function(i, j, l) {
                 return i == "SEARCH"
             })) {
+                // prepare animation
+                Maps.mainPage.layerSearchPane.disableAnimation();
+                Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
+                // append
                 Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerSearchPane.enableAnimation();
+                // perform animation
+                Maps.mainPage.layerSearchPane.adjust("opacity", 1);
                 this.goToListQuery();
             } else {
                 Maps.mainPage.layerSearchPane.remove();

@@ -19,21 +19,35 @@ Maps.MainResponder = SC.Responder.create({
         // always fetch links
         Maps.linkController.findLinks();
 
-        SC.PickerPane.create({
-            // allow events to bubble up to this responder
-            //nextResponder: Maps.MainResponder,
+        SC.PickerPane.design(SC.Animatable,{
+            themeName: 'popover',
+
+            transitions: {
+                opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
+            },
+            
             layout: { width: 400, height: 300 },
-            contentView: SC.TabView.extend({
-                layout: {top: 5, left: 5, right: 5, bottom: 5},
-                itemTitleKey: "title",
-                itemValueKey: "tab",
-                items: [
-                    {title: "_tags".loc(), tab: ( hasSocial ? "Maps.mainPage.tagsTab" : "Maps.mainPage.nosocialTab" ) },
-                    {title: "_comments".loc(), tab: ( hasSocial ? "Maps.mainPage.commentsTab" : "Maps.mainPage.nosocialTab" )},
-                    {title: "_links".loc(), tab: "Maps.mainPage.linksTab"}
-                ]
+            contentView: SC.WorkspaceView.extend({
+                topToolbar: null,
+                bottomToolbar: null,
+
+                contentView:SC.View.design({
+                    classNames: 'popover_content_background'.w(),
+                    
+                    childViews:"tabs".w(),
+                    tabs:SC.TabView.extend({
+                        layout: {top: 10, left: 5, right: 5, bottom: 5},
+                        itemTitleKey: "title",
+                        itemValueKey: "tab",
+                        items: [
+                            {title: "_tags".loc(), tab: ( hasSocial ? "Maps.mainPage.tagsTab" : "Maps.mainPage.nosocialTab" ) },
+                            {title: "_comments".loc(), tab: ( hasSocial ? "Maps.mainPage.commentsTab" : "Maps.mainPage.nosocialTab" )},
+                            {title: "_links".loc(), tab: "Maps.mainPage.linksTab"}
+                        ]
+                    })
+                })
             })
-        }).popup(view, SC.PICKER_POINTER);
+        }).create().popup(view, SC.PICKER_POINTER);
     },
 
 
