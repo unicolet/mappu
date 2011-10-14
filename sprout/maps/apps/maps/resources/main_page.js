@@ -212,7 +212,7 @@ Maps.mainPage = SC.Page.design({
     linksTab: SC.View.design({
         childViews: "links description".w(),
         links: SC.ScrollView.design({
-            layout: {left: 10, top:15, right: 10, bottom: 50 },
+            layout: {left: 0, top:0, right: 0, bottom:0},
             backgroundColor: 'white',
             contentView: SC.ListView.design({
                 rowHeight: 45,

@@ -37,5 +37,9 @@ SC.stringsFor('it', {
   "_comments" : "Commenti",
   "_missing_params" : "Parametri mancanti",
   "_select_features" : "Seleziona degli oggetti e trascinali nelle aree di drop prima di eseguire l'operazione ",
-  "_op_failed" : "L'operazione richiesta e' fallita "
+  "_op_failed" : "L'operazione richiesta e' fallita ",
+  "_query_error_title" : "La connessione al server e' fallita",
+  "_query_error_detail" : "Mentre l'applicazione stava colloquiando con il server remoto si e' verificato un errore. HTTP codice di errore (se disponibili): ",
+  "_starred" : "Aggiunta ai preferiti",
+  "_not_starred" : "Non l'hai aggiunta ai preferiti"
 }) ;

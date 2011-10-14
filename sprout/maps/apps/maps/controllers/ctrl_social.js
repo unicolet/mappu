@@ -23,12 +23,12 @@ Maps.socialController = SC.ObjectController.create(
 		if (content) {
 			this.set("tags", this.getPath("content.tags"));
 			if (content.get("starred")==true) {
-				this.set("starredAsText","You starred this feature");
+				this.set("starredAsText","_starred".loc());
 			} else {
-				this.set("starredAsText","This feature has not been starred");
+				this.set("starredAsText","_not_starred".loc());
 			}
 		} else {
-			this.set("starredAsText","This feature has not been starred");
+			this.set("starredAsText","_not_starred".loc());
 			this.set("tags","");
 		}
 	}.observes("content"),

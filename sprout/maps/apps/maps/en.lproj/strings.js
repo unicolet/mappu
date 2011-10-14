@@ -38,6 +38,9 @@ SC.stringsFor('en', {
   "_comments" : "Comments",
   "_missing_params" : "Missing Parameters",
   "_select_features" : "Select features and drop them in the drop doxes before attempting a",
-  "_op_failed" : "The requested operation failed"
-
+  "_op_failed" : "The requested operation failed",
+  "_query_error_title" : "The server conncetion failed",
+  "_query_error_detail" : "While connecting to the server the application received an error. HTTP error code (if available): ",
+  "_starred" : "You starred this feature",
+  "_not_starred" : "This feature has not been starred"
 }) ;

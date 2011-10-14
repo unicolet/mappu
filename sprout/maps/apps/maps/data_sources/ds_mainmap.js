@@ -1,9 +1,9 @@
 /**
-  *  Mappu : yet another web gis (with social taste).
-  *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
-  *
-  *  Licensed under the LGPL.
-*/
+ *  Mappu : yet another web gis (with social taste).
+ *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
+ *
+ *  Licensed under the LGPL.
+ */
 
 /** @class
 
@@ -75,6 +75,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 store.loadQueryResults(query, storeKeys);
             } else {
                 store.dataSourceDidErrorQuery(query, response);
+                this.notifyError(response);
             }
         },
 
@@ -89,6 +90,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 }
             } else {
                 store.dataSourceDidErrorQuery(query, response);
+                this.notifyError(response);
             }
         },
 
@@ -98,6 +100,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 store.loadQueryResults(query, storeKeys);
             } else {
                 store.dataSourceDidErrorQuery(query, response);
+                this.notifyError(response);
             }
         },
 
@@ -132,6 +135,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 store.dataSourceDidComplete(storeKey, dataHash);
             } else {
                 store.dataSourceDidError(storeKey, response.get('body'));
+                this.notifyError(response);
             }
         },
 
@@ -154,6 +158,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 }
             } else {
                 store.dataSourceDidError(storeKey, response.get('body'));
+                this.notifyError(response);
             }
         },
 
@@ -182,7 +187,10 @@ Maps.MapsDataSource = SC.DataSource.extend(
             if (SC.ok(response)) {
                 var dataHash = response.get('body').content;
                 store.dataSourceDidComplete(storeKey, null, dataHash.guid);
-            } else store.dataSourceDidError(storeKey, response);
+            } else {
+                store.dataSourceDidError(storeKey, response);
+                this.notifyError(response);
+            }
         },
 
         updateRecord: function(store, storeKey, params) {
@@ -210,7 +218,10 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 var data = response.get('body');
                 if (data) data = data.content; // if hash is returned; use it.
                 store.dataSourceDidComplete(storeKey, data);
-            } else store.dataSourceDidError(storeKey);
+            } else {
+                store.dataSourceDidError(storeKey);
+                this.notifyError(response);
+            }
         },
 
         destroyRecord: function(store, storeKey, params) {
@@ -233,7 +244,10 @@ Maps.MapsDataSource = SC.DataSource.extend(
         didDestroyRecord: function(response, store, storeKey) {
             if (SC.ok(response)) {
                 store.dataSourceDidDestroy(storeKey);
-            } else store.dataSourceDidError(storeKey);
+            } else {
+                store.dataSourceDidError(storeKey);
+                this.notifyError(response);
+            }
         },
 
         loadFeatureAttributes: function(features, store, id) {
@@ -248,7 +262,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
             return records;
         },
 
-       
+
         transformOLFeaturesInFeatures: function(features, store) {
             var records = [];
             if (features) {
@@ -266,5 +280,11 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 }
             }
             return records;
+        },
+
+        notifyError: function(response) {
+            // in rest 404 is used to notify of not existing records, so it's generally not an error worth notifying
+            if(response.status!=404)
+                SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
         }
     });

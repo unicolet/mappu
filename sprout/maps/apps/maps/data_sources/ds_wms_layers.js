@@ -105,8 +105,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
 		var storeKeys = store.loadRecords(Maps.Layer, records);
         store.dataSourceDidFetchQuery(query);
 	} else {
-        console.log('response has errors');
 		store.dataSourceDidErrorQuery(query, response);
+        this.notifyError(response);
 	}
   },
 
@@ -131,6 +131,9 @@ Maps.LayerDataSource = SC.DataSource.extend(
   
   destroyRecord: function(store, storeKey) {
     return YES ;
+  },
+
+  notifyError: function(response) {
+      SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
   }
-  
 }) ;
