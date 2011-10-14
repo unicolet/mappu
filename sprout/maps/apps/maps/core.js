@@ -31,15 +31,14 @@ Maps = SC.Application.create(
             Maps_print();
         },
 
-        gaussBoagaProj: null,
-        googleProj: null,
+        projections: {},
         
         initProjections: function() {
             // add decent error reporting into proj4js
             Proj4js.reportError=function(msg){console.log(msg);};
 
-            Maps.gaussBoagaProj = new OpenLayers.Projection('EPSG:3003');
-            Maps.googleProj = new OpenLayers.Projection('EPSG:900913');
+            Maps.projections['EPSG:3003'] = new OpenLayers.Projection('EPSG:3003');
+            Maps.projections['EPSG:900913'] = new OpenLayers.Projection('EPSG:900913');
         }
 
     });

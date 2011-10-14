@@ -119,9 +119,20 @@ Maps.openLayersController = SC.ArrayController.create(
 
                 for (var i = 0; i < event.features.length; i++) {
                     var feature = event.features[i];
-                    var c = feature.geometry.getCentroid().transform(Maps.gaussBoagaProj, Maps.googleProj);
+                    var c = feature.geometry.getCentroid();
+
+                    // apply transform if required
+                    try {
+                        var sourceProjection=Maps.openLayersController.get("content").findProperty("name",feature.gml.featureNSPrefix + ':' + feature.gml.featureType).get("srs");
+                        if(sourceProjection && sourceProjection!='EPSG:900913') {
+                            c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                            feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                        }
+                    } catch(e) {
+                        alert("Errore leggendo i risulati: "+e);
+                    }
+
                     var marker = new OpenLayers.Marker(new OpenLayers.LonLat(c.x, c.y), icon.clone());
-                    feature.geometry = feature.geometry.transform(Maps.gaussBoagaProj, Maps.googleProj);
                     marker.data = {'feature':feature, 'idx':i};
                     markersLayer.addMarker(marker);
                     marker.events.register(

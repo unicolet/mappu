@@ -95,7 +95,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
                             opacity: 10,
                             description: $(this).find('Abstract').text(),
                             cql_filter: null,
-                            maxExtent: bounds.transform(Maps.gaussBoagaProj, Maps.googleProj)
+                            maxExtent: bounds.transform(Maps.projections['EPSG:3003'], Maps.projections['EPSG:900913']),
+                            srs: $(this).find('SRS').text()
 						};
 						records[records.length]=record;
 					}

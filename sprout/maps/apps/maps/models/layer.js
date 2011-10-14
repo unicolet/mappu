@@ -27,6 +27,7 @@ Maps.Layer = SC.Record.extend(
     order: SC.Record.attr(Number),
     opacity: SC.Record.attr(Number),
     cql_filter: SC.Record.attr(String),
+    srs: SC.Record.attr(String),
 
     filterIcon: function(k,v) {
         if(this.get("cql_filter")!=null) {
