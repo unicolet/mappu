@@ -346,7 +346,7 @@ Maps.mainPage = SC.Page.design({
                         isEditable: YES,
                         action: "onLayerSelected",
                         target: "Maps.openLayersController",
-                        actOnSelect: YES,
+                        actOnSelect: YES
                         //showAlternatingRows: YES
                     })
                 }),

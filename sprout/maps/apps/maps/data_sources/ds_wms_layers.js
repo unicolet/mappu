@@ -57,9 +57,19 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
 		SC.$('Layer', content).each(
 			function(index) {
-                //console.log('layer n.'+index);
-				// saltiamo il primo layer 'contenitore'
-				// e il layer posticcio blank
+                // read the bounding box from the first
+                if(index==0) {
+                    var bbox=$(this).find("LatLonBoundingBox:first");
+                    var bounds = new OpenLayers.Bounds(
+                        bbox.attr("minx"),
+                        bbox.attr("miny"),
+                        bbox.attr("maxx"),
+                        bbox.attr("maxy")
+                    );
+                    // transform the bbox to 900913 and have KVO notify the map
+                    Maps.set("bbox",bounds.transform(new OpenLayers.Projection('EPSG:4326'),new OpenLayers.Projection('EPSG:900913')));
+                }
+				// can now skip first and proceed
 				if ( index!=0 && $(this).attr('queryable')!="0" ) {
 					var theName = $(this).find('Name:first').text();
 					if (theName!="blank:blank") {

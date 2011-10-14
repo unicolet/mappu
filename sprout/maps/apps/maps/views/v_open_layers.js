@@ -78,9 +78,16 @@ Maps.OpenLayers = SC.CollectionView.extend(
             //this.addUtilityLayers(map);
             this.addControls(map);
 
-            map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
+
+            //map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
             this.set('olmap', map);
         },
+
+        bboxDidChange: function() {
+            if(Maps.get("bbox") && this.get("olmap")) {
+                this.get("olmap").zoomToExtent(Maps.get("bbox"));
+            }
+        }.observes("Maps.bbox"),
 
         addGoogleLayers: function(map) {
             // create Google Mercator layers
