@@ -151,10 +151,6 @@ Maps.openLayersController = SC.ArrayController.create(
                 } else {
                     Maps.features.refresh();
                 }
-                if (Maps.first_time == YES) {
-                    //Maps.mainPage.mainPane.toolbar.layers.set("value", "RESULTS");
-                    Maps.first_time = NO;
-                }
                 SC.RunLoop.end();
 
             } else {

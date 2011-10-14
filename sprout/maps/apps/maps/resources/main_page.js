@@ -84,7 +84,7 @@ Maps.mainPage = SC.Page.design({
             childViews: 'topLeftView bottomRightView'.w(),
 
             topLeftView: Maps.OpenLayers.design(SC.SplitChild, {
-                layout: { top: 37, left: 0, bottom:0, right: 224 },
+                layout: { top: 37, left: 0, bottom:0, right: 300 },
 
                 layerId: 'olmap',
 
@@ -93,17 +93,17 @@ Maps.mainPage = SC.Page.design({
             }),
 
             bottomRightView: SC.View.design(SC.SplitChild, {
-                size: 200,
-                layout: { top: 37, width: 223, bottom:0, right: 0 },
+                size: 300,
+                layout: { top: 37, width: 299, bottom:0, right: 0 },
 
-                childViews: "resultsView featureView".w(),
+                childViews: "resultsView buttons featureView".w(),
                 resultsView: SC.ScrollView.design({
                     layout: { top: 0, left: 0, height:250, right: -1 },
                     hasHorizontalScroller: NO,
                     backgroundColor: 'white',
                     contentView: SC.ListView.design({
                         classNames: ["maps-chkbox-starred"],
-                        rowHeight: 24,
+                        rowHeight: 30,
                         contentBinding: 'Maps.featureInfoController.arrangedObjects',
                         selectionBinding: 'Maps.featureInfoController.selection',
                         contentValueKey: "name",
@@ -112,8 +112,28 @@ Maps.mainPage = SC.Page.design({
                     })
                 }),
 
+                buttons: SC.View.design({
+                    layout: { top: 251, height: 40, left:0, right: -1 },
+                    childViews: "loading".w(),
+                    loading:SC.ImageView.design({
+                        layout: { top: 0, bottom:0, width:40, right: 0 },
+                        value: "spinner",
+                        isVisibleBinding: "Maps.isLoading",
+                        
+                        didAppendToDocument: function() {
+                            SC.Request.manager.inflight.addObserver('[]', function(array) {
+                                var length=array.get('length');
+                                
+                                SC.run(function() {
+                                    Maps.set('isLoading', length > 0);
+                                },this);
+                            });
+                        }
+                    })
+                }),
+
                 featureView: SCTable.TableView.design({
-                    layout: { top: 251, bottom: -1, left:0, right: -1 },
+                    layout: { top: 291, bottom: -1, left:0, right: -1 },
 
                     contentBinding: 'Maps.featureInfoAttributesController.arrangedObjects',
                     selectionBinding: 'Maps.featureInfoAttributesController.selection',

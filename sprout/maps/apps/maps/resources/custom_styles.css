@@ -79,3 +79,9 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
         }
     }
 }
+
+.spinner {
+    background-image: static_url('images/spinner.gif');
+    background-repeat:no-repeat;
+    background-position:center;
+}
