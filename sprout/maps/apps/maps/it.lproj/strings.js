@@ -23,7 +23,7 @@ SC.stringsFor('it', {
   "_query_howto" : "Fai doppio click per scegliere una delle due ricerche disponibili",
   "_back" : "Indietro",
   "_run"  : "Esegui",
-  "_streets_satellite" : "Strade Satellite",
+  "_streets_satellite" : "Streets Satellite",
   "_info" : "Informazioni",
   "_opacity" : "Trasparenza",
   "_intersection" : "Intersezione",
