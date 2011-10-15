@@ -134,6 +134,9 @@ Maps.MainResponder = SC.Responder.create({
             format: new OpenLayers.Format.GML.v3({})
         });
 
+        // start spinner
+        Maps.set("isLoading", YES);
+
         wfs.read({
             params:{
                 "CQL_FILTER":Maps.layerQueryController.getCQLFilter()
@@ -143,10 +146,15 @@ Maps.MainResponder = SC.Responder.create({
     },
 
     didFetchWfsFeatures : function(response, options) {
-        //console.log("Maps.MainResponder.didFetchWfsFeatures");
-        var gml = new OpenLayers.Format.GML({extractAttributes: true});
-        response.features = gml.read(response.priv.responseXML);
-        Maps.openLayersController.showInfo(response);
+        try {
+            var gml = new OpenLayers.Format.GML({extractAttributes: true});
+            response.features = gml.read(response.priv.responseXML);
+            Maps.openLayersController.showInfo(response);
+        } catch(e) {
+            SC.AlertPane.warn("_op_failed".loc(), response.error, '_no_info_avail'.loc(), "OK", this);
+        }
+        // stop spinner
+        Maps.set("isLoading", NO);
     },
 
     doRemoveFilter: function() {

@@ -41,5 +41,6 @@ SC.stringsFor('it', {
   "_query_error_title" : "La connessione al server e' fallita",
   "_query_error_detail" : "Mentre l'applicazione stava colloquiando con il server remoto si e' verificato un errore. HTTP codice di errore (se disponibili): ",
   "_starred" : "Aggiunta ai preferiti",
-  "_not_starred" : "Non l'hai aggiunta ai preferiti"
+  "_not_starred" : "Non l'hai aggiunta ai preferiti",
+  "_no_info_avail" : "Nessuna ulteriore informazione disponibile"
 }) ;

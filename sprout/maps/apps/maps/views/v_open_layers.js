@@ -181,6 +181,7 @@ Maps.OpenLayers = SC.CollectionView.extend(
                     srs: 'EPSG:900913'
                 });
             featureInfoControl.events.register("getfeatureinfo", Maps.openLayersController, Maps.openLayersController.showInfo);
+            featureInfoControl.events.register("beforegetfeatureinfo", Maps.openLayersController, function(){Maps.set("isLoading",YES);});
             map.addControl(featureInfoControl);
 
             featureInfoControl.activate();

@@ -42,5 +42,6 @@ SC.stringsFor('en', {
   "_query_error_title" : "The server conncetion failed",
   "_query_error_detail" : "While connecting to the server the application received an error. HTTP error code (if available): ",
   "_starred" : "You starred this feature",
-  "_not_starred" : "This feature has not been starred"
+  "_not_starred" : "This feature has not been starred",
+  "_no_info_avail" : "No additional information available"
 }) ;

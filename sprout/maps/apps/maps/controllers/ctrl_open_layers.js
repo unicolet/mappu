@@ -105,6 +105,9 @@ Maps.openLayersController = SC.ArrayController.create(
         * 
         */
         showInfo: function(event) {
+            // disable spinner
+            Maps.set("isLoading",NO);
+            
             if (event.features && event.features.length) {
                 this.set("measure","");
 
