@@ -79,9 +79,95 @@ Maps.mainPage = SC.Page.design({
         }),
 
         splitview : SC.SplitView.design({
+            // these methods overriden from default because the default (wrongly) returns 100 when size==0
+            splitViewGetSizeForChild: function(splitView, child) {
+                return child.get('size')===undefined ? 100 : child.get('size');
+            },
+
+            collapseToLeft: function(child){
+                // check if child is already collapsed
+                if(child.get("size")!=0) {
+                    var childViews = this.get("childViews");
+                    var childIndex=-1;
+                    for(var i=0;i<childViews.length;i++) {
+                        if(childViews[i]===child) childIndex=i;
+                    }
+
+                    // set size=0 or won't collapse, save current size
+                    var currentSize=child.get("size");
+                    child.set("size",0);
+                    if(childIndex==(childViews.length-1)) {
+                        // collapsing rightmost child
+                        this.adjustPositionForChild(child,childViews[childIndex-2].get("position") + currentSize);
+                    } else {
+                        // to collapse we expand the child on the right
+                        this.adjustPositionForChild(childViews[childIndex+2], child.get("position"));
+                    }
+                }
+            },
+
+            collapseToRight: function(child){
+                // check if child is already collapsed
+                if(child.get("size")!=0) {
+                    var childViews = this.get("childViews");
+                    var childIndex=-1;
+                    for(var i=0;i<childViews.length;i++) {
+                        if(childViews[i]===child) childIndex=i;
+                    }
+
+                    // set size=0 or won't collapse, save current size
+                    var currentSize=child.get("size");
+
+                    if(childIndex==0) {
+                        // cannot collapse to the right
+                    } else {
+                        child.set("size",0);
+                        // move collapsing child to the right
+                        this.adjustPositionForChild(child,child.get("position") + currentSize);
+                        // expand the child on the right to the right
+                        this.adjustPositionForChild(childViews[childIndex-2], child.get("position")+currentSize);
+                    }
+                }
+            },
+
+            expandToLeft: function(child, size){
+                var childViews = this.get("childViews");
+                var childIndex=-1;
+                for(var i=0;i<childViews.length;i++) {
+                    if(childViews[i]===child) childIndex=i;
+                }
+
+                // set size to expand to
+                child.set("size",size);
+                if(childIndex==0) {
+                    // child is the leftmost child
+                    this.adjustPositionForChild(childViews[childIndex+1], child.get("position"));
+                } else {
+                    // resize against left child
+                    this.adjustPositionForChild(child,childViews[childIndex-1].get("position") - size);
+                }
+            },
+
+            expandToRight: function(child, size){
+                var childViews = this.get("childViews");
+                var childIndex=-1;
+                for(var i=0;i<childViews.length;i++) {
+                    if(childViews[i]===child) childIndex=i;
+                }
+
+                // set size to expand to
+                child.set("size",size);
+                if(childIndex==childViews.length-1) {
+                    // cannot expand further rightmost child
+                } else {
+                    // resize against right child
+                    this.adjustPositionForChild(childViews[childIndex+1], childViews[childIndex+1].get("position")+size);
+                }
+            },
+
             layout: { top: 45, left: 0, bottom:0, right: 0 },
             layoutDirection: SC.LAYOUT_HORIZONTAL,
-            childViews: 'topLeftView bottomRightView'.w(),
+            childViews: 'topLeftView middleRightView bottomRightView'.w(),
 
             topLeftView: Maps.OpenLayers.design(SC.SplitChild, {
                 layout: { top: 37, left: 0, bottom:0, right: 300 },
@@ -90,6 +176,17 @@ Maps.mainPage = SC.Page.design({
 
                 contentBinding: "Maps.openLayersController.content",
                 exampleView: Maps.OpenLayersLayer
+            }),
+
+            middleRightView: SC.View.design(SC.Animatable,SC.SplitChild,{
+                transitions: {
+                    width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
+                },
+                layout: {top:0,right:0, bottom:0, left:0},
+                size: 0,
+                canCollapse: YES,
+                collapseAtSize:0,
+                minimumSize:0
             }),
 
             bottomRightView: SC.View.design(SC.SplitChild, {
