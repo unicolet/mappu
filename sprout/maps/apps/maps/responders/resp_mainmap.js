@@ -19,7 +19,7 @@ Maps.MainResponder = SC.Responder.create({
         // always fetch links
         Maps.linkController.findLinks();
 
-        SC.PickerPane.design(SC.Animatable,{
+        var pickerPane = SC.PickerPane.design(SC.Animatable,{
             themeName: 'popover',
 
             transitions: {
@@ -47,7 +47,15 @@ Maps.MainResponder = SC.Responder.create({
                     })
                 })
             })
-        }).create().popup(view, SC.PICKER_POINTER);
+        }).create();
+        // prepare animation
+        pickerPane.disableAnimation();
+        pickerPane.adjust("opacity", 0).updateStyle();
+        // append
+        pickerPane.popup(view, SC.PICKER_POINTER);
+        pickerPane.enableAnimation();
+        // perform animation
+        pickerPane.adjust("opacity", 1);
     },
 
 
