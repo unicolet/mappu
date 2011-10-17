@@ -43,5 +43,8 @@ SC.stringsFor('en', {
   "_query_error_detail" : "While connecting to the server the application received an error. HTTP error code (if available): ",
   "_starred" : "You starred this feature",
   "_not_starred" : "This feature has not been starred",
-  "_no_info_avail" : "No additional information available"
+  "_no_info_avail" : "No additional information available",
+  "_geotools_help" : "Identify features by clicking on the map, then drag them from the"+
+      " list on the right to the placeholders above. Select an operation from the menu and then click 'OK' to execute it."+
+      " Click on clear to remove the result from the map."
 }) ;

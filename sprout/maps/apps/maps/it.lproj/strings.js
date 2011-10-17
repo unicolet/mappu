@@ -42,5 +42,8 @@ SC.stringsFor('it', {
   "_query_error_detail" : "Mentre l'applicazione stava colloquiando con il server remoto si e' verificato un errore. HTTP codice di errore (se disponibili): ",
   "_starred" : "Aggiunta ai preferiti",
   "_not_starred" : "Non l'hai aggiunta ai preferiti",
-  "_no_info_avail" : "Nessuna ulteriore informazione disponibile"
+  "_no_info_avail" : "Nessuna ulteriore informazione disponibile",
+  "_geotools_help" : "Clicca sulla mappa per selezionare degli oggetti, quindi trascinali dalla lista a destra su"+
+      " uno o entrambi i segnaposto qui sopra. Scegli l'operazione da eseguire dal menu e quindi clicca su 'OK' per eseguirla."+
+      " Clicca su pulisci per rimuovere il risultato dalla mappa."
 }) ;

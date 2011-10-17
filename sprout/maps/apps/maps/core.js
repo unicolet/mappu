@@ -24,7 +24,7 @@ Maps = SC.Application.create(
         wmsStore: SC.Store.create({commitRecordsAutomatically: YES}).from('Maps.LayerDataSource'),
         store: SC.Store.create({commitRecordsAutomatically: YES}).from('Maps.MapsDataSource'),
 
-        isLoading: YES,
+        isLoading: NO,
 
         print: function() {
             Maps_print();

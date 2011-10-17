@@ -77,15 +77,12 @@ Maps.openLayersController = SC.ArrayController.create(
             }
             if (tool == 'toolGeo') {
                 this.clearGeoToolsSelection();
-                // reset
-                if (!Maps.mainPage.geotools.isVisibleInWindow) {
-                    // make invisible w/o animation
-                    Maps.mainPage.geotools.adjust("opacity", 0).updateStyle();
-                    // append
-                    Maps.mainPage.geotools.append();
-                    // animate appearance
-                    Maps.mainPage.geotools.adjust("opacity", 1);
-                }
+                Maps.mainPage.mainPane.splitview.middleRightView.set("nowShowing","Maps.mainPage.geotoolsPane");
+
+                if(Maps.mainPage.mainPane.splitview.middleRightView.get("size")==0)
+                    Maps.mainPage.mainPane.splitview.expandToLeft(Maps.mainPage.mainPane.splitview.middleRightView, 160);
+                else
+                    Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
                 this.set("tools", "toolMove");
             }
         }.observes(".tools"),

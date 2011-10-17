@@ -1,9 +1,9 @@
 /**
-  *  Mappu : yet another web gis (with social taste).
-  *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
-  *
-  *  Licensed under the LGPL.
-*/
+ *  Mappu : yet another web gis (with social taste).
+ *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
+ *
+ *  Licensed under the LGPL.
+ */
 
 /*globals Maps */
 
@@ -22,7 +22,7 @@ Maps.mainPage = SC.Page.design({
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
-    mainPane: SC.MainPane.design(SC.Animatable,{
+    mainPane: SC.MainPane.design(SC.Animatable, {
         childViews: 'toolbar splitview'.w(),
 
         transitions: {
@@ -42,7 +42,7 @@ Maps.mainPage = SC.Page.design({
                 classNames: "app-logo".w()
             }),
             layers : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, right: 630, width: 160 },
+                layout: { centerY: 0, height: 30, centerX: 0, width: 160 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: "_layers".loc(), action: 'LAYERS', icon: "sc-icon-options-16"},
@@ -56,7 +56,7 @@ Maps.mainPage = SC.Page.design({
                 allowsMultipleSelection: YES
             }),
             tools : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, right: 370, width: 270 },
+                layout: { centerY: 0, height: 30, centerX: 240, width: 270 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: "_pan".loc(), action: 'toolMove', icon:""},
@@ -81,87 +81,87 @@ Maps.mainPage = SC.Page.design({
         splitview : SC.SplitView.design({
             // these methods overriden from default because the default (wrongly) returns 100 when size==0
             splitViewGetSizeForChild: function(splitView, child) {
-                return child.get('size')===undefined ? 100 : child.get('size');
+                return child.get('size') === undefined ? 100 : child.get('size');
             },
 
-            collapseToLeft: function(child){
+            collapseToLeft: function(child) {
                 // check if child is already collapsed
-                if(child.get("size")!=0) {
+                if (child.get("size") != 0) {
                     var childViews = this.get("childViews");
-                    var childIndex=-1;
-                    for(var i=0;i<childViews.length;i++) {
-                        if(childViews[i]===child) childIndex=i;
+                    var childIndex = -1;
+                    for (var i = 0; i < childViews.length; i++) {
+                        if (childViews[i] === child) childIndex = i;
                     }
 
                     // set size=0 or won't collapse, save current size
-                    var currentSize=child.get("size");
-                    child.set("size",0);
-                    if(childIndex==(childViews.length-1)) {
+                    var currentSize = child.get("size");
+                    child.set("size", 0);
+                    if (childIndex == (childViews.length - 1)) {
                         // collapsing rightmost child
-                        this.adjustPositionForChild(child,childViews[childIndex-2].get("position") + currentSize);
+                        this.adjustPositionForChild(child, childViews[childIndex - 2].get("position") + currentSize);
                     } else {
                         // to collapse we expand the child on the right
-                        this.adjustPositionForChild(childViews[childIndex+2], child.get("position"));
+                        this.adjustPositionForChild(childViews[childIndex + 2], child.get("position"));
                     }
                 }
             },
 
-            collapseToRight: function(child){
+            collapseToRight: function(child) {
                 // check if child is already collapsed
-                if(child.get("size")!=0) {
+                if (child.get("size") != 0) {
                     var childViews = this.get("childViews");
-                    var childIndex=-1;
-                    for(var i=0;i<childViews.length;i++) {
-                        if(childViews[i]===child) childIndex=i;
+                    var childIndex = -1;
+                    for (var i = 0; i < childViews.length; i++) {
+                        if (childViews[i] === child) childIndex = i;
                     }
 
                     // set size=0 or won't collapse, save current size
-                    var currentSize=child.get("size");
+                    var currentSize = child.get("size");
 
-                    if(childIndex==0) {
+                    if (childIndex == 0) {
                         // cannot collapse to the right
                     } else {
-                        child.set("size",0);
+                        child.set("size", 0);
                         // move collapsing child to the right
-                        this.adjustPositionForChild(child,child.get("position") + currentSize);
+                        this.adjustPositionForChild(child, child.get("position") + currentSize);
                         // expand the child on the right to the right
-                        this.adjustPositionForChild(childViews[childIndex-2], child.get("position")+currentSize);
+                        this.adjustPositionForChild(childViews[childIndex - 2], child.get("position") + currentSize);
                     }
                 }
             },
 
-            expandToLeft: function(child, size){
+            expandToLeft: function(child, size) {
                 var childViews = this.get("childViews");
-                var childIndex=-1;
-                for(var i=0;i<childViews.length;i++) {
-                    if(childViews[i]===child) childIndex=i;
+                var childIndex = -1;
+                for (var i = 0; i < childViews.length; i++) {
+                    if (childViews[i] === child) childIndex = i;
                 }
 
                 // set size to expand to
-                child.set("size",size);
-                if(childIndex==0) {
+                child.set("size", size);
+                if (childIndex == 0) {
                     // child is the leftmost child
-                    this.adjustPositionForChild(childViews[childIndex+1], child.get("position"));
+                    this.adjustPositionForChild(childViews[childIndex + 1], child.get("position"));
                 } else {
                     // resize against left child
-                    this.adjustPositionForChild(child,childViews[childIndex-1].get("position") - size);
+                    this.adjustPositionForChild(child, childViews[childIndex - 1].get("position") - size);
                 }
             },
 
-            expandToRight: function(child, size){
+            expandToRight: function(child, size) {
                 var childViews = this.get("childViews");
-                var childIndex=-1;
-                for(var i=0;i<childViews.length;i++) {
-                    if(childViews[i]===child) childIndex=i;
+                var childIndex = -1;
+                for (var i = 0; i < childViews.length; i++) {
+                    if (childViews[i] === child) childIndex = i;
                 }
 
                 // set size to expand to
-                child.set("size",size);
-                if(childIndex==childViews.length-1) {
+                child.set("size", size);
+                if (childIndex == childViews.length - 1) {
                     // cannot expand further rightmost child
                 } else {
                     // resize against right child
-                    this.adjustPositionForChild(childViews[childIndex+1], childViews[childIndex+1].get("position")+size);
+                    this.adjustPositionForChild(childViews[childIndex + 1], childViews[childIndex + 1].get("position") + size);
                 }
             },
 
@@ -169,8 +169,12 @@ Maps.mainPage = SC.Page.design({
             layoutDirection: SC.LAYOUT_HORIZONTAL,
             childViews: 'topLeftView middleRightView bottomRightView'.w(),
 
-            topLeftView: Maps.OpenLayers.design(SC.SplitChild, {
-                layout: { top: 37, left: 0, bottom:0, right: 300 },
+            topLeftView: Maps.OpenLayers.design(SC.Animatable, SC.SplitChild, {
+                transitions: {
+                    //width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
+                },
+
+                layout: { top: 0, left: 0, bottom:0, right: 300 },
 
                 layerId: 'olmap',
 
@@ -178,20 +182,25 @@ Maps.mainPage = SC.Page.design({
                 exampleView: Maps.OpenLayersLayer
             }),
 
-            middleRightView: SC.View.design(SC.Animatable,SC.SplitChild,{
+            middleRightView: SC.ContainerView.extend(SC.Animatable, SC.SplitChild,{
+                layout:{top:0,bottom:0,left:0,right:0},
                 transitions: {
-                    width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
+                    left: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT },
+                    width: { duration: .30, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
                 },
-                layout: {top:0,right:0, bottom:0, left:0},
+
                 size: 0,
                 canCollapse: YES,
-                collapseAtSize:0,
                 minimumSize:0
             }),
 
-            bottomRightView: SC.View.design(SC.SplitChild, {
+            bottomRightView: SC.View.design(SC.Animatable, SC.SplitChild, {
                 size: 300,
-                layout: { top: 37, width: 299, bottom:0, right: 0 },
+                layout: { top: 0, width: 299, bottom:0, right: 0 },
+
+                transitions: {
+                    //width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
+                },
 
                 childViews: "resultsView buttons featureView".w(),
                 resultsView: SC.ScrollView.design({
@@ -216,14 +225,14 @@ Maps.mainPage = SC.Page.design({
                         layout: { top: 0, bottom:0, width:40, right: 0 },
                         value: "spinner",
                         isVisibleBinding: "Maps.isLoading",
-                        
+
                         didAppendToDocument: function() {
                             SC.Request.manager.inflight.addObserver('[]', function(array) {
-                                var length=array.get('length');
-                                
+                                var length = array.get('length');
+
                                 SC.run(function() {
                                     Maps.set('isLoading', length > 0);
-                                },this);
+                                }, this);
                             });
                         }
                     })
@@ -399,7 +408,7 @@ Maps.mainPage = SC.Page.design({
         })
     }),
 
-    layerSearchPane : SC.PickerPane.design(SC.Animatable,{
+    layerSearchPane : SC.PickerPane.design(SC.Animatable, {
         themeName: 'popover',
 
         transitions: {
@@ -420,13 +429,13 @@ Maps.mainPage = SC.Page.design({
         })
     }).create(),
 
-    layerPalette : SC.PickerPane.extend(SC.Animatable,{
+    layerPalette : SC.PickerPane.extend(SC.Animatable, {
         themeName: 'popover',
 
         transitions: {
             opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
         },
-        
+
         layout: { width: 500, height: 300 },
         contentView: SC.WorkspaceView.extend({
             topToolbar: null,
@@ -448,7 +457,7 @@ Maps.mainPage = SC.Page.design({
                     layout: { top: 40, bottom: 0, left: 0, width: 210 },
                     backgroundColor: 'white',
                     contentView: SC.ListView.design({
-			layout:{top:0,bottom:0,right:0,left:8},
+                        layout:{top:0,bottom:0,right:0,left:8},
                         rowHeight: 30,
                         contentBinding: 'Maps.openLayersController.arrangedObjects',
                         selectionBinding: 'Maps.openLayersController.selection',
@@ -506,54 +515,55 @@ Maps.mainPage = SC.Page.design({
         })
     }).create(),
 
-    geotools : SC.PalettePane.create(SC.Animatable, {
-        layout: { width: 144, height: 159, left: 200, top: 100 },
-        transitions: {
-            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT } // CSS-transition-only timing function (JavaScript gets linear)
-        },
-        contentView: SC.View.extend({
-            layout:{top:0,bottom:0,left:0,right:0},
-            childViews: "feature1 feature2 operation go".w(),
-            feature1: Maps.DropView.design({
-                layout: {top: 5, left:5, right:5, height:36},
-                valueBinding: "Maps.featureInfoController.feature1descr",
-                textAlign: SC.ALIGN_CENTER,
-                classNames: ["maps-dropview"],
-                dropTargetProperty: "feature1"
-            }),
-            feature2: Maps.DropView.design({
-                layout: {top: 46, left:5, right:5, height:36},
-                valueBinding: "Maps.featureInfoController.feature2descr",
-                textAlign: SC.ALIGN_CENTER,
-                classNames: ["maps-dropview"],
-                dropTargetProperty: "feature2"
-            }),
-            operation: SC.SelectView.design({
-                layout: {top: 97, left:5, right:5, height:36},
-                items: [
-                    { title: "_intersection", value: "Intersection", pos: 1},
-                    { title: "_union", value: "Union", pos: 2 },
-                    { title: "_buffer", value: "Buffer", pos: 3 }
-                ],
-                itemTitleKey: 'title',
-                itemValueKey: 'value',
-                itemSortKey: 'pos',
-                checkboxEnabled: YES,
-                valueBinding: "Maps.featureInfoController.operation"
-            }),
-            go: SC.SegmentedView.design({
-                layout: {top: 128, left:5, right:5, height:36},
-                items: [
-                    {title: "OK", action:"performGeoOperation"},
-                    {title: "_clear", action:"performGeoClear"},
-                    {title: "_close", action:"performGeoClose"}
-                ],
-                itemTitleKey: "title",
-                itemActionKey: "action"
-            })
+    geotoolsPane: SC.View.design({
+        childViews: "feature1 feature2 operation go help helptext".w(),
+        feature1: Maps.DropView.design({
+            layout: {top: 5, left:5, right:5, height:30},
+            valueBinding: "Maps.featureInfoController.feature1descr",
+            textAlign: SC.ALIGN_CENTER,
+            classNames: ["maps-dropview","text-shadow"],
+            dropTargetProperty: "feature1"
+        }),
+        feature2: Maps.DropView.design({
+            layout: {top: 51, left:5, right:5, height:30},
+            valueBinding: "Maps.featureInfoController.feature2descr",
+            textAlign: SC.ALIGN_CENTER,
+            classNames: ["maps-dropview","text-shadow"],
+            dropTargetProperty: "feature2"
+        }),
+        operation: SC.SelectView.design({
+            layout: {top: 102, left:5, right:5, height:36},
+            items: [
+                { title: "_intersection", value: "Intersection", pos: 1},
+                { title: "_union", value: "Union", pos: 2 },
+                { title: "_buffer", value: "Buffer", pos: 3 }
+            ],
+            itemTitleKey: 'title',
+            itemValueKey: 'value',
+            itemSortKey: 'pos',
+            checkboxEnabled: YES,
+            valueBinding: "Maps.featureInfoController.operation"
+        }),
+        go: SC.SegmentedView.design({
+            layout: {top: 133, width:150, height:36, left:5},
+            items: [
+                {title: "OK", action:"performGeoOperation"},
+                {title: "_clear", action:"performGeoClear"},
+                {title: "_close", action:"performGeoClose"}
+            ],
+            itemTitleKey: "title",
+            itemActionKey: "action"
+        }),
+        help: SC.ImageView.design({
+            layout: {top: 180, centerX:0, height:26, width:26},
+            value: "sc-icon-help-24"
+        }),
+        helptext: SC.LabelView.design({
+            layout: {top: 210,left:5, right:5, bottom:5},
+            value:"_geotools_help".loc(),
+            classNames: "text-shadow".w()
         })
     })
-
 });
 
 Maps.loginPage = SC.Page.design({
@@ -611,5 +621,5 @@ Maps.loginPage = SC.Page.design({
                 isEnabledBinding: "Maps.authenticationManager.inputUsername"
             })
         })
-    })
+    }),
 });

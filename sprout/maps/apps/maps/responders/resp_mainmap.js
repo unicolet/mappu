@@ -60,10 +60,7 @@ Maps.MainResponder = SC.Responder.create({
 
 
     performGeoClose:function() {
-        // animation
-        Maps.mainPage.geotools.adjust("opacity", 0);
-        // now remove it
-        setTimeout(function(){Maps.mainPage.geotools.remove();}, 1000);
+        Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
     },
 
     saveTags: function() {

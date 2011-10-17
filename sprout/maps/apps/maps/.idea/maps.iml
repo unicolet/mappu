@@ -6,6 +6,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sproutcore145" level="application" />
     <orderEntry type="library" name="sproutcore15" level="application" />
+    <orderEntry type="library" name="OpenLayers_2.11" level="application" />
+    <orderEntry type="library" name="sproutcore16-animation" level="application" />
+    <orderEntry type="library" name="sproutcore16-desktop" level="application" />
   </component>
 </module>
 

@@ -25,6 +25,7 @@ div.maps-dropview {
 	font-style:italic;
 	vertical-align: middle;
 	padding-top: 10px;
+    border: 1px dashed #ccc;
 }
 
 .drag-entered {
@@ -84,4 +85,9 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
     background-image: static_url('images/spinner.gif');
     background-repeat:no-repeat;
     background-position:center;
+}
+
+div.text-shadow {
+    color: #222;
+    text-shadow: 0px 1px 1px white;
 }
