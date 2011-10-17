@@ -21,7 +21,7 @@ var iconSelected = new OpenLayers.Icon(sc_static('/images/pin_selected.png'), si
 var icon = new OpenLayers.Icon(sc_static('/images/pin.png'), size, offset);
 var currentMarker = null;
 
-Maps.OpenLayers = SC.CollectionView.extend(
+Maps.OpenLayers = SC.View.extend(
     /** @scope Maps.OpenLayers.prototype */ {
 
         // utility properties
@@ -34,24 +34,54 @@ Maps.OpenLayers = SC.CollectionView.extend(
         MARKERS_LAYER_NAME:"_MARKERS",
         olmap: null,
 
-        render: function(context) {
-            return context;
+        /*
+         * since these events will be handled by OL pretend we handled them or we will
+         * handle them twice.
+         *
+         */
+        mouseMoved: function(){
+            return YES;
         },
-        update: function(jquery) {
-            return jquery;
+        mouseDown: function(){
+            return YES;
+        },
+        mouseUp: function(){
+            return YES;
         },
 
-        renderOpenLayersMap: function() {
+        render: function(c,f) {
+            console.log("rendering");
+            return c;
+        },
+        update: function(c) {
+            console.log("updating");
+            return c;
+        },
+
+        didContentChange: function() {
+            var content=this.get("content");
+            var childViews=this.get("childViews");
+
+            //console.log("Content length changed, length is now: "+this.get("content").length()+" views: "+childViews.length);
+
+            for(var i=childViews.length; i < content.length(); i++) {
+                //console.log("Adding layer "+i+" content[i]="+content.objectAt(i));
+                // add new childView...
+                var layer=Maps.OpenLayersLayer.design({
+                    content: content.objectAt(i)
+                }).create();
+                this.appendChild(layer);
+            }
+        }.observes(".content.length"),
+
+        didAppendToDocument: function() {
+            //console.log("Appending to document");
+            this.initOpenLayers();
             var layer = this.get("layer"),
                 map   = this.get("olmap");
-            if (layer && map) {
-                ///console.log("OL renderOpenLayersMap::render");
-                map.render(layer);
-            } else if(!map && layer) {
-                //console.log("OL renderOpenLayersMap::init");
-                this.initOpenLayers();
-            }
-        }.observes("layer"),
+
+            this.invokeLast(function(){map.render(layer);});
+        },
 
         initOpenLayers: function() {
             var options = {
@@ -272,11 +302,10 @@ Maps.OpenLayers = SC.CollectionView.extend(
     });
 
 Maps.OpenLayersLayer = SC.View.extend({
-    isReusableInCollections: YES,
 
     content: null,
 
-    displayProperties: ["content", "content.visible", "content.opacity", "content.cql_filter"],
+    displayProperties: ["content", "content.order", "content.visible", "content.opacity", "content.cql_filter"],
 
     render: function(context, firstTime) {
         this.createOrUpdateWMSLayer();
@@ -292,6 +321,7 @@ Maps.OpenLayersLayer = SC.View.extend({
     createOrUpdateWMSLayer: function() {
         var map   = this.parentView.get("olmap");
         var layer = this.get("content");
+
         //var wmsLayerWithName = map.getLayersByName(layer.get("name"));
         //var wms = (wmsLayerWithName.length ? wmsLayerWithName[0] : null);
         var wms = this.wmsLayersCache[layer.get("name")];
@@ -345,5 +375,6 @@ Maps.OpenLayersLayer = SC.View.extend({
                 map.removeLayer(wms);
             }
         }
+
     }
 });
