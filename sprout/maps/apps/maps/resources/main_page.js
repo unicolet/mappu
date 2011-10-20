@@ -34,7 +34,7 @@ Maps.mainPage = SC.Page.design({
         toolbar : SC.ToolbarView.design({
             layout: { top: 0, left: 0, right: 0, height: 44 },
             anchorLocation: SC.ANCHOR_TOP,
-            childViews : 'logo layers tools label'.w(),
+            childViews : 'logo layers tools'.w(),
 
             logo: SC.LabelView.design({
                 layout: {centerY:0, left:20, height:24, width: 500},
@@ -68,13 +68,6 @@ Maps.mainPage = SC.Page.design({
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
                 valueBinding: "Maps.openLayersController.tools"
-            }),
-            label : SC.LabelView.design({
-                classNames: ['maps_black'],
-                controlSize: SC.LARGE_CONTROL_SIZE,
-                layout: { centerY: 0, height: 24, right: 160, width: 190 },
-                escapeHTML: NO,
-                valueBinding: "Maps.openLayersController.measure"
             })
         }),
 
@@ -208,7 +201,7 @@ Maps.mainPage = SC.Page.design({
                     hasHorizontalScroller: NO,
                     backgroundColor: 'white',
                     contentView: SC.ListView.design({
-                        classNames: ["maps-chkbox-starred"],
+                        classNames: ["maps-chkbox-starred","denim"],
                         rowHeight: 30,
                         contentBinding: 'Maps.featureInfoController.arrangedObjects',
                         selectionBinding: 'Maps.featureInfoController.selection',
@@ -220,7 +213,13 @@ Maps.mainPage = SC.Page.design({
 
                 buttons: SC.View.design({
                     layout: { top: 251, height: 40, left:0, right: -1 },
-                    childViews: "loading".w(),
+                    childViews: "notifications loading".w(),
+                    notifications : SC.LabelView.design({
+                        classNames: ['text-shadow'],
+                        layout: { centerY: 0, height: 24, right: 45, width: 100 },
+                        escapeHTML: NO,
+                        valueBinding: "Maps.openLayersController.measure"
+                    }),
                     loading:SC.ImageView.design({
                         layout: { top: 0, bottom:0, width:40, right: 0 },
                         value: "spinner",
@@ -240,6 +239,8 @@ Maps.mainPage = SC.Page.design({
 
                 featureView: SCTable.TableView.design({
                     layout: { top: 291, bottom: -1, left:0, right: -1 },
+
+                    classNames: ["denim"],
 
                     contentBinding: 'Maps.featureInfoAttributesController.arrangedObjects',
                     selectionBinding: 'Maps.featureInfoAttributesController.selection',

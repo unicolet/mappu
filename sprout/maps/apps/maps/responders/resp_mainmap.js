@@ -8,6 +8,7 @@ Maps.MainResponder = SC.Responder.create({
     // called when the user dblclicks an item in list view
     dblclick: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
+        if(!selectedFeature) return;
         var hasSocial=selectedFeature.get("social");
         var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
         var view = Maps.mainPage.mainPane.splitview.bottomRightView.resultsView.contentView.itemViewForContentIndex(selectionIndex);
