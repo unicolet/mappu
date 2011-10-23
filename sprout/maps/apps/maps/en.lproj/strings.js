@@ -19,7 +19,7 @@ SC.stringsFor('en', {
   "_howtotypetags" : "Use a comma (,) to separate tags",
   "_save"   : "Salva",
   "_addcomment_tip" : "Add a comment...",
-  "_nosocial_expl" : "The selected feature is missing and ID property and therefore it is not possible add anything to it. Please ask your GIS administrator to consider adding an ID field to this layer.",
+  "_nosocial_expl" : "The selected feature is missing an ID property and therefore it is not possible add anything to it. Please ask your GIS administrator to consider adding an ID field to this layer.",
   "_links" : "Links",
   "_query_howto" : "Double click to choose one of the available queries",
   "_back" : "Back",

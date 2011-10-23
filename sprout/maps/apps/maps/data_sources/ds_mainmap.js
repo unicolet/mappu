@@ -17,6 +17,7 @@ sc_require('models/comment');
 sc_require('models/link');
 sc_require("models/layer_query");
 sc_require("models/attribute");
+sc_require("models/tag");
 
 Maps.FEATURE_QUERY = SC.Query.remote(Maps.Feature, {});
 Maps.COMMENT_QUERY = SC.Query.remote(Maps.Comment, "social = {social}", {social: ""});
@@ -24,6 +25,8 @@ Maps.COMMENT_QUERY.set("isEditable", YES);
 Maps.LINK_QUERY = SC.Query.remote(Maps.Link, null, {});
 Maps.LAYERQUERY_QUERY = SC.Query.remote(Maps.LayerQuery, {});
 Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null, {id:-1});
+Maps.TAGSUMMARY_QUERY = SC.Query.remote(Maps.Tag);
+
 
 /* global variables */
 Maps.comments = null;
@@ -33,7 +36,14 @@ Maps.MapsDataSource = SC.DataSource.extend(
         rawFeatures:[],
 
         fetch: function(store, query) {
-            if (query.recordType == Maps.LayerQuery) {
+            if (query === Maps.TAGSUMMARY_QUERY) {
+                console.log("Maps.MapsDataSource.fetch() - Maps.TagSummary");
+                SC.Request.getUrl('/mapsocial/social/tagSummary')
+                    .set('isJSON', YES)
+                    .notify(this, 'didFetchTagSummary', store, query)
+                    .send();
+                return YES;
+            } else if (query.recordType == Maps.LayerQuery) {
                 //console.log("Maps.MapsDataSource.fetch() - Maps.LayerQuery");
                 SC.Request.getUrl('/mapsocial/layerQuery/?')
                     .set('isJSON', YES)
@@ -68,6 +78,17 @@ Maps.MapsDataSource = SC.DataSource.extend(
             }
             return NO;
         },
+
+        didFetchTagSummary : function(response, store, query) {
+            if (SC.ok(response)) {
+                var storeKeys = store.loadRecords(Maps.Tag, response.get('body').content);
+                store.loadQueryResults(query, storeKeys);
+            } else {
+                store.dataSourceDidErrorQuery(query, response);
+                this.notifyError(response);
+            }
+        },
+
 
         didFetchLayerQueries : function(response, store, query) {
             if (SC.ok(response)) {
@@ -196,8 +217,11 @@ Maps.MapsDataSource = SC.DataSource.extend(
         updateRecord: function(store, storeKey, params) {
             //console.log("in Maps.MapsDataSource.updateRecord() for " + store.idFor(storeKey));
             var url = null;
-            if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Attribute) || SC.kindOf(store.recordTypeFor(storeKey), Maps.Feature)) {
+            if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Attribute)
+                || SC.kindOf(store.recordTypeFor(storeKey), Maps.Feature)
+                || SC.kindOf(store.recordTypeFor(storeKey), Maps.Tag)) {
                 // only used in the UI
+                store.dataSourceDidComplete(storeKey);
                 return YES;
             } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Social)) {
                 url = '/mapsocial/social/' + store.idFor(storeKey) + '?alt=json';

@@ -86,7 +86,8 @@ Maps.openLayersController = SC.ArrayController.create(
                 this.set("tools", "toolMove");
             }
             if (tool == 'toolExplorer') {
-                //Maps.mainPage.mainPane.splitview.middleRightView.set("nowShowing","Maps.mainPage.geotoolsPane");
+                Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
+                Maps.mainPage.mainPane.splitview.labelExplorer.set("nowShowing","Maps.mainPage.explorerPane");
 
                 if(Maps.mainPage.mainPane.splitview.labelExplorer.get("size")==0)
                     Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 250);

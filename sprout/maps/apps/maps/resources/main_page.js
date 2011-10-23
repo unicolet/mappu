@@ -564,7 +564,27 @@ Maps.mainPage = SC.Page.design({
             value:"_geotools_help".loc(),
             classNames: "text-shadow".w()
         })
+    }),
+
+    explorerPane: SC.View.design({
+        layout: {top:0,bottom:0,left:0,right:0},
+        childViews: "tags".w(),
+
+        tags:SC.ScrollView.design({
+            contentView: SC.ListView.design({
+                classNames: ["denim"],
+                rowHeight: 30,
+                contentBinding: "Maps.tagsController.arrangedObjects",
+                selectionBinding: "Maps.tagsController.selection",
+                contentValueKey: "tag",
+                contentCheckboxKey: "visible",
+                //contentIconKey: "legendIcon",
+                contentUnreadCountKey: "occurrences"
+                //hasContentIcon: YES
+            })
+        })
     })
+
 });
 
 Maps.loginPage = SC.Page.design({
