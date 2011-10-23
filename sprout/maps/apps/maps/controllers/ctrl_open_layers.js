@@ -138,8 +138,13 @@ Maps.openLayersController = SC.ArrayController.create(
                             feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                         }
                     } catch(e) {
-                        alert("Errore leggendo i risulati: "+e);
+                        // TODO: translate and SC-ize
+                        alert("Errore leggendo i risultati: "+e);
                     }
+
+                    // save the centroid as a feature attibute, we'll need it later
+                    feature.data['x']=c.x;
+                    feature.data['y']=c.y;
 
                     var marker = new OpenLayers.Marker(new OpenLayers.LonLat(c.x, c.y), icon.clone());
                     marker.data = {'feature':feature, 'idx':i};

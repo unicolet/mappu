@@ -19,5 +19,7 @@ Maps.Social = SC.Record.extend(
 /** @scope Maps.Social.prototype */ {
 
 	starred: SC.Record.attr(Boolean),
-	tags: SC.Record.attr(String)
+	tags: SC.Record.attr(String),
+    x: SC.Record.attr(Number),
+    y: SC.Record.attr(Number)
 }) ;
