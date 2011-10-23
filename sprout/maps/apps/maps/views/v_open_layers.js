@@ -50,11 +50,9 @@ Maps.OpenLayers = SC.View.extend(
         },
 
         render: function(c,f) {
-            console.log("rendering");
             return c;
         },
         update: function(c) {
-            console.log("updating");
             return c;
         },
 

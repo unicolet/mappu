@@ -96,9 +96,14 @@ Maps.MainResponder = SC.Responder.create({
 
     didPerformGeoOperation: function(response) {
         if (SC.ok(response)) {
-            var payload = response.get("body");
+            var payload=null;
+            if (!response.isJSON())
+                payload = SC.$.parseJSON(response.get('body'));
+            else
+                payload = response.get("body");
             var WKTParser = new OpenLayers.Format.WKT();
-            var features = WKTParser.read(payload);
+            var features = WKTParser.read(payload['geom']);
+            Maps.openLayersController.set("measure","Area: "+Math.round(payload['area'])+" m<sup>2</sup>");
             if (features) {
                 Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
                 Maps.openLayersController.getGeotoolsLayer().addFeatures(features);

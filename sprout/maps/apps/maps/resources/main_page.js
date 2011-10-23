@@ -56,13 +56,14 @@ Maps.mainPage = SC.Page.design({
                 allowsMultipleSelection: YES
             }),
             tools : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, centerX: 240, width: 270 },
+                layout: { centerY: 0, height: 30, centerX: 260, width: 350 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: "_pan".loc(), action: 'toolMove', icon:""},
                     {title: "_area".loc(), action: 'toolArea', icon:""},
                     {title: "_length".loc(), action: 'toolLength', icon:""},
-                    {title: "_geotools".loc(), action: 'toolGeo', icon: icon_tools_16}
+                    {title: "_geotools".loc(), action: 'toolGeo', icon: icon_tools_16},
+                    {title: "_explorer".loc(), action: 'toolExplorer', icon: icon_tools_16}
                 ],
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
@@ -91,10 +92,10 @@ Maps.mainPage = SC.Page.design({
                     child.set("size", 0);
                     if (childIndex == (childViews.length - 1)) {
                         // collapsing rightmost child
-                        this.adjustPositionForChild(child, childViews[childIndex - 2].get("position") + currentSize);
+                        this.adjustPositionForChild(child, childViews[childIndex - 1].get("position") + currentSize);
                     } else {
                         // to collapse we expand the child on the right
-                        this.adjustPositionForChild(childViews[childIndex + 2], child.get("position"));
+                        this.adjustPositionForChild(childViews[childIndex + 1], child.get("position"));
                     }
                 }
             },
@@ -115,10 +116,10 @@ Maps.mainPage = SC.Page.design({
                         // cannot collapse to the right
                     } else {
                         child.set("size", 0);
+                        // expand size of the child on the right to the right
+                        childViews[childIndex - 2].set("size", child.get("position") + currentSize);
                         // move collapsing child to the right
                         this.adjustPositionForChild(child, child.get("position") + currentSize);
-                        // expand the child on the right to the right
-                        this.adjustPositionForChild(childViews[childIndex - 2], child.get("position") + currentSize);
                     }
                 }
             },
@@ -160,13 +161,16 @@ Maps.mainPage = SC.Page.design({
 
             layout: { top: 45, left: 0, bottom:0, right: 0 },
             layoutDirection: SC.LAYOUT_HORIZONTAL,
-            childViews: 'topLeftView middleRightView bottomRightView'.w(),
+            childViews: 'labelExplorer topLeftView middleRightView bottomRightView'.w(),
 
-            topLeftView: Maps.OpenLayers.design(SC.Animatable, SC.SplitChild, {
-                transitions: {
-                    //width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
-                },
+            labelExplorer: SC.ContainerView.extend(SC.SplitChild,{
+                layout:{top:0,bottom:0,left:0,right:0},
 
+                size:0,
+                canCollapse:YES,
+                minimumSize:0
+            }),
+            topLeftView: Maps.OpenLayers.design( SC.SplitChild, {
                 layout: { top: 0, left: 0, bottom:0, right: 300 },
 
                 layerId: 'olmap',
@@ -175,26 +179,20 @@ Maps.mainPage = SC.Page.design({
                 exampleView: Maps.OpenLayersLayer
             }),
 
-            middleRightView: SC.ContainerView.extend(SC.Animatable, SC.SplitChild,{
-                layout:{top:0,bottom:0,left:0,right:0},
+            middleRightView: SC.ContainerView.extend(SC.Animatable,SC.SplitChild,{
                 transitions: {
-                    left: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT },
-                    width: { duration: .30, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
+                    left: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT },
+                    width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
                 },
-
+                layout:{top:0,bottom:0,left:0,right:0},
                 size: 0,
                 canCollapse: YES,
                 minimumSize:0
             }),
 
-            bottomRightView: SC.View.design(SC.Animatable, SC.SplitChild, {
+            bottomRightView: SC.View.design(SC.SplitChild, {
                 size: 300,
                 layout: { top: 0, width: 299, bottom:0, right: 0 },
-
-                transitions: {
-                    //width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
-                },
-
                 childViews: "resultsView buttons featureView".w(),
                 resultsView: SC.ScrollView.design({
                     layout: { top: 0, left: 0, height:250, right: -1 },
@@ -535,9 +533,11 @@ Maps.mainPage = SC.Page.design({
         operation: SC.SelectView.design({
             layout: {top: 102, left:5, right:5, height:36},
             items: [
-                { title: "_intersection", value: "Intersection", pos: 1},
-                { title: "_union", value: "Union", pos: 2 },
-                { title: "_buffer", value: "Buffer", pos: 3 }
+                { title: "_area", value: "Area", pos: 1},
+                { title: "_intersection", value: "Intersection", pos: 2},
+                { title: "_union", value: "Union", pos: 3 },
+                { title: "_buffer5", value: "Buffer5", pos: 4 },
+                { title: "_buffer25", value: "Buffer25", pos: 5 }
             ],
             itemTitleKey: 'title',
             itemValueKey: 'value',
@@ -622,5 +622,5 @@ Maps.loginPage = SC.Page.design({
                 isEnabledBinding: "Maps.authenticationManager.inputUsername"
             })
         })
-    }),
+    })
 });

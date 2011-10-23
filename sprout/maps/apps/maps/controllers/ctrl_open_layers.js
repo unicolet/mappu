@@ -85,6 +85,15 @@ Maps.openLayersController = SC.ArrayController.create(
                     Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
                 this.set("tools", "toolMove");
             }
+            if (tool == 'toolExplorer') {
+                //Maps.mainPage.mainPane.splitview.middleRightView.set("nowShowing","Maps.mainPage.geotoolsPane");
+
+                if(Maps.mainPage.mainPane.splitview.labelExplorer.get("size")==0)
+                    Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 250);
+                else
+                    Maps.mainPage.mainPane.splitview.collapseToLeft(Maps.mainPage.mainPane.splitview.labelExplorer);
+                this.set("tools", "toolMove");
+            }
         }.observes(".tools"),
 
         clearGeoToolsSelection: function() {
