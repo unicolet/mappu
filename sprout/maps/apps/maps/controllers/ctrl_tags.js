@@ -17,7 +17,15 @@
 Maps.tagsController = SC.ArrayController.create(
 /** @scope Maps.tagsController.prototype */ {
 
-    layer: null,
+    hideVectorLayer: function() {
+        var vectorLayer = null;
+        var map=Maps.openLayersController.getOLMAP();
+        if(map.getLayersByName("_TAGS").length != 0) {
+            vectorLayer = map.getLayersByName("_TAGS")[0];
+            vectorLayer.removeAllFeatures();
+        }
+        vectorLayer.display(false);
+    },
 
     gatherTagPoints: function() {
         var selectedTags="";
@@ -34,7 +42,6 @@ Maps.tagsController = SC.ArrayController.create(
 
         SC.Request.getUrl("/mapsocial/social/tags?tags=" + selectedTags).json().notify(this, 'didGatherTagPoints').send();
     },
-
 
     didGatherTagPoints: function(response) {
         if (SC.ok(response)) {
@@ -53,13 +60,6 @@ Maps.tagsController = SC.ArrayController.create(
                 pointRadius: 4
             };
 
-            var vectorLayer = new OpenLayers.Layer.Vector("_TAGS",{
-                displayInLayerSwitcher: false,
-                isBaseLayer: false,
-                visibility: true,
-                opacity: 0.5,
-                renderers: [Maps.TagCanvas , "SVG", "VML"]
-            });
             var points=[];
             for(var i=0; i<payload.content.length; i++) {
                 //console.log("Adding point for tag:"+payload.content[i].x+" , "+payload.content[i].y);
@@ -67,9 +67,25 @@ Maps.tagsController = SC.ArrayController.create(
                 var pointFeature = new OpenLayers.Feature.Vector(point,null,style_green);
                 points.push(pointFeature);
             }
+
+            var vectorLayer = null;
+            var map=Maps.openLayersController.getOLMAP();
+            if(map.getLayersByName("_TAGS").length == 0) {
+                 vectorLayer = new OpenLayers.Layer.Vector("_TAGS",{
+                    displayInLayerSwitcher: false,
+                    isBaseLayer: false,
+                    visibility: true,
+                    opacity: 0.5,
+                    renderers: [Maps.TagCanvas , "SVG", "VML"]
+                });
+                map.addLayer(vectorLayer);
+            } else {
+                vectorLayer = map.getLayersByName("_TAGS")[0];
+                vectorLayer.removeAllFeatures();
+            }
+
             vectorLayer.addFeatures(points);
-            Maps.openLayersController.getOLMAP().addLayer(vectorLayer);
-            this.set("layer",vectorLayer);
+            vectorLayer.redraw();
         } else {
             SC.AlertPane.warn("_op_failed".loc(), response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
         }

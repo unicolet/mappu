@@ -90,7 +90,7 @@ Maps.openLayersController = SC.ArrayController.create(
                 Maps.mainPage.mainPane.splitview.labelExplorer.set("nowShowing","Maps.mainPage.explorerPane");
 
                 if(Maps.mainPage.mainPane.splitview.labelExplorer.get("size")==0)
-                    Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 250);
+                    Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 200);
                 else
                     Maps.mainPage.mainPane.splitview.collapseToLeft(Maps.mainPage.mainPane.splitview.labelExplorer);
                 this.set("tools", "toolMove");

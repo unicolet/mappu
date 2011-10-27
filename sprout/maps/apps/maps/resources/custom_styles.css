@@ -59,6 +59,28 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
             background: transparent;
         }
     }
+
+    /* buttons used in button bars */
+    $theme.button.borderless {
+       background: transparent;
+      /* & is SCSS's way of continuing the parent selector;
+         this translates to: $theme.button.active */
+      &.active {
+        background: transparent;
+      }
+      .left {
+        background: transparent;
+      }
+
+      .middle {
+        background: transparent;
+      }
+
+      .right {
+        background: transparent;
+      }
+    }
+
 }
 
 @theme(comments) {
@@ -105,4 +127,20 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
 div.text-shadow {
     color: #222;
     text-shadow: 0px 1px 1px white;
+}
+
+.icon-refresh-24 {
+    width: 25px;
+    height: 25px;
+    background-image: static_url('images/refresh.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-rendertags-24 {
+    width: 25px;
+    height: 25px;
+    background-image: static_url('images/eye.png');
+    background-repeat:no-repeat;
+    background-position:center;
 }

@@ -5,6 +5,16 @@
   *  Licensed under the LGPL.
 */
 Maps.MainResponder = SC.Responder.create({
+
+    rendertags: function() {
+        Maps.tagsController.gatherTagPoints();
+    },
+
+    reloadtags: function() {
+        Maps.tagsController.get("content").refresh();
+        Maps.tagsController.hideVectorLayer();
+    },
+
     // called when the user dblclicks an item in list view
     dblclick: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
@@ -65,8 +75,8 @@ Maps.MainResponder = SC.Responder.create({
     },
 
     saveTags: function() {
-        var guid = Maps.featureInfoController.get("selection").firstObject().attributes()['social'];
-        Maps.socialController.saveTags(guid);
+        var feature = Maps.featureInfoController.get("selection").firstObject();
+        Maps.socialController.saveTags(feature);
     },
 
     addComment: function() {

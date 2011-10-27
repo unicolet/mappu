@@ -33,14 +33,20 @@ Maps.socialController = SC.ObjectController.create(
 		}
 	}.observes("content"),
 	
-	saveTags: function(the_guid) {
+	saveTags: function(feature) {
 		var status=this.getPath("content.status");
 		if (status!=SC.Record.ERROR) {
 			this.get("content").set("tags", this.get("tags"));
 		} else {
 			var social = Maps.store.createRecord(
 				Maps.Social,
-				{ guid: the_guid, tags: this.get("tags") }
+				{
+                    guid: feature.attributes()["social"],
+                    tags: this.get("tags"),
+                    starred: false,
+                    x: feature.attributes()["x"],
+                    y: feature.attributes()["y"]
+                }
 				);
 			this.set("content", social);
 		}

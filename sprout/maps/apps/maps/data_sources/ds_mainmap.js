@@ -37,7 +37,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
 
         fetch: function(store, query) {
             if (query === Maps.TAGSUMMARY_QUERY) {
-                console.log("Maps.MapsDataSource.fetch() - Maps.TagSummary");
+                //console.log("Maps.MapsDataSource.fetch() - Maps.TagSummary");
                 SC.Request.getUrl('/mapsocial/social/tagSummary')
                     .set('isJSON', YES)
                     .notify(this, 'didFetchTagSummary', store, query)

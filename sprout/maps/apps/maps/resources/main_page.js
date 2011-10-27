@@ -63,7 +63,7 @@ Maps.mainPage = SC.Page.design({
                     {title: "_area".loc(), action: 'toolArea', icon:""},
                     {title: "_length".loc(), action: 'toolLength', icon:""},
                     {title: "_geotools".loc(), action: 'toolGeo', icon: icon_tools_16},
-                    {title: "_explorer".loc(), action: 'toolExplorer', icon: icon_tools_16}
+                    {title: "_explorer".loc(), action: 'toolExplorer'/*, icon: icon_tools_16*/}
                 ],
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
@@ -568,9 +568,10 @@ Maps.mainPage = SC.Page.design({
 
     explorerPane: SC.View.design({
         layout: {top:0,bottom:0,left:0,right:0},
-        childViews: "tags".w(),
+        childViews: "tags buttons".w(),
 
         tags:SC.ScrollView.design({
+            layout: {top:0,bottom:30,left:0,right:0},
             contentView: SC.ListView.design({
                 classNames: ["denim"],
                 rowHeight: 30,
@@ -581,6 +582,26 @@ Maps.mainPage = SC.Page.design({
                 //contentIconKey: "legendIcon",
                 contentUnreadCountKey: "occurrences"
                 //hasContentIcon: YES
+            })
+        }),
+        buttons: SC.View.design({
+            layout: {bottom:0,height:30,left:0,right:0},
+            childViews: "rendertags reloadtags".w(),
+            rendertags: SC.ButtonView.design({
+                classNames: ["borderless"],
+                layout: {bottom:0,width:0.48,top:4,right:0},
+                title: "_rendertags".loc(),
+                icon: "icon-rendertags-24",
+                action: "rendertags",
+                controlSize: SC.LARGE_CONTROL_SIZE
+            }),
+            reloadtags: SC.ButtonView.design({
+                classNames: ["borderless"],
+                layout: {bottom:0,width:0.48,top:4,left:0},
+                title: "_reloadtags".loc(),
+                icon: "icon-refresh-24",
+                action: "reloadtags",
+                controlSize: SC.LARGE_CONTROL_SIZE
             })
         })
     })
