@@ -1,4 +1,7 @@
-/* Copyright (c) 2006-2011 by OpenLayers Contributors (see authors.txt for 
+/*
+ * 2011 - Modified by Umberto Nicoletti to allow simpler, faster feature Drawing.
+ *
+ * Copyright (c) 2006-2011 by OpenLayers Contributors (see authors.txt for
  * full list of contributors). Published under the Clear BSD license.  
  * See http://svn.openlayers.org/trunk/openlayers/license.txt for the
  * full text of the license. */
@@ -262,8 +265,8 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
         var p1 = (0.5 + pt[1]) | 0;
         if(!isNaN(p0) && !isNaN(p1)) {
             // Set the style properties.
-            this.canvas.fillStyle   = '#69D96C';
-            this.canvas.strokeStyle = '#69D96C';
+            this.canvas.fillStyle   = '#169C19';
+            this.canvas.strokeStyle = '#3F6C3F';
             this.canvas.lineWidth   = 1;
 
             //this.canvas.beginPath();
@@ -294,7 +297,7 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
             this.canvas.beginPath();
             this.canvas.arc(p0+5,p1-5,5,0,360, true);
             this.canvas.fill();
-            //this.canvas.stroke();
+            this.canvas.stroke();
         }
     },
     

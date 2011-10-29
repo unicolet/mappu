@@ -346,7 +346,7 @@ Maps.OpenLayersLayer = SC.View.extend({
                 );
                 // add to the map, the set index to preserve ordering
                 map.addLayer(wms);
-                map.setLayerIndex(wms, layer.get("order")-1);
+                map.setLayerIndex(wms, layer.get("order")-2);
                 // save it into the cache
                 this.wmsLayersCache[layer.get("name")]=wms;
             } else {
