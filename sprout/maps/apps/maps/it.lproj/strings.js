@@ -44,11 +44,13 @@ SC.stringsFor('it', {
   "_select_features" : "Seleziona degli oggetti e trascinali nelle aree di drop prima di eseguire l'operazione ",
   "_op_failed" : "L'operazione richiesta e' fallita ",
   "_query_error_title" : "La connessione al server e' fallita",
-  "_query_error_detail" : "Mentre l'applicazione stava colloquiando con il server remoto si e' verificato un errore. HTTP codice di errore (se disponibili): ",
+  "_query_error_detail" : "Mentre l'applicazione stava interagendo con il server si e' verificato un errore. HTTP codice di errore (se disponibili): ",
   "_starred" : "Aggiunta ai preferiti",
   "_not_starred" : "Non l'hai aggiunta ai preferiti",
   "_no_info_avail" : "Nessuna ulteriore informazione disponibile",
   "_geotools_help" : "Clicca sulla mappa per selezionare degli oggetti, quindi trascinali dalla lista a destra su"+
       " uno o entrambi i segnaposto qui sopra. Scegli l'operazione da eseguire dal menu e quindi clicca su 'OK' per eseguirla."+
-      " Clicca su pulisci per rimuovere il risultato dalla mappa."
+      " Clicca su pulisci per rimuovere il risultato dalla mappa.",
+  "_max_tags_title": "Selezionare al massimo %@ etichette",
+  "_max_tags_body": "Per evitare di rallentare il browser il numero massimo di etichette che e' possibile disegnare e' limitato a %@."
 }) ;

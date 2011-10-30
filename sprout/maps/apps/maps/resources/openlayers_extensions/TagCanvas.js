@@ -141,15 +141,16 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
      */
     drawFeature: function(feature, style) {
         var rendered;
-        if (feature.geometry) {
-            //style = this.applyDefaultSymbolizer(style || feature.style);
+        if (feature.x && feature.y) {
+
             // don't render if display none or feature outside extent
-            var bounds = feature.geometry.getBounds();
+            //var bounds = feature.geometry.getBounds();
             //rendered = (style.display !== "none") && !!bounds && bounds.intersectsBounds(this.extent);
-            rendered =  !!bounds && bounds.intersectsBounds(this.extent);
+            //rendered =  !!bounds && bounds.intersectsBounds(this.extent);
+            rendered = this.extent.contains(feature.x, feature.y);
             if (rendered) {
                 // keep track of what we have rendered for redraw
-                this.features[feature.id] = [feature, style];
+                this.features[feature.id] = feature;
             }
             else {
                 // remove from features tracked for redraw
@@ -393,16 +394,16 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
             var height = this.root.height;
             var width = this.root.width;
             this.canvas.clearRect(0, 0, width, height);
-            if (this.hitDetection) {
-                this.hitContext.clearRect(0, 0, width, height);
-            }
-            var labelMap = [];
-            var feature, style;
+            //if (this.hitDetection) {
+            //    this.hitContext.clearRect(0, 0, width, height);
+            //}
+            //var labelMap = [];
+            var feature;
             for (var id in this.features) {
                 //if (!this.features.hasOwnProperty(id)) { continue; }
-                feature = this.features[id][0];
+                feature = this.features[id];
                 //style = this.features[id][1];
-                this.drawGeometry(feature.geometry, null, feature.id);
+                this.drawGeometry(feature, null, feature.id);
                 //if(style.label) {
                 //    labelMap.push([feature, style]);
                 //}

@@ -12,7 +12,7 @@ Maps.MainResponder = SC.Responder.create({
 
     reloadtags: function() {
         Maps.tagsController.get("content").refresh();
-        Maps.tagsController.hideVectorLayer();
+        Maps.tagsController.hideTagsLayer();
     },
 
     // called when the user dblclicks an item in list view

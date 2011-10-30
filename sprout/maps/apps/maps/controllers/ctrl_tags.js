@@ -20,7 +20,14 @@ Maps.tagsController = SC.ArrayController.create(
 
     selectedTags: '',
 
+    /*
+     * Max number of tags to render. Used to safeguard against performance degradation when
+     * large number of tags come into play.
+    */
+    maxTagsToRender: 4,
+
     updateHTTPProtocolFilter: function() {
+        Maps.set("isLoading", true);
         var layer = this.maybeAddVectorLayer();
         if(layer) {
             layer.protocol.params={'tags': this.get("selectedTags")};
@@ -32,7 +39,7 @@ Maps.tagsController = SC.ArrayController.create(
         }
     }.observes("selectedTags"),
 
-    hideVectorLayer: function() {
+    hideTagsLayer: function() {
         var vectorLayer = null;
         var map=Maps.openLayersController.getOLMAP();
         if(map.getLayersByName("_TAGS").length != 0) {
@@ -42,17 +49,36 @@ Maps.tagsController = SC.ArrayController.create(
         vectorLayer.display(false);
     },
 
+    refreshTagsLayer: function() {
+        var vectorLayer = null;
+        var map=Maps.openLayersController.getOLMAP();
+        if(map.getLayersByName("_TAGS").length != 0) {
+            vectorLayer = map.getLayersByName("_TAGS")[0];
+            vectorLayer.strategies[0].refresh();
+            return true;
+        }
+        return false;
+    },
+
     gatherTagPoints: function() {
+        var countMax = this.get("maxTagsToRender");
+        var count=0;
         var selectedTags="";
         var tagSummaries=this.get("content");
-        for(var i=0;i<tagSummaries.length();i++) {
+        for(var i=0; i<tagSummaries.length() ;i++) {
             var item=tagSummaries.objectAt(i);
             if(item.get("visible")) {
-                if(selectedTags=="")
-                    selectedTags=item.get("tag");
-                else
-                    selectedTags=selectedTags+","+item.get("tag");
+                count++;
+                if(count<=countMax) {
+                    if(selectedTags=="")
+                        selectedTags=item.get("tag");
+                    else
+                        selectedTags=selectedTags+","+item.get("tag");
+                }
             }
+        }
+        if(count>countMax) {
+            SC.AlertPane.warn("_max_tags_title".loc(countMax), "_max_tags_body".loc(countMax), "", "OK", this);
         }
 
         this.set("selectedTags", selectedTags);
@@ -63,7 +89,7 @@ Maps.tagsController = SC.ArrayController.create(
         var vectorLayer = null;
         var map=Maps.openLayersController.getOLMAP();
         if(map.getLayersByName("_TAGS").length == 0) {
-             vectorLayer = new OpenLayers.Layer.Vector("_TAGS",{
+             vectorLayer = new Maps.TagVector("_TAGS",{
                 strategies: [new OpenLayers.Strategy.Refresh({force:true}), new OpenLayers.Strategy.BBOX({ratio:2, resFactor: 3})],
                 protocol: new Maps.DynamicHTTP({
                     url:  "/mapsocial/social/tags",
@@ -89,19 +115,9 @@ Maps.tagsController = SC.ArrayController.create(
         console.log("Adding vector points...");
         var vectorLayer = this.maybeAddVectorLayer();
         vectorLayer.removeAllFeatures();
-        /*
-         * Dummy style to get rendering validated by OL code
-         */
-        var style = {};
-
-        var points=[];
-        for(var i=0; i<response.features.content.length; i++) {
-            //console.log("Adding point for tag:"+payload.content[i].x+" , "+payload.content[i].y);
-            var point = new OpenLayers.Geometry.Point(response.features.content[i].x, response.features.content[i].y);
-            var pointFeature = new OpenLayers.Feature.Vector(point,null,style);
-            points.push(pointFeature);
-        }
-        vectorLayer.addFeatures(points);
+        vectorLayer.addFeatures(response.features.content);
         vectorLayer.redraw();
+
+        Maps.set("isLoading", false);
     }
 }) ;

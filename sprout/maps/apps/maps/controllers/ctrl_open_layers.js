@@ -89,10 +89,13 @@ Maps.openLayersController = SC.ArrayController.create(
                 Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
                 Maps.mainPage.mainPane.splitview.labelExplorer.set("nowShowing","Maps.mainPage.explorerPane");
 
-                if(Maps.mainPage.mainPane.splitview.labelExplorer.get("size")==0)
+                if(Maps.mainPage.mainPane.splitview.labelExplorer.get("size")==0) {
                     Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 200);
-                else
+                    Maps.tagsController.refreshTagsLayer();
+                } else {
                     Maps.mainPage.mainPane.splitview.collapseToLeft(Maps.mainPage.mainPane.splitview.labelExplorer);
+                    Maps.tagsController.hideTagsLayer();
+                }
                 this.set("tools", "toolMove");
             }
         }.observes(".tools"),
