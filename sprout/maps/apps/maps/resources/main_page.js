@@ -205,7 +205,7 @@ Maps.mainPage = SC.Page.design({
                         selectionBinding: 'Maps.featureInfoController.selection',
                         contentValueKey: "name",
                         contentCheckboxKey: "isStarred",
-                        action: "dblclick"
+                        action: "maps_featureSelected"
                     })
                 }),
 
@@ -217,7 +217,7 @@ Maps.mainPage = SC.Page.design({
                         layout: { centerY: 0, height: 30, left: 5, width: 100 },
                         classNames: ["borderless"],
                         title: "_clear_q".loc(),
-                        action: "clearQueryResults"
+                        action: "maps_ClearQueryResults"
                     }),
                     notifications : SC.LabelView.design({
                         classNames: ['text-shadow'],
@@ -287,7 +287,7 @@ Maps.mainPage = SC.Page.design({
         saveTags: SC.ButtonView.design({
             layout: {top: 115, right: 10, width: 70},
             title: "_save".loc(),
-            action: "saveTags",
+            action: "maps_SaveTags",
             titleMinWidth: 40
         })
     }),
@@ -315,13 +315,13 @@ Maps.mainPage = SC.Page.design({
         addComment: SC.ButtonView.design({
             layout: {bottom: 10, right:55, width: 25, height: 25},
             title: "+",
-            action: "addComment",
+            action: "maps_AddComment",
             isEnabledBinding: SC.Binding.bool().from("Maps.socialCommentsController.newCommentText")
         }),
         delComment: SC.ButtonView.design({
             layout: {bottom: 10, right:10, width: 25, height: 25},
             title: "-",
-            action: "delComment",
+            action: "maps_DelComment",
             isEnabledBinding: SC.Binding.transform(
                 function(value, binding) {
                     return (value && value.length() > 0) ? true : false;
@@ -377,7 +377,7 @@ Maps.mainPage = SC.Page.design({
                 contentBinding: 'Maps.layerQueryController.arrangedObjects',
                 selectionBinding: 'Maps.layerQueryController.selection',
                 contentValueKey: "description",
-                action:"goToEditQuery"
+                action:"maps_GoToEditQuery"
             })
         })
     }),
@@ -473,7 +473,7 @@ Maps.mainPage = SC.Page.design({
                         contentRightIconKey: "filterIcon",
                         hasContentIcon: YES,
                         hasContentRightIcon: YES,
-                        action:"layerSearch",
+                        action:"maps_LayerSearch",
                         canReorderContent: YES,
                         isEditable: YES,
                         action: "onLayerSelected",
@@ -555,9 +555,9 @@ Maps.mainPage = SC.Page.design({
         go: SC.SegmentedView.design({
             layout: {top: 133, width:150, height:36, left:5},
             items: [
-                {title: "OK", action:"performGeoOperation"},
-                {title: "_clear", action:"performGeoClear"},
-                {title: "_close", action:"performGeoClose"}
+                {title: "OK", action:"maps_PerformGeoOperation"},
+                {title: "_clear", action:"maps_PerformGeoClear"},
+                {title: "_close", action:"maps_PerformGeoClose"}
             ],
             itemTitleKey: "title",
             itemActionKey: "action"
@@ -600,7 +600,7 @@ Maps.mainPage = SC.Page.design({
                 layout: {bottom:0,width:0.48,top:4,right:0},
                 title: "_rendertags".loc(),
                 icon: "icon-rendertags-24",
-                action: "rendertags",
+                action: "maps_RenderTags",
                 controlSize: SC.LARGE_CONTROL_SIZE
             }),
             reloadtags: SC.ButtonView.design({
@@ -608,7 +608,7 @@ Maps.mainPage = SC.Page.design({
                 layout: {bottom:0,width:0.48,top:4,left:0},
                 title: "_reloadtags".loc(),
                 icon: "icon-refresh-24",
-                action: "reloadtags",
+                action: "maps_ReloadTags",
                 controlSize: SC.LARGE_CONTROL_SIZE
             })
         })

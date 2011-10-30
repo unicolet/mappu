@@ -45,8 +45,8 @@ Maps.tagsController = SC.ArrayController.create(
         if(map.getLayersByName("_TAGS").length != 0) {
             vectorLayer = map.getLayersByName("_TAGS")[0];
             vectorLayer.removeAllFeatures();
+            vectorLayer.display(false);
         }
-        vectorLayer.display(false);
     },
 
     refreshTagsLayer: function() {

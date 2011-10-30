@@ -6,17 +6,17 @@
 */
 Maps.MainResponder = SC.Responder.create({
 
-    rendertags: function() {
+    maps_RenderTags: function() {
         Maps.tagsController.gatherTagPoints();
     },
 
-    reloadtags: function() {
+    maps_ReloadTags: function() {
         Maps.tagsController.get("content").refresh();
         Maps.tagsController.hideTagsLayer();
     },
 
     // called when the user dblclicks an item in list view
-    dblclick: function() {
+    maps_featureSelected: function() {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
         if(!selectedFeature) return;
         var hasSocial=selectedFeature.get("social");
@@ -69,28 +69,28 @@ Maps.MainResponder = SC.Responder.create({
         pickerPane.adjust("opacity", 1);
     },
 
-    clearQueryResults: function() {
+    maps_ClearQueryResults: function() {
         Maps.openLayersController.clearFeatures();
     },
 
-    performGeoClose:function() {
+    maps_PerformGeoClose:function() {
         Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
     },
 
-    saveTags: function() {
+    maps_SaveTags: function() {
         var feature = Maps.featureInfoController.get("selection").firstObject();
         Maps.socialController.saveTags(feature);
     },
 
-    addComment: function() {
+    maps_AddComment: function() {
         Maps.socialCommentsController.addComment();
     },
 
-    delComment: function() {
+    maps_DelComment: function() {
         Maps.socialCommentsController.delComment();
     },
 
-    performGeoOperation: function() {
+    maps_PerformGeoOperation: function() {
         var op = Maps.featureInfoController.get("operation");
         var geom1 = Maps.featureInfoController.get("feature1geom");
         var geom2 = Maps.featureInfoController.get("feature2geom");
@@ -126,17 +126,17 @@ Maps.MainResponder = SC.Responder.create({
         }
     },
 
-    performGeoClear: function() {
+    maps_PerformGeoClear: function() {
         Maps.openLayersController.clearGeoToolsSelection();
         Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
     },
 
-    layerSearch: function() {
+    maps_LayerSearch: function() {
         Maps.openLayersController.hideLayerPane();
         Maps.openLayersController.layerSearch();
     },
 
-    goToEditQuery: function() {
+    maps_GoToEditQuery: function() {
         Maps.openLayersController.goToEditQuery();
     },
 
