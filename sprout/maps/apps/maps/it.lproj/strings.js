@@ -52,5 +52,6 @@ SC.stringsFor('it', {
       " uno o entrambi i segnaposto qui sopra. Scegli l'operazione da eseguire dal menu e quindi clicca su 'OK' per eseguirla."+
       " Clicca su pulisci per rimuovere il risultato dalla mappa.",
   "_max_tags_title": "Selezionare al massimo %@ etichette",
-  "_max_tags_body": "Per evitare di rallentare il browser il numero massimo di etichette che e' possibile disegnare e' limitato a %@."
+  "_max_tags_body": "Per evitare di rallentare il browser il numero massimo di etichette che e' possibile disegnare e' limitato a %@.",
+  "_clear_q": "Pulisci"
 }) ;

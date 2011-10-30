@@ -53,5 +53,6 @@ SC.stringsFor('en', {
       " list on the right to the placeholders above. Select an operation from the menu and then click 'OK' to execute it."+
       " Click on clear to remove the result from the map.",
   "_max_tags_title": "Please select at most %@ tags",
-  "_max_tags_body": "Tag rendering is capped at %@ tags to avoid slowing down the browser too much while rendering."
+  "_max_tags_body": "Tag rendering is capped at %@ tags to avoid slowing down the browser too much while rendering.",
+  "_clear_q": "Clear"
 }) ;

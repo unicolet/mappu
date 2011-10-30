@@ -69,6 +69,9 @@ Maps.MainResponder = SC.Responder.create({
         pickerPane.adjust("opacity", 1);
     },
 
+    clearQueryResults: function() {
+        Maps.openLayersController.clearFeatures();
+    },
 
     performGeoClose:function() {
         Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);

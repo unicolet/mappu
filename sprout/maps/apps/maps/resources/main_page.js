@@ -210,8 +210,15 @@ Maps.mainPage = SC.Page.design({
                 }),
 
                 buttons: SC.View.design({
+                    classNames: ["graduated"],
                     layout: { top: 251, height: 40, left:0, right: -1 },
-                    childViews: "notifications loading".w(),
+                    childViews: "clearq notifications loading".w(),
+                    clearq: SC.ButtonView.design({
+                        layout: { centerY: 0, height: 30, left: 5, width: 100 },
+                        classNames: ["borderless"],
+                        title: "_clear_q".loc(),
+                        action: "clearQueryResults"
+                    }),
                     notifications : SC.LabelView.design({
                         classNames: ['text-shadow'],
                         layout: { centerY: 0, height: 24, right: 45, width: 100 },
@@ -585,6 +592,7 @@ Maps.mainPage = SC.Page.design({
             })
         }),
         buttons: SC.View.design({
+            classNames: ["graduated"],
             layout: {bottom:0,height:30,left:0,right:0},
             childViews: "rendertags reloadtags".w(),
             rendertags: SC.ButtonView.design({

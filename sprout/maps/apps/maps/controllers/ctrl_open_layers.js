@@ -176,6 +176,25 @@ Maps.openLayersController = SC.ArrayController.create(
             }
         },
 
+        /* remove all features retrieved by a GetFeatureInfo */
+        clearFeatures: function() {
+            var highlightLayer = this.getFeatureInfoLayer();
+            var markersLayer = this.getMarkersLayer();
+
+            // remove all previous marker and hilit features
+            while (markersLayer.markers.length > 0) {
+                markersLayer.removeMarker(markersLayer.markers[0]);
+            }
+            highlightLayer.removeAllFeatures();
+            Maps.MapsDataSource.rawFeatures = [];
+            if (!Maps.features) {
+                Maps.features = Maps.store.find(Maps.FEATURE_QUERY);
+                Maps.featureInfoController.set('content', Maps.features);
+            } else {
+                Maps.features.refresh();
+            }
+        },
+
         whichGoogleLayer: "Streets",
         switchGoogleLayer: function() {
             var newBaseLayer = "Google " + this.get("whichGoogleLayer");
