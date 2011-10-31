@@ -6,8 +6,6 @@
 */
 /*globals Maps */
 
-//sc_require("TagCanvas");
-
 /** @class
 
   (Document Your Controller Here)
