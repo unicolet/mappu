@@ -217,6 +217,7 @@ Maps.mainPage = SC.Page.design({
                         layout: { centerY: 0, height: 30, left: 5, width: 100 },
                         classNames: ["borderless"],
                         title: "_clear_q".loc(),
+                        icon: "sc-icon-trash-16",
                         action: "maps_ClearQueryResults"
                     }),
                     notifications : SC.LabelView.design({

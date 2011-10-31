@@ -554,6 +554,8 @@ Maps.TagVector = OpenLayers.Class(OpenLayers.Layer, {
     /**
      * APIMethod: addFeatures
      * Add Features to the layer.
+     * This has also been stripped down to the bare minimum resulting in a simple assignment
+     * to the layer's features vector.
      *
      * Parameters:
      * features - {Array(<OpenLayers.Feature.Vector>)} 
@@ -563,20 +565,8 @@ Maps.TagVector = OpenLayers.Class(OpenLayers.Layer, {
         if (!(OpenLayers.Util.isArray(features))) {
             features = [features];
         }
-        
-        var notify = !options || !options.silent;
-        if(notify) {
-            var event = {features: features};
-            var ret = this.events.triggerEvent("beforefeaturesadded", event);
-            if(ret === false) {
-                return;
-            }
-            features = event.features;
-        }
-        
-        // Track successfully added features for featuresadded event, since
-        // beforefeatureadded can veto single features.
-        var featuresAdded = [];
+
+        this.features=features;
         for (var i=0, len=features.length; i<len; i++) {
             if (i != (features.length - 1)) {
                 this.renderer.locked = true;
@@ -584,43 +574,9 @@ Maps.TagVector = OpenLayers.Class(OpenLayers.Layer, {
                 this.renderer.locked = false;
             }    
             var feature = features[i];
-            
-            if (this.geometryType &&
-              !(feature.geometry instanceof this.geometryType)) {
-                var throwStr = OpenLayers.i18n('componentShouldBe',
-                          {'geomType':this.geometryType.prototype.CLASS_NAME});
-                throw throwStr;
-              }
 
-            //give feature reference to its layer
-            feature.layer = this;
-
-            if (!feature.style && this.style) {
-                feature.style = OpenLayers.Util.extend({}, this.style);
-            }
-
-            if (notify) {
-                if(this.events.triggerEvent("beforefeatureadded",
-                                            {feature: feature}) === false) {
-                    continue;
-                }
-                this.preFeatureInsert(feature);
-            }
-
-            featuresAdded.push(feature);
-            this.features.push(feature);
+            //featuresAdded.push(feature);
             this.drawFeature(feature);
-            
-            if (notify) {
-                this.events.triggerEvent("featureadded", {
-                    feature: feature
-                });
-                this.onFeatureInsert(feature);
-            }
-        }
-        
-        if(notify) {
-            this.events.triggerEvent("featuresadded", {features: featuresAdded});
         }
     },
 

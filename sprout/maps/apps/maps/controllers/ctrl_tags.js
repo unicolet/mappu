@@ -34,8 +34,10 @@ Maps.tagsController = SC.ArrayController.create(
             // no tags requeste, just empty the layer
             if(!this.get("selectedTags") || this.get("selectedTags")=="") {
                 layer.removeAllFeatures();
+            } else {
+                layer.strategies[0].refresh();
             }
-            layer.strategies[0].refresh();
+            layer.setVisibility(true);
         }
     }.observes("selectedTags"),
 
@@ -45,7 +47,7 @@ Maps.tagsController = SC.ArrayController.create(
         if(map.getLayersByName("_TAGS").length != 0) {
             vectorLayer = map.getLayersByName("_TAGS")[0];
             vectorLayer.removeAllFeatures();
-            vectorLayer.display(false);
+            vectorLayer.setVisibility(false);
         }
     },
 
@@ -61,6 +63,8 @@ Maps.tagsController = SC.ArrayController.create(
     },
 
     gatherTagPoints: function() {
+        this.set("selectedTags", "");
+
         var countMax = this.get("maxTagsToRender");
         var count=0;
         var selectedTags="";
@@ -112,7 +116,6 @@ Maps.tagsController = SC.ArrayController.create(
     },
 
     didGatherTagPoints: function(scope,response) {
-        console.log("Adding vector points...");
         var vectorLayer = this.maybeAddVectorLayer();
         vectorLayer.removeAllFeatures();
         vectorLayer.addFeatures(response.features.content);

@@ -107,6 +107,21 @@ Maps.openLayersController = SC.ArrayController.create(
             Maps.featureInfoController.set("feature2geom", null);
         },
 
+        handleZOrderingChange: function(event) {
+            if(event && event.property=="order") {
+                var l=event.layer;
+                var map=l.map;
+                var order=map.getLayerIndex(l);
+                if(
+                    l instanceof OpenLayers.Layer.WMS
+                    &&
+                    order >= (map.layers.length-3) // keep three vector layers on top
+                    ) {
+                    map.setLayerIndex(l,order-1);
+                }
+            }
+        },
+
         /*
         * This function is called by the OpenLayers featureInfo control.
         * It's a really ugly piece of code because it mixes controller, datasource and view

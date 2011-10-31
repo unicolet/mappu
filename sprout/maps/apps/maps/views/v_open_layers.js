@@ -106,6 +106,7 @@ Maps.OpenLayers = SC.View.extend(
             //this.addUtilityLayers(map);
             this.addControls(map);
 
+            map.events.register("changelayer",Maps.openLayersController, Maps.openLayersController.handleZOrderingChange);
 
             //map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
             this.set('olmap', map);
@@ -346,7 +347,8 @@ Maps.OpenLayersLayer = SC.View.extend({
                 );
                 // add to the map, the set index to preserve ordering
                 map.addLayer(wms);
-                map.setLayerIndex(wms, layer.get("order")-2);
+                console.log(layer.get("name")+".setLayerIndex="+(layer.get("order")-1));
+                map.setLayerIndex(wms, layer.get("order")-1);
                 // save it into the cache
                 this.wmsLayersCache[layer.get("name")]=wms;
             } else {
