@@ -579,7 +579,7 @@ Maps.mainPage = SC.Page.design({
         childViews: "tags buttons".w(),
 
         tags:SC.ScrollView.design({
-            layout: {top:0,bottom:30,left:0,right:0},
+            layout: {top:0,bottom:130,left:0,right:0},
             contentView: SC.ListView.design({
                 classNames: ["denim"],
                 rowHeight: 30,
@@ -594,11 +594,20 @@ Maps.mainPage = SC.Page.design({
         }),
         buttons: SC.View.design({
             classNames: ["graduated"],
-            layout: {bottom:0,height:30,left:0,right:0},
-            childViews: "rendertags reloadtags".w(),
+            layout: {bottom:0,height:130,left:0,right:0},
+            childViews: "help helpText rendertags reloadtags".w(),
+            help: SC.ImageView.design({
+                layout: {top: 5, centerX:0, height:26, width:26},
+                value: "sc-icon-help-24"
+            }),
+            helpText: SC.LabelView.design({
+                classNames: "text-shadow".w(),
+                layout: {bottom:31,top:31,left:5,right:5},
+                value: "_tagexplorer_help".loc()
+            }),
             rendertags: SC.ButtonView.design({
                 classNames: ["borderless"],
-                layout: {bottom:0,width:0.48,top:4,right:0},
+                layout: {bottom:0,width:0.48,height:26,right:0},
                 title: "_rendertags".loc(),
                 icon: "icon-rendertags-24",
                 action: "maps_RenderTags",
@@ -606,7 +615,7 @@ Maps.mainPage = SC.Page.design({
             }),
             reloadtags: SC.ButtonView.design({
                 classNames: ["borderless"],
-                layout: {bottom:0,width:0.48,top:4,left:0},
+                layout: {bottom:0,width:0.48,height:26,left:0},
                 title: "_reloadtags".loc(),
                 icon: "icon-refresh-24",
                 action: "maps_ReloadTags",

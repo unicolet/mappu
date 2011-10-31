@@ -54,5 +54,6 @@ SC.stringsFor('en', {
       " Click on clear to remove the result from the map.",
   "_max_tags_title": "Please select at most %@ tags",
   "_max_tags_body": "Tag rendering is capped at %@ tags to avoid slowing down the browser too much while rendering.",
-  "_clear_q": "Clear"
+  "_clear_q": "Clear",
+  "_tagexplorer_help": "Tick at most 4 tags then click the render button below to display them in the map."
 }) ;
