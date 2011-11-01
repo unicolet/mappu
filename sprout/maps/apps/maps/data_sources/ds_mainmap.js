@@ -43,33 +43,33 @@ Maps.MapsDataSource = SC.DataSource.extend(
                     .notify(this, 'didFetchTagSummary', store, query)
                     .send();
                 return YES;
-            } else if (query.recordType == Maps.LayerQuery) {
+            } else if (query.recordType === Maps.LayerQuery) {
                 //console.log("Maps.MapsDataSource.fetch() - Maps.LayerQuery");
                 SC.Request.getUrl('/mapsocial/layerQuery/?')
                     .set('isJSON', YES)
                     .notify(this, 'didFetchLayerQueries', store, query)
                     .send();
                 return YES;
-            } else if (query.recordType == Maps.Link) {
+            } else if (query.recordType === Maps.Link) {
                 //console.log("Maps.MapsDataSource.fetch() - Maps.Link for " + $.param(query.parameters));
                 SC.Request.getUrl('/mapsocial/link/?' + $.param(query.parameters))
                     .set('isJSON', YES)
                     .notify(this, 'didFetchLinks', store, query)
                     .send();
                 return YES;
-            } else if (query.recordType == Maps.Comment) {
+            } else if (query.recordType === Maps.Comment) {
                 //console.log("Maps.MapsDataSource.fetch() - Maps.Comment for id=" + query.parameters['social']);
                 SC.Request.getUrl('/mapsocial/social/' + query.parameters['social'] + '/comments')
                     .set('isJSON', YES)
                     .notify(this, 'didFetchComments', store, query)
                     .send();
                 return YES;
-            } else if (query.recordType == Maps.Attribute) {
+            } else if (query.recordType === Maps.Attribute) {
                 var records = this.loadFeatureAttributes(Maps.MapsDataSource.rawFeatures, store, query.parameters['id']);
                 var storeKeys = store.loadRecords(Maps.Attribute, records);
                 store.loadQueryResults(query, storeKeys);
                 return YES;
-            } else if (query.recordType == Maps.Feature) {
+            } else if (query.recordType === Maps.Feature) {
                 var records = this.transformOLFeaturesInFeatures(Maps.MapsDataSource.rawFeatures, store);
                 var storeKeys = store.loadRecords(Maps.Feature, records);
                 store.loadQueryResults(query, storeKeys);
@@ -128,7 +128,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
         retrieveRecord: function(store, storeKey, id) {
             //console.log("in Maps.MapsDataSource.retrieveRecord() id=" + id);
             var recordType = SC.Store.recordTypeFor(storeKey);
-            if (recordType == 'Maps.Social') {
+            if (recordType === Maps.Social) {
                 SC.Request.getUrl('/mapsocial/social/' + id + '?alt=json').set('isJSON', YES)
                     .notify(this, this.didRetrieveRecord, {
                         store: store,
@@ -136,8 +136,8 @@ Maps.MapsDataSource = SC.DataSource.extend(
                     }).send();
                 return YES;
             }
-            if (recordType == 'Maps.User') {
-                SC.Request.getUrl('/mapsocial/login/userInfo?alt=json').set('isJSON', YES)
+            if (recordType === Maps.User) {
+                SC.Request.getUrl('/mapsocial/login/userInfo?alt=json&ienocache='+Math.random()).set('isJSON', YES)
                     .notify(this, this.didRetrieveUser, {
                         store: store,
                         storeKey: storeKey

@@ -49,12 +49,10 @@ Maps.authenticationManager=SC.ObjectController.create({
                 r = response.get('body');
 
             if (r.success) {
-
                 // login successful
                 Maps.statechart.sendEvent('loginSuccessful', {id:r.guid});
 
             } else {
-
                 // login failed
                 Maps.statechart.sendEvent('loginFailed', r.error);
             }

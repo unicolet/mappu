@@ -46,6 +46,9 @@ Maps.LayerDataSource = SC.DataSource.extend(
         // God mess IE
         if(SC.$.browser.msie) {
             var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+            // required or IE will attempt to validate against DTD, which will, most likely, fail
+            xmlDoc.async = "false";
+            xmlDoc.validateOnParse = "false";
             var parsed=xmlDoc.loadXML(content);
             if(!parsed) {
                 var myErr = xmlDoc.parseError;
