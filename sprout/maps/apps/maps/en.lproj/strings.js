@@ -44,7 +44,7 @@ SC.stringsFor('en', {
   "_missing_params" : "Missing Parameters",
   "_select_features" : "Select features and drop them in the drop doxes before attempting a",
   "_op_failed" : "The requested operation failed",
-  "_query_error_title" : "The server conncetion failed",
+  "_query_error_title" : "The server connection failed",
   "_query_error_detail" : "While connecting to the server the application received an error. HTTP error code (if available): ",
   "_starred" : "You starred this feature",
   "_not_starred" : "This feature has not been starred",
@@ -55,5 +55,9 @@ SC.stringsFor('en', {
   "_max_tags_title": "Please select at most %@ tags",
   "_max_tags_body": "Tag rendering is capped at %@ tags to avoid slowing down the browser too much while rendering.",
   "_clear_q": "Clear",
-  "_tagexplorer_help": "Tick at most 4 tags then click the render button below to display them in the map."
+  "_tagexplorer_help": "Tick at most 4 tags then click the render button below to display them in the map.",
+  "_print": "Print",
+  "_logout": "Logout",
+  "_working_on_it": "The requested functionality is currently not yet available.",
+  "_help": "Help"
 }) ;

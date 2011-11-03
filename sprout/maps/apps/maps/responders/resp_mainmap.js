@@ -6,6 +6,14 @@
 */
 Maps.MainResponder = SC.Responder.create({
 
+    logout: function(){
+        Maps.statechart.sendEvent("logout",{});
+    },
+
+    print: function(){
+        SC.AlertPane.info("_working_on_it".loc(), "_working_on_it".loc(), "", "OK", this);
+    },
+
     maps_RenderTags: function() {
         Maps.tagsController.gatherTagPoints();
     },

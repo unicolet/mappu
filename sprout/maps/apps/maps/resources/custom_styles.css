@@ -160,3 +160,27 @@ div.text-shadow {
     background-repeat:no-repeat;
     background-position:center;
 }
+
+.icon-print-16 {
+    width: 17px;
+    height: 17px;
+    background-image: static_url('images/printer.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-logout-16 {
+    width: 17px;
+    height: 17px;
+    background-image: static_url('images/door_in.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-menu-open {
+    width: 15px;
+    height: 10px;
+    background-image: static_url('images/disclose-down.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}

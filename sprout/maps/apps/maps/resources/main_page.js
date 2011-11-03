@@ -34,7 +34,7 @@ Maps.mainPage = SC.Page.design({
         toolbar : SC.ToolbarView.design({
             layout: { top: 0, left: 0, right: 0, height: 44 },
             anchorLocation: SC.ANCHOR_TOP,
-            childViews : 'logo layers tools'.w(),
+            childViews : 'logo layers tools menu'.w(),
 
             logo: SC.LabelView.design({
                 layout: {centerY:0, left:20, height:24, width: 500},
@@ -69,6 +69,12 @@ Maps.mainPage = SC.Page.design({
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
                 valueBinding: "Maps.openLayersController.tools"
+            }),
+            menu: SC.PopupButtonView.design({
+                layout: {right: 5, width: 100, height: 24, centerY:0},
+                icon: "icon-menu-open",
+                titleBinding: "Maps.authenticationManager.username",
+                menuBinding: 'Maps.authenticationManager.menuPane'
             })
         }),
 

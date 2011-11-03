@@ -54,5 +54,9 @@ SC.stringsFor('it', {
   "_max_tags_title": "Selezionare al massimo %@ etichette",
   "_max_tags_body": "Per evitare di rallentare il browser il numero massimo di etichette che e' possibile disegnare e' limitato a %@.",
   "_clear_q": "Pulisci",
-  "_tagexplorer_help": "Spunta max 4 etichette, poi clicca il bottone Ridisegna per vederle sulla mappa."
+  "_tagexplorer_help": "Spunta max 4 etichette, poi clicca il bottone Ridisegna per vederle sulla mappa.",
+  "_print": "Stampa",
+  "_logout": "Esci",
+  "_working_on_it": "La funzione selezionata non e' ancora disponibile",
+  "_help": "Aiuto"
 }) ;
