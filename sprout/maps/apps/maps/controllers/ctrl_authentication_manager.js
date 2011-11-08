@@ -57,7 +57,7 @@ Maps.authenticationManager = SC.ObjectController.create({
                 Maps.statechart.sendEvent('loginFailed', r.error);
             }
         } else {
-            store.dataSourceDidErrorQuery(query, response);
+            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
         }
     },
 
