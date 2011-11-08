@@ -14,6 +14,7 @@
  @extends SC.View
  */
 
+sc_require("resources/OpenLayers");
 
 var size = new OpenLayers.Size(21, 25);
 var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
@@ -89,9 +90,10 @@ Maps.OpenLayers = SC.View.extend(
                 units: "m",
                 numZoomLevels: 22,
                 maxResolution: 156543.0339,
-                maxExtent: new OpenLayers.Bounds(-20037508, -20037508,
-                    20037508, 20037508.34)
-            };
+                maxExtent: new OpenLayers.Bounds(-20037508, -20037508,20037508, 20037508.34),
+                fallThrough: false
+                //,fractionalZoom: true // required for zoomToScale to work precisely
+                };
             var map = new OpenLayers.Map(options);
 
             this.addGoogleLayers(map);
@@ -136,6 +138,7 @@ Maps.OpenLayers = SC.View.extend(
 
         addControls: function(map) {
             map.addControl(new OpenLayers.Control.MousePosition());
+            map.addControl(new OpenLayers.Control.Scale());
 
             // style the sketch fancy
             var sketchSymbolizers = {

@@ -14,6 +14,8 @@
  @extends SC.Object
  */
 
+sc_require("resources/OpenLayers");
+
 Maps.openLayersController = SC.ArrayController.create(
     SC.CollectionViewDelegate,
     /** @scope Maps.openLayersController.prototype */ {

@@ -5,6 +5,9 @@
  *  Licensed under the LGPL.
  */
 
+
+sc_require("resources/OpenLayers");
+
 /*globals Maps */
 
 SC.Binding.labelPrefix = function(prefix) {
