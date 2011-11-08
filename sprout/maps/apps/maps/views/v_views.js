@@ -32,7 +32,32 @@ Maps.LinkView = SC.ListItemView.extend(SC.ContentDisplay,
 	}
 });
 
-Maps.DropView = SC.LabelView.extend(SC.DropTarget, {
+Maps.DropView = SC.LabelView.extend(
+    //SC.DropTarget is now a protocol, will cause errors in production
+    {
+    isDropTarget: true,
+
+    // acceptDragOperation is a copy of performDragOperation
+    acceptDragOperation: function(drag, op) {
+		var ret = SC.DRAG_NONE;
+
+		// Continue only if data is available from drag
+		var selectionSet = drag.dataForType(Maps.Feature);
+		if (!selectionSet) {
+		  return ret;
+		}
+
+		// Get our record - there should only be 1 selection
+		var record = selectionSet.firstObject();
+		Maps.featureInfoController.set(this.get("dropTargetProperty"),record.attributes()["name"]);
+
+		var marker = Maps.openLayersController.getMarkersLayer().markers[Maps.featureInfoController.indexOf(record)];
+		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom",marker.data.feature.geometry.clone());
+
+		ret=SC.DRAG_LINK;
+		return ret;
+	},
+
 	performDragOperation: function(drag, op) {
 		var ret = SC.DRAG_NONE;
 
