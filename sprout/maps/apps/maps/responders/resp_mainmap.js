@@ -11,7 +11,49 @@ Maps.MainResponder = SC.Responder.create({
     },
 
     print: function(){
-        SC.AlertPane.info("_working_on_it".loc(), "_working_on_it".loc(), "", "OK", this);
+        if(SC.browser.chrome) {
+            SC.AlertPane.info({
+                message: "_print_chrome_title".loc(),
+                description: "_print_chrome_body".loc(),
+                caption: "",
+                buttons: [
+                    {
+                    title: "_install_print_extension".loc(),
+                    action: "didClickInstallPrintExtension"
+                    },
+                    {
+                      title: "OK"
+                    }
+                ]});
+        } else if(SC.browser.mozilla) {
+            SC.AlertPane.info({
+                message: "_print_mozilla_title".loc(),
+                description: "_print_mozilla_body".loc(),
+                caption: "",
+                buttons: [
+                    {
+                    title: "_install_print_extension".loc(),
+                    action: "didClickInstallPrintExtension"
+                    },
+                    {
+                      title: "OK"
+                    }
+                ]});
+        } else {
+            SC.AlertPane.info({
+                message: "_working_on_it".loc(),
+                description: "_working_on_it".loc(),
+                caption: "",
+                buttons: [
+                    {
+                      title: "OK"
+                    }
+                ]});
+        }
+    },
+
+    didClickInstallPrintExtension: function() {
+        window.open("http://www.google.com");
     },
 
     maps_RenderTags: function() {
