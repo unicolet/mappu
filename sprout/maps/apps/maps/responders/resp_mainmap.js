@@ -7,7 +7,7 @@
 Maps.MainResponder = SC.Responder.create({
 
     logout: function(){
-        Maps.statechart.sendEvent("logout",{});
+        Maps.authenticationManager.logout();
     },
 
     print: function(){

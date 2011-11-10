@@ -32,6 +32,22 @@ Maps.authenticationManager = SC.ObjectController.create({
         this.endPropertyChanges();
     },
 
+    logout: function() {
+        SC.Request.getUrl('/mapsocial/logout').json()
+            .notify(this, 'didLogout', null, null)
+            .send();
+    },
+
+    didLogout: function(response,s,q) {
+        if (SC.ok(response)) {
+            this.set("inputUsername","");
+            this.set("inputPassword","");
+            Maps.statechart.sendEvent("logout",{});
+        } else {
+            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
+        }
+    },
+
     attemptLogin: function() {
         SC.Request.postUrl('/mapsocial/j_spring_security_check',
             $.param({j_username: this.get("inputUsername"),j_password: this.get("inputPassword")}))

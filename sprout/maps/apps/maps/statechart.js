@@ -104,6 +104,7 @@ Maps.statechart = SC.Statechart.create({
                 setTimeout(function(){page.remove();},1500);
 
                 Maps.openLayersController.set('content', null);
+                Maps.authenticationManager.set('content', null);
                 Maps.layerQueryController.set('content', null);
                 Maps.featureInfoAttributesController.set('content', null);
 
