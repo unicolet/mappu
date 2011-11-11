@@ -29,7 +29,7 @@ div.maps-dropview {
 }
 
 .drag-entered {
-	border: 1px solid green;	
+	background-color: #608AB9;
 }
 
 .sc-pane.sc-panel > .sc-view {

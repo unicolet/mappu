@@ -37,6 +37,11 @@ Maps.DropView = SC.LabelView.extend(
     {
     isDropTarget: true,
 
+    /* Animate the view so the the user knows something happened */
+    react: function(){
+        SC.$(this.get('layer')).removeClass("drag-entered");
+    },
+
     // acceptDragOperation is a copy of performDragOperation
     acceptDragOperation: function(drag, op) {
 		var ret = SC.DRAG_NONE;
@@ -55,6 +60,9 @@ Maps.DropView = SC.LabelView.extend(
 		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom",marker.data.feature.geometry.clone());
 
 		ret=SC.DRAG_LINK;
+
+        this.react();
+        
 		return ret;
 	},
 
@@ -75,6 +83,9 @@ Maps.DropView = SC.LabelView.extend(
 		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom",marker.data.feature.geometry.clone());
 		
 		ret=SC.DRAG_LINK;
+
+        this.react();
+        
 		return ret;
 	},
 	
@@ -84,12 +95,12 @@ Maps.DropView = SC.LabelView.extend(
 	
 	dragEntered: function(drag, evt) {
 		//console.log("dragEntered");
-		$("#"+SC.guidFor(this)).addClass("drag-entered");
+		SC.$(this.get('layer')).addClass("drag-entered");
 	},
 	
 	dragExited: function(drag, evt) {
 		//console.log("dragExited");
-		$("#"+SC.guidFor(this)).removeClass("drag-entered");
+		SC.$(this.get('layer')).removeClass("drag-entered");
 	}
 });
 
