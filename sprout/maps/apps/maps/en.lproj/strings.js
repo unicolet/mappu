@@ -64,6 +64,9 @@ SC.stringsFor('en', {
     "_print_chrome_title" : "Please install extension to print with Google Chrome",
     "_print_chrome_body" : "Printing in Google Chrome is supported through a custom made extension",
     "_print_mozilla_title" : "Please install an extension to print with Mozilla",
-    "_print_mozilla_body" : "Printing in Mozilla is supported through one of the many available screenshot extensions."
+    "_print_mozilla_body" : "Printing in Mozilla is supported through one of the many available screenshot extensions.",
+    "_msie_unsupported" : "You are using Internet Explorer",
+    "_msie_unsupported_body" : "We are sorry, but despite out best efforts Internet Explorer is not currently completely supported by this application.\nYou can continue unsupported or upgrade to a supported browser.",
+    "_msie_unsupported_caption" : "Supported browsers are: Google Chrome or Safari (recommended), any recent version of Firefox."
 
 });

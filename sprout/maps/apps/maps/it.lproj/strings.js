@@ -63,5 +63,9 @@ SC.stringsFor('it', {
     "_print_chrome_title" : "Installare l'estensione per stampare con Google Chrome",
     "_print_chrome_body" : "La stampa con Google Chrome e' supportata attraverso una apposita estensione del browser.",
     "_print_mozilla_title" : "Installare una estensione per stampare con Mozilla",
-    "_print_mozilla_body" : "La stampa con Mozilla e' supportata attraverso una delle tante estensioni per catturare le schermate disponibili per il browser."
+    "_print_mozilla_body" : "La stampa con Mozilla e' supportata attraverso una delle tante estensioni per catturare le schermate disponibili per il browser.",
+    "_msie_unsupported" : "Stai usando Internet Explorer",
+    "_msie_unsupported_body" : "Siamo dispiaciuti di informarti che nonostante tutti i nostri sforzi non riusciamo a supportare completamente Internet Explorer.\nPuoi provare a continuare oppure usare un browser supportato.",
+    "_msie_unsupported_caption" : "I browser supportati sono: Google Chrome o Safari (raccomandati), tutte le versioni recenti di Firefox."
+
 });

@@ -10,6 +10,17 @@ Maps.statechart = SC.Statechart.create({
 
     checkingLoginSession: SC.State.extend({
         enterState: function() {
+            if(SC.browser.msie) {
+                SC.AlertPane.warn({
+                    message: "_msie_unsupported".loc(),
+                    description: "_msie_unsupported_body".loc(),
+                    caption: "_msie_unsupported_caption".loc,
+                    buttons: [
+                        {
+                          title: "OK"
+                        }
+                    ]});
+            }
             // try to load user data from existing server session
             Maps.authenticationManager.set("content",Maps.store.find(Maps.User, Math.random()));
         },
