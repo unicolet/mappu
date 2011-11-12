@@ -8,7 +8,7 @@
 SC.stringsFor('it', {
     "_appName" : "Comune di Mirano",
     "_layers" : "Livelli",
-    "_search" : "Query",
+    "_search" : "Interroga",
     "_pan"    : "Sposta",
     "_area"   : "Area",
     "_length" : "Misura",
@@ -66,6 +66,18 @@ SC.stringsFor('it', {
     "_print_mozilla_body" : "La stampa con Mozilla e' supportata attraverso una delle tante estensioni per catturare le schermate disponibili per il browser.",
     "_msie_unsupported" : "Stai usando Internet Explorer",
     "_msie_unsupported_body" : "Siamo dispiaciuti di informarti che nonostante tutti i nostri sforzi non riusciamo a supportare completamente Internet Explorer.\nPuoi provare a continuare oppure usare un browser supportato.",
-    "_msie_unsupported_caption" : "I browser supportati sono: Google Chrome o Safari (raccomandati), tutte le versioni recenti di Firefox."
-
+    "_msie_unsupported_caption" : "I browser supportati sono: Google Chrome o Safari (raccomandati), tutte le versioni recenti di Firefox.",
+    "_close" : "Chiudi",
+    "_help_text": "<p><span class='em'>Mappu</span> e' un WEB gis moderno con una interfaccia dinamica basata sul paradigma di Google Maps. Le funzioni "+
+        "di spostamento, zoom ed interrogazione sono tutte associate all'utilizzo diretto del mouse. Un click in un punto qualsiasi "+
+        "della mappa esegue una interrogazione di tutte gli oggetti che si trovano a quelle coordinate. I risultati vengono visualizzati "+
+        "sia in modalita' grafica sulla mappa con dei segnaposti che in modalita' analitica nella parte destra dello schermo. "+
+        "Selezionando uno degli oggetti mostrati nell'elendo in alto a destra tutti gli attributi vengono mostrati nella tabella sottostante "+
+        "mentre con un doppio click viene attivato un menu che consente di associare commenti, etichette e visualizzare i collegamenti alle banche dati. "+
+        "</p><span class='bold'>Ricerche nelle banche dati</span><p>Per eseguire una ricerca cliccare sul pulsante <span class='em'>Interroga</span> e quindi selezionare "+
+        "una delle ricerche predefinite.</p><span class='bold'>Gestione dei livelli</span><p>E' possibile personalizzare i livelli visibili nella mappa utilizzando "+
+        "il pulsante <span class='em'>Livelli</span> posizionato nella toolbar. E' anche possibile regolare la trasparenza di ciascun livello.</p>"+
+        "<span class='bold'>Se l'applicazione e' lenta</span><p>Se durante l'utilizzo l'applicazione diventa lenta si consiglia di provare a:<ol>"+
+        "<li>aggiornare il browser all'ultima versione Google Chrome</li><li>attivare solo i livelli indispensabili, spegnendo quelli non usati</li>"+
+        "<li>chiudere il browser e riaprirlo (in particolare dopo sessioni molto lunghe)</li><li>utilizzare un computer piu' potente dato che l'applicazione effettua delle operazioni di rendering piuttosto complesse</li></ol></p>"
 });

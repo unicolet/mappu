@@ -97,6 +97,28 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
     }
 
+    $theme.sc-static-layout.help_text {
+        font-size: 110%;
+        
+        p {
+            line-height: 1.5em;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .em {
+            font-style: italic;
+        }
+
+        ol li {
+            list-style-type: decimal;
+            margin-left: 2em;
+        }
+
+    }
+
 }
 
 @theme(comments) {

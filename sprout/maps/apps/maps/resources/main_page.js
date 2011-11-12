@@ -692,3 +692,28 @@ Maps.loginPage = SC.Page.design({
         })
     })
 });
+
+Maps.helpSheetPane = SC.SheetPane.design({
+    layout: {width:650, height:400, centerX:0},
+    contentView: SC.View.extend({
+        layout: {top:10,bottom:5,left:5,right:10},
+        childViews: "icon text closeBtn".w(),
+        icon: SC.ImageView.design({
+            layout: {left: 5, centerY:0, height:26, width:26},
+            value: "sc-icon-help-24"
+        }),
+        text: SC.ScrollView.design({
+            layout: {left: 40, right: 0, top:0, bottom: 40 },
+            hasHorizontalScroller: NO,
+            contentView: SC.StaticContentView.design({
+                classNames: ["help_text"],
+                content: "_help_text".loc()
+            })
+        }),
+        closeBtn: SC.ButtonView.design({
+            layout: {width: 90, right: 0, height:35, bottom: 0 },
+            title: "_close".loc(),
+            action: "helpClose"
+        })
+    })
+}).create();

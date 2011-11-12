@@ -6,6 +6,21 @@
 */
 Maps.MainResponder = SC.Responder.create({
 
+    /**
+     * Invoked when the user selectes the help button from the username menu.
+     * Causes a sheet pane to appear with some help text.
+     */
+    helpOpen: function() {
+        Maps.helpSheetPane.append();
+    },
+
+    /**
+     * Closes the sheet pane, animating the slide up.
+     */
+    helpClose: function() {
+        Maps.helpSheetPane.remove();
+    },
+
     logout: function(){
         Maps.authenticationManager.logout();
     },
