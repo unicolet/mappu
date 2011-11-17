@@ -51,12 +51,16 @@ Maps.MapsDataSource = SC.DataSource.extend(
                     .send();
                 return YES;
             } else if (query.recordType === Maps.Link) {
-                //console.log("Maps.MapsDataSource.fetch() - Maps.Link for " + $.param(query.parameters));
-                SC.Request.getUrl('/mapsocial/link/?' + $.param(query.parameters))
-                    .set('isJSON', YES)
-                    .notify(this, 'didFetchLinks', store, query)
-                    .send();
-                return YES;
+                if(query.isLocal()) {
+                    return YES;
+                } else {
+                    //console.log("Maps.MapsDataSource.fetch() - Maps.Link for " + $.param(query.parameters));
+                    SC.Request.getUrl('/mapsocial/link/?' + $.param(query.parameters))
+                        .set('isJSON', YES)
+                        .notify(this, 'didFetchLinks', store, query)
+                        .send();
+                    return YES;
+                }
             } else if (query.recordType === Maps.Comment) {
                 //console.log("Maps.MapsDataSource.fetch() - Maps.Comment for id=" + query.parameters['social']);
                 SC.Request.getUrl('/mapsocial/social/' + query.parameters['social'] + '/comments')
@@ -118,7 +122,12 @@ Maps.MapsDataSource = SC.DataSource.extend(
         didFetchLinks: function(response, store, query) {
             if (SC.ok(response)) {
                 var storeKeys = store.loadRecords(Maps.Link, response.get('body').content);
-                store.loadQueryResults(query, storeKeys);
+                if (query.isLocal()) {
+                    store.dataSourceDidFetchQuery(query);
+                } else {
+                    // this is for remote queries
+                    store.loadQueryResults(query, storeKeys);
+                }
             } else {
                 store.dataSourceDidErrorQuery(query, response);
                 this.notifyError(response);

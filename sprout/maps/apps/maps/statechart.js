@@ -105,6 +105,9 @@ Maps.statechart = SC.Statechart.create({
 
                 var attributes = Maps.store.find(Maps.ATTRIBUTES_QUERY);
                 Maps.featureInfoAttributesController.set('content', attributes);
+
+                // load all links from database. From now on only in-memory queries
+                Maps.store.find(Maps.LINK_QUERY);
             },
 
             exitState: function() {
