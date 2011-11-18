@@ -495,7 +495,7 @@ Maps.mainPage = SC.Page.design({
                 layerDetailView: SC.View.design({
                     layout: { top: 40, bottom: 5, right: 10, width: 270 },
                     isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
-                    childViews: "title name description opacitylbl opacity toggleFilter".w(),
+                    childViews: "title name description opacitylbl opacity toggleFilter googlearth".w(),
                     title: SC.LabelView.design({
                         value: "_info".loc(),
                         controlSize: SC.LARGE_CONTROL_SIZE,
@@ -521,10 +521,15 @@ Maps.mainPage = SC.Page.design({
                         layout: {top: 110, right:5, bottom: 50, left:5}
                     }),
                     toggleFilter: SC.ButtonView.design({
-                        layout: {bottom: 10, left:5, height: 25, right:5},
+                        layout: {bottom: 10, left:5, height: 25, right:50},
                         titleBinding: SC.Binding.labelPrefix("Rimuovi filtro").from("Maps.layerController.cql_filter"),
                         action: "doRemoveFilter",
                         isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
+                    }),
+                    googlearth: SC.ButtonView.design({
+                        layout: {bottom: 10, width:40, height: 25, right:5},
+                        action: "doOpenLayerWithGoogleEarth",
+                        icon: "icon-google-earth-24"
                     })
                 })
             })

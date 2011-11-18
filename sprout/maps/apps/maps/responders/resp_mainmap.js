@@ -25,6 +25,10 @@ Maps.MainResponder = SC.Responder.create({
         Maps.authenticationManager.logout();
     },
 
+    doOpenLayerWithGoogleEarth: function() {
+        window.open("/geoserver/cat/wms/kml?layers="+Maps.layerController.get("name"))
+    },
+
     print: function(){
         if(SC.browser.chrome) {
             SC.AlertPane.info({

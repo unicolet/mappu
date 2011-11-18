@@ -167,6 +167,14 @@ div.text-shadow {
     text-shadow: 0px 1px 1px white;
 }
 
+.icon-google-earth-24 {
+    width: 25px;
+    height: 25px;
+    background-image: static_url('images/google_earth_icon.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
 .icon-refresh-24 {
     width: 25px;
     height: 25px;
