@@ -173,6 +173,7 @@ Maps.OpenLayers = SC.View.extend(
                 line: new OpenLayers.Control.Measure(
                     OpenLayers.Handler.Path, {
                         persist: true,
+                        geodesic: true,
                         handlerOptions: {
                             layerOptions: {styleMap: styleMap}
                         }
@@ -181,6 +182,7 @@ Maps.OpenLayers = SC.View.extend(
                 polygon: new OpenLayers.Control.Measure(
                     OpenLayers.Handler.Polygon, {
                         persist: true,
+                        geodesic: true,
                         handlerOptions: {
                             layerOptions: {styleMap: styleMap}
                         }
@@ -291,6 +293,9 @@ Maps.OpenLayers = SC.View.extend(
             var order = event.order;
             var measure = event.measure;
             var out = "";
+            //@if(debug)
+            console.log("order="+order + ", measure=" + measure);
+            //@endif
             if (order == 1) {
                 out += "Length: " + measure.toFixed(3) + " " + units;
             } else {
