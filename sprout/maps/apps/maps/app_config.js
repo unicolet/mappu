@@ -13,3 +13,8 @@ var WMSCONFIG = {
     server_cache_path : "/geoserver/gwc/service/wms"
 };
 
+var APPCONFIG = {
+    title: "Sample"
+};
+
+
