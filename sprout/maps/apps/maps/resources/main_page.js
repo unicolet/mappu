@@ -41,7 +41,7 @@ Maps.mainPage = SC.Page.design({
 
             logo: SC.LabelView.design({
                 layout: {centerY:0, left:20, height:24, width: 500},
-                value: "_appName".loc(),
+                value: APPCONFIG.title,
                 classNames: "app-logo".w()
             }),
             layers : SC.SegmentedView.design({
