@@ -25,6 +25,7 @@ Maps = SC.Application.create(
         store: SC.Store.create({commitRecordsAutomatically: YES}).from('Maps.MapsDataSource'),
 
         isLoading: NO,
+        bbox: null,
 
         print: function() {
             Maps_print();

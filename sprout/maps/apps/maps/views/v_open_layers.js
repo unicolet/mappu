@@ -61,10 +61,7 @@ Maps.OpenLayers = SC.View.extend(
             var content=this.get("content");
             var childViews=this.get("childViews");
 
-            //console.log("Content length changed, length is now: "+this.get("content").length()+" views: "+childViews.length);
-
             for(var i=childViews.length; i < content.length(); i++) {
-                //console.log("Adding layer "+i+" content[i]="+content.objectAt(i));
                 // add new childView...
                 var layer=Maps.OpenLayersLayer.design({
                     content: content.objectAt(i)
@@ -74,7 +71,6 @@ Maps.OpenLayers = SC.View.extend(
         }.observes(".content.length"),
 
         didAppendToDocument: function() {
-            //console.log("Appending to document");
             this.initOpenLayers();
             var layer = this.get("layer"),
                 map   = this.get("olmap");
@@ -83,14 +79,16 @@ Maps.OpenLayers = SC.View.extend(
         },
 
         initOpenLayers: function() {
+            OpenLayers.DOTS_PER_INCH = 90.71428571428572;
             var options = {
                 tileSize: new OpenLayers.Size(256, 256),
                 projection: new OpenLayers.Projection("EPSG:900913"),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"),
-                units: "m",
                 numZoomLevels: 22,
-                maxResolution: 156543.0339,
+                maxResolution: 156543.03390625,
+                //resolutions: [156543.03390625, 78271.516953125, 39135.7584765625, 19567.87923828125, 9783.939619140625, 4891.9698095703125, 2445.9849047851562, 1222.9924523925781, 611.4962261962891, 305.74811309814453, 152.87405654907226, 76.43702827453613, 38.218514137268066, 19.109257068634033, 9.554628534317017, 4.777314267158508, 2.388657133579254, 1.194328566789627, 0.5971642833948135, 0.29858214169740677, 0.14929107084870338, 0.07464553542435169, 0.037322767712175846, 0.018661383856087923, 0.009330691928043961, 0.004665345964021981, 0.0023326729820109904, 0.0011663364910054952, 5.831682455027476E-4, 2.915841227513738E-4, 1.457920613756869E-4],
                 maxExtent: new OpenLayers.Bounds(-20037508, -20037508,20037508, 20037508.34),
+                units: 'm',
                 fallThrough: false
                 //,fractionalZoom: true // required for zoomToScale to work precisely
                 };
@@ -110,7 +108,7 @@ Maps.OpenLayers = SC.View.extend(
 
             map.events.register("changelayer",Maps.openLayersController, Maps.openLayersController.handleZOrderingChange);
 
-            //map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
+            map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
             this.set('olmap', map);
         },
 
@@ -203,9 +201,9 @@ Maps.OpenLayers = SC.View.extend(
 
             // get geature info handlers
             var featureInfoControl = new OpenLayers.Control.WMSGetFeatureInfo({
-                    url: '/geoserver/wms',
+                    url: WMSCONFIG.server_path,
                     // make featureinfo requests work even with geo web cache
-                    layerUrls: ["/geoserver/gwc/service/wms"],
+                    layerUrls: [WMSCONFIG.server_cache_path],
                     title: 'Identify features by clicking',
                     layers: null, // use null for ALL layers
                     queryVisible: true,
@@ -332,7 +330,7 @@ Maps.OpenLayersLayer = SC.View.extend({
                 // now build the WMS layer
                 wms = new OpenLayers.Layer.WMS(
                     layer.get('name'),
-                    "/geoserver/gwc/service/wms",
+                    ( WMSCONFIG.use_cache ? WMSCONFIG.server_cache_path : WMSCONFIG.server_path ),
                     {
                         layers: layer.get('name'),
                         'transparent':'true'
@@ -342,15 +340,17 @@ Maps.OpenLayersLayer = SC.View.extend({
                         'visibility': layer.get('visible'),
                         'isBaseLayer': false,
                         //'wrapDateLine': true,
-                        'buffer': 0,
-                        'tileSize': new OpenLayers.Size(512, 512),
-                        'maxExtent': layer.get('maxExtent'),
-                        'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
+                        'buffer': 0
+                        //'tileSize': new OpenLayers.Size(512, 512),
+                        //'maxExtent': layer.get('maxExtent'),
+                        //'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
                     }
                 );
                 // add to the map, the set index to preserve ordering
                 map.addLayer(wms);
+                //@if(debug)
                 console.log(layer.get("name")+".setLayerIndex="+(layer.get("order")-1));
+                //@endif
                 map.setLayerIndex(wms, layer.get("order")-1);
                 // save it into the cache
                 this.wmsLayersCache[layer.get("name")]=wms;
@@ -360,10 +360,10 @@ Maps.OpenLayersLayer = SC.View.extend({
 
                 if(layer.get("cql_filter")!=null) {
                     wms.mergeNewParams({"cql_filter": layer.get("cql_filter")});
-                    wms.url="/geoserver/wms";
+                    wms.url=WMSCONFIG.server_path;
                 } else {
                     wms.mergeNewParams({"cql_filter": null});
-                    wms.url="/geoserver/gwc/service/wms";
+                    wms.url=WMSCONFIG.server_cache_path;
                 }
                 // if removed, re-add it
                 if(map.getLayersByName(layer.get("name")).length==0) {

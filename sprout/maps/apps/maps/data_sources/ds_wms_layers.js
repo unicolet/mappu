@@ -30,7 +30,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
   fetch: function(store, query) {
 
 	if (query === Maps.LAYERS_QUERY ) {
-	  SC.Request.getUrl('/geoserver/wms?service=WMS&version=1.1.1&request=GetCapabilities')
+	  SC.Request.getUrl(WMSCONFIG.server_path+'?service=WMS&version=1.1.1&request=GetCapabilities')
 	  .notify(this, 'didFetchLayers', store, query)
 	  .send();
 	  return YES;
@@ -61,7 +61,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
 		SC.$('Layer', content).each(
 			function(index) {
                 // read the bounding box from the first
-                if(index==0) {
+                if(index==1) {
                     var bbox=$(this).find("LatLonBoundingBox:first");
                     var bounds = new OpenLayers.Bounds(
                         bbox.attr("minx"),
@@ -71,9 +71,12 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     );
                     // transform the bbox to 900913 and have KVO notify the map
                     Maps.set("bbox",bounds.transform(new OpenLayers.Projection('EPSG:4326'),new OpenLayers.Projection('EPSG:900913')));
+                    //@if(debug)
+                    console.log(bounds);
+                    //@endif
                 }
 				// can now skip first and proceed
-				if ( index!=0 && $(this).attr('queryable')!="0" ) {
+				if ( index!=0 ) {
 					var theName = $(this).find('Name:first').text();
 					if (theName!="blank:blank") {
                         var theLegendIcon = null;
