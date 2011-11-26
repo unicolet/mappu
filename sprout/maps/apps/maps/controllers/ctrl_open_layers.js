@@ -153,7 +153,11 @@ Maps.openLayersController = SC.ArrayController.create(
 
                     // apply transform if required
                     try {
-                        var sourceProjection=Maps.openLayersController.get("content").findProperty("name",feature.gml.featureNSPrefix + ':' + feature.gml.featureType).get("srs");
+                        var ownerLayer=Maps.openLayersController.get("content").findProperty("name",feature.gml.featureNSPrefix + ':' + feature.gml.featureType);
+                        var sourceProjection=WMSCONFIG.default_srs;
+                        if(ownerLayer) {
+                            var sourceProjection=ownerLayer.get("srs");
+                        }
                         if(sourceProjection && sourceProjection!='EPSG:900913') {
                             c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                             feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);

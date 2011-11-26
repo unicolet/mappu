@@ -26,7 +26,8 @@ Maps.MainResponder = SC.Responder.create({
     },
 
     doOpenLayerWithGoogleEarth: function() {
-        window.open("/geoserver/cat/wms/kml?layers="+Maps.layerController.get("name"))
+        var ws=Maps.layerController.get("name").split(":")[0];
+        window.open("/geoserver/"+ws+"/wms/kml?layers="+Maps.layerController.get("name"))
     },
 
     print: function(){
