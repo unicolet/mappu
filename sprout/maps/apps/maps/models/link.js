@@ -23,6 +23,10 @@ Maps.Link = SC.Record.extend(
 	layer: SC.Record.attr(String),
 	layerGroup: SC.Record.attr(String),
 	featureId: SC.Record.attr(String),
-	enabled: SC.Record.attr(Boolean)
+	enabled: SC.Record.attr(Boolean),
+
+    layerRegex: function() {
+        return new RegExp(this.get("layer"),"i");
+    }.property('layer').cacheable()
 
 }) ;
