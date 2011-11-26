@@ -78,7 +78,10 @@ Maps.LayerDataSource = SC.DataSource.extend(
 				// can now skip first and proceed
 				if ( index!=0 ) {
 					var theName = $(this).find('Name:first').text();
-					if (theName!="blank:blank") {
+                    //@if(debug)
+                    console.log("Processing layer: "+theName);
+                    //@endif
+					if (theName!="blank:blank" && $(this).find("keyword:contains(mappu_disable)").length==0) {
                         var theLegendIcon = null;
                         try {
                             if(SC.$.browser.msie) {
@@ -105,7 +108,11 @@ Maps.LayerDataSource = SC.DataSource.extend(
                             srs: $(this).find('SRS').text()
 						};
 						records[records.length]=record;
-					}
+					} else {
+                        //@if(debug)
+                        console.log("Not adding layer: "+theName);
+                        //@endif
+                    }
 				}
 			});
 		var storeKeys = store.loadRecords(Maps.Layer, records);
