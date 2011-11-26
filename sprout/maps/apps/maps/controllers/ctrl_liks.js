@@ -22,11 +22,23 @@ Maps.linkController = SC.ArrayController.create(
 		var fa = Maps.featureInfoController.get("selection").firstObject().attributes();
 
         var parameters={fid: Maps.featureInfoController.get("selection").firstObject().getSocialID(), layer: fa["LAYER"], group: fa["GROUP"]};
+        var query=null;
 
-        var query=SC.Query.local(Maps.Link,
-            "( ( layer={layer} AND layerGroup={group} AND featureId={fid} ) "+
-            "OR ( layer={layer} AND layerGroup={group} AND featureId!={fid} ) "+
-            "OR ( layerGroup={group} AND layerGroup!={group} AND featureId!={fid} ) )", parameters);
+        if(WMSCONFIG.extended_link_regex) {
+            parameters={
+                fid: Maps.featureInfoController.get("selection").firstObject().getSocialID(),
+                layer: fa["LAYER"],
+                group: fa["GROUP"]};
+            query=SC.Query.local(Maps.Link,
+                "( ( {layer} MATCHES layerRegex AND layerGroup={group} AND featureId={fid} ) "+
+                "OR ( {layer} MATCHES layerRegex AND layerGroup={group} AND featureId!={fid} ) "+
+                "OR ( layerGroup={group} AND layerGroup!={group} AND featureId!={fid} ) )", parameters);
+        } else {
+            query=SC.Query.local(Maps.Link,
+                "( ( layer={layer} AND layerGroup={group} AND featureId={fid} ) "+
+                "OR ( layer={layer} AND layerGroup={group} AND featureId!={fid} ) "+
+                "OR ( layerGroup={group} AND layerGroup!={group} AND featureId!={fid} ) )", parameters);
+        }
 
         this.set("content", Maps.store.find(query) );
 
