@@ -10,6 +10,7 @@
 var WMSCONFIG = {
     use_cache: true,
     server_path : "/geoserver/wms",
+    wfs_server_path : "/geoserver/wfs",
     server_cache_path : "/geoserver/gwc/service/wms",
     default_srs: "EPSG:3003",
     // enable use of regexps in link matching
@@ -17,7 +18,12 @@ var WMSCONFIG = {
 };
 
 var APPCONFIG = {
-    title: "Sample"
+    title: "Sample",
+    print: {
+        chrome: "/chrome.html",
+        firefox: "/firefox.html",
+        other: "/other.html"
+    }
 };
 
 

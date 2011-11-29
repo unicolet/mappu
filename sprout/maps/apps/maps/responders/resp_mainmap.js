@@ -73,7 +73,13 @@ Maps.MainResponder = SC.Responder.create({
     },
 
     didClickInstallPrintExtension: function() {
-        window.open("http://www.google.com");
+        if(SC.browser.chrome) {
+            window.open(APPCONFIG.print.chrome);
+        } else if(SC.browser.mozilla) {
+            window.open(APPCONFIG.print.firefox);
+        } else {
+            window.open(APPCONFIG.print.other);
+        }
     },
 
     maps_RenderTags: function() {
@@ -216,7 +222,7 @@ Maps.MainResponder = SC.Responder.create({
 
     layerQueryRun: function() {
         var wfs = new OpenLayers.Protocol.HTTP({
-            url:"/geoserver/wfs?service=wfs&version=1.0&request=GetFeature&typename=" + Maps.layerQueryController.getTypeName(),
+            url:WMSCONFIG.wfs_server_path+"?service=wfs&version=1.0&request=GetFeature&typename=" + Maps.layerQueryController.getTypeName(),
             format: new OpenLayers.Format.GML.v3({})
         });
 
