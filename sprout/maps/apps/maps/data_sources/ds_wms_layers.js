@@ -58,6 +58,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
             }
         }
 
+        var order=1;
+
 		SC.$('Layer', content).each(
 			function(index) {
                 // read the bounding box from the first
@@ -96,7 +98,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                         var bounds = new OpenLayers.Bounds(bbox.attr('minx'),bbox.attr('miny'),bbox.attr('maxx'),bbox.attr('maxy'));
 
 						var record={
-                            order: index,
+                            order: order++,
 							guid: index,
 							name: theName,
 							visible : $(this).find("keyword:contains(visible)").length!=0,

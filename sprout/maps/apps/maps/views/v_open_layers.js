@@ -327,8 +327,6 @@ Maps.OpenLayersLayer = SC.View.extend({
         var map   = this.parentView.get("olmap");
         var layer = this.get("content");
 
-        //var wmsLayerWithName = map.getLayersByName(layer.get("name"));
-        //var wms = (wmsLayerWithName.length ? wmsLayerWithName[0] : null);
         var wms = this.wmsLayersCache[layer.get("name")];
         if(layer.get('visible')) {
             if (!wms) {
@@ -380,7 +378,13 @@ Maps.OpenLayersLayer = SC.View.extend({
         } else {
             // if on the map, remove layer from map
             if(map.getLayersByName(layer.get("name")).length>0) {
-                map.removeLayer(wms);
+                if(WMSCONFIG.remove_wms_layers_when_not_used) {
+                    map.removeLayer(wms);
+                } else {
+                    map.setLayerIndex(wms, layer.get("order")-1);
+                    wms.setVisibility(layer.get('visible'));
+                    wms.redraw();
+                }
             }
         }
 

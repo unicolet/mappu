@@ -367,15 +367,23 @@ Maps.openLayersController = SC.ArrayController.create(
 
             // Actual re-ordering
             var oldIndex = record.get('order');  // -1 to convert from ranking # to index
-            console.log("reordering: from "+oldIndex+" to "+proposedInsertionIndex);
+            //@if(debug)
+            console.log("reordering item["+oldIndex+"]="+record+" to "+proposedInsertionIndex);
+            //@endif
             if (proposedInsertionIndex < oldIndex) {
                 // Move up list
                 for (var i = proposedInsertionIndex; i < oldIndex; i++) {
+                    //@if(debug)
+                    console.log("Moving item["+i+"]="+this.objectAt(i)+" up to "+(i+1));
+                    //@endif
                     this.objectAt(i).set('order', i+1);  // add 1 to convert from ranking to sequence #
                 }
             } else {
                 // Move down list
                 for (var i = oldIndex; i < proposedInsertionIndex; i++) {
+                    //@if(debug)
+                    console.log("Moving item["+i+"]="+this.objectAt(i)+" down to "+(i-1));
+                    //@endif
                     this.objectAt(i).set('order', i-1);  // add 1 to convert from ranking to sequence #
                 }
             }

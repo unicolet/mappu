@@ -14,7 +14,10 @@ var WMSCONFIG = {
     server_cache_path : "/geoserver/gwc/service/wms",
     default_srs: "EPSG:3003",
     // enable use of regexps in link matching
-    extended_link_regex: true
+    extended_link_regex: true,
+    // attempt to save memory and improve performance
+    // might confuse the reordering of layers
+    remove_wms_layers_when_not_used: true
 };
 
 var APPCONFIG = {
