@@ -143,3 +143,18 @@ Maps.FormView = SC.View.extend({
         }
     }
 });
+
+Maps.LegendView = SC.View.extend({
+    value: null,
+
+    displayProperties: ["value"],
+
+    render: function(context, firstTime) {
+        context = context.begin('div').addClass('maps-legend-view');
+        context = context.begin('img').attr('src',this.get("value")).end();
+        context = context.end();
+        this.set("calculatedHeight","1000");
+
+        return context;
+	}
+});

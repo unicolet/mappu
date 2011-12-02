@@ -69,5 +69,7 @@ SC.stringsFor('en', {
     "_msie_unsupported_body" : "We are sorry, but despite out best efforts Internet Explorer is not currently completely supported by this application.\nYou can continue unsupported or upgrade to a supported browser.",
     "_msie_unsupported_caption" : "Supported browsers are: Google Chrome or Safari (recommended), any recent version of Firefox.",
     "_close": "Close",
+    "_legend": "Legend",
+    "_layerprops": "Properties",
     "_help_text" : "To be translated."
 });

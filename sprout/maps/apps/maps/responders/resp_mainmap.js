@@ -82,6 +82,26 @@ Maps.MainResponder = SC.Responder.create({
         }
     },
 
+    // have this code sync with that in olcontroller
+    legend: NO,
+    toggleLegend: function() {
+        if(!this.legend)
+            Maps.openLayersController.goToLegend();
+        else
+            Maps.openLayersController.goToDetail();
+        this.set("legend", !this.legend );
+    },
+    legendBtnText: function() {
+        if(this.legend)
+            return "_layerprops".loc()
+        else
+            return "_legend".loc()
+    }.property("legend"),
+
+    showAdvancedOptions: function() {
+
+    },
+
     maps_RenderTags: function() {
         Maps.tagsController.gatherTagPoints();
     },

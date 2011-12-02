@@ -68,6 +68,8 @@ SC.stringsFor('it', {
     "_msie_unsupported_body" : "Siamo dispiaciuti di informarti che nonostante tutti i nostri sforzi non riusciamo a supportare completamente Internet Explorer.\nPuoi provare a continuare oppure usare un browser supportato.",
     "_msie_unsupported_caption" : "I browser supportati sono: Google Chrome o Safari (raccomandati), tutte le versioni recenti di Firefox.",
     "_close" : "Chiudi",
+    "_legend": "Legenda",
+    "_layerprops": "Proprieta'",
     "_help_text": "<p><span class='em'>Mappu</span> e' un WEB gis moderno con una interfaccia dinamica basata sul paradigma di Google Maps. Le funzioni "+
         "di spostamento, zoom ed interrogazione sono tutte associate all'utilizzo diretto del mouse. Un click in un punto qualsiasi "+
         "della mappa esegue una interrogazione di tutte gli oggetti che si trovano a quelle coordinate. I risultati vengono visualizzati "+

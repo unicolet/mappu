@@ -244,6 +244,9 @@ Maps.openLayersController = SC.ArrayController.create(
                 Maps.mainPage.layerPalette.enableAnimation();
                 // perform animation
                 Maps.mainPage.layerPalette.adjust("opacity", 1);
+
+                if(this.get("layerPaletteNowShowing")==null)
+                    this.goToDetail();
             } else {
                 // can't animate pp removal, sob
                 Maps.mainPage.layerPalette.remove();
@@ -294,6 +297,16 @@ Maps.openLayersController = SC.ArrayController.create(
 
         goToListQuery: function() {
             this.set("layerSearchNowShowing", "Maps.mainPage.queryListPane");
+        },
+
+        // this is bound to the sceneView nowShowing property
+        layerPaletteNowShowing:null,
+        goToDetail: function() {
+            this.set("layerPaletteNowShowing", "Maps.mainPage.layerInfoView");
+        },
+    
+        goToLegend: function() {
+            this.set("layerPaletteNowShowing", "Maps.mainPage.layerLegendView");
         },
 
         /**

@@ -452,9 +452,21 @@ Maps.mainPage = SC.Page.design({
             opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
         },
 
-        layout: { width: 500, height: 300 },
+        layout: { width: 500, height: 400 },
         contentView: SC.WorkspaceView.extend({
-            topToolbar: null,
+            topToolbar: SC.ToolbarView.design({
+                childViews: ["advancedBtn","legendBtn"],
+                advancedBtn: SC.ImageButtonView.design({
+                    layout: {width: 30, centerY: 0, right: 0, height: 16},
+                    image: "sc-icon-options-16",
+                    action: "showAdvancedOptions"
+                }),
+                legendBtn: SC.ButtonView.design({
+                    layout: {width: 80, centerY: 0, right: 40, height: 26},
+                    titleBinding: "Maps.MainResponder.legendBtnText",
+                    action: "toggleLegend"
+                })
+            }),
             bottomToolbar: null,
 
             contentView:SC.View.extend({
@@ -481,7 +493,7 @@ Maps.mainPage = SC.Page.design({
                         contentCheckboxKey: "visible",
                         contentIconKey: "legendIcon",
                         contentRightIconKey: "filterIcon",
-                        hasContentIcon: YES,
+                        hasContentIcon: NO,
                         hasContentRightIcon: YES,
                         action:"maps_LayerSearch",
                         canReorderContent: YES,
@@ -492,45 +504,10 @@ Maps.mainPage = SC.Page.design({
                         //showAlternatingRows: YES
                     })
                 }),
-                layerDetailView: SC.View.design({
+                layerDetailView: SC.SceneView.design({
                     layout: { top: 40, bottom: 5, right: 10, width: 270 },
-                    isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
-                    childViews: "title name description opacitylbl opacity toggleFilter googlearth".w(),
-                    title: SC.LabelView.design({
-                        value: "_info".loc(),
-                        controlSize: SC.LARGE_CONTROL_SIZE,
-                        layout: {top: 0, right:5, height: 20, left:5}
-                    }),
-                    name: SC.LabelView.design({
-                        valueBinding: SC.Binding.from('Maps.layerController.name').labelPrefix("Nome:"),
-                        layout: {top: 25, right:5, height: 20, left:5}
-                    }),
-                    opacitylbl: SC.LabelView.design({
-                        layout: {top: 50, right:5, height: 20, left:5},
-                        value: "_opacity".loc()
-                    }),
-                    opacity:SC.SliderView.design({
-                        layout: {top: 70, right:10, height: 20, left:10},
-                        valueBinding: 'Maps.layerController.opacity',
-                        maximum: 10,
-                        minimum: 0,
-                        step: 1
-                    }),
-                    description: SC.LabelView.design({
-                        valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("Descrizione:"),
-                        layout: {top: 110, right:5, bottom: 50, left:5}
-                    }),
-                    toggleFilter: SC.ButtonView.design({
-                        layout: {bottom: 10, left:5, height: 25, right:50},
-                        titleBinding: SC.Binding.labelPrefix("Rimuovi filtro").from("Maps.layerController.cql_filter"),
-                        action: "doRemoveFilter",
-                        isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
-                    }),
-                    googlearth: SC.ButtonView.design({
-                        layout: {bottom: 10, width:40, height: 25, right:5},
-                        action: "doOpenLayerWithGoogleEarth",
-                        icon: "icon-google-earth-24"
-                    })
+                    scenes: ["Maps.mainPage.layerInfoView","Maps.mainPage.layerLegendView"],
+                    nowShowingBinding: "Maps.openLayersController.layerPaletteNowShowing"
                 })
             })
         })
@@ -635,6 +612,56 @@ Maps.mainPage = SC.Page.design({
                 action: "maps_ReloadTags",
                 controlSize: SC.LARGE_CONTROL_SIZE
             })
+        })
+    }),
+
+    layerInfoView: SC.View.design({
+        layout: { top: 0, bottom: 0, right: 0, left: 0 },
+        isVisibleBinding: SC.Binding.bool().from("Maps.layerController.content"),
+        childViews: "title name description opacitylbl opacity toggleFilter googlearth".w(),
+        title: SC.LabelView.design({
+            value: "_info".loc(),
+            controlSize: SC.LARGE_CONTROL_SIZE,
+            layout: {top: 0, right:5, height: 20, left:5}
+        }),
+        name: SC.LabelView.design({
+            valueBinding: SC.Binding.from('Maps.layerController.name').labelPrefix("Nome:"),
+            layout: {top: 25, right:5, height: 20, left:5}
+        }),
+        opacitylbl: SC.LabelView.design({
+            layout: {top: 50, right:5, height: 20, left:5},
+            value: "_opacity".loc()
+        }),
+        opacity:SC.SliderView.design({
+            layout: {top: 70, right:10, height: 20, left:10},
+            valueBinding: 'Maps.layerController.opacity',
+            maximum: 10,
+            minimum: 0,
+            step: 1
+        }),
+        description: SC.LabelView.design({
+            valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("Descrizione:"),
+            layout: {top: 110, right:5, bottom: 50, left:5}
+        }),
+        toggleFilter: SC.ButtonView.design({
+            layout: {bottom: 10, left:5, height: 25, right:60},
+            titleBinding: SC.Binding.labelPrefix("Rimuovi filtro").from("Maps.layerController.cql_filter"),
+            action: "doRemoveFilter",
+            isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
+        }),
+        googlearth: SC.ImageButtonView.design({
+            layout: {bottom: 10, width:25, height: 25, right:10},
+            action: "doOpenLayerWithGoogleEarth",
+            image: "icon-google-earth-24"
+        })
+    }),
+    layerLegendView: SC.ScrollView.design({
+        backgroundColor: "white",
+        layout: { top: 0, bottom: 0, right: 0, left: 0 },
+        isHorizontalScrollerVisible: NO,
+        contentView: Maps.LegendView.design({
+            useStaticLayout: YES,
+            valueBinding: 'Maps.layerController.legendIcon'
         })
     })
 
