@@ -380,10 +380,10 @@ Maps.mainPage = SC.Page.design({
             value: "_query_howto".loc()
         }),
         queryList: SC.ScrollView.design({
-            layout: {bottom:5, top:36, left:5, right:5},
+            layout: {bottom:0, top:46, left:0, right:0},
             backgroundColor: 'white',
             contentView: SC.ListView.design({
-                rowHeight:24,
+                rowHeight:34,
                 contentBinding: 'Maps.layerQueryController.arrangedObjects',
                 selectionBinding: 'Maps.layerQueryController.selection',
                 contentValueKey: "description",

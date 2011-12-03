@@ -23,7 +23,7 @@ SC.stringsFor('it', {
     "_addcomment_tip" : "Aggiungi un commento...",
     "_nosocial_expl" : "La feature che hai selezionato non ha un attributo ID, quindi non e' possibile associarvi alcuna informazione. E' possibile chiedere al gestore del sito di aggiungere un attributo ID al livello corrente.",
     "_links" : "Collegamenti",
-    "_query_howto" : "Fai doppio click per scegliere una delle due ricerche disponibili",
+    "_query_howto" : "Fai doppio click per scegliere una delle ricerche alfanumeriche disponibili",
     "_back" : "Indietro",
     "_run"  : "Esegui",
     "_streets_satellite" : "Streets Satellite",
