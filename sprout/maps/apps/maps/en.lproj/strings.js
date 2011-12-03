@@ -71,5 +71,7 @@ SC.stringsFor('en', {
     "_close": "Close",
     "_legend": "Legend",
     "_layerprops": "Properties",
-    "_help_text" : "To be translated."
+    "_help_text" : "To be translated.",
+    "_session_expired": "Session expired, please reload the page",
+    "_session_expired_detail": "You login session has expired. To continue using the application please reload the page and then login again."
 });

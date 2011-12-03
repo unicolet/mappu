@@ -81,5 +81,7 @@ SC.stringsFor('it', {
         "il pulsante <span class='em'>Livelli</span> posizionato nella toolbar. E' anche possibile regolare la trasparenza di ciascun livello.</p>"+
         "<span class='bold'>Se l'applicazione e' lenta</span><p>Se durante l'utilizzo l'applicazione diventa lenta si consiglia di provare a:<ol>"+
         "<li>aggiornare il browser all'ultima versione Google Chrome</li><li>attivare solo i livelli indispensabili, spegnendo quelli non usati</li>"+
-        "<li>chiudere il browser e riaprirlo (in particolare dopo sessioni molto lunghe)</li><li>utilizzare un computer piu' potente dato che l'applicazione effettua delle operazioni di rendering piuttosto complesse</li></ol></p>"
+        "<li>chiudere il browser e riaprirlo (in particolare dopo sessioni molto lunghe)</li><li>utilizzare un computer piu' potente dato che l'applicazione effettua delle operazioni di rendering piuttosto complesse</li></ol></p>",
+    "_session_expired": "Sessione scaduta, ricaricare la pagina",
+    "_session_expired_detail": ":La sessione di autenticazione e' scaduta. Per continuare ad utilizzare il programma eseguire un ricaricamento della pagina del browser e quindi riautenticarsi."
 });
