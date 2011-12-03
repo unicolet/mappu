@@ -99,6 +99,36 @@ Maps.authenticationManager = SC.ObjectController.create({
         Maps.statechart.sendEvent('login', this.get('inputUsername'), this.get('inputPassword'));
     },
 
+    keepAliveInterval: null,
+    startSessionKeepAlive: function() {
+        this.set("keepAliveInterval", setInterval(function(){ Maps.authenticationManager.keepSessionAlive()}, 60000*5)); //every 5m
+    },
+
+    stopSessionKeepAlive: function() {
+        var interval=this.get("keepAliveInterval");
+        if (interval)
+            clearInterval(interval);
+    },
+
+    keepSessionAlive: function() {
+        SC.Request.getUrl('/mapsocial/login/').set('isJSON', YES)
+        .notify(this, this.didKeepSessionAlive, {}).send();
+    },
+
+    didKeepSessionAlive: function(response, params) {
+        if (SC.ok(response)) {
+            // do nothing
+            //@if(debug)
+            console.log("sessionKeepAlive: OK");
+            //@endif
+        } else {
+            //@if(debug)
+            console.log("sessionKeepAlive: must revalidate");
+            //@endif
+            SC.AlertPane.warn("_session_expired".loc(), "_session_expired_detail".loc() + response.status, "", "OK", this);
+        }
+    },
+
     menuPane: SC.MenuPane.create({
         layout: {width: 130},
         itemHeight: 25,

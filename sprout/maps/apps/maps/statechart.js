@@ -108,6 +108,9 @@ Maps.statechart = SC.Statechart.create({
 
                 // load all links from database. From now on only in-memory queries
                 Maps.store.find(Maps.LINK_QUERY);
+
+                // now start the keep session alive timer
+                Maps.authenticationManager.startSessionKeepAlive();
             },
 
             exitState: function() {
@@ -123,6 +126,7 @@ Maps.statechart = SC.Statechart.create({
                 Maps.featureInfoAttributesController.set('content', null);
 
                 Maps.openLayersController.destroyOpenLayersMap();
+                Maps.authenticationManager.stopSessionKeepAlive();
             }
         })
     })
