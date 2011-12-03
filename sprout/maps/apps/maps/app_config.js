@@ -26,7 +26,9 @@ var APPCONFIG = {
         chrome: "/chrome.html",
         firefox: "/firefox.html",
         other: "/other.html"
-    }
+    },
+    admin_user: "admin",
+    advanced_options: "/mapsocial/"
 };
 
 

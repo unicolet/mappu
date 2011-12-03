@@ -459,7 +459,8 @@ Maps.mainPage = SC.Page.design({
                 advancedBtn: SC.ImageButtonView.design({
                     layout: {width: 30, centerY: 0, right: 0, height: 16},
                     image: "sc-icon-options-16",
-                    action: "showAdvancedOptions"
+                    action: "showAdvancedOptions",
+                    isEnabledBinding: "Maps.authenticationManager.isAdmin"
                 }),
                 legendBtn: SC.ButtonView.design({
                     layout: {width: 80, centerY: 0, right: 40, height: 26},

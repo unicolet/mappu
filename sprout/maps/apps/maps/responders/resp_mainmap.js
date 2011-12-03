@@ -99,7 +99,7 @@ Maps.MainResponder = SC.Responder.create({
     }.property("legend"),
 
     showAdvancedOptions: function() {
-
+        window.open(APPCONFIG.advanced_options);
     },
 
     maps_RenderTags: function() {

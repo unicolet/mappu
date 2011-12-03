@@ -24,6 +24,10 @@ Maps.authenticationManager = SC.ObjectController.create({
         return this.getPath("content.guid");
     },
 
+    isAdmin: function() {
+        return this.currentUsername()==APPCONFIG.admin_user;
+    }.property("content").cacheable(),
+
     /* called to reinitialize this object and prepare for a new session */
     reset: function() {
         this.beginPropertyChanges();
