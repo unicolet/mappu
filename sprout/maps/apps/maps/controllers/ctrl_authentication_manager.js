@@ -142,9 +142,5 @@ Maps.authenticationManager = SC.ObjectController.create({
             //{ isSeparator: YES },
             { title: '_logout'.loc(), icon: 'icon-logout-16', keyEquivalent: 'ctrl_shift_n', action: "logout" }
         ]
-    }),
-
-    whenMenuPaneIsSelected: function() {
-        console.log(this.get("menuPane.selectedItem"));
-    }.observes("menuPane.selectedItem")
+    })
 });

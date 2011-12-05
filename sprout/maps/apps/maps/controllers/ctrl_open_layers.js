@@ -1,9 +1,9 @@
 /**
-  *  Mappu : yet another web gis (with social taste).
-  *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
-  *
-  *  Licensed under the LGPL.
-*/
+ *  Mappu : yet another web gis (with social taste).
+ *  Copyright (c) 2011 Umberto Nicoletti - umberto.nicoletti _at_ gmail.com, all rights reserved.
+ *
+ *  Licensed under the LGPL.
+ */
 
 /*globals Maps */
 
@@ -23,10 +23,10 @@ Maps.openLayersController = SC.ArrayController.create(
         measure: '',
 
         destroyOpenLayersMap: function() {
-            var olmap=this.getOLMAP();
-            if(olmap) {
+            var olmap = this.getOLMAP();
+            if (olmap) {
                 olmap.destroy();
-                Maps.mainPage.mainPane.splitview.topLeftView.set("olmap",null);
+                Maps.mainPage.mainPane.splitview.topLeftView.set("olmap", null);
             }
         },
 
@@ -79,9 +79,9 @@ Maps.openLayersController = SC.ArrayController.create(
             }
             if (tool == 'toolGeo') {
                 this.clearGeoToolsSelection();
-                Maps.mainPage.mainPane.splitview.middleRightView.set("nowShowing","Maps.mainPage.geotoolsPane");
+                Maps.mainPage.mainPane.splitview.middleRightView.set("nowShowing", "Maps.mainPage.geotoolsPane");
 
-                if(Maps.mainPage.mainPane.splitview.middleRightView.get("size")==0)
+                if (Maps.mainPage.mainPane.splitview.middleRightView.get("size") == 0)
                     Maps.mainPage.mainPane.splitview.expandToLeft(Maps.mainPage.mainPane.splitview.middleRightView, 160);
                 else
                     Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
@@ -89,9 +89,9 @@ Maps.openLayersController = SC.ArrayController.create(
             }
             if (tool == 'toolExplorer') {
                 Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
-                Maps.mainPage.mainPane.splitview.labelExplorer.set("nowShowing","Maps.mainPage.explorerPane");
+                Maps.mainPage.mainPane.splitview.labelExplorer.set("nowShowing", "Maps.mainPage.explorerPane");
 
-                if(Maps.mainPage.mainPane.splitview.labelExplorer.get("size")==0) {
+                if (Maps.mainPage.mainPane.splitview.labelExplorer.get("size") == 0) {
                     Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 200);
                     Maps.tagsController.refreshTagsLayer();
                 } else {
@@ -110,33 +110,63 @@ Maps.openLayersController = SC.ArrayController.create(
         },
 
         handleZOrderingChange: function(event) {
-            if(event && event.property=="order") {
-                var l=event.layer;
-                var map=l.map;
-                var order=map.getLayerIndex(l);
-                if(
+            if (event && event.property == "order") {
+                var l = event.layer;
+                var map = l.map;
+                var order = map.getLayerIndex(l);
+                if (
                     l instanceof OpenLayers.Layer.WMS
-                    &&
-                    order >= (map.layers.length-3) // keep three vector layers on top
+                        &&
+                        order >= (map.layers.length - 3) // keep three vector layers on top
                     ) {
-                    map.setLayerIndex(l,order-1);
+                    map.setLayerIndex(l, order - 1);
                 }
             }
         },
 
+        menuPane: SC.MenuPane.create({
+            layout: {width: 120},
+            itemHeight: 25,
+            items: [
+                { title: '_geocode'.loc(), icon: 'icon-print-16', action: "geocode" },
+                { title: '_streetview'.loc(), icon: 'sc-icon-help-16', action: "streetview" }
+            ],
+            /** @private
+             The ideal position for a picker pane is just below the anchor that
+             triggered it + offset of specific preferType. Find that ideal position,
+             then call fitPositionToScreen to get final position. If anchor is missing,
+             fallback to center.
+             */
+            positionPane: function(useAnchorCached) {
+                useAnchorCached = useAnchorCached && this.get('anchorCached');
+
+                var anchor = useAnchorCached ? this.get('anchorCached') : this.get('anchorElement'),
+                    layout       = this.get('layout');
+
+                if ( anchor && anchor.x && anchor.y ) {
+                    this.adjust({ width: layout.width, height: layout.height, left: anchor.x, top: anchor.y });
+                    // if no anchor view has been set for some reason, just center.
+                } else {
+                    this.adjust({ width: layout.width, height: layout.height, centerX: 0, centerY: 0 });
+                }
+                this.updateLayout();
+                return this;
+            }
+        }),
+
         /*
-        * This function is called by the OpenLayers featureInfo control.
-        * It's a really ugly piece of code because it mixes controller, datasource and view
-        * instructions.
-        * Until I don't come up with a better solution it has to stay this way though.
-        * 
-        */
+         * This function is called by the OpenLayers featureInfo control.
+         * It's a really ugly piece of code because it mixes controller, datasource and view
+         * instructions.
+         * Until I don't come up with a better solution it has to stay this way though.
+         *
+         */
         showInfo: function(event) {
             // disable spinner
-            Maps.set("isLoading",NO);
-            
+            Maps.set("isLoading", NO);
+
             if (event.features && event.features.length) {
-                this.set("measure","");
+                this.set("measure", "");
 
                 var highlightLayer = this.getFeatureInfoLayer();
                 var markersLayer = this.getMarkersLayer();
@@ -153,23 +183,23 @@ Maps.openLayersController = SC.ArrayController.create(
 
                     // apply transform if required
                     try {
-                        var ownerLayer=Maps.openLayersController.get("content").findProperty("name",feature.gml.featureNSPrefix + ':' + feature.gml.featureType);
-                        var sourceProjection=WMSCONFIG.default_srs;
-                        if(ownerLayer) {
-                            var sourceProjection=ownerLayer.get("srs");
+                        var ownerLayer = Maps.openLayersController.get("content").findProperty("name", feature.gml.featureNSPrefix + ':' + feature.gml.featureType);
+                        var sourceProjection = WMSCONFIG.default_srs;
+                        if (ownerLayer) {
+                            var sourceProjection = ownerLayer.get("srs");
                         }
-                        if(sourceProjection && sourceProjection!='EPSG:900913') {
+                        if (sourceProjection && sourceProjection != 'EPSG:900913') {
                             c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                             feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                         }
                     } catch(e) {
                         // TODO: translate and SC-ize
-                        alert("Errore leggendo i risultati: "+e);
+                        alert("Errore leggendo i risultati: " + e);
                     }
 
                     // save the centroid as a feature attibute, we'll need it later
-                    feature.data['x']=c.x;
-                    feature.data['y']=c.y;
+                    feature.data['x'] = c.x;
+                    feature.data['y'] = c.y;
 
                     var marker = new OpenLayers.Marker(new OpenLayers.LonLat(c.x, c.y), icon.clone());
                     marker.data = {'feature':feature, 'idx':i};
@@ -193,7 +223,7 @@ Maps.openLayersController = SC.ArrayController.create(
                 SC.RunLoop.end();
 
             } else {
-                this.set("measure","Nessun risultato");
+                this.set("measure", "Nessun risultato");
             }
         },
 
@@ -245,7 +275,7 @@ Maps.openLayersController = SC.ArrayController.create(
                 // perform animation
                 Maps.mainPage.layerPalette.adjust("opacity", 1);
 
-                if(this.get("layerPaletteNowShowing")==null)
+                if (this.get("layerPaletteNowShowing") == null)
                     this.goToDetail();
             } else {
                 // can't animate pp removal, sob
@@ -284,7 +314,7 @@ Maps.openLayersController = SC.ArrayController.create(
         // a layer has been selected on the layer list
         onLayerSelected: function() {
             var layer = SC.getPath('Maps.openLayersController.selection.firstObject');
-            if(layer) {
+            if (layer) {
                 Maps.layerController.set("content", layer);
             }
         },
@@ -304,7 +334,7 @@ Maps.openLayersController = SC.ArrayController.create(
         goToDetail: function() {
             this.set("layerPaletteNowShowing", "Maps.mainPage.layerInfoView");
         },
-    
+
         goToLegend: function() {
             this.set("layerPaletteNowShowing", "Maps.mainPage.layerLegendView");
         },
@@ -381,23 +411,23 @@ Maps.openLayersController = SC.ArrayController.create(
             // Actual re-ordering
             var oldIndex = record.get('order');  // -1 to convert from ranking # to index
             //@if(debug)
-            console.log("reordering item["+oldIndex+"]="+record+" to "+proposedInsertionIndex);
+            console.log("reordering item[" + oldIndex + "]=" + record + " to " + proposedInsertionIndex);
             //@endif
             if (proposedInsertionIndex < oldIndex) {
                 // Move up list
                 for (var i = proposedInsertionIndex; i < oldIndex; i++) {
                     //@if(debug)
-                    console.log("Moving item["+i+"]="+this.objectAt(i)+" up to "+(i+1));
+                    console.log("Moving item[" + i + "]=" + this.objectAt(i) + " up to " + (i + 1));
                     //@endif
-                    this.objectAt(i).set('order', i+1);  // add 1 to convert from ranking to sequence #
+                    this.objectAt(i).set('order', i + 1);  // add 1 to convert from ranking to sequence #
                 }
             } else {
                 // Move down list
                 for (var i = oldIndex; i < proposedInsertionIndex; i++) {
                     //@if(debug)
-                    console.log("Moving item["+i+"]="+this.objectAt(i)+" down to "+(i-1));
+                    console.log("Moving item[" + i + "]=" + this.objectAt(i) + " down to " + (i - 1));
                     //@endif
-                    this.objectAt(i).set('order', i-1);  // add 1 to convert from ranking to sequence #
+                    this.objectAt(i).set('order', i - 1);  // add 1 to convert from ranking to sequence #
                 }
             }
             record.set('order', proposedInsertionIndex);

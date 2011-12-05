@@ -15,6 +15,7 @@
  */
 
 sc_require("resources/OpenLayers");
+sc_require("resources/openlayers_extensions/MappuClickHandler")
 
 var size = new OpenLayers.Size(21, 25);
 var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
@@ -218,6 +219,18 @@ Maps.OpenLayers = SC.View.extend(
 
             featureInfoControl.activate();
             // end get geature info section
+
+            // click control for geocoding and street view
+            var clickControl = new OpenLayers.Control.ModClick(
+                {
+                    keyMask: OpenLayers.Handler.MOD_CTRL,
+                    onClick: function(evt){
+                        Maps.openLayersController.menuPane.popup({x:evt.x, y:evt.y});
+                    }
+                }
+            );
+            map.addControl(clickControl);
+            clickControl.activate();
         },
 
         addUtilityLayers: function(map) {
