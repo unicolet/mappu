@@ -17,15 +17,16 @@ OpenLayers.Control.ModClick = OpenLayers.Class(OpenLayers.Control, {
 
     initialize: function(options) {
         this.handlerOptions = OpenLayers.Util.extend(
-            {}, this.defaultHandlerOptions
+            options, this.defaultHandlerOptions
         );
         OpenLayers.Control.prototype.initialize.apply(
             this, arguments
         );
         this.handler = new OpenLayers.Handler.Click(
             this, {
-                'click': this.onClick
-            }, this.handlerOptions
+                'click': this.onClick //function(e) {console.log("onClick");}
+            },
+            this.handlerOptions
         );
     }
     // override them in the definition

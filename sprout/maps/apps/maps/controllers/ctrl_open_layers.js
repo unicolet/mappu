@@ -124,6 +124,10 @@ Maps.openLayersController = SC.ArrayController.create(
             }
         },
 
+        // lat lon where the mouse was last ctrl-clicked
+        lat:null,
+        lon:null,
+
         menuPane: SC.MenuPane.create({
             layout: {width: 120},
             itemHeight: 25,

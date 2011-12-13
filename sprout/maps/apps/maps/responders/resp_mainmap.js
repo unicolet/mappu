@@ -273,5 +273,19 @@ Maps.MainResponder = SC.Responder.create({
         var layer=Maps.openLayersController.get("selection").firstObject();
         if(layer)
                 layer.set("cql_filter",null);
+    },
+
+    /*
+     * Use the gmaps api to reverse geocode a lat,lon couple
+     */
+    geocode: function() {
+        Maps.addressController.findAddresses(Maps.openLayersController.get("lat"), Maps.openLayersController.get("lon"));
+    },
+
+    /*
+     * launch streetview in a browser window
+     */
+    streetview: function() {
+        alert("Ci stiamo ancora lavorando...");
     }
 });

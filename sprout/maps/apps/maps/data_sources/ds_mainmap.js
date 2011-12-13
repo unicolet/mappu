@@ -18,6 +18,7 @@ sc_require('models/link');
 sc_require("models/layer_query");
 sc_require("models/attribute");
 sc_require("models/tag");
+sc_require("models/address");
 
 Maps.FEATURE_QUERY = SC.Query.remote(Maps.Feature, {});
 Maps.COMMENT_QUERY = SC.Query.remote(Maps.Comment, "social = {social}", {social: ""});
@@ -26,6 +27,7 @@ Maps.LINK_QUERY = SC.Query.remote(Maps.Link, null, {});
 Maps.LAYERQUERY_QUERY = SC.Query.remote(Maps.LayerQuery, {});
 Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null, {id:-1});
 Maps.TAGSUMMARY_QUERY = SC.Query.remote(Maps.Tag);
+Maps.GEOCODE_QUERY = SC.Query.remote(Maps.Address);
 
 
 /* global variables */
@@ -35,7 +37,35 @@ Maps.MapsDataSource = SC.DataSource.extend(
     /** @scope Maps.MapsDataSource.prototype */ {
         rawFeatures:[],
 
+        //geocoder: new google.maps.Geocoder(),
+
         fetch: function(store, query) {
+            if (query.recordType === Maps.Address) {
+                //@if(debug)
+                console.log("Geocoding lat,lon = "+query.parameters.lat+","+query.parameters.lon);
+                //@endif
+                var latlng = new google.maps.LatLng(query.parameters.lat, query.parameters.lon);
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({'latLng': latlng}, function(results, status) {
+                    //@if(debug)
+                    console.log("Geocoding results");
+                    //@endif
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var records=[];
+                        for(var i=0; i<results.length; i++) {
+                            //@if(debug)
+                            console.log("Geocoding results["+i+"]:"+results[i].formatted_address);
+                            //@endif
+                            records[records.length]={'formatted_address': results[i].formatted_address};
+                        }
+                        var storeKeys = store.loadRecords(Maps.Address, records);
+                        store.loadQueryResults(query, storeKeys);
+                    } else {
+                        //this.notifyError(status);
+                    }
+                });
+                return YES;
+            }
             if (query === Maps.TAGSUMMARY_QUERY) {
                 //console.log("Maps.MapsDataSource.fetch() - Maps.TagSummary");
                 SC.Request.getUrl('/mapsocial/social/tagSummary')
@@ -51,7 +81,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                     .send();
                 return YES;
             } else if (query.recordType === Maps.Link) {
-                if(query.isLocal()) {
+                if (query.isLocal()) {
                     return YES;
                 } else {
                     //console.log("Maps.MapsDataSource.fetch() - Maps.Link for " + $.param(query.parameters));
@@ -146,7 +176,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 return YES;
             }
             if (recordType === Maps.User) {
-                SC.Request.getUrl('/mapsocial/login/userInfo?alt=json&ienocache='+Math.random()).set('isJSON', YES)
+                SC.Request.getUrl('/mapsocial/login/userInfo?alt=json&ienocache=' + Math.random()).set('isJSON', YES)
                     .notify(this, this.didRetrieveUser, {
                         store: store,
                         storeKey: storeKey
@@ -316,8 +346,13 @@ Maps.MapsDataSource = SC.DataSource.extend(
         },
 
         notifyError: function(response) {
-            // in rest 404 is used to notify of not existing records, so it's generally not an error worth notifying
-            if(response.status!=404)
-                SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
+            var status=response;
+            if(response.status) {
+                // in rest 404 is used to notify of not existing records, so it's generally not an error worth notifying
+                if (response.status != 404) {
+                    status=response.status;
+                    SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + status, "", "OK", this);
+                }
+            }
         }
     });

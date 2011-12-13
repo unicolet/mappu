@@ -223,9 +223,16 @@ Maps.OpenLayers = SC.View.extend(
             // click control for geocoding and street view
             var clickControl = new OpenLayers.Control.ModClick(
                 {
-                    keyMask: OpenLayers.Handler.MOD_CTRL,
                     onClick: function(evt){
-                        Maps.openLayersController.menuPane.popup({x:evt.x, y:evt.y});
+                        // check that CTRL is pressed while clicking
+                        if(evt.ctrlKey) {
+                            var map=Maps.openLayersController.getOLMAP();
+                            var ll=map.getLonLatFromPixel(new OpenLayers.Pixel(evt.x, evt.y))
+                                .transform(Maps.projections['EPSG:900913'], Maps.projections['EPSG:4326'])
+                            Maps.openLayersController.set("lat",ll.lat);
+                            Maps.openLayersController.set("lon",ll.lon);
+                            Maps.openLayersController.menuPane.popup({x:evt.x, y:evt.y});
+                        }
                     }
                 }
             );

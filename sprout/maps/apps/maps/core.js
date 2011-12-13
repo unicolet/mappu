@@ -39,6 +39,7 @@ Maps = SC.Application.create(
 
             Maps.projections['EPSG:3003'] = new OpenLayers.Projection('EPSG:3003');
             Maps.projections['EPSG:900913'] = new OpenLayers.Projection('EPSG:900913');
+            Maps.projections['EPSG:4326'] = new OpenLayers.Projection('EPSG:4326');
         }
 
     });
