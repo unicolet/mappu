@@ -17,5 +17,7 @@ Maps.addressController = SC.ArrayController.create({
 		} else {
 			addresses.refresh();
 		}
+
+        Maps.mainPage.addressPane.append();
     }
 });

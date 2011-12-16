@@ -132,8 +132,8 @@ Maps.openLayersController = SC.ArrayController.create(
             layout: {width: 120},
             itemHeight: 25,
             items: [
-                { title: '_geocode'.loc(), icon: 'icon-print-16', action: "geocode" },
-                { title: '_streetview'.loc(), icon: 'sc-icon-help-16', action: "streetview" }
+                { title: '_geocode'.loc(), icon: 'http://maps.gstatic.com/favicon.ico', action: "geocode" },
+                { title: '_streetview'.loc(), icon: 'icon-streetview-16', action: "streetview" }
             ],
             /** @private
              The ideal position for a picker pane is just below the anchor that

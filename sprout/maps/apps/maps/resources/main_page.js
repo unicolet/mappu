@@ -664,8 +664,36 @@ Maps.mainPage = SC.Page.design({
             useStaticLayout: YES,
             valueBinding: 'Maps.layerController.legendIcon'
         })
-    })
+    }),
 
+    addressPane: SC.PalettePane.design({
+        layout: {width: 500, height: 200, centerX:0, centerY:0},
+        contentView: SC.View.design({
+            childViews: "addressList button close".w(),
+            addressList: SC.ScrollView.design({
+                layout: {top:5, left:5, right:5, height: 160},
+                contentView: SC.ListView.design({
+                    contentBinding: "Maps.addressController.arrangedObjects",
+                    selectionBinding: "Maps.addressController.selection",
+                    contentValueKey: "formatted_address"
+                })
+            }),
+            button: SC.ButtonView.design({
+                layout: {bottom:5, width: 100, height: 25, right: 100},
+                title: "_launch".loc(),
+                action: function() {
+                    alert("Stiamo lavorando anche a  questo...");
+                }
+            }),
+            close: SC.ButtonView.design({
+                layout: {bottom:5, width: 80, height: 25, right: 5},
+                title: "_close".loc(),
+                action: function() {
+                    Maps.mainPage.addressPane.remove();
+                }
+            })
+        })
+    }).create()
 });
 
 Maps.loginPage = SC.Page.design({

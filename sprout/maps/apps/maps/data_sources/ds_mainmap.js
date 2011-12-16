@@ -56,12 +56,12 @@ Maps.MapsDataSource = SC.DataSource.extend(
                             //@if(debug)
                             console.log("Geocoding results["+i+"]:"+results[i].formatted_address);
                             //@endif
-                            records[records.length]={'formatted_address': results[i].formatted_address};
+                            records[records.length]={guid:i, 'formatted_address': results[i].formatted_address};
                         }
                         var storeKeys = store.loadRecords(Maps.Address, records);
                         store.loadQueryResults(query, storeKeys);
                     } else {
-                        //this.notifyError(status);
+                        this.notifyError(status);
                     }
                 });
                 return YES;

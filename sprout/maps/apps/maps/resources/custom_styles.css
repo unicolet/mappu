@@ -214,3 +214,11 @@ div.text-shadow {
     background-repeat:no-repeat;
     background-position:center;
 }
+
+.icon-streetview-16 {
+    width: 18px;
+    height: 18px;
+    background-image: static_url('images/streetview.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}

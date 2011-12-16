@@ -286,6 +286,6 @@ Maps.MainResponder = SC.Responder.create({
      * launch streetview in a browser window
      */
     streetview: function() {
-        alert("Ci stiamo ancora lavorando...");
+        window.open("http://maps.google.it/?ll="+Maps.openLayersController.get("lat")+","+Maps.openLayersController.get("lon")+"&t=m&z=19&vpsrc=6", "mappu_gmaps");
     }
 });
