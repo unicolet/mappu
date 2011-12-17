@@ -192,11 +192,9 @@ div.text-shadow {
 }
 
 .icon-print-16 {
-    width: 17px;
-    height: 17px;
-    background-image: static_url('images/printer.png');
-    background-repeat:no-repeat;
-    background-position:center;
+    width: 16px;
+    height: 16px;
+    @include slice("images/printer.png");
 }
 
 .icon-logout-16 {
@@ -221,4 +219,46 @@ div.text-shadow {
     background-image: static_url('images/streetview.png');
     background-repeat:no-repeat;
     background-position:center;
+}
+
+.icon-clear-24 {
+	width: 24px;
+	height: 24px;
+	@include slice("images/clear.png");
+}
+
+.icon-search-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/search.png");
+}
+
+.icon-explore-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/explore.png");
+}
+
+.icon-layers-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/layers.png");
+}
+
+.icon-measure-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/measure.png");
+}
+
+.icon-area-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/area.png");
+}
+
+.icon-settings-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/settings.png");
 }

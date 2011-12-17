@@ -48,8 +48,8 @@ Maps.mainPage = SC.Page.design({
                 layout: { centerY: 0, height: 30, centerX: 0, width: 160 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
-                    {title: "_layers".loc(), action: 'LAYERS', icon: "sc-icon-options-16"},
-                    {title: "_search".loc(), action: 'SEARCH', icon: "sc-icon-bookmark-16"}
+                    {title: "_layers".loc(), action: 'LAYERS', icon: "icon-layers-16"},
+                    {title: "_search".loc(), action: 'SEARCH', icon: "icon-search-16"}
                 ],
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
@@ -59,14 +59,14 @@ Maps.mainPage = SC.Page.design({
                 allowsMultipleSelection: YES
             }),
             tools : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, centerX: 260, width: 350 },
+                layout: { centerY: 0, height: 30, centerX: 280, width: 400 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: "_pan".loc(), action: 'toolMove', icon:""},
-                    {title: "_area".loc(), action: 'toolArea', icon:""},
-                    {title: "_length".loc(), action: 'toolLength', icon:""},
+                    {title: "_area".loc(), action: 'toolArea', icon:"icon-area-16"},
+                    {title: "_length".loc(), action: 'toolLength', icon:"icon-measure-16"},
                     {title: "_geotools".loc(), action: 'toolGeo', icon: icon_tools_16},
-                    {title: "_explorer".loc(), action: 'toolExplorer'/*, icon: icon_tools_16*/}
+                    {title: "_explorer".loc(), action: 'toolExplorer', icon: "icon-explore-16"}
                 ],
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
@@ -226,7 +226,7 @@ Maps.mainPage = SC.Page.design({
                         layout: { centerY: 0, height: 30, left: 5, width: 100 },
                         classNames: ["borderless"],
                         title: "_clear_q".loc(),
-                        icon: "sc-icon-trash-16",
+                        icon: "icon-clear-24",
                         action: "maps_ClearQueryResults"
                     }),
                     notifications : SC.LabelView.design({
@@ -458,9 +458,10 @@ Maps.mainPage = SC.Page.design({
                 childViews: ["advancedBtn","legendBtn"],
                 advancedBtn: SC.ImageButtonView.design({
                     layout: {width: 30, centerY: 0, right: 0, height: 16},
-                    image: "sc-icon-options-16",
+                    image: "icon-settings-16",
                     action: "showAdvancedOptions",
-                    isEnabledBinding: "Maps.authenticationManager.isAdmin"
+                    isEnabledBinding: "Maps.authenticationManager.isAdmin",
+                    toolTip: "_settings".loc()
                 }),
                 legendBtn: SC.ButtonView.design({
                     layout: {width: 80, centerY: 0, right: 40, height: 26},
