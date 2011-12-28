@@ -84,5 +84,8 @@ SC.stringsFor('it', {
         "<li>chiudere il browser e riaprirlo (in particolare dopo sessioni molto lunghe)</li><li>utilizzare un computer piu' potente dato che l'applicazione effettua delle operazioni di rendering piuttosto complesse</li></ol></p>",
     "_session_expired": "Sessione scaduta, ricaricare la pagina",
     "_session_expired_detail": ":La sessione di autenticazione e' scaduta. Per continuare ad utilizzare il programma eseguire un ricaricamento della pagina del browser e quindi riautenticarsi.",
-    "_settings": "Impostazioni"
+    "_settings": "Impostazioni",
+    "_filter_error": "Impossibile applicare il filtro",
+    "_filter_error_body": "Al momento i filtri sui gruppi di layer non sono supportati."
+
 });

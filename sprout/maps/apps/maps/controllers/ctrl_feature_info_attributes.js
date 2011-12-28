@@ -20,10 +20,21 @@ Maps.featureInfoAttributesController = SC.ArrayController.create(SCTable.TableDe
         var feature = Maps.featureInfoController.get("selection").firstObject();
 
         var layer=Maps.openLayersController.get("content").filterProperty('name',feature.get("GROUP")+":"+feature.get("LAYER"))[0];
-        if(layer.get("cql_filter")!=null) {
-            layer.set("cql_filter",null);
+        if(!layer) {
+            SC.AlertPane.warn({
+                    message: "_filter_error".loc(),
+                    description: "_filter_error_body".loc(),
+                    buttons: [
+                        {
+                          title: "OK"
+                        }
+                    ]});
         } else {
-            layer.set("cql_filter",attr.get("property")+"='"+attr.get("value")+"'");
+            if(layer.get("cql_filter")!=null) {
+                layer.set("cql_filter",null);
+            } else {
+                layer.set("cql_filter",attr.get("property")+"='"+attr.get("value")+"'");
+            }
         }
     }
 
