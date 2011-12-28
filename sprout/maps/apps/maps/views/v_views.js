@@ -116,7 +116,8 @@ Maps.FormView = SC.View.extend({
         if (filterString) {
             var params=new Object();
             for (var i=0;i<10;i++) {
-                params["INPUT"+i]="<input type=\"text\" name=\"input"+i+"\" style=\"width:auto;\" size=\"4\" onclick=\"this.focus()\">";
+                params["INPUT"+i]="<input type=\"text\" name=\"input"+i+"\" style=\"width:auto;\" onclick=\"this.focus()\">";
+                params["SMALL"+i]="<input type=\"text\" name=\"input"+i+"\" style=\"width:auto;\" size=\'4\' onclick=\"this.focus()\">";
             }
             var form_text = Mustache.to_html(filterString, params);
             //console.log("Maps.FormView.formText="+form_text);
