@@ -10,17 +10,6 @@ Maps.statechart = SC.Statechart.create({
 
     checkingLoginSession: SC.State.extend({
         enterState: function() {
-            if(SC.browser.msie) {
-                SC.AlertPane.warn({
-                    message: "_msie_unsupported".loc(),
-                    description: "_msie_unsupported_body".loc(),
-                    caption: "_msie_unsupported_caption".loc,
-                    buttons: [
-                        {
-                          title: "OK"
-                        }
-                    ]});
-            }
             // try to load user data from existing server session
             Maps.authenticationManager.set("content",Maps.store.find(Maps.User, Math.random()));
         },
@@ -44,6 +33,18 @@ Maps.statechart = SC.Statechart.create({
         enterState: function() {
             Maps.authenticationManager.reset();
             Maps.getPath('loginPage.mainPane').append();
+
+            if(SC.browser.msie) {
+                SC.AlertPane.warn({
+                    message: "_msie_unsupported".loc(),
+                    description: "_msie_unsupported_body".loc(),
+                    caption: "_msie_unsupported_caption".loc(),
+                    buttons: [
+                        {
+                          title: "OK"
+                        }
+                    ]});
+            }
         },
 
         exitState: function() {
@@ -97,6 +98,8 @@ Maps.statechart = SC.Statechart.create({
                 // perform animation
                 page.adjust("opacity", 1);
 
+                SC.routes.add('zoom/:lat/:lon/:level', Maps, Maps.zoom);
+
                 var layers = Maps.wmsStore.find(Maps.LAYERS_QUERY);
                 Maps.openLayersController.set('content', layers);
 
@@ -111,6 +114,7 @@ Maps.statechart = SC.Statechart.create({
 
                 // now start the keep session alive timer
                 Maps.authenticationManager.startSessionKeepAlive();
+
             },
 
             exitState: function() {
