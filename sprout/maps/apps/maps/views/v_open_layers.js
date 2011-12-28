@@ -115,7 +115,9 @@ Maps.OpenLayers = SC.View.extend(
 
         bboxDidChange: function() {
             if(Maps.get("bbox") && this.get("olmap")) {
-                this.get("olmap").zoomToExtent(Maps.get("bbox"));
+                // sometimes we shouldn't zoom because the user has routed us to a certain location
+                if (Maps.get("shouldZoom")==YES)
+                    this.get("olmap").zoomToExtent(Maps.get("bbox"));
             }
         }.observes("Maps.bbox"),
 
