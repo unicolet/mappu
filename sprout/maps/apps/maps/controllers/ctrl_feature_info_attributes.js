@@ -15,6 +15,10 @@ Maps.featureInfoAttributesController = SC.ArrayController.create(SCTable.TableDe
         }
     }.observes("Maps.featureInfoController.selection"),
 
+    clearFeatureAttributes: function() {
+        this.content.refresh();
+    },
+
     onAttributeDoubleClick: function() {
         var attr = this.get("selection").firstObject();
         var feature = Maps.featureInfoController.get("selection").firstObject();

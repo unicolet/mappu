@@ -167,6 +167,7 @@ Maps.MainResponder = SC.Responder.create({
 
     maps_ClearQueryResults: function() {
         Maps.openLayersController.clearFeatures();
+        Maps.featureInfoAttributesController.clearFeatureAttributes();
     },
 
     maps_PerformGeoClose:function() {
