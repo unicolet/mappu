@@ -43,80 +43,66 @@ Maps.LayerDataSource = SC.DataSource.extend(
 	if (SC.ok(response)) {
 		var records = [];
 		var content = response.get('body');
-        // God mess IE
-        if(SC.$.browser.msie) {
-            var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-            // required or IE will attempt to validate against DTD, which will, most likely, fail
-            xmlDoc.async = "false";
-            xmlDoc.validateOnParse = "false";
-            var parsed=xmlDoc.loadXML(content);
-            if(!parsed) {
-                var myErr = xmlDoc.parseError;
-                alert(myErr.reason);
-            } else {
-                content=xmlDoc;
-            }
-        }
 
+        var wmsCapabilities=new OpenLayers.Format.WMSCapabilities();
+        var capabilities=wmsCapabilities.read(content);
+        var numLayers=capabilities.capability.layers.length;
+        var layers=capabilities.capability.layers;
         var order=1;
 
-		SC.$('Layer', content).each(
-			function(index) {
-                // read the bounding box from the first
-                if(index==1) {
-                    var bbox=$(this).find("LatLonBoundingBox:first");
-                    var bounds = new OpenLayers.Bounds(
-                        bbox.attr("minx"),
-                        bbox.attr("miny"),
-                        bbox.attr("maxx"),
-                        bbox.attr("maxy")
-                    );
+        for(var i=0;i<numLayers;i++) {
+            var l=layers[i];
+            if(l.keywords.contains("mappu_disable")) {
+                //@if(debug)
+                console.log("Skipping layer "+l.name);
+                //@endif
+            } else {
+                // read bbox from layer
+                var bbox=null;
+                for (var b in l.bbox) {
+                    if(l.bbox[b].srs)
+                        bbox=l.bbox[b];
+                }
+                var bounds = new OpenLayers.Bounds(
+                    bbox.bbox[0],
+                    bbox.bbox[1],
+                    bbox.bbox[2],
+                    bbox.bbox[3]
+                );
+                bounds.transform(new OpenLayers.Projection(bbox.srs),new OpenLayers.Projection('EPSG:900913'));
+
+                var legend=null;
+                try {
+                    legend=l.styles[0].legend.href
+                } catch(e) {}
+
+                var record={
+                            order: order++,
+							guid: i,
+							name: l.name,
+							visible : l.keywords.contains("mappu_disable"),
+							legendIcon : legend,
+                            opacity: 10,
+                            description: l.abstract,
+                            cql_filter: null,
+                            maxExtent: bounds,
+                            srs: bbox.srs
+						};
+                records[records.length]=record;
+
+                // if first layer then use it to zoom the map
+                if(i==0) {
                     // transform the bbox to 900913 and have KVO notify the map
-                    Maps.set("bbox",bounds.transform(new OpenLayers.Projection('EPSG:4326'),new OpenLayers.Projection('EPSG:900913')));
+                    Maps.set("bbox",bounds);
                     //@if(debug)
-                    console.log(bounds);
+                    console.log("Map Bounds:"+bounds);
                     //@endif
                 }
-				// can now skip first and proceed
-				if ( index!=0 ) {
-					var theName = $(this).find('Name:first').text();
-                    //@if(debug)
-                    console.log("Processing layer: "+theName);
-                    //@endif
-					if (theName!="blank:blank" && $(this).find("keyword:contains(mappu_disable)").length==0) {
-                        var theLegendIcon = null;
-                        try {
-                            if(SC.$.browser.msie) {
-                                theLegendIcon = $(this.find("Style:first OnlineResource")).attr('xlink:href');
-                            } else {
-						        theLegendIcon = $(this.getElementsByTagName('Style')[0].innerHTML).find("OnlineResource").attr('xlink:href');
-                            }
-                        } catch(e) {};
-                        
-                        // now for the BoundingBox
-                        var bbox=$(this).find('BoundingBox:first');
-                        var bounds = new OpenLayers.Bounds(bbox.attr('minx'),bbox.attr('miny'),bbox.attr('maxx'),bbox.attr('maxy'));
 
-						var record={
-                            order: order++,
-							guid: index,
-							name: theName,
-							visible : $(this).find("keyword:contains(visible)").length!=0,
-							legendIcon : theLegendIcon,
-                            opacity: 10,
-                            description: $(this).find('Abstract').text(),
-                            cql_filter: null,
-                            maxExtent: bounds.transform(Maps.projections['EPSG:3003'], Maps.projections['EPSG:900913']),
-                            srs: $(this).find('SRS').text()
-						};
-						records[records.length]=record;
-					} else {
-                        //@if(debug)
-                        console.log("Not adding layer: "+theName);
-                        //@endif
-                    }
-				}
-			});
+            }
+
+        }
+        
 		var storeKeys = store.loadRecords(Maps.Layer, records);
         store.dataSourceDidFetchQuery(query);
 	} else {
