@@ -117,7 +117,7 @@ Maps.FormView = SC.View.extend({
             var params=new Object();
             for (var i=0;i<10;i++) {
                 params["INPUT"+i]="<input type=\"text\" name=\"input"+i+"\" style=\"width:auto;\" onclick=\"this.focus()\">";
-                params["SMALL"+i]="<input type=\"text\" name=\"input"+i+"\" style=\"width:auto;\" size=\'4\' onclick=\"this.focus()\">";
+                params["SMALL"+i]="<input type=\"text\" name=\"small"+i+"\" style=\"width:auto;\" size=\'4\' onclick=\"this.focus()\">";
             }
             var form_text = Mustache.to_html(filterString, params);
             //console.log("Maps.FormView.formText="+form_text);
@@ -136,12 +136,16 @@ Maps.FormView = SC.View.extend({
     },
 
     getCQLFilter: function() {
+        var cql=null;
         var filterString = Maps.layerQueryController.get("selection").firstObject().get("filterString");
         if (filterString) {
-            return Mustache.to_html(filterString, this.getFormValues());
-        } else {
-            return null;
+            cql = Mustache.to_html(filterString, this.getFormValues());
         }
+        //@if(debug)
+        console.log("Form Values="+this.getFormValues());
+        console.log("CQL Filter="+cql);
+        //@endif
+        return cql;
     }
 });
 
