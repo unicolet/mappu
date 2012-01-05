@@ -10,6 +10,15 @@ Maps.statechart = SC.Statechart.create({
 
     checkingLoginSession: SC.State.extend({
         enterState: function() {
+            // bind spinner status
+            SC.Request.manager.inflight.addObserver('[]', function(array) {
+                var length = array.get('length');
+
+                SC.run(function() {
+                    Maps.set('isLoading', length > 0);
+                }, this);
+            });
+
             // try to load user data from existing server session
             Maps.authenticationManager.set("content",Maps.store.find(Maps.User, Math.random()));
         },

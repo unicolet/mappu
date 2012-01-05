@@ -262,3 +262,11 @@ div.text-shadow {
 	height: 16px;
 	@include slice("images/settings.png");
 }
+
+.hippie_background {
+    background-image: static_url("glowing_twisted_lights.jpg");
+    -moz-background-size: 100% 100%; /* Firefox 3.6 */
+    -webkit-background-size: 100% 100%; /* Firefox 3.6 */
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
+}

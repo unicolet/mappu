@@ -45,7 +45,7 @@ Maps.mainPage = SC.Page.design({
                 classNames: "app-logo".w()
             }),
             layers : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, centerX: 0, width: 160 },
+                layout: { centerY: 0, height: 30, centerX: ( $(window).width()<1024 ? 0-130: 0), width: 160 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: "_layers".loc(), action: 'LAYERS', icon: "icon-layers-16"},
@@ -59,7 +59,7 @@ Maps.mainPage = SC.Page.design({
                 allowsMultipleSelection: YES
             }),
             tools : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, centerX: 280, width: 400 },
+                layout: { centerY: 0, height: 30, centerX: ( $(window).width()<1024 ? 280-130: 280), width: 400 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: "_pan".loc(), action: 'toolMove', icon:""},
@@ -238,17 +238,7 @@ Maps.mainPage = SC.Page.design({
                     loading:SC.ImageView.design({
                         layout: { top: 0, bottom:0, width:40, right: 0 },
                         value: "spinner",
-                        isVisibleBinding: "Maps.isLoading",
-
-                        didAppendToDocument: function() {
-                            SC.Request.manager.inflight.addObserver('[]', function(array) {
-                                var length = array.get('length');
-
-                                SC.run(function() {
-                                    Maps.set('isLoading', length > 0);
-                                }, this);
-                            });
-                        }
+                        isVisibleBinding: "Maps.isLoading"
                     })
                 }),
 
@@ -699,19 +689,20 @@ Maps.mainPage = SC.Page.design({
 
 Maps.loginPage = SC.Page.design({
     mainPane: SC.MainPane.design({
+        classNames: ["hippie_background"],
         themeName: "loginPane",
         layout:{top:0,bottom:0,left:0,right:0},
         childViews: "logo loginform".w(),
         logo: SC.ImageView.design({
-            layout:{centerY:0, left:80, width: 373, height: 96},
+            layout:{centerY:0, left:( $(window).width()<1024 ? 80-50: 80), width: 373, height: 96},
             value:app_logo_huge,
             canLoadInBackground: YES
         }),
         loginform:SC.View.design({
-            layout: {width: 500, height: 300, left: 600, centerY: 0},
+            layout: {width: 500, height: 300, left: ( $(window).width()<1024 ? 600-130: 600), centerY: 0},
             classNames:"loginform".w(),
 
-            childViews: 'labelU login labelP password button message'.w(),
+            childViews: 'labelU login labelP password button message loading'.w(),
             labelU: SC.LabelView.design({
                 layout: {top:45, width:200, left:15, height:50},
                 value: "_username".loc(),
@@ -750,6 +741,11 @@ Maps.loginPage = SC.Page.design({
                 action: "submitLogin",
                 target: "Maps.authenticationManager",
                 isEnabledBinding: "Maps.authenticationManager.inputUsername"
+            }),
+            loading:SC.ImageView.design({
+                layout: {top:220, right:5, width:25, height:30},
+                value: "spinner",
+                isVisibleBinding: "Maps.isLoading"
             })
         })
     })
