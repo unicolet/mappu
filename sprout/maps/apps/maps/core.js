@@ -52,14 +52,34 @@ Maps = SC.Application.create(
      * Handle routing notificartons
      * @param route
      */
-    zoom: function(route) {
+    zoomRoute: function(route) {
         if(route && route.lat && route.lon) {
             console.log("Zoooming to: "+route.lat+","+route.lon+" level="+route.level);
             var center=new OpenLayers.LonLat(route.lon, route.lat).transform(Maps.projections['EPSG:4326'], Maps.projections['EPSG:900913']);
             Maps.openLayersController.getOLMAP().setCenter(center, (route.level?route.level:15) );
             Maps.set("shouldZoom",NO);
         }
-    }
+    },
 
+    findRoute: function(route) {
+        if(route && route.layer && route.query) {
+            console.log("Finding : "+route.layer+", "+route.query);
+
+            var wfs = new OpenLayers.Protocol.HTTP({
+                url:WMSCONFIG.wfs_server_path+"?service=wfs&version=1.0&request=GetFeature&typename=" + route.layer,
+                format: new OpenLayers.Format.GML.v3({})
+            });
+
+            // start spinner
+            Maps.set("isLoading", YES);
+
+            wfs.read({
+                params:{
+                    "CQL_FILTER":route.query
+                },
+                callback: Maps.MainResponder.didFetchWfsFeatures
+            });
+        }
+    }
 });
 

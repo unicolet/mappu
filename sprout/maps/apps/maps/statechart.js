@@ -107,7 +107,8 @@ Maps.statechart = SC.Statechart.create({
                 // perform animation
                 page.adjust("opacity", 1);
 
-                SC.routes.add('zoom/:lat/:lon/:level', Maps, Maps.zoom);
+                SC.routes.add('zoom/:lat/:lon/:level', Maps, Maps.zoomRoute);
+                SC.routes.add('find/:layer/:query', Maps, Maps.findRoute);
 
                 var layers = Maps.wmsStore.find(Maps.LAYERS_QUERY);
                 Maps.openLayersController.set('content', layers);
