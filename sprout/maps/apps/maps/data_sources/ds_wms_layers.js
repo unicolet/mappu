@@ -79,7 +79,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
                 var record={
                             order: order++,
 							guid: i,
-							name: l.name,
+                            name: l.name,
+                            title: l.title,
 							visible : l.keywords.contains("mappu_disable"),
 							legendIcon : legend,
                             opacity: 10,

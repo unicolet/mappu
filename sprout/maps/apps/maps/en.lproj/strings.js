@@ -76,5 +76,9 @@ SC.stringsFor('en', {
     "_session_expired_detail": "You login session has expired. To continue using the application please reload the page and then login again.",
     "_settings": "Settings",
     "_filter_error": "Cannot apply filter",
-    "_filter_error_body": "The layer you are trying to filter is probably a layer group, which are not, at this point, supported."
+    "_filter_error_body": "The layer you are trying to filter is probably a layer group, which are not, at this point, supported.",
+    "_description:": "Description:",
+    "_remove_filter": "Clear filter:",
+    "_geocode": "Geocode",
+    "_streetview": "Streetview"
 });

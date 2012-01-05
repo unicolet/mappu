@@ -197,8 +197,7 @@ Maps.openLayersController = SC.ArrayController.create(
                             feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                         }
                     } catch(e) {
-                        // TODO: translate and SC-ize
-                        alert("Errore leggendo i risultati: " + e);
+                        SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + e, "", "OK", this);
                     }
 
                     // save the centroid as a feature attibute, we'll need it later

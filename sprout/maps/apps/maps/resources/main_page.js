@@ -460,7 +460,7 @@ Maps.mainPage = SC.Page.design({
                     layout: {width: 30, centerY: 0, right: 0, height: 16},
                     image: "icon-settings-16",
                     action: "showAdvancedOptions",
-                    isEnabledBinding: "Maps.authenticationManager.isAdmin",
+                    isVisibleBinding: "Maps.authenticationManager.isAdmin",
                     toolTip: "_settings".loc()
                 }),
                 legendBtn: SC.ButtonView.design({
@@ -491,7 +491,7 @@ Maps.mainPage = SC.Page.design({
                         rowHeight: 30,
                         contentBinding: 'Maps.openLayersController.arrangedObjects',
                         selectionBinding: 'Maps.openLayersController.selection',
-                        contentValueKey: "name",
+                        contentValueKey: "title",
                         contentCheckboxKey: "visible",
                         contentIconKey: "legendIcon",
                         contentRightIconKey: "filterIcon",
@@ -642,12 +642,12 @@ Maps.mainPage = SC.Page.design({
             step: 1
         }),
         description: SC.LabelView.design({
-            valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("Descrizione:"),
+            valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("_description:".loc()),
             layout: {top: 110, right:5, bottom: 50, left:5}
         }),
         toggleFilter: SC.ButtonView.design({
             layout: {bottom: 10, left:5, height: 25, right:60},
-            titleBinding: SC.Binding.labelPrefix("Rimuovi filtro").from("Maps.layerController.cql_filter"),
+            titleBinding: SC.Binding.labelPrefix("_remove_filter".loc()).from("Maps.layerController.cql_filter"),
             action: "doRemoveFilter",
             isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
         }),

@@ -86,6 +86,9 @@ SC.stringsFor('it', {
     "_session_expired_detail": ":La sessione di autenticazione e' scaduta. Per continuare ad utilizzare il programma eseguire un ricaricamento della pagina del browser e quindi riautenticarsi.",
     "_settings": "Impostazioni",
     "_filter_error": "Impossibile applicare il filtro",
-    "_filter_error_body": "Al momento i filtri sui gruppi di layer non sono supportati."
-
+    "_filter_error_body": "Al momento i filtri sui gruppi di layer non sono supportati.",
+    "_description:": "Descrizione:",
+    "_remove_filter": "Rimuovi filtro:",
+    "_geocode": "Risolvi indirizzo",
+    "_streetview": "Lancia streetview"
 });
