@@ -263,6 +263,7 @@ div.text-shadow {
 	@include slice("images/settings.png");
 }
 
+/* Image license: CC http://creativity103.com/collections/Lightwaves/slides/twisted_lights.html */
 .hippie_background {
     background-image: static_url("glowing_twisted_lights.jpg");
     -moz-background-size: 100% 100%; /* Firefox 3.6 */
