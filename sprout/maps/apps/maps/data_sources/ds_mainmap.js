@@ -19,7 +19,6 @@ sc_require("models/layer_query");
 sc_require("models/attribute");
 sc_require("models/tag");
 sc_require("models/address");
-sc_require("models/usagetip");
 
 Maps.FEATURE_QUERY = SC.Query.remote(Maps.Feature, {});
 Maps.COMMENT_QUERY = SC.Query.remote(Maps.Comment, "social = {social}", {social: ""});

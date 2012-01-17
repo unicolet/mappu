@@ -73,22 +73,22 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
                 var legend=null;
                 try {
-                    legend=l.styles[0].legend.href
+                    legend=l.styles[0].legend.href;
                 } catch(e) {}
 
                 var record={
                             order: order++,
-							guid: i,
+			    guid: i,
                             name: l.name,
                             title: l.title,
-							visible : l.keywords.contains("mappu_disable"),
-							legendIcon : legend,
+			    visible : l.keywords.contains("mappu_disable"),
+			    legendIcon : legend,
                             opacity: 10,
-                            description: l.abstract,
+                            description: l['abstract'],
                             cql_filter: null,
                             maxExtent: bounds,
                             srs: bbox.srs
-						};
+		};
                 records[records.length]=record;
 
                 // if first layer then use it to zoom the map
