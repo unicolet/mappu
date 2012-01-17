@@ -775,3 +775,46 @@ Maps.helpSheetPane = SC.SheetPane.design({
         })
     })
 }).create();
+
+Maps.usageTipSheetPane = SC.SheetPane.create({
+  layout: { width: 650, height: 400, centerX: 0 },
+  contentView: SC.View.extend({
+      childViews: "title tipText tipImg showCheckbox nextBtn closeBtn".w(),
+      title: SC.LabelView.design({
+          layout: {top:5, left: 10, right:10, height: 50 },
+          value: "_usage_tip_title".loc(),
+          controlSize: SC.HUGE_CONTROL_SIZE,
+          fontWeight: SC.BOLD_WEIGHT,
+          icon: "icon-tips-16"
+      }),
+      tipText: SC.LabelView.design({
+          layout: {top:60, left: 10, width:440, height: 240 },
+          valueBinding: "Maps.usageTipController.tipText"
+      }),
+      tipImg: SC.ImageView.design({
+          layout: {top:60, right: 10, width:190, height: 240 },
+          valueBinding: "Maps.usageTipController.tipImg",
+          useImageQueue: YES
+      }),
+      showCheckbox: SC.CheckboxView.design({
+          layout: {bottom: 5, left: 10, width: "0.3", height: 30 },
+          title: "_tip_at_startup".loc(),
+          valueBinding: "Maps.usageTipController.showTips"
+      }),
+      nextBtn: SC.ButtonView.design({
+          layout: {bottom: 5, right: 100, width: 80, height: 30 },
+          title: "_next".loc(),
+          action: function() {
+              Maps.usageTipController.showNextTip();
+          }
+      }),
+      closeBtn: SC.ButtonView.design({
+          layout: {bottom: 5, right: 10, width: 80, height: 30 },
+          title: "_close".loc(),
+          action: function() {
+              Maps.usageTipSheetPane.remove();
+          }
+      })
+
+  })
+});

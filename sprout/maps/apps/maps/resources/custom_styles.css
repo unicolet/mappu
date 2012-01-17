@@ -263,6 +263,12 @@ div.text-shadow {
 	@include slice("images/settings.png");
 }
 
+.icon-tips-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/tips.png");
+}
+
 /* Image license: CC http://creativity103.com/collections/Lightwaves/slides/twisted_lights.html */
 .hippie_background {
     background-image: static_url("glowing_twisted_lights.jpg");

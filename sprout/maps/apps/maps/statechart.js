@@ -125,6 +125,7 @@ Maps.statechart = SC.Statechart.create({
                 // now start the keep session alive timer
                 Maps.authenticationManager.startSessionKeepAlive();
 
+                Maps.usageTipController.maybeShowTips();
             },
 
             exitState: function() {

@@ -19,6 +19,7 @@ sc_require("models/layer_query");
 sc_require("models/attribute");
 sc_require("models/tag");
 sc_require("models/address");
+sc_require("models/usagetip");
 
 Maps.FEATURE_QUERY = SC.Query.remote(Maps.Feature, {});
 Maps.COMMENT_QUERY = SC.Query.remote(Maps.Comment, "social = {social}", {social: ""});
@@ -28,7 +29,6 @@ Maps.LAYERQUERY_QUERY = SC.Query.remote(Maps.LayerQuery, {});
 Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null, {id:-1});
 Maps.TAGSUMMARY_QUERY = SC.Query.remote(Maps.Tag);
 Maps.GEOCODE_QUERY = SC.Query.remote(Maps.Address);
-
 
 /* global variables */
 Maps.comments = null;
@@ -169,6 +169,15 @@ Maps.MapsDataSource = SC.DataSource.extend(
             var recordType = SC.Store.recordTypeFor(storeKey);
             if (recordType === Maps.Social) {
                 SC.Request.getUrl('/mapsocial/social/' + id + '?alt=json').set('isJSON', YES)
+                    .notify(this, this.didRetrieveRecord, {
+                        store: store,
+                        storeKey: storeKey
+                    }).send();
+                return YES;
+            }
+            if (recordType === Maps.UsageTip) {
+                var lang=SC.Locale.currentLanguage ? "it" : SC.Locale.currentLanguage;
+                SC.Request.getUrl('/mapsocial/tips/next?language='+lang+'&alt=json').set('isJSON', YES)
                     .notify(this, this.didRetrieveRecord, {
                         store: store,
                         storeKey: storeKey

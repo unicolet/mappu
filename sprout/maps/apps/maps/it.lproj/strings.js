@@ -90,5 +90,9 @@ SC.stringsFor('it', {
     "_description:": "Descrizione:",
     "_remove_filter": "Rimuovi filtro:",
     "_geocode": "Risolvi indirizzo",
-    "_streetview": "Lancia streetview"
+    "_streetview": "Lancia streetview",
+    "_tip_at_startup": "Mostra i suggerimenti all'avvio",
+    "_usage_tip_title": "Lo sapevate che ... ?",
+    "_tips" : "Suggerimenti",
+    "_next": "Prossimo"
 });

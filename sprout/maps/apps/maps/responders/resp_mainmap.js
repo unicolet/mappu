@@ -15,6 +15,14 @@ Maps.MainResponder = SC.Responder.create({
     },
 
     /**
+     * Invoked when the user selectes the tips button from the username menu.
+     * Causes a sheet pane to appear with usage tips.
+     */
+    tipsOpen: function() {
+        Maps.usageTipSheetPane.append();
+    },
+
+    /**
      * Closes the sheet pane, animating the slide up.
      */
     helpClose: function() {

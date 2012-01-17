@@ -139,6 +139,7 @@ Maps.authenticationManager = SC.ObjectController.create({
         items: [
             { title: '_print'.loc(), icon: 'icon-print-16', keyEquivalent: 'ctrl_p', action: "print" },
             { title: '_help'.loc(), icon: 'sc-icon-help-16', keyEquivalent: 'ctrl_h', action: "helpOpen" },
+            { title: '_tips'.loc(), icon: 'icon-tips-16', keyEquivalent: 'ctrl_i', action: "tipsOpen" },
             //{ isSeparator: YES },
             { title: '_logout'.loc(), icon: 'icon-logout-16', keyEquivalent: 'ctrl_shift_n', action: "logout" }
         ]

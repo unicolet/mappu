@@ -80,5 +80,9 @@ SC.stringsFor('en', {
     "_description:": "Description:",
     "_remove_filter": "Clear filter:",
     "_geocode": "Geocode",
-    "_streetview": "Streetview"
+    "_streetview": "Streetview",
+    "_tip_at_startup": "Show tips at startup",
+    "_usage_tip_title": "Did you know that ... ?",
+    "_tips" : "Tips",
+    "_next": "Next"
 });
