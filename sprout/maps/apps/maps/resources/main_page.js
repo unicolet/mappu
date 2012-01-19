@@ -777,17 +777,19 @@ Maps.helpSheetPane = SC.SheetPane.design({
 }).create();
 
 Maps.usageTipSheetPane = SC.SheetPane.create({
-  layout: { width: 650, height: 400, centerX: 0 },
+  layout: { width: 650, height: 350, centerX: 0 },
   contentView: SC.View.extend({
       childViews: "title tipText tipImg showCheckbox nextBtn closeBtn".w(),
       title: SC.LabelView.design({
-          layout: {top:5, left: 10, right:10, height: 50 },
+          classNames: ["help_text"],
+          layout: {top:10, left: 10, right:10, height: 50 },
           value: "_usage_tip_title".loc(),
           controlSize: SC.HUGE_CONTROL_SIZE,
           fontWeight: SC.BOLD_WEIGHT,
           icon: "icon-tips-16"
       }),
       tipText: SC.LabelView.design({
+          classNames: ["help_text"],
           layout: {top:60, left: 10, width:440, height: 240 },
           valueBinding: "Maps.usageTipController.tipText"
       }),

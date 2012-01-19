@@ -25,10 +25,10 @@ Maps.usageTipController = SC.ObjectController.create(
     /**
      * Startup function, called by statechart.
      */
-    maybeShowTips: function() {
+    maybeShowTips: function(force) {
         this.readTipsSettings();
         
-        if(this.get("showTips")) {
+        if(this.get("showTips")||force) {
             this.showNextTip();
             Maps.usageTipSheetPane.append();
         }

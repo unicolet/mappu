@@ -19,7 +19,7 @@ Maps.MainResponder = SC.Responder.create({
      * Causes a sheet pane to appear with usage tips.
      */
     tipsOpen: function() {
-        Maps.usageTipSheetPane.append();
+        Maps.usageTipController.maybeShowTips(true);
     },
 
     /**
