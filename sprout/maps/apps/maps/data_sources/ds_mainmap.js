@@ -175,7 +175,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 return YES;
             }
             if (recordType === Maps.UsageTip) {
-                var lang=SC.Locale.currentLanguage ? "it" : SC.Locale.currentLanguage;
+                var lang=SC.Locale.currentLanguage;
                 SC.Request.getUrl('/mapsocial/tips/next?language='+lang+'&alt=json').set('isJSON', YES)
                     .notify(this, this.didRetrieveRecord, {
                         store: store,
