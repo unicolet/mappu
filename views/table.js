@@ -203,7 +203,7 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
 
     headerScrollView = this.createChildView(SC.ScrollView, {
       classNames: 'sctable-header-scroll-view',
-      layout: { left: 1, right: 0, top: 0, height: headerHeight },
+      layout: { left: 0, right: 0, top: 0, height: headerHeight },
       borderStyle: SC.BORDER_NONE,
       contentView: SCTable.TableHeaderView.extend({
         layout: { right: 0, minWidth: tableWidth },
