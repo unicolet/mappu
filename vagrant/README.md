@@ -13,7 +13,7 @@ create a install-data directory:
 
     mkdir install-data
 
-the put a recent copy of JDK 1.6 into that folder.
+then put a recent copy of JDK 1.6 into that folder.
 It will be used as the default jdk for tomcat and it cannot
 be automatically deployed due to licensing issues.
 
@@ -23,7 +23,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/jdk-6u30-download-137713
 
 The installer script scripts/mappu.sh will also automatically download
 installer files for Tomcat, Geoserver and Mappu and they will be cached in
-install-data so that they don;t hev to be downloaded over and over.
+install-data so that they don't have to be downloaded over and over.
 
 The content of the install data is safe to delete.
 
