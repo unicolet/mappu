@@ -13,8 +13,8 @@ Mappu is a web-based gis which strives to:
 - provide social functionality on top of your existing GIS data
 - simplify the process of linking data to gis and viceversa
 
-Gettin Mappu
-------------
+Getting Mappu
+-------------
 
 I'm working on a vagrant script that will make it as easy as
 possible to provision a vm with all the necessary software
