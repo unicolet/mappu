@@ -39,73 +39,77 @@ Maps.LayerDataSource = SC.DataSource.extend(
   },
   
   didFetchLayers: function(response, store, query) {
-	//console.log('in didFetchLayers');
 	if (SC.ok(response)) {
-		var records = [];
-		var content = response.get('body');
+        try {
+            var records = [];
+            var content = response.get('body');
 
-        var wmsCapabilities=new OpenLayers.Format.WMSCapabilities();
-        var capabilities=wmsCapabilities.read(content);
-        var numLayers=capabilities.capability.layers.length;
-        var layers=capabilities.capability.layers;
-        var order=1;
+            var wmsCapabilities=new OpenLayers.Format.WMSCapabilities();
+            var capabilities=wmsCapabilities.read(content);
+            var numLayers=capabilities.capability.layers.length;
+            var layers=capabilities.capability.layers;
+            var order=1;
 
-        for(var i=0;i<numLayers;i++) {
-            var l=layers[i];
-            if(l.keywords.contains("mappu_disable")) {
-                //@if(debug)
-                console.log("Skipping layer "+l.name);
-                //@endif
-            } else {
-                // read bbox from layer
-                var bbox=null;
-                for (var b in l.bbox) {
-                    if(l.bbox[b].srs)
-                        bbox=l.bbox[b];
-                }
-                var bounds = new OpenLayers.Bounds(
-                    bbox.bbox[0],
-                    bbox.bbox[1],
-                    bbox.bbox[2],
-                    bbox.bbox[3]
-                );
-                bounds.transform(new OpenLayers.Projection(bbox.srs),new OpenLayers.Projection('EPSG:900913'));
-
-                var legend=null;
-                try {
-                    legend=l.styles[0].legend.href;
-                } catch(e) {}
-
-                var record={
-                            order: order++,
-			    guid: i,
-                            name: l.name,
-                            title: l.title,
-			    visible : l.keywords.contains("mappu_disable"),
-			    legendIcon : legend,
-                            opacity: 10,
-                            description: l['abstract'],
-                            cql_filter: null,
-                            maxExtent: bounds,
-                            srs: bbox.srs
-		};
-                records[records.length]=record;
-
-                // if first layer then use it to zoom the map
-                if(i==0) {
-                    // transform the bbox to 900913 and have KVO notify the map
-                    Maps.set("bbox",bounds);
+            for(var i=0;i<numLayers;i++) {
+                var l=layers[i];
+                if(l.keywords.contains("mappu_disable")) {
                     //@if(debug)
-                    console.log("Map Bounds:"+bounds);
+                    console.log("Skipping layer "+l.name);
                     //@endif
+                } else {
+                    // read bbox from layer
+                    var bbox=null;
+                    for (var b in l.bbox) {
+                        if(l.bbox[b].srs)
+                            bbox=l.bbox[b];
+                    }
+                    var bounds = new OpenLayers.Bounds(
+                        bbox.bbox[0],
+                        bbox.bbox[1],
+                        bbox.bbox[2],
+                        bbox.bbox[3]
+                    );
+                    bounds.transform(new OpenLayers.Projection(bbox.srs),new OpenLayers.Projection('EPSG:900913'));
+
+                    var legend=null;
+                    try {
+                        legend=l.styles[0].legend.href;
+                    } catch(e) {}
+
+                    var record={
+                                order: order++,
+                    guid: i,
+                                name: l.name,
+                                title: l.title,
+                    visible : l.keywords.contains("mappu_disable"),
+                    legendIcon : legend,
+                                opacity: 10,
+                                description: l['abstract'],
+                                cql_filter: null,
+                                maxExtent: bounds,
+                                srs: bbox.srs
+            };
+                    records[records.length]=record;
+
+                    // if first layer then use it to zoom the map
+                    if(i==0) {
+                        // transform the bbox to 900913 and have KVO notify the map
+                        Maps.set("bbox",bounds);
+                        //@if(debug)
+                        console.log("Map Bounds:"+bounds);
+                        //@endif
+                    }
+
                 }
 
             }
 
+            var storeKeys = store.loadRecords(Maps.Layer, records);
+            store.dataSourceDidFetchQuery(query);
+        } catch(e) {
+            store.dataSourceDidErrorQuery(query, response);
+            this.notifyError({status:e});
         }
-        
-		var storeKeys = store.loadRecords(Maps.Layer, records);
-        store.dataSourceDidFetchQuery(query);
 	} else {
 		store.dataSourceDidErrorQuery(query, response);
         this.notifyError(response);
