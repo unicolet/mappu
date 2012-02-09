@@ -445,7 +445,14 @@ Maps.mainPage = SC.Page.design({
         layout: { width: 500, height: 400 },
         contentView: SC.WorkspaceView.extend({
             topToolbar: SC.ToolbarView.design({
-                childViews: ["advancedBtn","legendBtn"],
+                childViews: "advancedBtn legendBtn googleView".w(),
+                googleView: SC.RadioView.design({
+                    layout: {centerY: 0, left: 30, width:200, height: 16},
+                    items: '_streets_satellite'.loc().w(),
+                    valueBinding: "Maps.openLayersController.whichGoogleLayer",
+                    height: 24,
+                    layoutDirection: SC.LAYOUT_HORIZONTAL
+                }),
                 advancedBtn: SC.ImageButtonView.design({
                     layout: {width: 30, centerY: 0, right: 0, height: 16},
                     image: "icon-settings-16",
@@ -464,17 +471,10 @@ Maps.mainPage = SC.Page.design({
             contentView:SC.View.extend({
                 classNames: 'popover_content_background'.w(),
                 layout: {top: 0, left: 0, right: 0, bottom: 0},
-                childViews: 'googleView layerView layerDetailView'.w(),
-                googleView: SC.RadioView.design({
-                    layout: {top: 15, left: 30, width:200, height: 30},
-                    items: '_streets_satellite'.loc().w(),
-                    valueBinding: "Maps.openLayersController.whichGoogleLayer",
-                    height: 24,
-                    layoutDirection: SC.LAYOUT_HORIZONTAL
-                }),
+                childViews: 'layerView layerDetailView'.w(),
                 layerView: SC.ScrollView.design({
                     hasHorizontalScroller: NO,
-                    layout: { top: 40, bottom: 0, left: 0, width: 210 },
+                    layout: { top: 0, bottom: 0, left: 0, width: 210 },
                     backgroundColor: 'white',
                     contentView: SC.ListView.design({
                         layout:{top:0,bottom:0,right:0,left:8},
@@ -497,7 +497,7 @@ Maps.mainPage = SC.Page.design({
                     })
                 }),
                 layerDetailView: SC.SceneView.design({
-                    layout: { top: 40, bottom: 5, right: 10, width: 270 },
+                    layout: { top: 0, bottom: 5, right: 10, width: 270 },
                     scenes: ["Maps.mainPage.layerInfoView","Maps.mainPage.layerLegendView"],
                     nowShowingBinding: "Maps.openLayersController.layerPaletteNowShowing"
                 })
@@ -614,18 +614,18 @@ Maps.mainPage = SC.Page.design({
         title: SC.LabelView.design({
             value: "_info".loc(),
             controlSize: SC.LARGE_CONTROL_SIZE,
-            layout: {top: 0, right:5, height: 20, left:5}
+            layout: {top: 10, right:5, height: 20, left:5}
         }),
         name: SC.LabelView.design({
             valueBinding: SC.Binding.from('Maps.layerController.name').labelPrefix("Nome:"),
-            layout: {top: 25, right:5, height: 20, left:5}
+            layout: {top: 35, right:5, height: 20, left:5}
         }),
         opacitylbl: SC.LabelView.design({
-            layout: {top: 50, right:5, height: 20, left:5},
+            layout: {top: 60, right:5, height: 20, left:5},
             value: "_opacity".loc()
         }),
         opacity:SC.SliderView.design({
-            layout: {top: 70, right:10, height: 20, left:10},
+            layout: {top: 80, right:10, height: 20, left:10},
             valueBinding: 'Maps.layerController.opacity',
             maximum: 10,
             minimum: 0,
@@ -633,7 +633,7 @@ Maps.mainPage = SC.Page.design({
         }),
         description: SC.LabelView.design({
             valueBinding: SC.Binding.from('Maps.layerController.description').labelPrefix("_description:".loc()),
-            layout: {top: 110, right:5, bottom: 50, left:5}
+            layout: {top: 120, right:5, bottom: 50, left:5}
         }),
         toggleFilter: SC.ButtonView.design({
             layout: {bottom: 10, left:5, height: 25, right:60},
