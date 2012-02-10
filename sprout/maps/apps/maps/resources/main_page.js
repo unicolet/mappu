@@ -373,6 +373,7 @@ Maps.mainPage = SC.Page.design({
             layout: {bottom:0, top:46, left:0, right:0},
             backgroundColor: 'white',
             contentView: SC.ListView.design({
+                classNames: "border-top".w(),
                 rowHeight:34,
                 contentBinding: 'Maps.layerQueryController.arrangedObjects',
                 selectionBinding: 'Maps.layerQueryController.selection',
@@ -477,6 +478,7 @@ Maps.mainPage = SC.Page.design({
                     layout: { top: 0, bottom: 0, left: 0, width: 210 },
                     backgroundColor: 'white',
                     contentView: SC.ListView.design({
+                        classNames: "border-right".w(),
                         layout:{top:0,bottom:0,right:0,left:8},
                         rowHeight: 30,
                         contentBinding: 'Maps.openLayersController.arrangedObjects',
@@ -497,7 +499,7 @@ Maps.mainPage = SC.Page.design({
                     })
                 }),
                 layerDetailView: SC.SceneView.design({
-                    layout: { top: 0, bottom: 5, right: 10, width: 270 },
+                    layout: { top: 0, bottom: 0, left: 211, right: 0 },
                     scenes: ["Maps.mainPage.layerInfoView","Maps.mainPage.layerLegendView"],
                     nowShowingBinding: "Maps.openLayersController.layerPaletteNowShowing"
                 })

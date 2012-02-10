@@ -12,12 +12,12 @@ config :all, :required => [:sproutcore, 'animation', 'sctable', :'sproutcore/exp
 #	c[:stylesheet_libs] = ['http://fonts.googleapis.com/css?family=Holtwood+One+SC|Pacifico']
 #end
 
-proxy "/geoserver", :to => "192.168.217.128"
-proxy "/mapsocial", :to => "192.168.217.128"
-proxy "/geocache", :to => "192.168.217.128"
+#proxy "/geoserver", :to => "192.168.217.128"
+#proxy "/mapsocial", :to => "192.168.217.128"
+#proxy "/geocache", :to => "192.168.217.128"
 
 
-#proxy "/geoserver", :to => "10.1.23.187"
-#proxy "/mapsocial", :to => "10.1.23.187"
-#proxy "/geocache", :to => "10.1.23.187"
+proxy "/geoserver", :to => "10.1.23.187"
+proxy "/mapsocial", :to => "10.1.23.187"
+proxy "/geocache", :to => "10.1.23.187"
 

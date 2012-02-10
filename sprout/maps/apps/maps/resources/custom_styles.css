@@ -48,6 +48,7 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
 @theme(maps) {
     $theme.sc-view.denim, $theme.sctable-body-scroll-view {
         background: transparent static_url("grey_denim.png");
+        /*background: black;  visual debugging */
 
         text-shadow: 0px 1px 1px #ccc;
 
@@ -116,9 +117,15 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
             list-style-type: decimal;
             margin-left: 2em;
         }
-
     }
 
+    $theme.ace.collection.border-right {
+        border-right: 1px solid gray;
+    }
+
+    $theme.ace.collection.border-top {
+        border-top: 1px solid gray;
+    }
 }
 
 @theme(comments) {
