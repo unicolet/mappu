@@ -328,11 +328,11 @@ Maps.OpenLayers = SC.View.extend(
         }
     });
 
-Maps.OpenLayersLayer = SC.View.extend({
+Maps.OpenLayersLayer = SC.View.extend(SC.ContentDisplay, {
 
     content: null,
 
-    displayProperties: ["content", "content.order", "content.visible", "content.opacity", "content.cql_filter"],
+    contentDisplayProperties: ["order", "visible", "opacity", "cql_filter"],
 
     render: function(context, firstTime) {
         this.createOrUpdateWMSLayer();
