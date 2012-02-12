@@ -46,8 +46,11 @@ else
 	echo "# Installing tomcat                                            #"
 	echo "################################################################"
 	(
-	wget http://mirror.nohup.it/apache/tomcat/tomcat-7/v7.0.25/bin/apache-tomcat-7.0.25.tar.gz > /dev/null 2>&1
-	tar -zxf apache-tomcat-7.0.25.tar.gz 
+	if [ ! -e /vagrant_data/apache-tomcat-7.0.25.tar.gz ]; then 
+		wget http://mirror.nohup.it/apache/tomcat/tomcat-7/v7.0.25/bin/apache-tomcat-7.0.25.tar.gz > /dev/null 2>&1
+		sudo cp apache-tomcat-7.0.25.tar.gz /vagrant_data/apache-tomcat-7.0.25.tar.gz
+	fi
+	tar -zxf /vagrant_data/apache-tomcat-7.0.25.tar.gz 
 	sudo mv apache-tomcat-7.0.25 /opt/ 
 
 	sudo useradd tomcat
@@ -233,6 +236,29 @@ sudo mv geoserver.war /opt/tomcat/webapps/geoserver.war
 sudo chown tomcat.tomcat /opt/tomcat/webapps/geoserver.war
 ) >> provision.log 2>&1
 
+
+echo "################################################################"
+echo "# Installing JAI libraries (performance)                       #"
+echo "#                                                              #"
+echo "# You will have to manually answer Y to accept license         #"
+echo "################################################################"
+(
+if [ ! -e /vagrant_data/jai*.bin ]; then
+	wget http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-i586-jdk.bin
+	wget http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-i586-jdk.bin
+	sudo cp jai-1_1_3-lib-linux-i586-jdk.bin /vagrant_data/
+	sudo cp jai_imageio-1_1-lib-linux-i586-jdk.bin /vagrant_data/
+fi
+sudo cp /vagrant_data/jai-1_1_3-lib-linux-i586-jdk.bin /opt/jdk/
+sudo cp /vagrant_data/jai_imageio-1_1-lib-linux-i586-jdk.bin /opt/jdk/
+
+cd /opt/jdk
+echo yes | sudo sh jai-1_1_3-lib-linux-i586-jdk.bin
+echo yes | sudo _POSIX2_VERSION=199209 sh jai_imageio-1_1-lib-linux-i586-jdk.bin
+cd -
+
+) >> provision.log 2>&1
+
 echo "################################################################"
 echo "# Configuring apache                                           #"
 echo "################################################################"
@@ -272,7 +298,7 @@ sudo a2enmod deflate
 
 sudo /etc/init.d/tomcat7 start
 
-sudo /etc/init.d/apache restart
+sudo /etc/init.d/apache2 restart
 ) >> provision.log 2>&1 
 
 echo ""
