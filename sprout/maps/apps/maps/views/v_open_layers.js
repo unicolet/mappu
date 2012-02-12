@@ -17,6 +17,8 @@
 sc_require("resources/OpenLayers");
 sc_require("resources/openlayers_extensions/MappuClickHandler")
 
+OpenLayers.ImgPath = 'source/resources/img/';
+
 var size = new OpenLayers.Size(21, 25);
 var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
 var iconSelected = new OpenLayers.Icon(sc_static('/images/pin_selected.png'), size, offset);

@@ -88,7 +88,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                                 cql_filter: null,
                                 maxExtent: bounds,
                                 srs: bbox.srs
-            };
+                    };
                     records[records.length]=record;
 
                     // if first layer then use it to zoom the map
