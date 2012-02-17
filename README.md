@@ -16,7 +16,7 @@ Current Limitations:
 
 #Dependencies
 
-  * [__Sproutcore__](http://www.github.com/sproutcore/sproutcore) (versions 1.4-stable through 1.5.0.pre.4)
+  * [__Sproutcore__](http://www.github.com/sproutcore/sproutcore) (Versions 1.4-stable through 1.7.0, though styling is currently a bit off due to Sproutcore theme changes I haven't caught up to yet.)
   
 #Demo App
 
