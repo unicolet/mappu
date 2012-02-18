@@ -52,6 +52,16 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
   showAlternatingRows: NO,
 
   /*
+    Set this to YES if you want rows to be highlighted when the mouse moves over them.
+    Note that this slows down the performance of the table somewhat by forcing a re-render
+    of any row whose highlight status changes, so for the fastest experience, set it to NO.
+    
+    Currently, this property may only be set at creation time; changing it after the TableView
+    is created will have no effect.
+  */
+  shouldHighlightRowOnMouseOver: YES,
+
+  /*
     Target for action fired when double-clicking on a row
   */
   target: null,
@@ -181,7 +191,9 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
         columnsBinding: SC.Binding.from('columns', this),
         selectionBinding: SC.Binding.from('selection', this),
         contentValueKey: 'name',
-        exampleView: SCTable.TableRowView,
+        exampleView: SCTable.TableRowView.extend({
+          shouldHighlightRowOnMouseOver: this.get('shouldHighlightRowOnMouseOver')
+        }),
         rowHeight: this.get('rowHeight'),
         tableDelegateBinding: SC.Binding.from('tableDelegate', this).oneWay(),
         showAlternatingRowsBinding: SC.Binding.from('showAlternatingRows', this).oneWay(),

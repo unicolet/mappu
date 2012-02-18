@@ -24,11 +24,14 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   displayProperties: ['isMouseOver'],
 
   /*
-    Set this property to YES (default) to disable the re-rendering of rows when the mouse
-    moves over.
-    On slower computers (i.e. my 2006 dual core mac mini) this is quite slow.
-   */
-  fastRendering: YES,
+    Set this to YES if you want rows to be highlighted when the mouse moves over them.
+    Note that this slows down the performance of the table somewhat by forcing a re-render
+    of any row whose highlight status changes, so for the fastest experience, set it to NO.
+    
+    Note that this property will be set by the owning TableView to match its global
+    'shouldHighlightRowOnMouseOver' property, so you shouldn't have to set it here.
+  */
+  shouldHighlightRowOnMouseOver: NO,
 
   /*
     @read-only
@@ -91,13 +94,15 @@ SCTable.TableRowView = SC.View.extend(SC.Control, /*SC.Benchmark,*/ {
   },
 
   mouseEntered: function(evt) {
-    if(!this.get("fastRendering"))
-        this.set('isMouseOver', YES);
+    if (this.get('shouldHighlightRowOnMouseOver')) {
+      this.set('isMouseOver', YES);
+    }
   },
-  
+
   mouseExited: function(evt) {
-    if(!this.get("fastRendering"))
-        this.set('isMouseOver', NO);
+    if (this.get('isMouseOver') || this.get('shouldHighlightRowOnMouseOver')) {
+      this.set('isMouseOver', NO);
+    }
   }
 
 });
