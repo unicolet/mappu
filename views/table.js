@@ -59,7 +59,7 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
     Currently, this property may only be set at creation time; changing it after the TableView
     is created will have no effect.
   */
-  shouldHighlightRowOnMouseOver: YES,
+  shouldHighlightRowOnMouseOver: NO,
 
   /*
     Target for action fired when double-clicking on a row
