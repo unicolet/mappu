@@ -72,12 +72,14 @@ Maps.OpenLayers = SC.View.extend(
             var content=this.get("content");
             var childViews=this.get("childViews");
 
-            for(var i=childViews.length; i < content.length(); i++) {
-                // add new childView...
-                var layer=Maps.OpenLayersLayer.design({
-                    content: content.objectAt(i)
-                }).create();
-                this.appendChild(layer);
+            if(childViews && content) {
+                for(var i=childViews.length; i < content.length(); i++) {
+                    // add new childView...
+                    var layer=Maps.OpenLayersLayer.design({
+                        content: content.objectAt(i)
+                    }).create();
+                    this.appendChild(layer);
+                }
             }
         }.observes(".content.length",".content"),
 
@@ -125,6 +127,7 @@ Maps.OpenLayers = SC.View.extend(
                     console.log("Zooming to bbox "+Maps.get("bbox"));
                     //@endif
                     map.zoomToExtent(Maps.get("bbox"), true);
+                    map.zoomTo(12);
                 } else {
                     map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
                 }

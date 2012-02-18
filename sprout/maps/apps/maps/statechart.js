@@ -57,7 +57,8 @@ Maps.statechart = SC.Statechart.create({
         },
 
         exitState:function () {
-            Maps.getPath('loginPage.mainPane').remove();
+            // removed in the next step
+            //Maps.getPath('loginPage.mainPane').remove();
         },
 
 
@@ -134,8 +135,16 @@ Maps.statechart = SC.Statechart.create({
                 }
                 Maps.progressPane.append();
 
-                var layers = Maps.wmsStore.find(Maps.LAYERS_QUERY);
-                Maps.openLayersController.set('tmp', layers);
+                var layers=Maps.openLayersController.get('tmp');
+                if(layers) {
+                    layers.refresh();
+                } else {
+                    layers = Maps.wmsStore.find(Maps.LAYERS_QUERY);
+                    Maps.openLayersController.set('tmp', layers);
+                }
+                //@if(debug)
+                console.log("At the end of loadingWms.enterState");
+                //@endif
             },
 
             updateProgress: function(progress) {
@@ -147,12 +156,14 @@ Maps.statechart = SC.Statechart.create({
             },
 
             exitState:function () {
-                //Maps.progressPane.remove();
+                // the progress pane is removed by the next state
             }
         }),
 
         viewingMap:SC.State.extend({
             enterState:function () {
+                Maps.getPath('loginPage.mainPane').remove();
+
                 var page = Maps.getPath('mainPage.mainPane');
                 // prepare animation
                 page.disableAnimation();

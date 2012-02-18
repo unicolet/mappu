@@ -33,6 +33,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
         //
 
         fetch:function (store, query) {
+            this.projections = new Array();
+            this.numberOfProjections=1;
 
             if (query === Maps.LAYERS_QUERY) {
                 SC.Request.getUrl(WMSCONFIG.server_path + '?service=WMS&version=1.1.1&request=GetCapabilities')
@@ -44,12 +46,6 @@ Maps.LayerDataSource = SC.DataSource.extend(
         },
 
         didFetchCapabilitiesResponse:function (response, store, query) {
-            //this.invokeLater(function() {this.deferredFetchCapabilitiesResponse(response, store, query)}, 100);
-            var self = this;
-            setTimeout(function() {self.deferredFetchCapabilitiesResponse(response, store, query)}, 10);
-        },
-
-        deferredFetchCapabilitiesResponse:function (response, store, query) {
             if (SC.ok(response)) {
                 try {
                     var records = [];
