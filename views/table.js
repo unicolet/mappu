@@ -155,6 +155,16 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
 
   // PUBLIC METHODS
 
+  init: function() {
+    sc_super();
+    
+    // In case the 'columns' array is static and already
+    // set at init time, force the 'columns' observer to
+    // fire once manually to set up observers
+    // on column widths.
+    this._updateColumnObservers();
+  },
+
   createChildViews: function() {
     var childViews = [], headerScrollView, bodyScrollView;
     var headerHeight = this.get('headerHeight');
@@ -226,8 +236,6 @@ SCTable.TableView = SC.View.extend(SCTable.TableColumnsDelegate, SCTable.TableDe
     this._headerView = headerScrollView.get('contentView');
 
     this.set('childViews', [bodyScrollView, headerScrollView]);
-
-    this._updateColumnObservers();
   },
   
   /*
