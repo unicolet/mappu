@@ -20,6 +20,10 @@ Maps.openLayersController = SC.ArrayController.create(
     SC.CollectionViewDelegate,
     /** @scope Maps.openLayersController.prototype */ {
 
+        // only used in loadingWms to save the layer list
+        // which is the moved to content so that the view can pickup the changes
+        tmp: null,
+
         measure: '',
 
         destroyOpenLayersMap: function() {

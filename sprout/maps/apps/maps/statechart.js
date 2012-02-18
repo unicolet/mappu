@@ -111,19 +111,22 @@ Maps.statechart = SC.Statechart.create({
                                 layout:{top:100, centerX:0, width:350, height:20},
                                 render:function (ctx, firstTime) {
                                     if (firstTime) {
-                                        ctx.push("<progress style=\"width:100%\" max=\"100\" value=\"0\"></progress>");
+                                        ctx.push("<progress style=\"width:100%\"></progress>");
                                     }
                                     return ctx;
                                 },
                                 updateProgress:function (progress) {
                                     var justToTriggerRefresh=0;
                                     var bar = this.$("progress")[0];
-                                    bar.value = progress;
-                                    // force refresh
-                                    justToTriggerRefresh = bar.parentNode.offsetTop+"px";
-                                    //@if(debug)
-                                    console.log("Progress is now: "+progress);
-                                    //@endif
+                                    if(bar) {
+                                        bar.max=100;
+                                        bar.value = progress;
+                                        // force refresh
+                                        justToTriggerRefresh = bar.parentNode.offsetTop+"px";
+                                        //@if(debug)
+                                        console.log("Progress is now: "+progress);
+                                        //@endif
+                                    }
                                 }
                             })
                         })
@@ -132,7 +135,7 @@ Maps.statechart = SC.Statechart.create({
                 Maps.progressPane.append();
 
                 var layers = Maps.wmsStore.find(Maps.LAYERS_QUERY);
-                Maps.openLayersController.set('content', layers);
+                Maps.openLayersController.set('tmp', layers);
             },
 
             updateProgress: function(progress) {
@@ -163,8 +166,7 @@ Maps.statechart = SC.Statechart.create({
                 SC.routes.add('zoom/:lat/:lon/:level', Maps, Maps.zoomRoute);
                 SC.routes.add('find/:layer/:query', Maps, Maps.findRoute);
 
-                //var layers = Maps.wmsStore.find(Maps.LAYERS_QUERY);
-                //Maps.openLayersController.set('content', layers);
+                Maps.openLayersController.set('content', Maps.openLayersController.get("tmp"));
 
                 var queries = Maps.store.find(Maps.LAYERQUERY_QUERY);
                 Maps.layerQueryController.set('content', queries);

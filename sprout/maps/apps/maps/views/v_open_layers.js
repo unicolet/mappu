@@ -79,7 +79,7 @@ Maps.OpenLayers = SC.View.extend(
                 }).create();
                 this.appendChild(layer);
             }
-        }.observes(".content.length"),
+        }.observes(".content.length",".content"),
 
         didAppendToDocument: function() {
             this.initOpenLayers();
