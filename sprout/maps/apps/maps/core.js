@@ -80,6 +80,22 @@ Maps = SC.Application.create(
                 callback: Maps.MainResponder.didFetchWfsFeatures
             });
         }
+    },
+
+    progressPane: null,
+
+    updateStateProgress:function (progress) {
+        if (this.progressPane) {
+            var currentStates = Maps.statechart.currentStates();
+            currentStates.every(
+                function(it) {
+                    if(it && it.updateProgress) {
+                        it.updateProgress(progress);
+                    }
+                }
+            );
+        }
     }
+
 });
 

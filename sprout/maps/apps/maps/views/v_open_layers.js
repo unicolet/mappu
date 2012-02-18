@@ -65,6 +65,10 @@ Maps.OpenLayers = SC.View.extend(
         },
 
         didContentChange: function() {
+            //@if(debug)
+            console.log("++ Maps.OpenLayers.didContentChange ++");
+            //@endif
+
             var content=this.get("content");
             var childViews=this.get("childViews");
 
@@ -115,7 +119,25 @@ Maps.OpenLayers = SC.View.extend(
 
             map.events.register("changelayer",Maps.openLayersController, Maps.openLayersController.handleZOrderingChange);
 
-            map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
+            if (Maps.get("shouldZoom")==YES) {
+                if(Maps.get("bbox")!=null) {
+                    //@if(debug)
+                    console.log("Zooming to bbox "+Maps.get("bbox"));
+                    //@endif
+                    map.zoomToExtent(Maps.get("bbox"), true);
+                } else {
+                    map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
+                }
+            }
+
+            // if the layer list has already loaded by the time the view gets rendered
+            // we need to explicitly create childviews
+            if(this.getPath("content.status")==SC.READY_CLEAN) {
+                //@if(debug)
+                console.log("Forcing didContentChange on OpenlayersView");
+                //@endif
+                //this.didContentChange();
+            }
             this.set('olmap', map);
         },
 
