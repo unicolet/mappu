@@ -126,6 +126,17 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
     $theme.ace.collection.border-top {
         border-top: 1px solid gray;
     }
+
+    $theme.ace.collection .sc-collection-item.sel {
+        background: #608AB9;
+        background: -moz-linear-gradient(top, #72a5dc 0%, #3c76c4 50%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#72a5dc), color-stop(50%,#3c76c4)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top, #72a5dc 0%,#3c76c4 50%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top, #72a5dc 0%,#3c76c4 50%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top, #72a5dc 0%,#3c76c4 50%); /* IE10+ */
+        background: linear-gradient(top, #72a5dc 0%,#3c76c4 50%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#72a5dc', endColorstr='#3c76c4',GradientType=0 ); /* IE6-9 */
+    }
 }
 
 @theme(comments) {
