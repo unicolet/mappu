@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2930a89a-a813-4ef2-8369-a660917cacab" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/en.lproj/strings.js" afterPath="$PROJECT_DIR$/en.lproj/strings.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/it.lproj/strings.js" afterPath="$PROJECT_DIR$/it.lproj/strings.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/statechart.js" afterPath="$PROJECT_DIR$/statechart.js" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="maps.iws" />
@@ -24,15 +26,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="v_open_layers.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/v_open_layers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="35" selection-start="4813" selection-end="4813" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ctrl_open_layers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/ctrl_open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -42,10 +35,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="statechart.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="statechart.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/statechart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="143" column="17" selection-start="5114" selection-end="5114" vertical-scroll-proportion="0.0">
+            <state line="106" column="51" selection-start="3247" selection-end="3247" vertical-scroll-proportion="0.24412297">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/en.lproj/strings.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="87" column="27" selection-start="4437" selection-end="4437" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/it.lproj/strings.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="97" column="4" selection-start="6620" selection-end="6650" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -73,9 +84,7 @@
         <entry file="file://$PROJECT_DIR$/core.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="92" column="37" selection-start="3100" selection-end="3100" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -89,10 +98,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ds_wms_layers.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ds_wms_layers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_sources/ds_wms_layers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="0" selection-start="1360" selection-end="1360" vertical-scroll-proportion="0.24050634">
+            <state line="60" column="57" selection-start="1978" selection-end="1978" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -121,8 +130,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/it.lproj/strings.js" />
-        <option value="$PROJECT_DIR$/controllers/ctrl_usagetip.js" />
         <option value="$PROJECT_DIR$/responders/resp_mainmap.js" />
         <option value="$PROJECT_DIR$/resources/main_page.js" />
         <option value="$PROJECT_DIR$/resources/custom_styles.css" />
@@ -134,14 +141,16 @@
         <option value="$PROJECT_DIR$/controllers/ctrl_progress.js" />
         <option value="$PROJECT_DIR$/core.js" />
         <option value="$PROJECT_DIR$/controllers/ctrl_open_layers.js" />
-        <option value="$PROJECT_DIR$/statechart.js" />
         <option value="$PROJECT_DIR$/views/v_open_layers.js" />
         <option value="$PROJECT_DIR$/data_sources/ds_wms_layers.js" />
+        <option value="$PROJECT_DIR$/it.lproj/strings.js" />
+        <option value="$PROJECT_DIR$/en.lproj/strings.js" />
+        <option value="$PROJECT_DIR$/statechart.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
+    <option name="x" value="1365" />
     <option name="y" value="25" />
     <option name="width" value="1368" />
     <option name="height" value="748" />
@@ -172,7 +181,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -317,6 +325,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Favorites" />
     </panes>
   </component>
@@ -334,15 +343,15 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../.." />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="237" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1145" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="1146" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="1145" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="235" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="230" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -391,13 +400,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="25" width="1368" height="748" extended-state="6" />
-    <editor active="false" />
+    <frame x="1365" y="25" width="1368" height="748" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53837717" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20253165" sideWeight="0.595" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20253165" sideWeight="0.39333335" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20253165" sideWeight="0.6" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20253165" sideWeight="0.38833332" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -504,118 +513,92 @@
     <find-history />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.6.0.1/lib/frameworks/sproutcore/frameworks/core_foundation/views/view/base.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="54" selection-end="54" vertical-scroll-proportion="0.081374325">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.6.0.1/lib/frameworks/sproutcore/frameworks/core_foundation/views/view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1519" column="2" selection-start="48657" selection-end="48657" vertical-scroll-proportion="0.6111111">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.6.0.1/lib/frameworks/sproutcore/frameworks/core_foundation/views/view/layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-22.267632">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.6.0.1/lib/frameworks/sproutcore/frameworks/core_foundation/ext/object.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="2" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="26" column="2" selection-start="1085" selection-end="1085" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.6.0.1/lib/frameworks/sproutcore/frameworks/statechart/system/statechart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="904" column="2" selection-start="31929" selection-end="31929" vertical-scroll-proportion="2.1669903">
-          <folding />
-        </state>
+        <state line="904" column="2" selection-start="31929" selection-end="31929" vertical-scroll-proportion="2.1669903" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.rvm/gems/ruby-1.9.2-p180/gems/sproutcore-1.6.0.1/lib/frameworks/sproutcore/frameworks/desktop/views/progress.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="231" column="34" selection-start="5854" selection-end="5854" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="37" selection-start="3100" selection-end="3100" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/ctrl_open_layers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="19" selection-start="279" selection-end="279" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/responders/resp_mainmap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="39" selection-start="904" selection-end="904" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="742" column="31" selection-start="31717" selection-end="31717" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/ctrl_authentication_manager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="38" selection-start="3210" selection-end="3210" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/statechart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="143" column="17" selection-start="5114" selection-end="5114" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="231" column="34" selection-start="5854" selection-end="5854" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file:///var/www/OpenLayers-2.11/lib/OpenLayers/Map.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2214" column="10" selection-start="79168" selection-end="79174" vertical-scroll-proportion="0.14285715">
-          <folding />
-        </state>
+        <state line="2214" column="10" selection-start="79168" selection-end="79174" vertical-scroll-proportion="0.14285715" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/v_open_layers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="35" selection-start="4813" selection-end="4813" vertical-scroll-proportion="0.0">
+        <state line="129" column="35" selection-start="4813" selection-end="4813" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/ctrl_open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="19" selection-start="279" selection-end="279" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/responders/resp_mainmap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="39" selection-start="904" selection-end="904" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/main_page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="742" column="31" selection-start="31717" selection-end="31717" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="37" selection-start="3100" selection-end="3100" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/ctrl_authentication_manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="102" column="38" selection-start="3210" selection-end="3210" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/custom_styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="120" column="0" selection-start="3922" selection-end="3922" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_sources/ds_wms_layers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="0" selection-start="1360" selection-end="1360" vertical-scroll-proportion="0.24050634">
+        <state line="60" column="57" selection-start="1978" selection-end="1978" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/it.lproj/strings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="4" selection-start="6620" selection-end="6650" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/en.lproj/strings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="27" selection-start="4437" selection-end="4437" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/statechart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="51" selection-start="3247" selection-end="3247" vertical-scroll-proportion="0.24412297">
           <folding />
         </state>
       </provider>
