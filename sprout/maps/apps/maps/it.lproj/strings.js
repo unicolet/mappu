@@ -94,5 +94,6 @@ SC.stringsFor('it', {
     "_tip_at_startup": "Mostra i suggerimenti all'avvio",
     "_usage_tip_title": "Lo sapevate che ... ?",
     "_tips" : "Suggerimenti",
-    "_next": "Prossimo"
+    "_next": "Prossimo",
+    "_loading": "Sto caricando..."
 });

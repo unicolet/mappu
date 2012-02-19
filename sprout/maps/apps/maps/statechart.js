@@ -101,15 +101,15 @@ Maps.statechart = SC.Statechart.create({
             enterState:function () {
                 if(!Maps.progressPane) {
                     Maps.progressPane = SC.PanelPane.create({
-                        layout:{ width:400, height:200, centerX:0, centerY:0 },
+                        layout:{ width:400, height:60, centerX:0, centerY:0 },
                         contentView:SC.View.extend({
                             childViews:"labl bar".w(),
                             labl:SC.LabelView.design({
-                                layout:{top:50, centerX:0, width:300, height:30},
+                                layout:{top:10, centerX:0, width: 100, height:30},
                                 value:"_loading".loc()
                             }),
                             bar:SC.View.design({
-                                layout:{top:100, centerX:0, width:350, height:20},
+                                layout:{top:30, centerX:0, width:350, height:20},
                                 render:function (ctx, firstTime) {
                                     if (firstTime) {
                                         ctx.push("<progress style=\"width:100%\"></progress>");

@@ -84,5 +84,6 @@ SC.stringsFor('en', {
     "_tip_at_startup": "Show tips at startup",
     "_usage_tip_title": "Did you know that ... ?",
     "_tips" : "Tips",
-    "_next": "Next"
+    "_next": "Next",
+    "_loading": "Loading..."
 });
