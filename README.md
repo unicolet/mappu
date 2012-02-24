@@ -20,5 +20,5 @@ I'm working on a vagrant script that will make it as easy as
 possible to provision a vm with all the necessary software
 installed automatically.
 
-The script is almost ready and it's in the *vagrant* folder.
+The script is in the *vagrant* folder.
 
