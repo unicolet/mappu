@@ -135,7 +135,7 @@ Maps.authenticationManager = SC.ObjectController.create({
 
     menuPane: SC.MenuPane.create({
         layout: {width: 130},
-        itemHeight: 25,
+        //itemHeight: 25,
         items: [
             { title: '_print'.loc(), icon: 'icon-print-16', keyEquivalent: 'ctrl_p', action: "print" },
             { title: '_help'.loc(), icon: 'sc-icon-help-16', keyEquivalent: 'ctrl_h', action: "helpOpen" },

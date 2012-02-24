@@ -40,7 +40,7 @@ Maps.mainPage = SC.Page.design({
             childViews : 'logo layers tools menu'.w(),
 
             logo: SC.LabelView.design({
-                layout: {centerY:0, left:20, height:24, width: 500},
+                layout: {centerY:0, left:20, height:36, width: 500},
                 value: APPCONFIG.title,
                 classNames: "app-logo".w()
             }),
@@ -403,13 +403,13 @@ Maps.mainPage = SC.Page.design({
             })
         }),
         back: SC.ButtonView.design({
-            layout: {right:100, bottom: 10, width: 80, height: 25},
+            layout: {right:100, bottom: 10, width: 80, height: 24},
             title: "_back".loc(),
             action: "layerQueryBack",
             themeName: "point-left"
         }),
         send: SC.ButtonView.design({
-            layout: {right:10, bottom: 10, width: 80, height: 25},
+            layout: {right:10, bottom: 10, width: 80, height: 24},
             title: "_run".loc(),
             action: "layerQueryRun"
         })
@@ -462,7 +462,7 @@ Maps.mainPage = SC.Page.design({
                     toolTip: "_settings".loc()
                 }),
                 legendBtn: SC.ButtonView.design({
-                    layout: {width: 80, centerY: 0, right: 40, height: 26},
+                    layout: {width: 80, centerY: 0, right: 40, height: 24},
                     titleBinding: "Maps.MainResponder.legendBtnText",
                     action: "toggleLegend"
                 })
@@ -524,7 +524,7 @@ Maps.mainPage = SC.Page.design({
             dropTargetProperty: "feature2"
         }),
         operation: SC.SelectView.design({
-            layout: {top: 102, left:5, right:5, height:36},
+            layout: {top: 102, left:5, right:5, height:24},
             items: [
                 { title: "_area", value: "Area", pos: 1},
                 { title: "_intersection", value: "Intersection", pos: 2},
@@ -549,7 +549,7 @@ Maps.mainPage = SC.Page.design({
             itemActionKey: "action"
         }),
         help: SC.ImageView.design({
-            layout: {top: 180, centerX:0, height:26, width:26},
+            layout: {top: 180, centerX:0, height:24, width:24},
             value: "sc-icon-help-24"
         }),
         helptext: SC.LabelView.design({
@@ -582,7 +582,7 @@ Maps.mainPage = SC.Page.design({
             layout: {bottom:0,height:130,left:0,right:0},
             childViews: "help helpText rendertags reloadtags".w(),
             help: SC.ImageView.design({
-                layout: {top: 5, centerX:0, height:26, width:26},
+                layout: {top: 5, centerX:0, height:24, width:24},
                 value: "sc-icon-help-24"
             }),
             helpText: SC.LabelView.design({
@@ -638,13 +638,13 @@ Maps.mainPage = SC.Page.design({
             layout: {top: 120, right:5, bottom: 50, left:5}
         }),
         toggleFilter: SC.ButtonView.design({
-            layout: {bottom: 10, left:5, height: 25, right:60},
+            layout: {bottom: 10, left:5, height: 24, right:60},
             titleBinding: SC.Binding.labelPrefix("_remove_filter".loc()).from("Maps.layerController.cql_filter"),
             action: "doRemoveFilter",
             isEnabledBinding: SC.Binding.bool().from("Maps.layerController.cql_filter")
         }),
         googlearth: SC.ImageButtonView.design({
-            layout: {bottom: 10, width:25, height: 25, right:10},
+            layout: {bottom: 10, width:24, height: 24, right:10},
             action: "doOpenLayerWithGoogleEarth",
             image: "icon-google-earth-24"
         })
@@ -696,12 +696,12 @@ Maps.loginPage = SC.Page.design({
         layout:{top:0,bottom:0,left:0,right:0},
         childViews: "logo loginform".w(),
         logo: SC.ImageView.design({
-            layout:{centerY:0, left:( $(window).width()<1024 ? 80-50: 80), width: 373, height: 96},
+            layout:{centerY:0, left:( $(window).width()<=1024 ? 80-50: 80), width: 373, height: 96},
             value:app_logo_huge,
             canLoadInBackground: YES
         }),
         loginform:SC.View.design({
-            layout: {width: 500, height: 300, left: ( $(window).width()<1024 ? 600-130: 600), centerY: 0},
+            layout: {width: 500, height: 300, left: ( $(window).width()<=1024 ? 600-130: 600), centerY: 0},
             classNames:"loginform".w(),
 
             childViews: 'labelU login labelP password button message loading'.w(),
@@ -759,7 +759,7 @@ Maps.helpSheetPane = SC.SheetPane.design({
         layout: {top:10,bottom:5,left:5,right:10},
         childViews: "icon text closeBtn".w(),
         icon: SC.ImageView.design({
-            layout: {left: 5, centerY:0, height:26, width:26},
+            layout: {left: 5, centerY:0, height:24, width:24},
             value: "sc-icon-help-24"
         }),
         text: SC.ScrollView.design({
@@ -771,7 +771,7 @@ Maps.helpSheetPane = SC.SheetPane.design({
             })
         }),
         closeBtn: SC.ButtonView.design({
-            layout: {width: 90, right: 0, height:35, bottom: 0 },
+            layout: {width: 90, right: 0, height:24, bottom: 0 },
             title: "_close".loc(),
             action: "helpClose"
         })
@@ -801,19 +801,19 @@ Maps.usageTipSheetPane = SC.SheetPane.create({
           useImageQueue: YES
       }),
       showCheckbox: SC.CheckboxView.design({
-          layout: {bottom: 5, left: 10, width: "0.3", height: 30 },
+          layout: {bottom: 5, left: 10, width: "0.3", height: 24 },
           title: "_tip_at_startup".loc(),
           valueBinding: "Maps.usageTipController.showTips"
       }),
       nextBtn: SC.ButtonView.design({
-          layout: {bottom: 5, right: 100, width: 80, height: 30 },
+          layout: {bottom: 5, right: 100, width: 80, height: 24 },
           title: "_next".loc(),
           action: function() {
               Maps.usageTipController.showNextTip();
           }
       }),
       closeBtn: SC.ButtonView.design({
-          layout: {bottom: 5, right: 10, width: 80, height: 30 },
+          layout: {bottom: 5, right: 10, width: 80, height: 24 },
           title: "_close".loc(),
           action: function() {
               Maps.usageTipSheetPane.remove();

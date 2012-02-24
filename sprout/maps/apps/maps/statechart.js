@@ -118,8 +118,9 @@ Maps.statechart = SC.Statechart.create({
                                 },
                                 updateProgress:function (progress) {
                                     var justToTriggerRefresh=0;
-                                    var bar = this.$("progress")[0];
-                                    if(bar) {
+                                    var bar = this.$("progress");					
+                                    if(bar && bar.length==1) {
+					bar=bar[0];
                                         bar.max=100;
                                         bar.value = progress;
                                         // force refresh
@@ -127,7 +128,11 @@ Maps.statechart = SC.Statechart.create({
                                         //@if(debug)
                                         console.log("Progress is now: "+progress);
                                         //@endif
-                                    }
+                                    } else {
+                                        //@if(debug)
+                                        console.log("Cannot find progress element, perhaps it is unsupported on this platform?");
+                                        //@endif
+				    }
                                 }
                             })
                         })
