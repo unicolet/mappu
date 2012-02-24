@@ -34,6 +34,9 @@ Maps.socialController = SC.ObjectController.create(
 	}.observes("content"),
 	
 	saveTags: function(feature) {
+		//@if(debug)
+		console.log("Saving feature tags: "+this.get("tags"));
+		//@endif
 		var status=this.getPath("content.status");
 		if (status!=SC.Record.ERROR) {
 			this.get("content").set("tags", this.get("tags"));

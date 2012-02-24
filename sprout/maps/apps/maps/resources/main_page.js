@@ -278,14 +278,15 @@ Maps.mainPage = SC.Page.design({
         tags: SC.TextFieldView.design({
             isTextArea: YES,
             layout: {left: 10, top: 50, right: 10, height: 50 },
-            valueBinding: 'Maps.socialController.tags'
+            valueBinding: 'Maps.socialController.tags',
+	    hintOnFocus: NO
         }),
         tagsHelp: SC.LabelView.design({
             layout: {top: 115, left: 10, width: 300},
             value: "_howtotypetags".loc()
         }),
         saveTags: SC.ButtonView.design({
-            layout: {top: 115, right: 10, width: 70},
+            layout: {top: 115, right: 10, width: 70, height: 24},
             title: "_save".loc(),
             action: "maps_SaveTags",
             titleMinWidth: 40
@@ -310,16 +311,17 @@ Maps.mainPage = SC.Page.design({
         newComment: SC.TextFieldView.design({
             layout: {bottom: 10, left:10, width: 295, height: 25 },
             valueBinding: "Maps.socialCommentsController.newCommentText",
-            hint: "_addcomment_tip"
+            hint: "_addcomment_tip",
+	    hintOnFocus: NO
         }),
         addComment: SC.ButtonView.design({
-            layout: {bottom: 10, right:55, width: 25, height: 25},
+            layout: {bottom: 10, right:55, width: 25, height: 24},
             title: "+",
             action: "maps_AddComment",
             isEnabledBinding: SC.Binding.bool().from("Maps.socialCommentsController.newCommentText")
         }),
         delComment: SC.ButtonView.design({
-            layout: {bottom: 10, right:10, width: 25, height: 25},
+            layout: {bottom: 10, right:10, width: 25, height: 24},
             title: "-",
             action: "maps_DelComment",
             isEnabledBinding: SC.Binding.transform(
