@@ -714,7 +714,8 @@ Maps.loginPage = SC.Page.design({
             login: SC.TextFieldView.design({
                 layout: {top:45, right:25, left:155, height:50},
                 valueBinding: "Maps.authenticationManager.inputUsername",
-                controlSize: SC.HUGE_CONTROL_SIZE
+                controlSize: SC.HUGE_CONTROL_SIZE,
+		hintOnFocus: NO
             }),
             labelP: SC.LabelView.design({
                 layout: {top:105, width:200, left:15, height:50},
@@ -726,7 +727,8 @@ Maps.loginPage = SC.Page.design({
                 layout: {top:105, right:25, left:155, height:50},
                 valueBinding: "Maps.authenticationManager.inputPassword",
                 isPassword: YES,
-                controlSize: SC.HUGE_CONTROL_SIZE
+                controlSize: SC.HUGE_CONTROL_SIZE,
+		hintOnFocus: NO
             }),
             message: SC.LabelView.design({
                 layout: {top:165, right:25, left:15, height:50},
