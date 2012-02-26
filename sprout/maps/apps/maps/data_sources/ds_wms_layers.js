@@ -52,7 +52,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     var content = response.get('body');
 
                     var wmsCapabilities = new OpenLayers.Format.WMSCapabilities();
-                    var capabilities = wmsCapabilities.read(content);
+                    var capabilities = wmsCapabilities.read(OpenLayers.parseXMLString(content));
                     var numLayers = capabilities.capability.layers.length;
                     var layers = capabilities.capability.layers;
                     var order = 1;
