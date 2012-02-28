@@ -47,12 +47,27 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
         didFetchCapabilitiesResponse:function (response, store, query) {
             if (SC.ok(response)) {
-                try {
+                //try {
                     var records = [];
                     var content = response.get('body');
-
+                    
+		    // God mess IE
+                    if(SC.$.browser.msie) {
+                        var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+                        // required or IE will attempt to validate against DTD, which will, most likely, fail
+                        xmlDoc.async = false;
+                        xmlDoc.validateOnParse = false;
+			xmlDoc.resolveExternals = false;
+                        var parsed=xmlDoc.loadXML(content);
+                        if(!parsed) {
+                            var myErr = xmlDoc.parseError;
+                            alert(myErr.reason);
+                        } else {
+                            content=xmlDoc;
+                        }
+                    }
                     var wmsCapabilities = new OpenLayers.Format.WMSCapabilities();
-                    var capabilities = wmsCapabilities.read(OpenLayers.parseXMLString(content));
+                    var capabilities = wmsCapabilities.read(content);
                     var numLayers = capabilities.capability.layers.length;
                     var layers = capabilities.capability.layers;
                     var order = 1;
@@ -74,10 +89,10 @@ Maps.LayerDataSource = SC.DataSource.extend(
                         var proj = new Proj4js.Proj(this.projections[i], this.whenProjReady(response, store, query, capabilities));
                     }
 
-                } catch (e) {
-                    store.dataSourceDidErrorQuery(query, response);
-                    this.notifyError({status:e});
-                }
+                //} catch (e) {
+                //    store.dataSourceDidErrorQuery(query, response);
+                //    this.notifyError({status:e});
+                //}
             } else {
                 store.dataSourceDidErrorQuery(query, response);
                 this.notifyError(response);
