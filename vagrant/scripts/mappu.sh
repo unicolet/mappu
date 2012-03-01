@@ -2,7 +2,7 @@
 
 # variables
 REPO_DIR="/vagrant_data"
-REMOTE_REPO="https://s3.amazonaws.com/s3-mappu/"
+REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
 
 echo "################################################################"
 echo "# Check provision.log for errors                               #"
