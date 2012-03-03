@@ -127,9 +127,9 @@ Maps.OpenLayers = SC.View.extend(
                     console.log("Zooming to bbox "+Maps.get("bbox"));
                     //@endif
                     map.zoomToExtent(Maps.get("bbox"), true);
-                    map.zoomTo(12);
+                    map.zoomTo(WMSCONFIG.default_zoom_level);
                 } else {
-                    map.setCenter(new OpenLayers.LonLat(1325724, 5694253), 12);
+                    map.setCenter(new OpenLayers.LonLat(1325724, 5694253), WMSCONFIG.default_zoom_level);
                 }
             }
 

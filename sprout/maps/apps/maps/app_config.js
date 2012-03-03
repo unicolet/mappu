@@ -17,7 +17,8 @@ var WMSCONFIG = {
     extended_link_regex: true,
     // attempt to save memory and improve performance
     // might confuse the reordering of layers
-    remove_wms_layers_when_not_used: true
+    remove_wms_layers_when_not_used: true,
+    default_zoom_level: 5
 };
 
 var APPCONFIG = {
