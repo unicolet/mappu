@@ -1,13 +1,21 @@
 #!/bin/bash
 
 # variables
-REPO_DIR="/vagrant_data"
+REPO_DIR="/root/PKG"
+if getent passwd vagrant ; then
+	REPO_DIR="/vagrant_data";
+fi
+
 REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
+
+# x86_64 or i686, i586, etc
+ARCH=`uname -m`
 
 echo "################################################################"
 echo "# Check provision.log for errors                               #"
 echo "#                                                              #"
 echo "# Adding repositories, updating and installing base pkgs       #"
+echo "# LOCAL REPO=${REPO_DIR} USER=$USER"
 echo "################################################################"
 (
 # update
@@ -38,7 +46,7 @@ sudo apt-get install -y apache2
 ) >> provision.log 2>&1
 
 mkdir PKG > /dev/null 2>&1 # we can ignore warnings
-sudo chown -R vagrant PKG/
+sudo chown -R $USER PKG/
 cd PKG
 
 if [ -e /opt/tomcat ]; then
@@ -154,13 +162,18 @@ else
 	echo "################################################################"
 	echo "# Installing Java                                              #"
 	echo "################################################################"
-	(
 	# checking for jdk in shared folder
-	jdk=`ls -1 ${REPO_DIR}/jdk-6*.bin | head -1`
-	echo $jdk
+	# check platform spcific jdk
+	if [ "$ARCH" == "x86_64" ]; then
+		jdk=`ls -1 ${REPO_DIR}/jdk-6*x64*.bin | head -1`
+	fi
+	if [ "$jdk" == "" ]; then
+		jdk=`ls -1 ${REPO_DIR}/jdk-6*.bin | head -1`
+	fi
+	echo Found $jdk
 	if [ -e ${jdk} ]; then
 		chmod +x $jdk
-		$jdk -noregister
+		( $jdk -noregister >> provision.log 2>&1 ) || ( echo "Unpacking failed."; exit 1 )
 		# find out the full jdk name
 		jdk=`ls -1 . | grep jdk1.6* | head -1`
 		sudo mv $jdk /opt
@@ -178,7 +191,6 @@ Exiting.
 EOF
 		exit 1
 	fi
-	) >> provision.log 2>&1
 fi
 
 echo "################################################################"
@@ -209,7 +221,7 @@ fi;
 
 (
 # extract driver and changelog from war
-unzip -j $WARFILE WEB-INF/changelog.xml WEB-INF/lib/liquibase-1.9.3.jar WEB-INF/lib/postgresql-8.3-603.jdbc3.jar
+unzip -o -j $WARFILE WEB-INF/changelog.xml WEB-INF/lib/liquibase-1.9.3.jar WEB-INF/lib/postgresql-8.3-603.jdbc3.jar
 # now run liquibase migration
 /opt/jdk/bin/java -jar liquibase-1.9.3.jar --classpath=postgresql-8.3-603.jdbc3.jar --changeLogFile=changelog.xml --driver=org.postgresql.Driver --username=social --password=social --url=jdbc:postgresql:social update
 
@@ -257,22 +269,29 @@ echo "# Installing JAI libraries (performance)                       #"
 echo "#                                                              #"
 echo "# You will have to manually answer Y to accept license         #"
 echo "################################################################"
-(
-if [ ! -e ${REPO_DIR}/jai*.bin ]; then
-	wget http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-i586-jdk.bin
-	wget http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-i586-jdk.bin
-	sudo cp jai-1_1_3-lib-linux-i586-jdk.bin ${REPO_DIR}/
-	sudo cp jai_imageio-1_1-lib-linux-i586-jdk.bin ${REPO_DIR}/
+#(
+if [ ! -e "${REPO_DIR}/jai*.bin" ]; then
+	if [ "$ARCH" == "x86_64" ]; then
+		JAI_ARCH=amd64
+		wget http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-amd64-jdk.bin
+		wget http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-amd64-jdk.bin
+	else
+		JAI_ARCH=i586
+		wget http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-i586-jdk.bin
+		wget http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-i586-jdk.bin
+	fi
+	sudo cp jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin ${REPO_DIR}/
+	sudo cp jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin ${REPO_DIR}/
 fi
-sudo cp ${REPO_DIR}/jai-1_1_3-lib-linux-i586-jdk.bin /opt/jdk/
-sudo cp ${REPO_DIR}/jai_imageio-1_1-lib-linux-i586-jdk.bin /opt/jdk/
+sudo cp ${REPO_DIR}/jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin /opt/jdk/
+sudo cp ${REPO_DIR}/jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin /opt/jdk/
 
 cd /opt/jdk
-echo yes | sudo sh jai-1_1_3-lib-linux-i586-jdk.bin
-echo yes | sudo _POSIX2_VERSION=199209 sh jai_imageio-1_1-lib-linux-i586-jdk.bin
+echo yes | sudo sh jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin
+echo yes | sudo _POSIX2_VERSION=199209 sh jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin
 cd -
 
-) >> provision.log 2>&1
+#) >> provision.log 2>&1
 
 echo "################################################################"
 echo "# Configuring apache                                           #"
@@ -311,9 +330,9 @@ sudo a2enmod cache
 sudo a2enmod disk_cache
 sudo a2enmod deflate
 
-sudo /etc/init.d/tomcat7 start
+#sudo /etc/init.d/tomcat7 start
 
-sudo /etc/init.d/apache2 restart
+#sudo /etc/init.d/apache2 restart
 ) >> provision.log 2>&1 
 
 echo ""
