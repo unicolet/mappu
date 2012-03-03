@@ -4,7 +4,7 @@
 # ===========================================================================
 
 
-config :all, :required => [:sproutcore, 'animation', 'sctable', :'sproutcore/experimental/split_view'], :minify => true, :preferred_language => :it, :bootstrap => 'appconfig', :javascript_libs => ['http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false'], :stylesheet_libs => ['http://fonts.googleapis.com/css?family=Holtwood+One+SC|Pacifico']
+config :all, :required => [:sproutcore, :'sproutcore/animation', 'sctable', :'sproutcore/experimental/split_view'], :minify => true, :preferred_language => :it, :bootstrap => 'appconfig', :javascript_libs => ['http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false'], :stylesheet_libs => ['http://fonts.googleapis.com/css?family=Gudea:400,400italic']
 
 
 #config :all do |c|
@@ -12,12 +12,12 @@ config :all, :required => [:sproutcore, 'animation', 'sctable', :'sproutcore/exp
 #	c[:stylesheet_libs] = ['http://fonts.googleapis.com/css?family=Holtwood+One+SC|Pacifico']
 #end
 
-proxy "/geoserver", :to => "192.168.217.128"
-proxy "/mapsocial", :to => "192.168.217.128"
-proxy "/geocache", :to => "192.168.217.128"
+#proxy "/geoserver", :to => "192.168.217.128"
+#proxy "/mapsocial", :to => "192.168.217.128"
+#proxy "/geocache", :to => "192.168.217.128"
 
 
-#proxy "/geoserver", :to => "10.1.23.187"
-#proxy "/mapsocial", :to => "10.1.23.187"
-#proxy "/geocache", :to => "10.1.23.187"
+proxy "/geoserver", :to => "127.0.0.1"
+proxy "/mapsocial", :to => "127.0.0.1"
+proxy "/geocache", :to => "127.0.0.1"
 

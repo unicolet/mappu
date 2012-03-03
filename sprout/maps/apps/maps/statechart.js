@@ -151,7 +151,7 @@ Maps.statechart = SC.Statechart.create({
                 Maps.progressPane.contentView.bar.updateProgress(progress);
             },
 
-            loadingCompleted: function() {
+	   loadingCompleted: function(data) {
                 this.gotoState('viewingMap');
             },
 
