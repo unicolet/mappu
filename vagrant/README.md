@@ -1,8 +1,6 @@
 QUICK DEPLOY WITH VAGRANT
 =========================
 
-*This is a work in progress, we're almost there*
-
 Requires that you have a working vagrant install:
 
 http://vagrantup.com/

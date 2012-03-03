@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# variables
+REPO_DIR="/vagrant_data"
+REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
+
 echo "################################################################"
 echo "# Check provision.log for errors                               #"
 echo "#                                                              #"
@@ -46,11 +50,11 @@ else
 	echo "# Installing tomcat                                            #"
 	echo "################################################################"
 	(
-	if [ ! -e /vagrant_data/apache-tomcat-7.0.25.tar.gz ]; then 
+	if [ ! -e ${REPO_DIR}/apache-tomcat-7.0.25.tar.gz ]; then 
 		wget http://mirror.nohup.it/apache/tomcat/tomcat-7/v7.0.25/bin/apache-tomcat-7.0.25.tar.gz > /dev/null 2>&1
-		sudo cp apache-tomcat-7.0.25.tar.gz /vagrant_data/apache-tomcat-7.0.25.tar.gz
+		sudo cp apache-tomcat-7.0.25.tar.gz ${REPO_DIR}/apache-tomcat-7.0.25.tar.gz
 	fi
-	tar -zxf /vagrant_data/apache-tomcat-7.0.25.tar.gz 
+	tar -zxf ${REPO_DIR}/apache-tomcat-7.0.25.tar.gz 
 	sudo mv apache-tomcat-7.0.25 /opt/ 
 
 	sudo useradd tomcat
@@ -152,17 +156,28 @@ else
 	echo "################################################################"
 	(
 	# checking for jdk in shared folder
-	jdk=`ls -1 /vagrant_data/jdk-6*.bin | head -1`
+	jdk=`ls -1 ${REPO_DIR}/jdk-6*.bin | head -1`
 	echo $jdk
-	chmod +x $jdk
-	$jdk -noregister
-	# find out the full jdk name
-	jdk=`ls -1 . | grep jdk1.6* | head -1`
-	sudo mv $jdk /opt
-	sudo ln -s /opt/$jdk /opt/jdk
+	if [ -e ${jdk} ]; then
+		chmod +x $jdk
+		$jdk -noregister
+		# find out the full jdk name
+		jdk=`ls -1 . | grep jdk1.6* | head -1`
+		sudo mv $jdk /opt
+		sudo ln -s /opt/$jdk /opt/jdk
 
-	sudo update-rc.d tomcat7 defaults
+		sudo update-rc.d tomcat7 defaults
+	else
+CAT <<EOF
+FATAL: Could not find a JDK to install.
+Please download a .bin package from http://www.oracle.com/technetwork/java/javase/index.html
+and place it in the shared directory (install-data) so that this script can find it.
 
+Exiting.
+
+EOF
+		exit 1
+	fi
 	) >> provision.log 2>&1
 fi
 
@@ -186,10 +201,10 @@ echo "################################################################"
 export JAVA_HOME=/opt/jdk
 export PATH=$JAVA_HOME/bin:$PATH
 
-export WARFILE=/vagrant_data/mapsocial-0.1.war
+export WARFILE=${REPO_DIR}/mapsocial-0.1.war
 if [ ! -e $WARFILE ]; then
 	# download from s3
-	wget https://s3.amazonaws.com/s3-mappu/mapsocial-0.1.war && mv mapsocial-0.1.war /vagrant_data/
+	wget ${REMOTE_REPO}/mapsocial-0.1.war && mv mapsocial-0.1.war ${REPO_DIR}/
 fi;
 
 (
@@ -205,7 +220,7 @@ echo "# Installing/Upgrading backend web app                         #"
 echo "################################################################"
 (
 sudo rm -f /opt/tomcat/webapps/mapsocial.war
-sudo cp /vagrant_data/mapsocial-0.1.war /opt/tomcat/webapps/mapsocial.war
+sudo cp ${REPO_DIR}/mapsocial-0.1.war /opt/tomcat/webapps/mapsocial.war
 sudo chown tomcat.tomcat /opt/tomcat/webapps/mapsocial.war
 ) >> provision.log 2>&1
 
@@ -214,10 +229,10 @@ echo "################################################################"
 echo "# Installing Sproutcore frontend                               #"
 echo "################################################################"
 (
-export SCAPP=/vagrant_data/mappu-build-1.0.tgz
+export SCAPP=${REPO_DIR}/mappu-build-1.0.tgz
 if [ ! -e $SCAPP ]; then
         # download from s3
-        wget https://s3.amazonaws.com/s3-mappu/mappu-build-1.0.tgz && mv mappu-build-1.0.tgz /vagrant_data/
+        wget ${REMOTE_REPO}/mappu-build-1.0.tgz && mv mappu-build-1.0.tgz ${REPO_DIR}/
 fi;
 
 sudo tar -zxf $SCAPP -C /var/www/
@@ -227,11 +242,11 @@ echo "################################################################"
 echo "# Installing Geoserver                                         #"
 echo "################################################################"
 (
-if [ ! -e /vagrant_data/geoserver-2.1.3-war.zip ]; then
+if [ ! -e ${REPO_DIR}/geoserver-2.1.3-war.zip ]; then
 	curl -O -L http://downloads.sourceforge.net/project/geoserver/GeoServer/2.1.3/geoserver-2.1.3-war.zip
-	cp geoserver-2.1.3-war.zip /vagrant_data/
+	cp geoserver-2.1.3-war.zip ${REPO_DIR}/
 fi
-unzip /vagrant_data/geoserver-2.1.3-war.zip geoserver.war
+unzip ${REPO_DIR}/geoserver-2.1.3-war.zip geoserver.war
 sudo mv geoserver.war /opt/tomcat/webapps/geoserver.war
 sudo chown tomcat.tomcat /opt/tomcat/webapps/geoserver.war
 ) >> provision.log 2>&1
@@ -243,14 +258,14 @@ echo "#                                                              #"
 echo "# You will have to manually answer Y to accept license         #"
 echo "################################################################"
 (
-if [ ! -e /vagrant_data/jai*.bin ]; then
+if [ ! -e ${REPO_DIR}/jai*.bin ]; then
 	wget http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-i586-jdk.bin
 	wget http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-i586-jdk.bin
-	sudo cp jai-1_1_3-lib-linux-i586-jdk.bin /vagrant_data/
-	sudo cp jai_imageio-1_1-lib-linux-i586-jdk.bin /vagrant_data/
+	sudo cp jai-1_1_3-lib-linux-i586-jdk.bin ${REPO_DIR}/
+	sudo cp jai_imageio-1_1-lib-linux-i586-jdk.bin ${REPO_DIR}/
 fi
-sudo cp /vagrant_data/jai-1_1_3-lib-linux-i586-jdk.bin /opt/jdk/
-sudo cp /vagrant_data/jai_imageio-1_1-lib-linux-i586-jdk.bin /opt/jdk/
+sudo cp ${REPO_DIR}/jai-1_1_3-lib-linux-i586-jdk.bin /opt/jdk/
+sudo cp ${REPO_DIR}/jai_imageio-1_1-lib-linux-i586-jdk.bin /opt/jdk/
 
 cd /opt/jdk
 echo yes | sudo sh jai-1_1_3-lib-linux-i586-jdk.bin
