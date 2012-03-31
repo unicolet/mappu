@@ -81,7 +81,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
                             if (l.bbox[b].srs)
                                 bbox = l.bbox[b];
                         }
-                        this.projections.push(bbox.srs)
+			if(!Proj4js.defs[bbox.srs]) // load projection from remote sources
+                        	this.projections.push(bbox.srs)
                     }
                     this.projections = this.projections.uniq();
                     this.numberOfProjections=this.projections.length;
@@ -161,6 +162,9 @@ Maps.LayerDataSource = SC.DataSource.extend(
                 }
             }
             Maps.updateStateProgress(100);
+            //@if(debug)
+            console.log("WMS Capabilities loading completed.");
+            //@endif
 
             SC.run(function() {
                 Maps.statechart.sendEvent("loadingCompleted",100);
@@ -171,14 +175,14 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
         whenProjReady:function (response, store, query, capabilities) {
             //@if(debug)
-            console.log("- proj loaded");
+            console.log("- proj loaded "+response+", projections.length="+this.projections.length);
             //@endif
 
             this.projections.pop();
             if (this.projections.length <= 0) {
                 Maps.updateStateProgress(50);
                 this.doFetchLayers(response, store, query, capabilities)
-            } else {
+		    } else {
                 Maps.updateStateProgress(Math.round(50*this.numberOfProjections/this.projections.length));
             }
         },
