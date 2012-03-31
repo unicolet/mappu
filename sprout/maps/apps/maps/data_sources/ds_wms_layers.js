@@ -47,17 +47,17 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
         didFetchCapabilitiesResponse:function (response, store, query) {
             if (SC.ok(response)) {
-                //try {
+                try {
                     var records = [];
                     var content = response.get('body');
                     
-		    // God mess IE
+		            // God mess IE
                     if(SC.$.browser.msie) {
                         var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
                         // required or IE will attempt to validate against DTD, which will, most likely, fail
                         xmlDoc.async = false;
                         xmlDoc.validateOnParse = false;
-			xmlDoc.resolveExternals = false;
+			            xmlDoc.resolveExternals = false;
                         var parsed=xmlDoc.loadXML(content);
                         if(!parsed) {
                             var myErr = xmlDoc.parseError;
@@ -81,6 +81,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                             if (l.bbox[b].srs)
                                 bbox = l.bbox[b];
                         }
+			        if(!Proj4js.defs[bbox.srs]) // load projection from remote sources
                         this.projections.push(bbox.srs)
                     }
                     this.projections = this.projections.uniq();
@@ -89,10 +90,10 @@ Maps.LayerDataSource = SC.DataSource.extend(
                         var proj = new Proj4js.Proj(this.projections[i], this.whenProjReady(response, store, query, capabilities));
                     }
 
-                //} catch (e) {
-                //    store.dataSourceDidErrorQuery(query, response);
-                //    this.notifyError({status:e});
-                //}
+                } catch (e) {
+                    store.dataSourceDidErrorQuery(query, response);
+                    this.notifyError({status:e});
+                }
             } else {
                 store.dataSourceDidErrorQuery(query, response);
                 this.notifyError(response);
@@ -161,6 +162,9 @@ Maps.LayerDataSource = SC.DataSource.extend(
                 }
             }
             Maps.updateStateProgress(100);
+            //@if(debug)
+            console.log("WMS Capabilities loading completed.");
+            //@endif
 
             SC.run(function() {
                 Maps.statechart.sendEvent("loadingCompleted",100);
@@ -171,14 +175,14 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
         whenProjReady:function (response, store, query, capabilities) {
             //@if(debug)
-            console.log("- proj loaded");
+            console.log("- proj loaded "+response+", projections.length="+this.projections.length);
             //@endif
 
             this.projections.pop();
             if (this.projections.length <= 0) {
                 Maps.updateStateProgress(50);
                 this.doFetchLayers(response, store, query, capabilities)
-            } else {
+		    } else {
                 Maps.updateStateProgress(Math.round(50*this.numberOfProjections/this.projections.length));
             }
         },

@@ -22,3 +22,9 @@ installed automatically.
 
 The script is in the *vagrant* folder.
 
+Screenshot/demo
+---------------
+
+I am working at a demo, in the meanwhile have a look at the
+screenhots in the media folder.
+
