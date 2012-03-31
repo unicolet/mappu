@@ -43,7 +43,7 @@ Maps.statechart = SC.Statechart.create({
             Maps.authenticationManager.reset();
             Maps.getPath('loginPage.mainPane').append();
 
-            if (SC.browser.msie) {
+            if (SC.browser.isIE) {
                 SC.AlertPane.warn({
                     message:"_msie_unsupported".loc(),
                     description:"_msie_unsupported_body".loc(),
