@@ -25,6 +25,11 @@ The script is in the *vagrant* folder.
 Screenshot/demo
 ---------------
 
-I am working at a demo, in the meanwhile have a look at the
-screenhots in the media folder.
+Screenhots are hosted in the media folder.
+
+A demo is available on a temporary cloud server:
+
+http://31.222.191.183/static/maps/en/1.0/
+
+login with demo/demo
 
