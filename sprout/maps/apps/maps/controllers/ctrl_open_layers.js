@@ -273,14 +273,18 @@ Maps.openLayersController = SC.ArrayController.create(
             if (selected.find(function(i, j, l) {
                 return i == "LAYERS"
             })) {
-                // prepare animation
-                Maps.mainPage.layerPalette.disableAnimation();
-                Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
-                // append
-                Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-                Maps.mainPage.layerPalette.enableAnimation();
-                // perform animation
-                Maps.mainPage.layerPalette.adjust("opacity", 1);
+		if(!SC.browser.isIE) {
+                	// prepare animation
+	                Maps.mainPage.layerPalette.disableAnimation();
+        	        Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
+                	// append
+	                Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+       		        Maps.mainPage.layerPalette.enableAnimation();
+               		// perform animation
+                	Maps.mainPage.layerPalette.adjust("opacity", 1);
+		} else {
+			Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+		}
 
                 if (this.get("layerPaletteNowShowing") == null)
                     this.goToDetail();
@@ -291,14 +295,18 @@ Maps.openLayersController = SC.ArrayController.create(
             if (selected.find(function(i, j, l) {
                 return i == "SEARCH"
             })) {
-                // prepare animation
-                Maps.mainPage.layerSearchPane.disableAnimation();
-                Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
-                // append
-                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-                Maps.mainPage.layerSearchPane.enableAnimation();
-                // perform animation
-                Maps.mainPage.layerSearchPane.adjust("opacity", 1);
+		if(!SC.browser.isIE) {
+                	// prepare animation
+        	        Maps.mainPage.layerSearchPane.disableAnimation();
+               		Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
+                	// append
+                	Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                	Maps.mainPage.layerSearchPane.enableAnimation();
+                	// perform animation
+                	Maps.mainPage.layerSearchPane.adjust("opacity", 1);
+		} else {
+                	Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+		}
                 this.goToListQuery();
             } else {
                 Maps.mainPage.layerSearchPane.remove();
