@@ -174,7 +174,7 @@ Maps.openLayersController = SC.ArrayController.create(
             Maps.set("isLoading", NO);
 
             if (event.features && event.features.length) {
-                this.set("measure", "");
+                this.set("measure", ""); // clear measure text
 
                 var highlightLayer = this.getFeatureInfoLayer();
                 var markersLayer = this.getMarkersLayer();
@@ -189,21 +189,24 @@ Maps.openLayersController = SC.ArrayController.create(
                     var feature = event.features[i];
                     var c = feature.geometry.getCentroid();
 
-                    // apply transform if required
-                    try {
-                        var ownerLayer = Maps.openLayersController.get("content").findProperty("name", feature.gml.featureNSPrefix + ':' + feature.gml.featureType);
-                        var sourceProjection = WMSCONFIG.default_srs;
-                        if (ownerLayer) {
-                            var sourceProjection = ownerLayer.get("srs");
+                    this.detectServerType(event);
+                    if(Maps.isGEOSERVER) {
+                        // apply transform to the feature geometry only if we detect geoserver
+                        // and the owner layer srs is not EPSG:900913
+                        try {
+                            var ownerLayer = Maps.openLayersController.get("content").findProperty("name", feature.gml.featureNSPrefix + ':' + feature.gml.featureType);
+                            var sourceProjection = WMSCONFIG.default_srs;
+                            if (ownerLayer) {
+                                var sourceProjection = ownerLayer.get("srs");
+                            }
+                            if (sourceProjection && sourceProjection != 'EPSG:900913') {
+                                c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                            }
+                        } catch(e) {
+                            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + e, "", "OK", this);
                         }
-                        if (sourceProjection && sourceProjection != 'EPSG:900913') {
-                            c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
-                            feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
-                        }
-                    } catch(e) {
-                        SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + e, "", "OK", this);
                     }
-
                     // save the centroid as a feature attibute, we'll need it later
                     feature.data['x'] = c.x;
                     feature.data['y'] = c.y;
@@ -231,6 +234,17 @@ Maps.openLayersController = SC.ArrayController.create(
 
             } else {
                 this.set("measure", "Nessun risultato");
+            }
+        },
+
+        detectServerType : function (event) {
+            if(Maps.isGEOSERVER==null && Maps.isMAPSERVER==null) {
+                Maps.isGEOSERVER=YES;
+                Maps.isMAPSERVER=NO;
+                if (event.request.responseText.search("msGMLOutput") != -1) {
+                    Maps.isGEOSERVER=NO;
+                    Maps.isMAPSERVER=YES;
+                }
             }
         },
 

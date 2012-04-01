@@ -338,15 +338,28 @@ Maps.MapsDataSource = SC.DataSource.extend(
             var records = [];
             if (features) {
                 for (var i = 0; i < features.length; i++) {
-                    var record = features[i].data;
-                    record['guid'] = i + 1;
-                    record['name'] = features[i].fid;
-                    record['GROUP'] = features[i].gml.featureNSPrefix;
-                    record['LAYER'] = features[i].gml.featureType;
-                    if (features[i].data['ID'])
-                        record['social'] = features[i].gml.featureNSPrefix + ':' + features[i].gml.featureType + ':' + features[i].data['ID'];
-                    else
-                        record['social'] = null;
+                    if(Maps.isGEOSERVER) {
+                        var record = features[i].data;
+                        record['guid'] = i + 1;
+                        record['name'] = features[i].fid;
+                        record['GROUP'] = features[i].gml.featureNSPrefix;
+                        record['LAYER'] = features[i].gml.featureType;
+                        if (features[i].data['ID'])
+                            record['social'] = features[i].gml.featureNSPrefix + ':' + features[i].gml.featureType + ':' + features[i].data['ID'];
+                        else
+                            record['social'] = null;
+                    }
+                    if(Maps.isMAPSERVER) {
+                        var record = features[i].data;
+                        record['guid'] = i + 1;
+                        record['name'] = features[i].id;
+                        record['GROUP'] = ""; // TO BE FIXED!
+                        record['LAYER'] = features[i].type;
+                        if (features[i].data['ID'])
+                            record['social'] = "" + ':' + features[i].type + ':' + features[i].data['ID'];
+                        else
+                            record['social'] = null;
+                    }
                     records[records.length] = record;
                 }
             }

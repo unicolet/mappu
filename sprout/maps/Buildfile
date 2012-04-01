@@ -17,7 +17,8 @@ config :all, :required => [:sproutcore, :'sproutcore/animation', 'sctable', :'sp
 #proxy "/geocache", :to => "192.168.217.128"
 
 
-proxy "/geoserver", :to => "127.0.0.1"
-proxy "/mapsocial", :to => "127.0.0.1"
-proxy "/geocache", :to => "127.0.0.1"
+proxy "/cgi-bin", :to => "localhost"
+proxy "/geoserver", :to => "31.222.191.183"
+proxy "/mapsocial", :to => "31.222.191.183"
+proxy "/geocache", :to => "31.222.191.183"
 

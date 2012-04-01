@@ -95,7 +95,10 @@ Maps = SC.Application.create(
                 }
             );
         }
-    }
+    },
+
+    isGEOSERVER: null,
+    isMAPSERVER: null
 
 });
 
