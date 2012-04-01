@@ -120,7 +120,7 @@ Maps.statechart = SC.Statechart.create({
                                     var justToTriggerRefresh=0;
                                     var bar = this.$("progress");					
                                     if(bar && bar.length==1) {
-					bar=bar[0];
+					                    bar=bar[0];
                                         bar.max=100;
                                         bar.value = progress;
                                         // force refresh
