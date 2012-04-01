@@ -46,13 +46,16 @@ Maps.LayerDataSource = SC.DataSource.extend(
         },
 
         didFetchCapabilitiesResponse:function (response, store, query) {
+            //@if(debug)
+            console.log("In didFetchCapabilitiesResponse. Is response OK? " + SC.ok(response));
+            //@endif
             if (SC.ok(response)) {
                 try {
                     var records = [];
                     var content = response.get('body');
                     
 		            // God mess IE
-                    if(SC.$.browser.msie) {
+                    if(SC.browser.isIE) {
                         var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
                         // required or IE will attempt to validate against DTD, which will, most likely, fail
                         xmlDoc.async = false;
@@ -87,7 +90,16 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     this.projections = this.projections.uniq();
                     this.numberOfProjections=this.projections.length;
                     for (var i = 0; i < this.projections.length; i++) {
+                        //@if(debug)
+                        console.log("Requiring remote load of projection " + this.projections[i]);
+                        //@endif
                         var proj = new Proj4js.Proj(this.projections[i], this.whenProjReady(response, store, query, capabilities));
+                    }
+
+                    // if all projections are available locally continue as usual
+                    if(this.numberOfProjections==0) {
+                        Maps.updateStateProgress(50);
+                        this.doFetchLayers(response, store, query, capabilities);
                     }
 
                 } catch (e) {
