@@ -82,6 +82,8 @@ Maps.mainPage = SC.Page.design({
         }),
 
         splitview : SC.SplitView.design({
+	    //splitDividerView: null,
+
             // these methods overriden from default because the default (wrongly) returns 100 when size==0
             splitViewGetSizeForChild: function(splitView, child) {
                 return child.get('size') === undefined ? 100 : child.get('size');
@@ -92,20 +94,28 @@ Maps.mainPage = SC.Page.design({
                 if (child.get("size") != 0) {
                     var childViews = this.get("childViews");
                     var childIndex = -1;
+		    		// find the child
                     for (var i = 0; i < childViews.length; i++) {
                         if (childViews[i] === child) childIndex = i;
                     }
 
                     // set size=0 or won't collapse, save current size
                     var currentSize = child.get("size");
+                    var step=1;
                     child.set("size", 0);
-                    if (childIndex == (childViews.length - 1)) {
-                        // collapsing rightmost child
-                        this.adjustPositionForChild(child, childViews[childIndex - 1].get("position") + currentSize);
+                    if (childIndex == (childViews.length - 1)) { // if is last child
+                        // then collapse rightmost child
+						step=-1;                        
                     } else {
-                        // to collapse we expand the child on the right
-                        this.adjustPositionForChild(childViews[childIndex + 1], child.get("position"));
+                        // else collapse child on the right
+                        step=1;
                     }
+		    		// find closest child
+                    for ( i=childIndex+step; childViews[i].isSplitDivider ; i=i+step) {}
+                    if(step==1)
+                    	this.adjustPositionForChild(childViews[i], child.get("position"));
+                    else
+                    	this.adjustPositionForChild(child, childViews[i].get("position") + currentSize);
                 }
             },
 
@@ -125,8 +135,11 @@ Maps.mainPage = SC.Page.design({
                         // cannot collapse to the right
                     } else {
                         child.set("size", 0);
+                        // find closest child
+                        var step=-1;
+	                    for ( i=childIndex+step; childViews[i].isSplitDivider ; i=i+step) {}
                         // expand size of the child on the right to the right
-                        childViews[childIndex - 2].set("size", child.get("position") + currentSize);
+                        childViews[i].set("size", child.get("position") + currentSize);
                         // move collapsing child to the right
                         this.adjustPositionForChild(child, child.get("position") + currentSize);
                     }
@@ -144,10 +157,21 @@ Maps.mainPage = SC.Page.design({
                 child.set("size", size);
                 if (childIndex == 0) {
                     // child is the leftmost child
-                    this.adjustPositionForChild(childViews[childIndex + 1], child.get("position"));
+                    var step=1;
+                    for ( i=childIndex+step; childViews[i].isSplitDivider ; i=i+step) {}
+                    this.adjustPositionForChild(childViews[i], child.get("position"));
                 } else {
                     // resize against left child
-                    this.adjustPositionForChild(child, childViews[childIndex - 1].get("position") - size);
+                    var step=-1;
+                    for ( i=childIndex+step; childViews[i].isSplitDivider ; i=i+step) {}
+                    if(childViews[i].get("size")>0) {
+                    	var new_size= ( childViews[i].get("size") > size ? childViews[i].get("size") - size : 0 );
+                    	//@if(debug)
+                    	console.log("Resizing left sibling to new size: "+new_size);
+                    	//@endif
+                    	childViews[i].set("size", new_size);
+                    }
+                    this.adjustPositionForChild(child, child.get("position") - size);
                 }
             },
 
@@ -164,7 +188,16 @@ Maps.mainPage = SC.Page.design({
                     // cannot expand further rightmost child
                 } else {
                     // resize against right child
-                    this.adjustPositionForChild(childViews[childIndex + 1], childViews[childIndex + 1].get("position") + size);
+                    var step=1;
+                    for ( i=childIndex+step; childViews[i].isSplitDivider ; i=i+step) {}
+					if(childViews[i].get("size")>0) {
+                    	var new_size= ( childViews[i].get("size") > size ? childViews[i].get("size") - size : 0 );
+                    	childViews[i].set("size", new_size);
+                    	//@if(debug)
+                    	console.log("Resizing right sibling to new size: "+new_size);
+                    	//@endif
+                    }
+                    this.adjustPositionForChild(childViews[i], childViews[i].get("position") + size);
                 }
             },
 
@@ -188,7 +221,7 @@ Maps.mainPage = SC.Page.design({
                 exampleView: Maps.OpenLayersLayer
             }),
 
-            middleRightView: SC.ContainerView.extend(SC.Animatable,SC.SplitChild,{
+            middleRightView: SC.ContainerView.extend(SC.SplitChild,{
                 transitions: {
                     left: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT },
                     width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
