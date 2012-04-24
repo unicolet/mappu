@@ -82,7 +82,7 @@ Maps.mainPage = SC.Page.design({
         }),
 
         splitview : SC.SplitView.design({
-	    //splitDividerView: null,
+	        //splitDividerView: null,
 
             // these methods overriden from default because the default (wrongly) returns 100 when size==0
             splitViewGetSizeForChild: function(splitView, child) {
@@ -112,10 +112,11 @@ Maps.mainPage = SC.Page.design({
                     }
 		    		// find closest child
                     for ( i=childIndex+step; childViews[i].isSplitDivider ; i=i+step) {}
-                    if(step==1)
+                    if(step==1) {
                     	this.adjustPositionForChild(childViews[i], child.get("position"));
-                    else
+                    } else {
                     	this.adjustPositionForChild(child, childViews[i].get("position") + currentSize);
+                    }
                 }
             },
 
