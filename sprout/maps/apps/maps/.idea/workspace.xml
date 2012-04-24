@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2930a89a-a813-4ef2-8369-a660917cacab" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_config.js" afterPath="$PROJECT_DIR$/app_config.js" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="maps.iws" />
@@ -64,9 +65,7 @@
         <entry file="file://$PROJECT_DIR$/views/v_open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="248" column="120" selection-start="9471" selection-end="9471" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -74,7 +73,7 @@
       <file leaf-file-name="ctrl_open_layers.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/ctrl_open_layers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="203" column="100" selection-start="8413" selection-end="8413" vertical-scroll-proportion="0.55140185">
+            <state line="234" column="20" selection-start="9835" selection-end="9835" vertical-scroll-proportion="0.027777778">
               <folding />
             </state>
           </provider>
@@ -93,9 +92,7 @@
         <entry file="file://$PROJECT_DIR$/data_sources/ds_mainmap.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="366" column="10" selection-start="15675" selection-end="15675" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -143,9 +140,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="-1" />
     <option name="y" value="25" />
-    <option name="width" value="1366" />
-    <option name="height" value="743" />
+    <option name="width" value="1368" />
+    <option name="height" value="748" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -290,14 +288,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1366" height="743" extended-state="0" />
+    <frame x="-1" y="25" width="1368" height="748" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53781515" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.202088" sideWeight="0.6084034" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.202088" sideWeight="0.37983194" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20178704" sideWeight="0.62833333" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20178704" sideWeight="0.36" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -309,6 +306,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46386555" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -423,46 +421,19 @@
         <state line="97" column="11" selection-start="3262" selection-end="3262" vertical-scroll-proportion="0.3321617" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/custom_styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="29" selection-start="3895" selection-end="3895" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file:///var/www/OpenLayers-2.11/lib/OpenLayers/Format/WMTSCapabilities/v1_0_0.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="4" selection-start="2383" selection-end="2383" vertical-scroll-proportion="0.027372263">
-          <folding />
-        </state>
+        <state line="78" column="4" selection-start="2383" selection-end="2383" vertical-scroll-proportion="0.027372263" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/defs/AA-proj4js-combined.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="757" column="34" selection-start="24977" selection-end="24977" vertical-scroll-proportion="0.42156863">
-          <folding />
-        </state>
+        <state line="757" column="34" selection-start="24977" selection-end="24977" vertical-scroll-proportion="0.42156863" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/statechart.js">
+    <entry file="file://$PROJECT_DIR$/data_sources/ds_wms_layers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="31" selection-start="1314" selection-end="1329" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="257" selection-end="257" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/v_open_layers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="248" column="120" selection-start="9471" selection-end="9471" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
+        <state line="97" column="0" selection-start="3867" selection-end="3867" vertical-scroll-proportion="0.41423357" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/main_page.js">
@@ -470,39 +441,46 @@
         <state line="742" column="31" selection-start="31630" selection-end="31630" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_sources/ds_wms_layers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="0" selection-start="3867" selection-end="3867" vertical-scroll-proportion="0.41423357">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/ctrl_authentication_manager.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="102" column="38" selection-start="3210" selection-end="3210" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_sources/ds_mainmap.js">
+    <entry file="file://$PROJECT_DIR$/statechart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="366" column="10" selection-start="15675" selection-end="15675" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="45" column="31" selection-start="1314" selection-end="1329" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="257" selection-end="257" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/v_open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="248" column="120" selection-start="9471" selection-end="9471" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/ctrl_open_layers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="234" column="20" selection-start="9835" selection-end="9835" vertical-scroll-proportion="0.027777778">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="52" selection-start="2307" selection-end="2307" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="67" column="52" selection-start="2307" selection-end="2307" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/ctrl_open_layers.js">
+    <entry file="file://$PROJECT_DIR$/data_sources/ds_mainmap.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="203" column="100" selection-start="8413" selection-end="8413" vertical-scroll-proportion="0.55140185">
-          <folding />
-        </state>
+        <state line="366" column="10" selection-start="15675" selection-end="15675" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/custom_styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="29" selection-start="3895" selection-end="3895" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
   </component>
