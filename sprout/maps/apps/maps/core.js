@@ -97,6 +97,10 @@ Maps = SC.Application.create(
         }
     },
 
+    /*
+        The application will try to detect which server it's talking to by looking  at the capabilities
+        and/or GetFeatureInfo response.
+     */
     isGEOSERVER: null,
     isMAPSERVER: null
 

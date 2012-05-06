@@ -237,11 +237,20 @@ Maps.openLayersController = SC.ArrayController.create(
             }
         },
 
-        detectServerType : function (event) {
+        detectServerType : function (input) {
             if(Maps.isGEOSERVER==null && Maps.isMAPSERVER==null) {
                 Maps.isGEOSERVER=YES;
                 Maps.isMAPSERVER=NO;
-                if (event.request.responseText.search("msGMLOutput") != -1) {
+                if( typeof(input)=="string" && input.search("MapServer")) {
+                    //@if(debug)
+                    console.log("detectServerType: detected MapServer");
+                    //@endif
+                    Maps.isGEOSERVER=NO;
+                    Maps.isMAPSERVER=YES;
+                } else if (input.request && input.request.responseText.search("msGMLOutput") != -1) {
+                    //@if(debug)
+                    console.log("detectServerType: detected MapServer");
+                    //@endif
                     Maps.isGEOSERVER=NO;
                     Maps.isMAPSERVER=YES;
                 }

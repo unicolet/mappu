@@ -53,6 +53,8 @@ Maps.LayerDataSource = SC.DataSource.extend(
                 try {
                     var records = [];
                     var content = response.get('body');
+
+                    Maps.openLayersController.detectServerType(content);
                     
 		            // God mess IE
                     if(SC.browser.isIE) {
