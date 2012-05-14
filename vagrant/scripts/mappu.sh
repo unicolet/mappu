@@ -7,6 +7,7 @@ if getent passwd vagrant ; then
 fi
 
 REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
+MAPPU_VERSION="1.1"
 
 # x86_64 or i686, i586, etc
 ARCH=`uname -m`
@@ -241,10 +242,10 @@ echo "################################################################"
 echo "# Installing Sproutcore frontend                               #"
 echo "################################################################"
 (
-export SCAPP=${REPO_DIR}/mappu-build-1.0.tgz
+export SCAPP=${REPO_DIR}/mappu-build-${MAPPU_VERSION}.tgz
 if [ ! -e $SCAPP ]; then
         # download from s3
-        wget ${REMOTE_REPO}/mappu-build-1.0.tgz && mv mappu-build-1.0.tgz ${REPO_DIR}/
+        wget ${REMOTE_REPO}/mappu-build-${MAPPU_VERSION}.tgz && mv mappu-build-${MAPPU_VERSION}.tgz ${REPO_DIR}/
 fi;
 
 sudo tar -zxf $SCAPP -C /var/www/
