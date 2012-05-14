@@ -4,7 +4,7 @@
 # ===========================================================================
 
 
-config :all, :required => [:sproutcore, :'sproutcore/animation', 'sctable', :'sproutcore/experimental/split_view'], :minify => true, :preferred_language => :it, :bootstrap => 'appconfig', :javascript_libs => ['http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false'], :stylesheet_libs => ['http://fonts.googleapis.com/css?family=Gudea:400,400italic']
+config :all, :required => [:sproutcore, :'sproutcore/animation', 'sctable', :'sproutcore/experimental/split_view'], :minify => true, :preferred_language => :it, :bootstrap => 'appconfig', :javascript_libs => ['http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false','/print-servlet/pdf/info.json?var=printConfig'], :stylesheet_libs => ['http://fonts.googleapis.com/css?family=Gudea:400,400italic']
 
 
 #config :all do |c|
@@ -21,4 +21,5 @@ proxy "/cgi-bin", :to => "localhost"
 proxy "/geoserver", :to => "31.222.191.183"
 proxy "/mapsocial", :to => "31.222.191.183"
 proxy "/geocache", :to => "31.222.191.183"
+proxy "/print-servlet", :to => "31.222.191.183"
 
