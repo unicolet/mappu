@@ -19,6 +19,10 @@ echo "# Adding repositories, updating and installing base pkgs       #"
 echo "# LOCAL REPO=${REPO_DIR} USER=$USER"
 echo "################################################################"
 (
+# have apt-get choose the faster mirror
+sudo perl -pi.bak -e "s/http:\/\/us\.archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/" /etc/apt/sources.list
+sudo perl -pi.bak2 -e "s/http:\/\/security\.ubuntu\.com\/ubuntu/mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/" /etc/apt/sources.list
+
 # update
 sudo apt-get -y update 
 
