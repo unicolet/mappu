@@ -1,3 +1,8 @@
+/* make google CopyRight box go away */
+.olLayerGooglePoweredBy.olLayerGoogleV3.gmnoprint {
+visibility:hidden;
+}
+
 div.olMap {
     z-index: 0;
     padding: 0 !important;
