@@ -57,14 +57,16 @@ typeof(mapfish)==="undefined" ? mapfish={} : mapfish;
 
 Usage example:
 
-var printer=new mapfish.PrintProtocol(Maps.openLayersController.getOLMAP(),printConfig);
+var map=Maps.openLayersController.getOLMAP();
+var printer=new mapfish.PrintProtocol(map,printConfig);
 printer.spec.layout="A4 portrait";
 printer.spec.pages=[
         {
-            center: [6, 45.5],
-            scale: 4000000,
+            bbox: map.getExtent().toBBOX().split(","),
             dpi: 190,
-            geodetic: false
+            geodetic: false,
+            comment: "Some comment",
+            mapTitle: "Some title"
         }
     ];
 printer.createPDF();
@@ -264,6 +266,18 @@ mapfish.Util.relativeToAbsoluteURL = function(source, loc) {
     }
 
     return  h + p;
+};
+
+// This function rewrites the host:port component of the url to localhost
+// for all those cases when the print servlet is on the same host as
+// the wms server
+mapfish.Util.toLocalhost=function(url) {
+    // vector layers will pass url as undefined
+    if(url) {
+        var pathIndex=url.indexOf("/",7);
+        return url.substr(0,7) + "localhost" + url.substr(pathIndex);
+    }
+    return url;
 };
 
 /**
@@ -486,7 +500,7 @@ mapfish.PrintProtocol = OpenLayers.Class({
      */
     openPdf: function(answer, success, popup, context) {
         OpenLayers.Console.info(answer.getURL);
-        if (Ext.isIE || Ext.isOpera) {
+        if (SC.browser.isIE || SC.browser.isOpera) {
             // OK, my friend IE on XP SP2 (or higher) tends to have this:
             // http://support.microsoft.com/kb/883255
 
@@ -684,9 +698,7 @@ mapfish.PrintProtocol = OpenLayers.Class({
             url = url[0];
         }
         return {
-            baseURL: mapfish.Util.relativeToAbsoluteURL(url),
-            opacity: (olLayer.opacity != null) ? olLayer.opacity : 1.0,
-            singleTile: olLayer.singleTile,
+            baseURL: mapfish.Util.toLocalhost(mapfish.Util.relativeToAbsoluteURL(url)).replace(WMSCONFIG.server_cache_path, WMSCONFIG.server_path),
             customParams: {}
         };
     },
@@ -722,10 +734,9 @@ mapfish.PrintProtocol = OpenLayers.Class({
         {
             type: 'WMS',
             layers: mapfish.Util.fixArray(olLayer.params.LAYERS),
-            format: olLayer.params.FORMAT || olLayer.DEFAULT_PARAMS.format,
-            styles: mapfish.Util.fixArray(olLayer.params.STYLES ||
-                                          olLayer.DEFAULT_PARAMS.styles)
+            format: olLayer.params.FORMAT || olLayer.DEFAULT_PARAMS.format
         });
+        /*
         for (var paramName in olLayer.params) {
             var paramNameLow = paramName.toLowerCase();
             if (olLayer.DEFAULT_PARAMS[paramNameLow] == null &&
@@ -736,6 +747,7 @@ mapfish.PrintProtocol = OpenLayers.Class({
                 layer.customParams[paramName] = olLayer.params[paramName];
             }
         }
+        */
         return layer;
     },
 
@@ -1137,6 +1149,6 @@ mapfish.PrintProtocol.SUPPORTED_TYPES = {
     'OpenLayers.Layer.PointTrack': mapfish.PrintProtocol.prototype.convertVectorLayer,
     'OpenLayers.Layer.MapServer': mapfish.PrintProtocol.prototype.convertMapServerLayer,
     'OpenLayers.Layer.MapServer.Untiled': mapfish.PrintProtocol.prototype.convertMapServerLayer,
-    'OpenLayers.Layer.Image': mapfish.PrintProtocol.prototype.convertImageLayer,
+    'OpenLayers.Layer.Image': mapfish.PrintProtocol.prototype.convertImageLayer
     //'OpenLayers.Layer.Google': mapfish.PrintProtocol.prototype.convertGoogleLayer
 };
