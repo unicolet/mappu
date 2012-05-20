@@ -59,7 +59,7 @@ Usage example:
 
 var map=Maps.openLayersController.getOLMAP();
 var printer=new mapfish.PrintProtocol(map,printConfig);
-printer.spec.layout="A4 portrait";
+printer.spec.layout="A4 landscape";
 printer.spec.pages=[
         {
             bbox: map.getExtent().toBBOX().split(","),
