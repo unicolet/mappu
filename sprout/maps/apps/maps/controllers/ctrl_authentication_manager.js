@@ -100,7 +100,7 @@ Maps.authenticationManager = SC.ObjectController.create({
 
     /* target of login button */
     submitLogin: function() {
-        Maps.statechart.sendEvent('login', this.get('inputUsername'), this.get('inputPassword'));
+        Maps.statechart.sendEvent('login');
     },
 
     keepAliveInterval: null,

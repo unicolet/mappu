@@ -22,7 +22,9 @@ var WMSCONFIG = {
     // attempt to save memory and improve performance
     // might confuse the reordering of layers
     remove_wms_layers_when_not_used: false,
-    default_zoom_level: 5
+    // set to the desired initial zoom level or false to have the map calculate the
+    // most appropriate one based on the map's extent
+    default_zoom_level: false
 };
 
 var APPCONFIG = {
