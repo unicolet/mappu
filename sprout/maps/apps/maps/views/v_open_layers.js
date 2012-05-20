@@ -127,7 +127,11 @@ Maps.OpenLayers = SC.View.extend(
                     console.log("Zooming to bbox "+Maps.get("bbox"));
                     //@endif
                     map.zoomToExtent(Maps.get("bbox"), true);
-                    map.zoomTo(WMSCONFIG.default_zoom_level);
+                    if(WMSCONFIG.default_zoom_level) {
+                        map.zoomTo(WMSCONFIG.default_zoom_level);
+                    } else {
+                        map.zoomTo(map.getZoomForExtent(Maps.get("bbox")));
+                    }
                 } else {
                     map.setCenter(new OpenLayers.LonLat(1325724, 5694253), WMSCONFIG.default_zoom_level);
                 }
@@ -146,9 +150,16 @@ Maps.OpenLayers = SC.View.extend(
 
         bboxDidChange: function() {
             if(Maps.get("bbox") && this.get("olmap")) {
+                var map=this.get("olmap");
+
                 // sometimes we shouldn't zoom because the user has routed us to a certain location
-                if (Maps.get("shouldZoom")==YES)
-                    this.get("olmap").zoomToExtent(Maps.get("bbox"));
+                if (Maps.get("shouldZoom")==YES) {
+                    //@if(debug)
+                    console.log("Zooming map to content");
+                    //@endif
+                    map.zoomTo(map.getZoomForExtent(Maps.get("bbox")));
+                    map.zoomToExtent(Maps.get("bbox"), true);
+                }
             }
         }.observes("Maps.bbox"),
 
