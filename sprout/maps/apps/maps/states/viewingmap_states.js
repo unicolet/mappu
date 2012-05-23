@@ -6,12 +6,17 @@
  */
 
 Maps.viewingMapState = SC.State.extend({
+    substatesAreConcurrent: NO,
+
+    initialSubstate:'browsingMapState',
 
     logout:function () {
         this.gotoState('notLoggedIn');
     },
 
     enterState:function () {
+        console.log("*** viewingMapState.enter ***");
+
         Maps.getPath('loginPage.mainPane').remove();
 
         var page = Maps.getPath('mainPage.mainPane');
@@ -62,5 +67,73 @@ Maps.viewingMapState = SC.State.extend({
 
         Maps.openLayersController.destroyOpenLayersMap();
         Maps.authenticationManager.stopSessionKeepAlive();
-    }
+    },
+
+    didChooseLayersOrSearch: function(view) {
+        if(view.get("value")=="LAYERS")
+            this.gotoState('showingLayersPaneState');
+        if(view.get("value")=="SEARCH")
+            this.gotoState('showingSearchPaneState');
+    },
+
+    browsingMapState: SC.State.extend({
+        // this state is the main state when the user is mostly interacting with map
+        // all ui has been created when the user entered its parent state
+    }),
+
+    showingLayersPaneState: SC.State.extend({
+        enterState: function() {
+            if(!SC.browser.isIE) {
+                // prepare animation
+                Maps.mainPage.layerPalette.disableAnimation();
+                Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
+                // append
+                Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerPalette.enableAnimation();
+                // perform animation
+                Maps.mainPage.layerPalette.adjust("opacity", 1);
+            } else {
+                Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+            }
+            Maps.openLayersController.goToDetail();
+        },
+
+        didCloseLayerPalette: function() {
+            this.gotoState("browsingMapState");
+        },
+
+        exitState: function() {
+            // can't animate pp removal, sob
+            Maps.mainPage.layerPalette.remove();
+            Maps.mainPage.get("layersAndSearch").set("value","");
+        }
+    }),
+
+    showingSearchPaneState: SC.State.extend({
+        enterState: function() {
+            if(!SC.browser.isIE) {
+                // prepare animation
+                Maps.mainPage.layerSearchPane.disableAnimation();
+                Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
+                // append
+                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerSearchPane.enableAnimation();
+                // perform animation
+                Maps.mainPage.layerSearchPane.adjust("opacity", 1);
+            } else {
+                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+            }
+            Maps.openLayersController.goToListQuery();
+        },
+
+        didCloseSearchPalette: function() {
+            this.gotoState("browsingMapState");
+        },
+
+        exitState: function() {
+            // can't animate pp removal, sob
+            Maps.mainPage.layerSearchPane.remove();
+            Maps.mainPage.get("layersAndSearch").set("value","");
+        }
+    })
 });

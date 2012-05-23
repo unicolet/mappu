@@ -22,6 +22,8 @@ var icon_tools_16 = static_url('sc-icon-tools-16');
 // This page describes the main user interface for your application.  
 Maps.mainPage = SC.Page.design({
 
+    layersAndSearch: SC.outlet("mainPane.toolbar.layers"),
+
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
@@ -32,7 +34,8 @@ Maps.mainPage = SC.Page.design({
             opacity: { duration: 1.5, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT } // CSS-transition-only timing function (JavaScript gets linear)
         },
 
-        defaultResponder: 'Maps.MainResponder',
+        //defaultResponder: 'Maps.MainResponder',
+        defaultResponder: 'Maps.statechart',
 
         toolbar : SC.ToolbarView.design({
             layout: { top: 0, left: 0, right: 0, height: 44 },
@@ -54,9 +57,9 @@ Maps.mainPage = SC.Page.design({
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
-                valueBinding: "Maps.openLayersController.layersAndSearch",
                 allowsEmptySelection: YES,
-                allowsMultipleSelection: YES
+                allowsMultipleSelection: YES,
+                action: 'didChooseLayersOrSearch'
             }),
             tools : SC.SegmentedView.design({
                 layout: { centerY: 0, height: 30, centerX: ( $(window).width()<1024 ? 280-130: 280), width: 400 },
@@ -420,6 +423,8 @@ Maps.mainPage = SC.Page.design({
     layerSearchPane : SC.PickerPane.design(SC.Animatable, {
         themeName: 'popover',
 
+        removeAction: "didCloseSearchPalette",
+
         transitions: {
             opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
         },
@@ -440,6 +445,8 @@ Maps.mainPage = SC.Page.design({
 
     layerPalette : SC.PickerPane.extend(SC.Animatable, {
         themeName: 'popover',
+
+        removeAction: "didCloseLayerPalette",
 
         transitions: {
             opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
