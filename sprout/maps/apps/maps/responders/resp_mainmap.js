@@ -119,59 +119,7 @@ Maps.MainResponder = SC.Responder.create({
         Maps.tagsController.hideTagsLayer();
     },
 
-    // called when the user dblclicks an item in list view
-    maps_featureSelected: function() {
-        var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
-        if(!selectedFeature) return;
-        var hasSocial=selectedFeature.get("social");
-        var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
-        var view = Maps.mainPage.mainPane.splitview.bottomRightView.resultsView.contentView.itemViewForContentIndex(selectionIndex);
 
-        if(hasSocial) {
-            Maps.socialController.set("content", selectedFeature.get("social"));
-            Maps.socialCommentsController.findComments();
-        }
-        // always fetch links
-        Maps.linkController.findLinks();
-
-        var pickerPane = SC.PickerPane.design(SC.Animatable,{
-            themeName: 'popover',
-
-            transitions: {
-                opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
-            },
-            
-            layout: { width: 400, height: 300 },
-            contentView: SC.WorkspaceView.extend({
-                topToolbar: null,
-                bottomToolbar: null,
-
-                contentView:SC.View.design({
-                    classNames: 'popover_content_background'.w(),
-                    
-                    childViews:"tabs".w(),
-                    tabs:SC.TabView.extend({
-                        layout: {top: 10, left: 5, right: 5, bottom: 5},
-                        itemTitleKey: "title",
-                        itemValueKey: "tab",
-                        items: [
-                            {title: "_tags".loc(), tab: ( hasSocial ? "Maps.mainPage.tagsTab" : "Maps.mainPage.nosocialTab" ) },
-                            {title: "_comments".loc(), tab: ( hasSocial ? "Maps.mainPage.commentsTab" : "Maps.mainPage.nosocialTab" )},
-                            {title: "_links".loc(), tab: "Maps.mainPage.linksTab"}
-                        ]
-                    })
-                })
-            })
-        }).create();
-        // prepare animation
-        pickerPane.disableAnimation();
-        pickerPane.adjust("opacity", 0).updateStyle();
-        // append
-        pickerPane.popup(view, SC.PICKER_POINTER);
-        pickerPane.enableAnimation();
-        // perform animation
-        pickerPane.adjust("opacity", 1);
-    },
 
     maps_ClearQueryResults: function() {
         Maps.openLayersController.clearFeatures();

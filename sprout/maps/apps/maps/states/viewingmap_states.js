@@ -76,6 +76,25 @@ Maps.viewingMapState = SC.State.extend({
             this.gotoState('showingSearchPaneState');
     },
 
+        // called when the user dblclicks an item in list view
+    maps_featureSelected: function(listView) {
+        var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
+        if(!selectedFeature) return;
+        var hasSocial=selectedFeature.get("social");
+        var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
+        var view = listView.itemViewForContentIndex(selectionIndex);
+
+        if(hasSocial) {
+            Maps.socialController.set("content", selectedFeature.get("social"));
+            Maps.socialCommentsController.findComments();
+        } else {
+            Maps.socialController.set("content", null);
+        }
+        // always fetch links
+        Maps.linkController.findLinks();
+        this.gotoState("showingFeatureResultPaneState", {targetView:view});
+    },
+
     browsingMapState: SC.State.extend({
         // this state is the main state when the user is mostly interacting with map
         // all ui has been created when the user entered its parent state
@@ -88,12 +107,12 @@ Maps.viewingMapState = SC.State.extend({
                 Maps.mainPage.layerPalette.disableAnimation();
                 Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
                 // append
-                Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
                 Maps.mainPage.layerPalette.enableAnimation();
                 // perform animation
                 Maps.mainPage.layerPalette.adjust("opacity", 1);
             } else {
-                Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
             }
             Maps.openLayersController.goToDetail();
         },
@@ -116,12 +135,12 @@ Maps.viewingMapState = SC.State.extend({
                 Maps.mainPage.layerSearchPane.disableAnimation();
                 Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
                 // append
-                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
                 Maps.mainPage.layerSearchPane.enableAnimation();
                 // perform animation
                 Maps.mainPage.layerSearchPane.adjust("opacity", 1);
             } else {
-                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
+                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
             }
             Maps.openLayersController.goToListQuery();
         },
@@ -135,5 +154,28 @@ Maps.viewingMapState = SC.State.extend({
             Maps.mainPage.layerSearchPane.remove();
             Maps.mainPage.get("layersAndSearch").set("value","");
         }
-    })
+    }),
+
+    showingFeatureResultPaneState: SC.State.extend({
+            enterState: function(ctx) {
+                var pickerPane = Maps.mainPage.featureResultPane;
+                // prepare animation
+                pickerPane.disableAnimation();
+                pickerPane.adjust("opacity", 0).updateStyle();
+                // append
+                pickerPane.popup(ctx.targetView, SC.PICKER_POINTER);
+                pickerPane.enableAnimation();
+                // perform animation
+                pickerPane.adjust("opacity", 1);
+            },
+
+            didCloseFeatureResultPane: function() {
+                this.gotoState("browsingMapState");
+            },
+
+            exitState: function() {
+                // can't animate pp removal, sob
+                Maps.mainPage.featureResultPane.remove();
+            }
+        })
 });
