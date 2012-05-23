@@ -34,7 +34,6 @@ Maps.mainPage = SC.Page.design({
             opacity: { duration: 1.5, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT } // CSS-transition-only timing function (JavaScript gets linear)
         },
 
-        //defaultResponder: 'Maps.MainResponder',
         defaultResponder: 'Maps.statechart',
 
         toolbar : SC.ToolbarView.design({
