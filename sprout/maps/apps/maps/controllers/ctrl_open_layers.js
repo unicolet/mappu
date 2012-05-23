@@ -241,13 +241,14 @@ Maps.openLayersController = SC.ArrayController.create(
             if(Maps.isGEOSERVER==null && Maps.isMAPSERVER==null) {
                 Maps.isGEOSERVER=YES;
                 Maps.isMAPSERVER=NO;
+                // the mapserver guys like to advertise their version in the comments
                 if( typeof(input)=="string" && input.search("MapServer")) {
                     //@if(debug)
                     console.log("detectServerType: detected MapServer");
                     //@endif
                     Maps.isGEOSERVER=NO;
                     Maps.isMAPSERVER=YES;
-                } else if (input.request && input.request.responseText.search("msGMLOutput") != -1) {
+                } else if (input.request && input.request.responseText.search("MapServer") != -1) {
                     //@if(debug)
                     console.log("detectServerType: detected MapServer");
                     //@endif
