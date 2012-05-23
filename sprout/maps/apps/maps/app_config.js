@@ -35,7 +35,9 @@ var APPCONFIG = {
         other: "/other.html"
     },
     admin_user: "admin",
-    advanced_options: "/mapsocial/"
+    advanced_options: "/mapsocial/",
+    // disable tips globally
+    showTips: true
 };
 
 
