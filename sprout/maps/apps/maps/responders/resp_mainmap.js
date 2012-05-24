@@ -6,32 +6,7 @@
 */
 Maps.MainResponder = SC.Responder.create({
 
-    /**
-     * Invoked when the user selectes the help button from the username menu.
-     * Causes a sheet pane to appear with some help text.
-     */
-    helpOpen: function() {
-        Maps.helpSheetPane.append();
-    },
 
-    /**
-     * Invoked when the user selectes the tips button from the username menu.
-     * Causes a sheet pane to appear with usage tips.
-     */
-    tipsOpen: function() {
-        Maps.usageTipController.maybeShowTips(true);
-    },
-
-    /**
-     * Closes the sheet pane, animating the slide up.
-     */
-    helpClose: function() {
-        Maps.helpSheetPane.remove();
-    },
-
-    logout: function(){
-        Maps.authenticationManager.logout();
-    },
 
     doOpenLayerWithGoogleEarth: function() {
         var ws=Maps.layerController.get("name").split(":")[0];
@@ -110,25 +85,7 @@ Maps.MainResponder = SC.Responder.create({
         window.open(APPCONFIG.advanced_options);
     },
 
-    maps_RenderTags: function() {
-        Maps.tagsController.gatherTagPoints();
-    },
 
-    maps_ReloadTags: function() {
-        Maps.tagsController.get("content").refresh();
-        Maps.tagsController.hideTagsLayer();
-    },
-
-
-
-    maps_ClearQueryResults: function() {
-        Maps.openLayersController.clearFeatures();
-        Maps.featureInfoAttributesController.clearFeatureAttributes();
-    },
-
-    maps_PerformGeoClose:function() {
-        Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
-    },
 
     maps_SaveTags: function() {
         var feature = Maps.featureInfoController.get("selection").firstObject();
@@ -143,46 +100,7 @@ Maps.MainResponder = SC.Responder.create({
         Maps.socialCommentsController.delComment();
     },
 
-    maps_PerformGeoOperation: function() {
-        var op = Maps.featureInfoController.get("operation");
-        var geom1 = Maps.featureInfoController.get("feature1geom");
-        var geom2 = Maps.featureInfoController.get("feature2geom");
-        if (!geom1 && !geom2) {
-            SC.AlertPane.warn("_missing_params".loc(), "_select_features".loc() + op, "", "OK", this);
-        } else {
-            if (!geom2) {
-                geom2 = "";
-            }
-            if (!geom1) {
-                geom1 = "";
-            }
-            SC.Request.postUrl("/mapsocial/jts/" + op.toLowerCase()).notify(this, 'didPerformGeoOperation').send(geom1.toString() + "*" + geom2.toString());
-        }
-    },
 
-    didPerformGeoOperation: function(response) {
-        if (SC.ok(response)) {
-            var payload=null;
-            if (!response.isJSON())
-                payload = SC.$.parseJSON(response.get('body'));
-            else
-                payload = response.get("body");
-            var WKTParser = new OpenLayers.Format.WKT();
-            var features = WKTParser.read(payload['geom']);
-            Maps.openLayersController.set("measure","Area: "+Math.round(payload['area'])+" m<sup>2</sup>");
-            if (features) {
-                Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
-                Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
-            }
-        } else {
-            SC.AlertPane.warn("_op_failed".loc(), response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
-        }
-    },
-
-    maps_PerformGeoClear: function() {
-        Maps.openLayersController.clearGeoToolsSelection();
-        Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
-    },
 
     maps_LayerSearch: function() {
         Maps.openLayersController.hideLayerPane();

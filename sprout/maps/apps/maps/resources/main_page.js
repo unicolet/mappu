@@ -36,6 +36,7 @@ Maps.nosocialTab=SC.View.extend({
 Maps.mainPage = SC.Page.design({
 
     layersAndSearch: SC.outlet("mainPane.toolbar.layers"),
+    splitView : SC.outlet("mainPane.splitview"),
 
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
@@ -86,7 +87,7 @@ Maps.mainPage = SC.Page.design({
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
-                valueBinding: "Maps.openLayersController.tools"
+                action: 'didClickOnTools'
             }),
             menu: SC.PopupButtonView.design({
                 layout: {right: 5, width: 100, height: 24, centerY:0},
@@ -242,11 +243,11 @@ Maps.mainPage = SC.Page.design({
                         classNames: ["borderless"],
                         title: "_clear_q".loc(),
                         icon: "icon-clear-24",
-                        action: "maps_ClearQueryResults"
+                        action: "clearQueryResults"
                     }),
                     notifications : SC.LabelView.design({
                         classNames: ['text-shadow'],
-                        layout: { centerY: 0, height: 24, right: 45, width: 100 },
+                        layout: { centerY: 0, height: 24, right: 45, left: 120 },
                         escapeHTML: NO,
                         valueBinding: "Maps.openLayersController.measure"
                     }),

@@ -10,7 +10,34 @@ Maps.viewingMapState = SC.State.extend({
 
     initialSubstate:'browsingMapState',
 
-    logout:function () {
+    /**
+     * Invoked when the user selectes the help button from the username menu.
+     * Causes a sheet pane to appear with some help text.
+     */
+    helpOpen: function() {
+        Maps.helpSheetPane.append();
+    },
+
+    /**
+     * Invoked when the user selectes the tips button from the username menu.
+     * Causes a sheet pane to appear with usage tips.
+     */
+    tipsOpen: function() {
+        Maps.usageTipController.maybeShowTips(true);
+    },
+
+    /**
+     * Closes the sheet pane, animating the slide up.
+     */
+    helpClose: function() {
+        Maps.helpSheetPane.remove();
+    },
+
+    logout: function(){
+        Maps.authenticationManager.logout();
+    },
+
+    didLogout:function () {
         this.gotoState('notLoggedIn');
     },
 
@@ -76,7 +103,12 @@ Maps.viewingMapState = SC.State.extend({
             this.gotoState('showingSearchPaneState');
     },
 
-        // called when the user dblclicks an item in list view
+    clearQueryResults: function() {
+        Maps.openLayersController.clearFeatures();
+        Maps.featureInfoAttributesController.clearFeatureAttributes();
+    },
+
+    // called when the user dblclicks an item in list view
     maps_featureSelected: function(listView) {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
         if(!selectedFeature) return;
@@ -94,6 +126,36 @@ Maps.viewingMapState = SC.State.extend({
         Maps.linkController.findLinks();
         this.gotoState("showingFeatureResultPaneState", {targetView:view});
     },
+
+    didClickOnTools: function(view) {
+        var tool = view.get("value");
+
+        if (tool == 'toolMove') {
+            Maps.openLayersController.getOLView().toolMove();
+            // clear last measure
+            Maps.openLayersController.set('measure', '');
+        }
+        if (tool == 'toolArea') {
+            Maps.openLayersController.getOLView().toolArea();
+        }
+        if (tool == 'toolLength') {
+            Maps.openLayersController.getOLView().toolLength();
+        }
+        if (tool == 'toolGeo') {
+            this.gotoState("showingGeoToolsState");
+            view.set("value", "toolMove");
+        }
+        if (tool == 'toolExplorer') {
+            this.gotoState("showingTagExplorerState");
+            view.set("value", "toolMove");
+        }
+    },
+
+    /*******************************************************
+     *
+     *                     SUB STATES
+     *
+     *******************************************************/
 
     browsingMapState: SC.State.extend({
         // this state is the main state when the user is mostly interacting with map
@@ -157,25 +219,111 @@ Maps.viewingMapState = SC.State.extend({
     }),
 
     showingFeatureResultPaneState: SC.State.extend({
-            enterState: function(ctx) {
-                var pickerPane = Maps.mainPage.featureResultPane;
-                // prepare animation
-                pickerPane.disableAnimation();
-                pickerPane.adjust("opacity", 0).updateStyle();
-                // append
-                pickerPane.popup(ctx.targetView, SC.PICKER_POINTER);
-                pickerPane.enableAnimation();
-                // perform animation
-                pickerPane.adjust("opacity", 1);
-            },
+        enterState: function(ctx) {
+            var pickerPane = Maps.mainPage.featureResultPane;
+            // prepare animation
+            pickerPane.disableAnimation();
+            pickerPane.adjust("opacity", 0).updateStyle();
+            // append
+            pickerPane.popup(ctx.targetView, SC.PICKER_POINTER);
+            pickerPane.enableAnimation();
+            // perform animation
+            pickerPane.adjust("opacity", 1);
+        },
 
-            didCloseFeatureResultPane: function() {
-                this.gotoState("browsingMapState");
-            },
+        didCloseFeatureResultPane: function() {
+            this.gotoState("browsingMapState");
+        },
 
-            exitState: function() {
-                // can't animate pp removal, sob
-                Maps.mainPage.featureResultPane.remove();
+        exitState: function() {
+            // can't animate pp removal, sob
+            Maps.mainPage.featureResultPane.remove();
+        }
+    }),
+
+    showingGeoToolsState: SC.State.extend({
+        enterState: function() {
+            var splitView=Maps.mainPage.get("splitView");
+            Maps.openLayersController.clearGeoToolsSelection();
+
+            splitView.middleRightView.set("nowShowing", "Maps.mainPage.geotoolsPane");
+
+            if (splitView.middleRightView.get("size") == 0)
+                splitView.expandToLeft(splitView.middleRightView, 160);
+            else
+                splitView.collapseToRight(splitView.middleRightView);
+        },
+        exitState: function() {
+            var splitView=Maps.mainPage.get("splitView");
+            splitView.collapseToRight(splitView.middleRightView);
+        },
+        maps_PerformGeoOperation: function() {
+            var op = Maps.featureInfoController.get("operation");
+            var geom1 = Maps.featureInfoController.get("feature1geom");
+            var geom2 = Maps.featureInfoController.get("feature2geom");
+            if (!geom1 && !geom2) {
+                SC.AlertPane.warn("_missing_params".loc(), "_select_features".loc() + op, "", "OK", this);
+            } else {
+                if (!geom2) {
+                    geom2 = "";
+                }
+                if (!geom1) {
+                    geom1 = "";
+                }
+                SC.Request.postUrl("/mapsocial/jts/" + op.toLowerCase(), null).notify(this, 'didPerformGeoOperation').send(geom1.toString() + "*" + geom2.toString());
             }
-        })
+        },
+        didPerformGeoOperation: function(response) {
+            if (SC.ok(response)) {
+                var payload=null;
+                if (!response.isJSON())
+                    payload = SC.$.parseJSON(response.get('body'));
+                else
+                    payload = response.get("body");
+                var WKTParser = new OpenLayers.Format.WKT();
+                var features = WKTParser.read(payload['geom']);
+                Maps.openLayersController.set("measure","Area: "+Math.round(payload['area'])+" m<sup>2</sup>");
+                if (features) {
+                    Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
+                    Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
+                }
+            } else {
+                SC.AlertPane.warn("_op_failed".loc(), response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
+            }
+        },
+        maps_PerformGeoClear: function() {
+            Maps.openLayersController.clearGeoToolsSelection();
+            Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
+        },
+        maps_PerformGeoClose: function() {
+            this.gotoState("browsingMapState");
+        }
+    }),
+
+    showingTagExplorerState: SC.State.extend({
+        enterState: function(ctx) {
+            var splitView=Maps.mainPage.get("splitView");
+            Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
+            splitView.labelExplorer.set("nowShowing", "Maps.mainPage.explorerPane");
+
+            if (splitView.labelExplorer.get("size") == 0) {
+                splitView.expandToRight(splitView.labelExplorer, 200);
+                Maps.tagsController.refreshTagsLayer();
+            } else {
+                Maps.mainPage.mainPane.splitview.collapseToLeft(splitView.labelExplorer);
+                Maps.tagsController.hideTagsLayer();
+            }
+
+        },
+        exitState: function() {
+
+        },
+        maps_RenderTags: function() {
+            Maps.tagsController.gatherTagPoints();
+        },
+        maps_ReloadTags: function() {
+            Maps.tagsController.get("content").refresh();
+            Maps.tagsController.hideTagsLayer();
+        }
+    })
 });

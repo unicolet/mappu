@@ -63,49 +63,6 @@ Maps.openLayersController = SC.ArrayController.create(
             return olview.get("GEOTOOLS_LAYER");
         },
 
-        tools: "toolMove".w(),
-        toolsDidChange : function() {
-            var tool = this.get("tools");
-
-            if (tool == 'toolMove') {
-                this.getOLView().toolMove();
-                // clear last measure
-                Maps.openLayersController.set('measure', '');
-            }
-            if (tool == 'toolArea') {
-                this.getOLView().toolArea();
-            }
-            if (tool == 'toolLength') {
-                this.getOLView().toolLength();
-            }
-            if (tool == 'toggleLayers') {
-                this.toggleLayers();
-            }
-            if (tool == 'toolGeo') {
-                this.clearGeoToolsSelection();
-                Maps.mainPage.mainPane.splitview.middleRightView.set("nowShowing", "Maps.mainPage.geotoolsPane");
-
-                if (Maps.mainPage.mainPane.splitview.middleRightView.get("size") == 0)
-                    Maps.mainPage.mainPane.splitview.expandToLeft(Maps.mainPage.mainPane.splitview.middleRightView, 160);
-                else
-                    Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
-                this.set("tools", "toolMove");
-            }
-            if (tool == 'toolExplorer') {
-                Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
-                Maps.mainPage.mainPane.splitview.labelExplorer.set("nowShowing", "Maps.mainPage.explorerPane");
-
-                if (Maps.mainPage.mainPane.splitview.labelExplorer.get("size") == 0) {
-                    Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 200);
-                    Maps.tagsController.refreshTagsLayer();
-                } else {
-                    Maps.mainPage.mainPane.splitview.collapseToLeft(Maps.mainPage.mainPane.splitview.labelExplorer);
-                    Maps.tagsController.hideTagsLayer();
-                }
-                this.set("tools", "toolMove");
-            }
-        }.observes(".tools"),
-
         clearGeoToolsSelection: function() {
             Maps.featureInfoController.set("feature1", null);
             Maps.featureInfoController.set("feature2", null);
