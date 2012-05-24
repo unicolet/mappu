@@ -33,10 +33,12 @@ Maps.viewingMapState = SC.State.extend({
         Maps.helpSheetPane.remove();
     },
 
+    /* Invoked when the user chooses to logout from the user menu */
     logout: function(){
         Maps.authenticationManager.logout();
     },
 
+    /* callback to logout */
     didLogout:function () {
         this.gotoState('notLoggedIn');
     },
@@ -310,13 +312,25 @@ Maps.viewingMapState = SC.State.extend({
                 splitView.expandToRight(splitView.labelExplorer, 200);
                 Maps.tagsController.refreshTagsLayer();
             } else {
-                Maps.mainPage.mainPane.splitview.collapseToLeft(splitView.labelExplorer);
+                splitView.collapseToLeft(splitView.labelExplorer);
                 Maps.tagsController.hideTagsLayer();
             }
+        },
+        didClickOnTools: function(view) {
+            var tool = view.get("value");
 
+            if (tool == 'toolExplorer') {
+                view.set("value", "toolMove");
+                this.gotoState("browsingMapState");
+            } else {
+                // bubble up
+                this.parentState.didClickOnTools(view);
+            }
         },
         exitState: function() {
-
+            var splitView=Maps.mainPage.get("splitView");
+            splitView.collapseToLeft(splitView.labelExplorer);
+            Maps.tagsController.hideTagsLayer();
         },
         maps_RenderTags: function() {
             Maps.tagsController.gatherTagPoints();
