@@ -89,13 +89,17 @@ Maps.LayerDataSource = SC.DataSource.extend(
 			        if(!Proj4js.defs[bbox.srs]) // load projection from remote sources
                         this.projections.push(bbox.srs)
                     }
-                    this.projections = this.projections.uniq();
+                    var tmpProjections=this.projections.uniq();
+                    this.projections = tmpProjections.slice(); // clone array
                     this.numberOfProjections=this.projections.length;
-                    for (var i = 0; i < this.projections.length; i++) {
+                    //@if(debug)
+                    console.log("Requiring remote load of " + this.projections.length + " projections, nofProjections="+this.numberOfProjections);
+                    //@endif
+                    for (var i = 0; i < tmpProjections.length; i++) {
                         //@if(debug)
-                        console.log("Requiring remote load of projection " + this.projections[i]);
+                        console.log("Requiring remote load of projection " + tmpProjections[i]);
                         //@endif
-                        var proj = new Proj4js.Proj(this.projections[i], this.whenProjReady(response, store, query, capabilities));
+                        var proj = new Proj4js.Proj(tmpProjections[i], this.whenProjReady(tmpProjections[i], response, store, query, capabilities));
                     }
 
                     // if all projections are available locally continue as usual
@@ -187,9 +191,9 @@ Maps.LayerDataSource = SC.DataSource.extend(
             });
         },
 
-        whenProjReady:function (response, store, query, capabilities) {
+        whenProjReady:function (projCode, response, store, query, capabilities) {
             //@if(debug)
-            console.log("- proj loaded "+response+", projections.length="+this.projections.length);
+            console.log("- proj "+projCode+" loaded , projections.length="+this.projections.length);
             //@endif
 
             this.projections.pop();

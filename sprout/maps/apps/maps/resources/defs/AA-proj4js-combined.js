@@ -286,7 +286,7 @@ Proj4js = {
      * Override this in applications to report error messages or throw exceptions.
      */
     reportError: function(msg) {
-      //console.log(msg);
+      console.log(msg);
     },
 
 /**
