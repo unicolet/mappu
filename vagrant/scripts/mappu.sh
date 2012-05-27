@@ -335,9 +335,9 @@ sudo a2enmod cache
 sudo a2enmod disk_cache
 sudo a2enmod deflate
 
-#sudo /etc/init.d/tomcat7 start
+sudo /etc/init.d/tomcat7 start
 
-#sudo /etc/init.d/apache2 restart
+sudo /etc/init.d/apache2 restart
 ) >> provision.log 2>&1 
 
 echo ""
