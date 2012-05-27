@@ -198,15 +198,15 @@ Maps.openLayersController = SC.ArrayController.create(
             if(Maps.isGEOSERVER==null && Maps.isMAPSERVER==null) {
                 Maps.isGEOSERVER=YES;
                 Maps.isMAPSERVER=NO;
-                if( typeof(input)=="string" && input.search("MapServer")) {
+                if( typeof(input)=="string" && input.search("MapServer")!= -1) {
                     //@if(debug)
-                    console.log("detectServerType: detected MapServer");
+                    console.log("check 1 detectServerType: detected MapServer");
                     //@endif
                     Maps.isGEOSERVER=NO;
                     Maps.isMAPSERVER=YES;
                 } else if (input.request && input.request.responseText.search("msGMLOutput") != -1) {
                     //@if(debug)
-                    console.log("detectServerType: detected MapServer");
+                    console.log("check 2 detectServerType: detected MapServer");
                     //@endif
                     Maps.isGEOSERVER=NO;
                     Maps.isMAPSERVER=YES;
