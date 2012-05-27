@@ -490,7 +490,7 @@ Maps.mainPage = SC.Page.design({
                 }),
                 legendBtn: SC.ButtonView.design({
                     layout: {width: 80, centerY: 0, right: 40, height: 24},
-                    titleBinding: "Maps.MainResponder.legendBtnText",
+                    titleBinding: "Maps.openLayersController.legendBtnText",
                     action: "toggleLegend"
                 })
             }),
@@ -516,7 +516,6 @@ Maps.mainPage = SC.Page.design({
                         contentRightIconKey: "filterIcon",
                         hasContentIcon: NO,
                         hasContentRightIcon: YES,
-                        action:"maps_LayerSearch",
                         canReorderContent: YES,
                         isEditable: YES,
                         action: "onLayerSelected",
@@ -708,9 +707,7 @@ Maps.mainPage = SC.Page.design({
             close: SC.ButtonView.design({
                 layout: {bottom:5, width: 80, height: 25, right: 5},
                 title: "_close".loc(),
-                action: function() {
-                    Maps.mainPage.addressPane.remove();
-                }
+                action: "close"
             })
         })
     }).create(),

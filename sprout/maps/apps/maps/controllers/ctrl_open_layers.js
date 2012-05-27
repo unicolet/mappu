@@ -258,14 +258,18 @@ Maps.openLayersController = SC.ArrayController.create(
             this.set("layerSearchNowShowing", "Maps.mainPage.queryListPane");
         },
 
+        //
+        legendBtnText: "",
         // this is bound to the sceneView nowShowing property
         layerPaletteNowShowing:null,
         goToDetail: function() {
             this.set("layerPaletteNowShowing", "Maps.mainPage.layerInfoView");
+            this.set("legendBtnText","_legend".loc())
         },
 
         goToLegend: function() {
             this.set("layerPaletteNowShowing", "Maps.mainPage.layerLegendView");
+            this.set("legendBtnText","_layerprops".loc())
         },
 
         /**

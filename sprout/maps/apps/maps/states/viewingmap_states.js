@@ -153,6 +153,77 @@ Maps.viewingMapState = SC.State.extend({
         }
     },
 
+    print: function(){
+        if(SC.browser.chrome) {
+            SC.AlertPane.info({
+                message: "_print_chrome_title".loc(),
+                description: "_print_chrome_body".loc(),
+                caption: "",
+                buttons: [
+                    {
+                    title: "_install_print_extension".loc(),
+                    action: "didClickInstallPrintExtension"
+                    },
+                    {
+                      title: "OK"
+                    }
+                ]});
+        } else if(SC.browser.mozilla) {
+            SC.AlertPane.info({
+                message: "_print_mozilla_title".loc(),
+                description: "_print_mozilla_body".loc(),
+                caption: "",
+                buttons: [
+                    {
+                    title: "_install_print_extension".loc(),
+                    action: "didClickInstallPrintExtension"
+                    },
+                    {
+                      title: "OK"
+                    }
+                ]});
+        } else {
+            SC.AlertPane.info({
+                message: "_working_on_it".loc(),
+                description: "_working_on_it".loc(),
+                caption: "",
+                buttons: [
+                    {
+                      title: "OK"
+                    }
+                ]});
+        }
+    },
+
+    didClickInstallPrintExtension: function() {
+        if(SC.browser.chrome) {
+            window.open(APPCONFIG.print.chrome);
+        } else if(SC.browser.mozilla) {
+            window.open(APPCONFIG.print.firefox);
+        } else {
+            window.open(APPCONFIG.print.other);
+        }
+    },
+
+    doOpenLayerWithGoogleEarth: function() {
+        var ws=Maps.layerController.get("name").split(":")[0];
+        window.open("/geoserver/"+ws+"/wms/kml?layers="+Maps.layerController.get("name"))
+    },
+
+    /*
+     * Use the gmaps api to reverse geocode a lat,lon couple
+     */
+    geocode: function() {
+        this.gotoState("geoCodeState");
+    },
+
+    /*
+     * launch streetview in a browser window
+     */
+    streetview: function() {
+        window.open("http://maps.google.it/?ll="+Maps.openLayersController.get("lat")+","+Maps.openLayersController.get("lon")+"&t=m&z=19&vpsrc=6", "mappu_gmaps");
+    },
+
     /*******************************************************
      *
      *                     SUB STATES
@@ -164,84 +235,11 @@ Maps.viewingMapState = SC.State.extend({
         // all ui has been created when the user entered its parent state
     }),
 
-    showingLayersPaneState: SC.State.extend({
-        enterState: function() {
-            if(!SC.browser.isIE) {
-                // prepare animation
-                Maps.mainPage.layerPalette.disableAnimation();
-                Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
-                // append
-                Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
-                Maps.mainPage.layerPalette.enableAnimation();
-                // perform animation
-                Maps.mainPage.layerPalette.adjust("opacity", 1);
-            } else {
-                Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
-            }
-            Maps.openLayersController.goToDetail();
-        },
+    showingLayersPaneState: SC.State.plugin("Maps.showingLayersPaneState"),
 
-        didCloseLayerPalette: function() {
-            this.gotoState("browsingMapState");
-        },
+    showingSearchPaneState: SC.State.plugin("Maps.showingSearchPaneState"),
 
-        exitState: function() {
-            // can't animate pp removal, sob
-            Maps.mainPage.layerPalette.remove();
-            Maps.mainPage.get("layersAndSearch").set("value","");
-        }
-    }),
-
-    showingSearchPaneState: SC.State.extend({
-        enterState: function() {
-            if(!SC.browser.isIE) {
-                // prepare animation
-                Maps.mainPage.layerSearchPane.disableAnimation();
-                Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
-                // append
-                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
-                Maps.mainPage.layerSearchPane.enableAnimation();
-                // perform animation
-                Maps.mainPage.layerSearchPane.adjust("opacity", 1);
-            } else {
-                Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
-            }
-            Maps.openLayersController.goToListQuery();
-        },
-
-        didCloseSearchPalette: function() {
-            this.gotoState("browsingMapState");
-        },
-
-        exitState: function() {
-            // can't animate pp removal, sob
-            Maps.mainPage.layerSearchPane.remove();
-            Maps.mainPage.get("layersAndSearch").set("value","");
-        }
-    }),
-
-    showingFeatureResultPaneState: SC.State.extend({
-        enterState: function(ctx) {
-            var pickerPane = Maps.mainPage.featureResultPane;
-            // prepare animation
-            pickerPane.disableAnimation();
-            pickerPane.adjust("opacity", 0).updateStyle();
-            // append
-            pickerPane.popup(ctx.targetView, SC.PICKER_POINTER);
-            pickerPane.enableAnimation();
-            // perform animation
-            pickerPane.adjust("opacity", 1);
-        },
-
-        didCloseFeatureResultPane: function() {
-            this.gotoState("browsingMapState");
-        },
-
-        exitState: function() {
-            // can't animate pp removal, sob
-            Maps.mainPage.featureResultPane.remove();
-        }
-    }),
+    showingFeatureResultPaneState: SC.State.plugin("Maps.showingFeatureResultPaneState"),
 
     showingGeoToolsState: SC.State.extend({
         enterState: function() {
@@ -339,5 +337,7 @@ Maps.viewingMapState = SC.State.extend({
             Maps.tagsController.get("content").refresh();
             Maps.tagsController.hideTagsLayer();
         }
-    })
+    }),
+
+    geoCodeState:SC.State.plugin('Maps.geoCodeState')
 });
