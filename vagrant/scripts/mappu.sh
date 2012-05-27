@@ -313,7 +313,7 @@ Allow from All
 <IfModule mod_cache.c>
 <IfModule mod_disk_cache.c>
 CacheRoot /var/cache/apache2/mod_disk_cache
-CacheEnable disk /geoserver/psn/wms
+CacheEnable disk /geoserver/wms
 CacheDirLevels 5
 CacheDirLength 3
 CacheDefaultExpire 3600
@@ -337,11 +337,18 @@ sudo a2enmod deflate
 
 sudo /etc/init.d/tomcat7 start
 
+sleep 10
+
 sudo /etc/init.d/apache2 restart
 ) >> provision.log 2>&1 
 
+URL=`sudo ifconfig eth1 | awk -F: '/inet addr/ {print $2} ' | awk '{printf("http://%s/static/maps/en/1.1/\n",$1); }'`
+
 echo ""
-echo "Installation completed."
+echo "Installation completed, point your browser to:"
 echo ""
+echo "$URL"
+echo ""
+echo "Login as admin/admin01"
 exit
 
