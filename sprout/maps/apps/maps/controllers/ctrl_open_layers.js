@@ -63,49 +63,6 @@ Maps.openLayersController = SC.ArrayController.create(
             return olview.get("GEOTOOLS_LAYER");
         },
 
-        tools: "toolMove".w(),
-        toolsDidChange : function() {
-            var tool = this.get("tools");
-
-            if (tool == 'toolMove') {
-                this.getOLView().toolMove();
-                // clear last measure
-                Maps.openLayersController.set('measure', '');
-            }
-            if (tool == 'toolArea') {
-                this.getOLView().toolArea();
-            }
-            if (tool == 'toolLength') {
-                this.getOLView().toolLength();
-            }
-            if (tool == 'toggleLayers') {
-                this.toggleLayers();
-            }
-            if (tool == 'toolGeo') {
-                this.clearGeoToolsSelection();
-                Maps.mainPage.mainPane.splitview.middleRightView.set("nowShowing", "Maps.mainPage.geotoolsPane");
-
-                if (Maps.mainPage.mainPane.splitview.middleRightView.get("size") == 0)
-                    Maps.mainPage.mainPane.splitview.expandToLeft(Maps.mainPage.mainPane.splitview.middleRightView, 160);
-                else
-                    Maps.mainPage.mainPane.splitview.collapseToRight(Maps.mainPage.mainPane.splitview.middleRightView);
-                this.set("tools", "toolMove");
-            }
-            if (tool == 'toolExplorer') {
-                Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
-                Maps.mainPage.mainPane.splitview.labelExplorer.set("nowShowing", "Maps.mainPage.explorerPane");
-
-                if (Maps.mainPage.mainPane.splitview.labelExplorer.get("size") == 0) {
-                    Maps.mainPage.mainPane.splitview.expandToRight(Maps.mainPage.mainPane.splitview.labelExplorer, 200);
-                    Maps.tagsController.refreshTagsLayer();
-                } else {
-                    Maps.mainPage.mainPane.splitview.collapseToLeft(Maps.mainPage.mainPane.splitview.labelExplorer);
-                    Maps.tagsController.hideTagsLayer();
-                }
-                this.set("tools", "toolMove");
-            }
-        }.observes(".tools"),
-
         clearGeoToolsSelection: function() {
             Maps.featureInfoController.set("feature1", null);
             Maps.featureInfoController.set("feature2", null);
@@ -133,8 +90,8 @@ Maps.openLayersController = SC.ArrayController.create(
         lon:null,
 
         menuPane: SC.MenuPane.create({
-            layout: {width: 120},
-            itemHeight: 25,
+            layout: {width: 200},
+            itemHeight: 22,
             items: [
                 { title: '_geocode'.loc(), icon: 'http://maps.gstatic.com/favicon.ico', action: "geocode" },
                 { title: '_streetview'.loc(), icon: 'icon-streetview-16', action: "streetview" }
@@ -242,15 +199,15 @@ Maps.openLayersController = SC.ArrayController.create(
                 Maps.isGEOSERVER=YES;
                 Maps.isMAPSERVER=NO;
                 // the mapserver guys like to advertise their version in the comments
-                if( typeof(input)=="string" && input.search("MapServer")) {
+                if( typeof(input)=="string" && input.search("MapServer")!= -1) {
                     //@if(debug)
-                    console.log("detectServerType: detected MapServer");
+                    console.log("check 1 detectServerType: detected MapServer");
                     //@endif
                     Maps.isGEOSERVER=NO;
                     Maps.isMAPSERVER=YES;
                 } else if (input.request && input.request.responseText.search("MapServer") != -1) {
                     //@if(debug)
-                    console.log("detectServerType: detected MapServer");
+                    console.log("check 2 detectServerType: detected MapServer");
                     //@endif
                     Maps.isGEOSERVER=NO;
                     Maps.isMAPSERVER=YES;
@@ -284,72 +241,6 @@ Maps.openLayersController = SC.ArrayController.create(
             map.setBaseLayer(map.getLayersByName(newBaseLayer)[0]);
         }.observes(".whichGoogleLayer"),
 
-        // layersAndSearch is bound to the Layers/Search combo buttons on the toolbar
-        layersAndSearch: null,
-        toggleLayers: function() {
-            var selected = this.get("layersAndSearch");
-
-            // make selected always an array
-            if (! $.isArray(selected)) {
-                selected = (selected + "").w();
-            }
-
-            if (selected.find(function(i, j, l) {
-                return i == "LAYERS"
-            })) {
-		if(!SC.browser.isIE) {
-                	// prepare animation
-	                Maps.mainPage.layerPalette.disableAnimation();
-        	        Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
-                	// append
-	                Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-       		        Maps.mainPage.layerPalette.enableAnimation();
-               		// perform animation
-                	Maps.mainPage.layerPalette.adjust("opacity", 1);
-		} else {
-			Maps.mainPage.layerPalette.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-		}
-
-                if (this.get("layerPaletteNowShowing") == null)
-                    this.goToDetail();
-            } else {
-                // can't animate pp removal, sob
-                Maps.mainPage.layerPalette.remove();
-            }
-            if (selected.find(function(i, j, l) {
-                return i == "SEARCH"
-            })) {
-		if(!SC.browser.isIE) {
-                	// prepare animation
-        	        Maps.mainPage.layerSearchPane.disableAnimation();
-               		Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
-                	// append
-                	Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-                	Maps.mainPage.layerSearchPane.enableAnimation();
-                	// perform animation
-                	Maps.mainPage.layerSearchPane.adjust("opacity", 1);
-		} else {
-                	Maps.mainPage.layerSearchPane.popup(Maps.mainPage.mainPane.toolbar.layers, SC.PICKER_POINTER);
-		}
-                this.goToListQuery();
-            } else {
-                Maps.mainPage.layerSearchPane.remove();
-            }
-        }.observes(".layersAndSearch"),
-
-        /*
-         Keep button state and panel visibility in sync
-         */
-        didPickerPaneRemove: function() {
-            if (( !Maps.mainPage.layerSearchPane.get("isVisibleInWindow") )
-                &&
-                ( !Maps.mainPage.layerPalette.get("isVisibleInWindow") )
-                ) {
-                this.set("layersAndSearch", "".w());
-            }
-        }.observes("Maps.mainPage.layerSearchPane.isVisibleInWindow", "Maps.mainPage.layerPalette.isVisibleInWindow"),
-
-
         // a layer has been selected on the layer list
         onLayerSelected: function() {
             var layer = SC.getPath('Maps.openLayersController.selection.firstObject');
@@ -368,14 +259,18 @@ Maps.openLayersController = SC.ArrayController.create(
             this.set("layerSearchNowShowing", "Maps.mainPage.queryListPane");
         },
 
+        //
+        legendBtnText: "",
         // this is bound to the sceneView nowShowing property
         layerPaletteNowShowing:null,
         goToDetail: function() {
             this.set("layerPaletteNowShowing", "Maps.mainPage.layerInfoView");
+            this.set("legendBtnText","_legend".loc())
         },
 
         goToLegend: function() {
             this.set("layerPaletteNowShowing", "Maps.mainPage.layerLegendView");
+            this.set("legendBtnText","_layerprops".loc())
         },
 
         /**

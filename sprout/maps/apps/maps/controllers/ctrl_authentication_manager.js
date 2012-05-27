@@ -46,7 +46,7 @@ Maps.authenticationManager = SC.ObjectController.create({
         if (SC.ok(response)) {
             this.set("inputUsername","");
             this.set("inputPassword","");
-            Maps.statechart.sendEvent("logout",{});
+            Maps.statechart.sendEvent("didLogout",{});
         } else {
             SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
         }

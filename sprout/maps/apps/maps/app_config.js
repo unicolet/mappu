@@ -9,13 +9,13 @@
 
 var WMSCONFIG = {
     use_cache: true,
-//    server_path : "/geoserver/wms",
-//    wfs_server_path : "/geoserver/wfs",
-//    server_cache_path : "/geoserver/gwc/service/wms",
+    server_path : "/geoserver/wms",
+    wfs_server_path : "/geoserver/wfs",
+    server_cache_path : "/geoserver/gwc/service/wms",
 
-    server_path : "/cgi-bin/wms",
-    wfs_server_path : "/cgi-bin/wms",
-    server_cache_path : "/cgi-bin/wms",
+//    server_path : "/cgi-bin/wms",
+//    wfs_server_path : "/cgi-bin/wms",
+//    server_cache_path : "/cgi-bin/wms",
     default_srs: "EPSG:3003",
     // enable use of regexps in link matching
     extended_link_regex: true,
