@@ -698,14 +698,14 @@ Maps.mainPage = SC.Page.design({
                 })
             }),
             button: SC.ButtonView.design({
-                layout: {bottom:5, width: 100, height: 25, right: 100},
+                layout: {bottom:5, width: 100, height: 24, right: 100},
                 title: "_launch".loc(),
                 action: function() {
                     alert("Stiamo lavorando anche a  questo...");
                 }
             }),
             close: SC.ButtonView.design({
-                layout: {bottom:5, width: 80, height: 25, right: 5},
+                layout: {bottom:5, width: 80, height: 24, right: 5},
                 title: "_close".loc(),
                 action: "close"
             })

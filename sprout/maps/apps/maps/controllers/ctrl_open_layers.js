@@ -90,8 +90,8 @@ Maps.openLayersController = SC.ArrayController.create(
         lon:null,
 
         menuPane: SC.MenuPane.create({
-            layout: {width: 120},
-            itemHeight: 25,
+            layout: {width: 200},
+            itemHeight: 22,
             items: [
                 { title: '_geocode'.loc(), icon: 'http://maps.gstatic.com/favicon.ico', action: "geocode" },
                 { title: '_streetview'.loc(), icon: 'icon-streetview-16', action: "streetview" }

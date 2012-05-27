@@ -8,7 +8,10 @@
 Maps.geoCodeState = SC.State.extend({
     enterState: function(ctx) {
         Maps.addressController.findAddresses(Maps.openLayersController.get("lat"), Maps.openLayersController.get("lon"));
-        Maps.mainPage.addressPane.append();
+        var pane = Maps.getPath('mainPage.addressPane');
+        pane.adjust("opacity", 0);
+        pane.append();
+        pane.animate("opacity", 1, 0.5);
     },
 
     close: function() {
@@ -16,6 +19,7 @@ Maps.geoCodeState = SC.State.extend({
     },
 
     exitState: function(ctx) {
-        Maps.mainPage.addressPane.remove();
+        var pane = Maps.getPath('mainPage.addressPane');
+        pane.animate("opacity", 0, 0.3, function(){ pane.remove();});
     }
 });
