@@ -24,7 +24,7 @@ var WMSCONFIG = {
     remove_wms_layers_when_not_used: false,
     // set to the desired initial zoom level or false to have the map calculate the
     // most appropriate one based on the map's extent
-    default_zoom_level: 2 
+    default_zoom_level: false
 };
 
 var APPCONFIG = {
