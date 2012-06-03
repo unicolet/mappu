@@ -62,7 +62,7 @@ SC.stringsFor('en', {
     "_help": "Help",
     "_install_print_extension": "Install extension...",
     "_print_chrome_title" : "Please install extension to print with Google Chrome",
-    "_print_chrome_body" : "Printing in Google Chrome is supported through a custom made extension",
+    "_print_chrome_body" : "Printing in Google Chrome is also supported through a custom made extension",
     "_print_mozilla_title" : "Please install an extension to print with Mozilla",
     "_print_mozilla_body" : "Printing in Mozilla is supported through one of the many available screenshot extensions.",
     "_msie_unsupported" : "You are using Internet Explorer",
@@ -85,5 +85,8 @@ SC.stringsFor('en', {
     "_usage_tip_title": "Did you know that ... ?",
     "_tips" : "Tips",
     "_next": "Next",
-    "_loading": "Loading..."
+    "_loading": "Loading...",
+    "_print_title": "Print options",
+    "_comment": "Optional comment to be added on the print:",
+    "_do_print": "Print"
 });

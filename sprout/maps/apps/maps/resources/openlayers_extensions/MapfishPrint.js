@@ -698,8 +698,12 @@ mapfish.PrintProtocol = OpenLayers.Class({
         if (url instanceof Array) {
             url = url[0];
         }
+        var baseurl = mapfish.Util.toLocalhost(mapfish.Util.relativeToAbsoluteURL(url));
+        if(baseurl)
+            baseurl=baseurl.replace(WMSCONFIG.server_cache_path, WMSCONFIG.server_path);
+
         return {
-            baseURL: mapfish.Util.toLocalhost(mapfish.Util.relativeToAbsoluteURL(url)).replace(WMSCONFIG.server_cache_path, WMSCONFIG.server_path),
+            baseURL: baseurl,
             customParams: {}
         };
     },
@@ -1144,7 +1148,7 @@ mapfish.PrintProtocol.SUPPORTED_TYPES = {
     'OpenLayers.Layer.TileCache': mapfish.PrintProtocol.prototype.convertTileCacheLayer,
     'OpenLayers.Layer.OSM': mapfish.PrintProtocol.prototype.convertOSMLayer,
     'OpenLayers.Layer.TMS': mapfish.PrintProtocol.prototype.convertTMSLayer,
-    'OpenLayers.Layer.Vector': mapfish.PrintProtocol.prototype.convertVectorLayer,
+    //'OpenLayers.Layer.Vector': mapfish.PrintProtocol.prototype.convertVectorLayer,
     'OpenLayers.Layer.Vector.RootContainer': mapfish.PrintProtocol.prototype.convertVectorLayer,
     'OpenLayers.Layer.GML': mapfish.PrintProtocol.prototype.convertVectorLayer,
     'OpenLayers.Layer.PointTrack': mapfish.PrintProtocol.prototype.convertVectorLayer,

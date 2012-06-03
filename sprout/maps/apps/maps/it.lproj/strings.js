@@ -61,7 +61,7 @@ SC.stringsFor('it', {
     "_help": "Aiuto",
     "_install_print_extension": "Installa l'estensione...",
     "_print_chrome_title" : "Installare l'estensione per stampare con Google Chrome",
-    "_print_chrome_body" : "La stampa con Google Chrome e' supportata attraverso una apposita estensione del browser.",
+    "_print_chrome_body" : "La stampa con Google Chrome e' supportata anche attraverso una apposita estensione del browser.",
     "_print_mozilla_title" : "Installare una estensione per stampare con Mozilla",
     "_print_mozilla_body" : "La stampa con Mozilla e' supportata attraverso una delle tante estensioni per catturare le schermate disponibili per il browser.",
     "_msie_unsupported" : "Stai usando Internet Explorer",
@@ -95,5 +95,8 @@ SC.stringsFor('it', {
     "_usage_tip_title": "Lo sapevate che ... ?",
     "_tips" : "Suggerimenti",
     "_next": "Prossimo",
-    "_loading": "Sto caricando..."
+    "_loading": "Sto caricando...",
+    "_print_title": "Opzioni di stampa",
+    "_comment": "Digitare un commento da inserire nel foglio di stampa:",
+    "_do_print": "Stampa"
 });

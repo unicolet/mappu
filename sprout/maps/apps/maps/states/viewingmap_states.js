@@ -10,39 +10,6 @@ Maps.viewingMapState = SC.State.extend({
 
     initialSubstate:'browsingMapState',
 
-    /**
-     * Invoked when the user selectes the help button from the username menu.
-     * Causes a sheet pane to appear with some help text.
-     */
-    helpOpen: function() {
-        Maps.helpSheetPane.append();
-    },
-
-    /**
-     * Invoked when the user selectes the tips button from the username menu.
-     * Causes a sheet pane to appear with usage tips.
-     */
-    tipsOpen: function() {
-        Maps.usageTipController.maybeShowTips(true);
-    },
-
-    /**
-     * Closes the sheet pane, animating the slide up.
-     */
-    helpClose: function() {
-        Maps.helpSheetPane.remove();
-    },
-
-    /* Invoked when the user chooses to logout from the user menu */
-    logout: function(){
-        Maps.authenticationManager.logout();
-    },
-
-    /* callback to logout */
-    didLogout:function () {
-        this.gotoState('notLoggedIn');
-    },
-
     enterState:function () {
         console.log("*** viewingMapState.enter ***");
 
@@ -96,6 +63,39 @@ Maps.viewingMapState = SC.State.extend({
 
         Maps.openLayersController.destroyOpenLayersMap();
         Maps.authenticationManager.stopSessionKeepAlive();
+    },
+
+    /**
+     * Invoked when the user selectes the help button from the username menu.
+     * Causes a sheet pane to appear with some help text.
+     */
+    helpOpen: function() {
+        Maps.helpSheetPane.append();
+    },
+
+    /**
+     * Invoked when the user selectes the tips button from the username menu.
+     * Causes a sheet pane to appear with usage tips.
+     */
+    tipsOpen: function() {
+        Maps.usageTipController.maybeShowTips(true);
+    },
+
+    /**
+     * Closes the sheet pane, animating the slide up.
+     */
+    helpClose: function() {
+        Maps.helpSheetPane.remove();
+    },
+
+    /* Invoked when the user chooses to logout from the user menu */
+    logout: function(){
+        Maps.authenticationManager.logout();
+    },
+
+    /* callback to logout */
+    didLogout:function () {
+        this.gotoState('notLoggedIn');
     },
 
     didChooseLayersOrSearch: function(view) {
@@ -154,55 +154,7 @@ Maps.viewingMapState = SC.State.extend({
     },
 
     print: function(){
-        if(SC.browser.chrome) {
-            SC.AlertPane.info({
-                message: "_print_chrome_title".loc(),
-                description: "_print_chrome_body".loc(),
-                caption: "",
-                buttons: [
-                    {
-                    title: "_install_print_extension".loc(),
-                    action: "didClickInstallPrintExtension"
-                    },
-                    {
-                      title: "OK"
-                    }
-                ]});
-        } else if(SC.browser.mozilla) {
-            SC.AlertPane.info({
-                message: "_print_mozilla_title".loc(),
-                description: "_print_mozilla_body".loc(),
-                caption: "",
-                buttons: [
-                    {
-                    title: "_install_print_extension".loc(),
-                    action: "didClickInstallPrintExtension"
-                    },
-                    {
-                      title: "OK"
-                    }
-                ]});
-        } else {
-            SC.AlertPane.info({
-                message: "_working_on_it".loc(),
-                description: "_working_on_it".loc(),
-                caption: "",
-                buttons: [
-                    {
-                      title: "OK"
-                    }
-                ]});
-        }
-    },
-
-    didClickInstallPrintExtension: function() {
-        if(SC.browser.chrome) {
-            window.open(APPCONFIG.print.chrome);
-        } else if(SC.browser.mozilla) {
-            window.open(APPCONFIG.print.firefox);
-        } else {
-            window.open(APPCONFIG.print.other);
-        }
+        this.gotoState("printingMapState");
     },
 
     doOpenLayerWithGoogleEarth: function() {
@@ -339,5 +291,7 @@ Maps.viewingMapState = SC.State.extend({
         }
     }),
 
-    geoCodeState:SC.State.plugin('Maps.geoCodeState')
+    geoCodeState:SC.State.plugin('Maps.geoCodeState'),
+
+    printingMapState: SC.State.plugin('Maps.printingMapState')
 });
