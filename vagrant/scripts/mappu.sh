@@ -268,6 +268,19 @@ sudo mv geoserver.war /opt/tomcat/webapps/geoserver.war
 sudo chown tomcat.tomcat /opt/tomcat/webapps/geoserver.war
 ) >> provision.log 2>&1
 
+echo "################################################################"
+echo "# Installing Mapfish Print servlet                             #"
+echo "################################################################"
+(
+if [ ! -e ${REPO_DIR}/print-servlet-1.2-SNAPSHOT.war ]; then
+        curl -O -L ${REMOTE_REPO}/print-servlet-1.2-SNAPSHOT.war 
+        mv print-servlet-1.2-SNAPSHOT.war ${REPO_DIR}/
+fi
+sudo cp ${REPO_DIR}/print-servlet-1.2-SNAPSHOT.war /opt/tomcat/webapps/print-servlet.war
+sudo chown tomcat.tomcat /opt/tomcat/webapps/print-servlet.war
+) >> provision.log 2>&1
+
+
 
 echo "################################################################"
 echo "# Installing JAI libraries (performance)                       #"
@@ -299,7 +312,7 @@ cd -
 #) >> provision.log 2>&1
 
 echo "################################################################"
-echo "# Configuring apache                                           #"
+echo "# Configuring apache and starting services (could take long)   #"
 echo "################################################################"
 (
 cat > mappu.conf <<EOF
@@ -327,6 +340,14 @@ Order Allow,Deny
 Allow from All
 </Location>
 
+ProxyPass /print-servlet ajp://127.0.0.1:8009/print-servlet
+
+<Location /print-servlet>
+Order Allow,Deny
+Allow from All
+</Location>
+
+
 EOF
 sudo cp mappu.conf /etc/apache2/conf.d/mappu
 
@@ -337,7 +358,10 @@ sudo a2enmod deflate
 
 sudo /etc/init.d/tomcat7 start
 
-sleep 10
+sleep 15
+
+# download and install MapFish print comfig.yaml
+wget -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
 
 sudo /etc/init.d/apache2 restart
 ) >> provision.log 2>&1 
