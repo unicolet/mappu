@@ -12,6 +12,10 @@ MAPPU_VERSION="1.1"
 # x86_64 or i686, i586, etc
 ARCH=`uname -m`
 
+mkdir ${REPO_DIR} > /dev/null 2>&1 # we can ignore warnings
+sudo chown -R $USER ${REPO_DIR}/
+cd ${REPO_DIR}
+
 echo "################################################################"
 echo "# Check provision.log for errors                               #"
 echo "#                                                              #"
@@ -49,10 +53,6 @@ sudo apt-get install -y postgresql-9.1 libpq-dev
 sudo apt-get install -y postgis 
 sudo apt-get install -y apache2 
 ) >> provision.log 2>&1
-
-mkdir PKG > /dev/null 2>&1 # we can ignore warnings
-sudo chown -R $USER PKG/
-cd PKG
 
 if [ -e /opt/tomcat ]; then
 	echo "################################################################"
