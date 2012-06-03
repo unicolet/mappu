@@ -139,8 +139,7 @@ EOF
 #!/bin/sh
 #
 # Global tomcat/java configuration.
-# Due to licensing issues you will have to install JDK 1.6 in /opt/jdk MANUALLY
-#
+# Attempt to fetch java from Oracle site directly
 
 if [ -e "/opt/geoserver-gdal-libs/" ]; then
 	    export GDAL_DATA="/opt/geoserver-gdal-libs/"
@@ -168,12 +167,23 @@ else
 	echo "################################################################"
 	echo "# Installing Java                                              #"
 	echo "################################################################"
+
 	# checking for jdk in shared folder
 	# check platform spcific jdk
 	if [ "$ARCH" == "x86_64" ]; then
+		wget ${REMOTE_REPO}/jdk-6u31-linux-x64.bin
+		chmod u+x jdk-6u31-linux-x64.bin
+		echo yes | ./jdk-6u31-linux-x64.bin
+		sudo mv jdk1.6.0_31 /opt/
+		sudo ln -s /opt/jdk1.6.0_31 /opt/jdk 
 		jdk=`ls -1 ${REPO_DIR}/jdk-6*x64*.bin | head -1`
 	fi
 	if [ "$jdk" == "" ]; then
+		wget ${REMOTE_REPO}/jdk-6u31-linux-i586.bin
+		chmod u+x jdk-6u31-linux-i586.bin
+		echo yes | ./jdk-6u31-linux-i586.bin
+		sudo mv jdk1.6.0_31 /opt/
+		sudo ln -s /opt/jdk1.6.0_31 /opt/jdk 
 		jdk=`ls -1 ${REPO_DIR}/jdk-6*.bin | head -1`
 	fi
 	echo Found $jdk
@@ -264,7 +274,7 @@ if [ ! -e ${REPO_DIR}/geoserver-2.1.3-war.zip ]; then
 	curl -O -L http://downloads.sourceforge.net/project/geoserver/GeoServer/2.1.3/geoserver-2.1.3-war.zip
 	cp geoserver-2.1.3-war.zip ${REPO_DIR}/
 fi
-unzip ${REPO_DIR}/geoserver-2.1.3-war.zip geoserver.war
+unzip -o ${REPO_DIR}/geoserver-2.1.3-war.zip geoserver.war
 sudo mv geoserver.war /opt/tomcat/webapps/geoserver.war
 sudo chown tomcat.tomcat /opt/tomcat/webapps/geoserver.war
 ) >> provision.log 2>&1
