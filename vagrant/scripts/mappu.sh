@@ -361,7 +361,7 @@ sudo /etc/init.d/tomcat7 start
 sleep 15
 
 # download and install MapFish print comfig.yaml
-wget -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
+sudo wget -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
 
 sudo /etc/init.d/apache2 restart
 ) >> provision.log 2>&1 
