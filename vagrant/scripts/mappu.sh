@@ -8,6 +8,7 @@ fi
 
 REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
 MAPPU_VERSION="1.1"
+TOMCAT_VERSION="7.0.27"
 
 # x86_64 or i686, i586, etc
 ARCH=`uname -m`
@@ -63,16 +64,16 @@ else
 	echo "# Installing tomcat                                            #"
 	echo "################################################################"
 	(
-	if [ ! -e ${REPO_DIR}/apache-tomcat-7.0.25.tar.gz ]; then 
-		wget http://mirror.nohup.it/apache/tomcat/tomcat-7/v7.0.25/bin/apache-tomcat-7.0.25.tar.gz > /dev/null 2>&1
-		sudo cp apache-tomcat-7.0.25.tar.gz ${REPO_DIR}/apache-tomcat-7.0.25.tar.gz
+	if [ ! -e ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz ]; then 
+		wget http://mirror.nohup.it/apache/tomcat/tomcat-7/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz > /dev/null 2>&1
+		sudo cp apache-tomcat-${TOMCAT_VERSION}.tar.gz ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz
 	fi
-	tar -zxf ${REPO_DIR}/apache-tomcat-7.0.25.tar.gz 
-	sudo mv apache-tomcat-7.0.25 /opt/ 
+	tar -zxf ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz 
+	sudo mv apache-tomcat-${TOMCAT_VERSION} /opt/ 
 
 	sudo useradd tomcat
-	sudo chown -R tomcat.tomcat /opt/apache-tomcat-7.0.25
-	sudo ln -s /opt/apache-tomcat-7.0.25 /opt/tomcat
+	sudo chown -R tomcat.tomcat /opt/apache-tomcat-${TOMCAT_VERSION}
+	sudo ln -s /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat
 	) >> provision.log 2>&1
 
 	sudo cat >> tomcat7 << EOF
