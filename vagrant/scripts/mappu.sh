@@ -328,8 +328,8 @@ EEOF
 
 cd /opt/jdk
 sudo chmod +x jai*.bin
-sudo expect /tmp/exp_script jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin
-sudo _POSIX2_VERSION=199209 expect /tmp/exp_script jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin
+sudo expect /tmp/exp_script ./jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin
+sudo _POSIX2_VERSION=199209 expect /tmp/exp_script ./jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin
 cd -
 
 ) >> provision.log 2>&1
@@ -381,7 +381,7 @@ sudo a2enmod deflate
 
 sudo /etc/init.d/tomcat7 start
 
-sleep 15
+sleep 30 
 
 # download and install MapFish print comfig.yaml
 sudo wget -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
