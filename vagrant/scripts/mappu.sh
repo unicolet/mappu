@@ -36,6 +36,7 @@ sudo apt-get install -y python-software-properties
 sudo apt-get install -y unzip
 sudo apt-get install -y curl
 sudo apt-get install -y wget 
+sudo apt-get install -y expect 
 
 # add repositories
 sudo add-apt-repository ppa:pitti/postgresql 
@@ -298,7 +299,7 @@ echo "# Installing JAI libraries (performance)                       #"
 echo "#                                                              #"
 echo "# You will have to manually answer Y to accept license         #"
 echo "################################################################"
-#(
+(
 if [ ! -e "${REPO_DIR}/jai*.bin" ]; then
 	if [ "$ARCH" == "x86_64" ]; then
 		JAI_ARCH=amd64
@@ -315,12 +316,23 @@ fi
 sudo cp ${REPO_DIR}/jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin /opt/jdk/
 sudo cp ${REPO_DIR}/jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin /opt/jdk/
 
+cat >> /tmp/exp_script << EEOF
+set program [lindex \$argv 0]
+spawn \$program
+expect "More"
+send "q\r"
+expect "Do you agree"
+send "yes\r"
+expect eof
+EEOF
+
 cd /opt/jdk
-echo yes | sudo sh jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin
-echo yes | sudo _POSIX2_VERSION=199209 sh jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin
+sudo chmod +x jai*.bin
+sudo expect /tmp/exp_script jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin
+sudo _POSIX2_VERSION=199209 expect /tmp/exp_script jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin
 cd -
 
-#) >> provision.log 2>&1
+) >> provision.log 2>&1
 
 echo "################################################################"
 echo "# Configuring apache and starting services (could take long)   #"
