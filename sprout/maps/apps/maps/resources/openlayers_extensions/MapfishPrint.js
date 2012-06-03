@@ -516,7 +516,8 @@ mapfish.PrintProtocol = OpenLayers.Class({
             // a "Content-disposition: attachment" header and thus will propose
             // to save or open using the PDF reader.
             window.location = answer.getURL;
-            success.call(context);
+            if(success)
+                success.call(context);
         }
     },
 
