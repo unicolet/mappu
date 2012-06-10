@@ -9,6 +9,7 @@ fi
 REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
 MAPPU_VERSION="1.1"
 TOMCAT_VERSION="7.0.27"
+GEOSERVER_PKG="geoserver-2.0.13-custom.war"
 
 # x86_64 or i686, i586, etc
 ARCH=`uname -m`
@@ -168,7 +169,7 @@ else
 	echo "################################################################"
 	echo "# Installing Java                                              #"
 	echo "################################################################"
-
+(
 	# checking for jdk in shared folder
 	# check platform spcific jdk
 	if [ "$ARCH" == "x86_64" ]; then
@@ -187,10 +188,10 @@ else
 		sudo ln -s /opt/jdk1.6.0_31 /opt/jdk 
 		jdk=`ls -1 ${REPO_DIR}/jdk-6*.bin | head -1`
 	fi
-	echo Found $jdk
+	echo Found jdk: $jdk
 	if [ -e ${jdk} ]; then
 		chmod +x $jdk
-		( $jdk -noregister >> provision.log 2>&1 ) || ( echo "Unpacking failed."; exit 1 )
+		( $jdk -noregister >> provision.log 2>&1 ) || ( echo "JDK Unpacking failed."; exit 1 )
 		# find out the full jdk name
 		jdk=`ls -1 . | grep jdk1.6* | head -1`
 		sudo mv $jdk /opt
@@ -208,6 +209,7 @@ Exiting.
 EOF
 		exit 1
 	fi
+) >> provision.log 2
 fi
 
 echo "################################################################"
@@ -271,12 +273,11 @@ echo "################################################################"
 echo "# Installing Geoserver                                         #"
 echo "################################################################"
 (
-if [ ! -e ${REPO_DIR}/geoserver-2.1.3-war.zip ]; then
-	curl -O -L http://downloads.sourceforge.net/project/geoserver/GeoServer/2.1.3/geoserver-2.1.3-war.zip
-	cp geoserver-2.1.3-war.zip ${REPO_DIR}/
+if [ ! -e ${REPO_DIR}/${GEOSERVER_PKG} ]; then
+	curl -O -L ${REMOTE_REPO}/${GEOSERVER_PKG}
+	cp ${GEOSERVER_PKG} ${REPO_DIR}/
 fi
-unzip -o ${REPO_DIR}/geoserver-2.1.3-war.zip geoserver.war
-sudo mv geoserver.war /opt/tomcat/webapps/geoserver.war
+sudo mv ${GEOSERVER_PKG} /opt/tomcat/webapps/geoserver.war
 sudo chown tomcat.tomcat /opt/tomcat/webapps/geoserver.war
 ) >> provision.log 2>&1
 
