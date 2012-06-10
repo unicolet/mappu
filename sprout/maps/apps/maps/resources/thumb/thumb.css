@@ -1,0 +1,11 @@
+$theme.sc-thumb-view {
+  .gripper {
+    @include slice("icn_toolbar-resize-handle.png");
+    position: absolute;
+    top: 50%;
+    margin-top: -7px;
+    left: 15px;
+    width: 5px;
+    height: 13px;
+  }
+}

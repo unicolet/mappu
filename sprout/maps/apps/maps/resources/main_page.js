@@ -103,98 +103,10 @@ Maps.mainPage = SC.Page.design({
                 return child.get('size') === undefined ? 100 : child.get('size');
             },
 
-            collapseToLeft: function(child) {
-                // check if child is already collapsed
-                if (child.get("size") != 0) {
-                    var childViews = this.get("childViews");
-                    var childIndex = -1;
-                    for (var i = 0; i < childViews.length; i++) {
-                        if (childViews[i] === child) childIndex = i;
-                    }
-
-                    // set size=0 or won't collapse, save current size
-                    var currentSize = child.get("size");
-                    child.set("size", 0);
-                    if (childIndex == (childViews.length - 1)) {
-                        // collapsing rightmost child
-                        this.adjustPositionForChild(child, childViews[childIndex - 1].get("position") + currentSize);
-                    } else {
-                        // to collapse we expand the child on the right
-                        this.adjustPositionForChild(childViews[childIndex + 1], child.get("position"));
-                    }
-                }
-            },
-
-            collapseToRight: function(child) {
-                // check if child is already collapsed
-                if (child.get("size") != 0) {
-                    var childViews = this.get("childViews");
-                    var childIndex = -1;
-                    for (var i = 0; i < childViews.length; i++) {
-                        if (childViews[i] === child) childIndex = i;
-                    }
-
-                    // set size=0 or won't collapse, save current size
-                    var currentSize = child.get("size");
-
-                    if (childIndex == 0) {
-                        // cannot collapse to the right
-                    } else {
-                        child.set("size", 0);
-                        // expand size of the child on the right to the right
-                        childViews[childIndex - 2].set("size", child.get("position") + currentSize);
-                        // move collapsing child to the right
-                        this.adjustPositionForChild(child, child.get("position") + currentSize);
-                    }
-                }
-            },
-
-            expandToLeft: function(child, size) {
-                var childViews = this.get("childViews");
-                var childIndex = -1;
-                for (var i = 0; i < childViews.length; i++) {
-                    if (childViews[i] === child) childIndex = i;
-                }
-
-                // set size to expand to
-                child.set("size", size);
-                if (childIndex == 0) {
-                    // child is the leftmost child
-                    this.adjustPositionForChild(childViews[childIndex + 1], child.get("position"));
-                } else {
-                    // resize against left child
-                    this.adjustPositionForChild(child, childViews[childIndex - 1].get("position") - size);
-                }
-            },
-
-            expandToRight: function(child, size) {
-                var childViews = this.get("childViews");
-                var childIndex = -1;
-                for (var i = 0; i < childViews.length; i++) {
-                    if (childViews[i] === child) childIndex = i;
-                }
-
-                // set size to expand to
-                child.set("size", size);
-                if (childIndex == childViews.length - 1) {
-                    // cannot expand further rightmost child
-                } else {
-                    // resize against right child
-                    this.adjustPositionForChild(childViews[childIndex + 1], childViews[childIndex + 1].get("position") + size);
-                }
-            },
-
             layout: { top: 45, left: 0, bottom:0, right: 0 },
             layoutDirection: SC.LAYOUT_HORIZONTAL,
-            childViews: 'labelExplorer topLeftView middleRightView bottomRightView'.w(),
+            childViews: 'topLeftView bottomRightView'.w(),
 
-            labelExplorer: SC.ContainerView.extend(SC.SplitChild,{
-                layout:{top:0,bottom:0,left:0,right:0},
-
-                size:0,
-                canCollapse:YES,
-                minimumSize:0
-            }),
             topLeftView: Maps.OpenLayers.design( SC.SplitChild, {
                 layout: { top: 0, left: 0, bottom:0, right: 300 },
 
@@ -202,17 +114,6 @@ Maps.mainPage = SC.Page.design({
 
                 contentBinding: "Maps.openLayersController.content",
                 exampleView: Maps.OpenLayersLayer
-            }),
-
-            middleRightView: SC.ContainerView.extend(SC.Animatable,SC.SplitChild,{
-                transitions: {
-                    left: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT },
-                    width: { duration: .25, timing: SC.Animatable.TRANSITION_EASE_IN_OUT }
-                },
-                layout:{top:0,bottom:0,left:0,right:0},
-                size: 0,
-                canCollapse: YES,
-                minimumSize:0
             }),
 
             bottomRightView: SC.View.design(SC.SplitChild, {
@@ -237,9 +138,12 @@ Maps.mainPage = SC.Page.design({
                 buttons: SC.View.design({
                     classNames: ["graduated"],
                     layout: { top: 251, height: 40, left:0, right: -1 },
-                    childViews: "clearq notifications loading".w(),
+                    childViews: "thumb clearq notifications loading".w(),
+                    thumb: SC.ThumbView.design({
+                        layout: { left: -10, bottom: 0, height: 33, width: 29, zIndex: 1200 }
+                    }),
                     clearq: SC.ButtonView.design({
-                        layout: { centerY: 0, height: 30, left: 5, width: 100 },
+                        layout: { centerY: 0, height: 30, left: 24, width: 100 },
                         classNames: ["borderless"],
                         title: "_clear_q".loc(),
                         icon: "icon-clear-24",
@@ -247,7 +151,7 @@ Maps.mainPage = SC.Page.design({
                     }),
                     notifications : SC.LabelView.design({
                         classNames: ['text-shadow'],
-                        layout: { centerY: 0, height: 24, right: 45, left: 120 },
+                        layout: { centerY: 0, height: 20, right: 45, left: 120 },
                         escapeHTML: NO,
                         valueBinding: "Maps.openLayersController.measure"
                     }),
@@ -533,107 +437,113 @@ Maps.mainPage = SC.Page.design({
         })
     }).create(),
 
-    geotoolsPane: SC.View.design({
-        childViews: "feature1 feature2 operation go help helptext".w(),
-        feature1: Maps.DropView.design({
-            layout: {top: 5, left:5, right:5, height:30},
-            valueBinding: "Maps.featureInfoController.feature1descr",
-            textAlign: SC.ALIGN_CENTER,
-            classNames: ["maps-dropview","text-shadow"],
-            dropTargetProperty: "feature1"
-        }),
-        feature2: Maps.DropView.design({
-            layout: {top: 51, left:5, right:5, height:30},
-            valueBinding: "Maps.featureInfoController.feature2descr",
-            textAlign: SC.ALIGN_CENTER,
-            classNames: ["maps-dropview","text-shadow"],
-            dropTargetProperty: "feature2"
-        }),
-        operation: SC.SelectView.design({
-            layout: {top: 102, left:5, right:5, height:24},
-            items: [
-                { title: "_area", value: "Area", pos: 1},
-                { title: "_intersection", value: "Intersection", pos: 2},
-                { title: "_union", value: "Union", pos: 3 },
-                { title: "_buffer5", value: "Buffer5", pos: 4 },
-                { title: "_buffer25", value: "Buffer25", pos: 5 }
-            ],
-            itemTitleKey: 'title',
-            itemValueKey: 'value',
-            itemSortKey: 'pos',
-            checkboxEnabled: YES,
-            valueBinding: "Maps.featureInfoController.operation"
-        }),
-        go: SC.SegmentedView.design({
-            layout: {top: 133, width:150, height:36, left:5},
-            items: [
-                {title: "OK", action:"maps_PerformGeoOperation"},
-                {title: "_clear", action:"maps_PerformGeoClear"},
-                {title: "_close", action:"maps_PerformGeoClose"}
-            ],
-            itemTitleKey: "title",
-            itemActionKey: "action"
-        }),
-        help: SC.ImageView.design({
-            layout: {top: 180, centerX:0, height:24, width:24},
-            value: "sc-icon-help-24"
-        }),
-        helptext: SC.LabelView.design({
-            layout: {top: 210,left:5, right:5, bottom:5},
-            value:"_geotools_help".loc(),
-            classNames: "text-shadow".w()
-        })
-    }),
-
-    explorerPane: SC.View.design({
-        layout: {top:0,bottom:0,left:0,right:0},
-        childViews: "tags buttons".w(),
-
-        tags:SC.ScrollView.design({
-            layout: {top:0,bottom:130,left:0,right:0},
-            contentView: SC.ListView.design({
-                classNames: ["denim"],
-                rowHeight: 30,
-                contentBinding: "Maps.tagsController.arrangedObjects",
-                selectionBinding: "Maps.tagsController.selection",
-                contentValueKey: "tag",
-                contentCheckboxKey: "visible",
-                //contentIconKey: "legendIcon",
-                contentUnreadCountKey: "occurrences"
-                //hasContentIcon: YES
-            })
-        }),
-        buttons: SC.View.design({
-            classNames: ["graduated"],
-            layout: {bottom:0,height:130,left:0,right:0},
-            childViews: "help helpText rendertags reloadtags".w(),
+    geotoolsPane: SC.PalettePane.design({
+        layout: {width: 160, height: 500, right:-180, centerY:0},
+        contentView: SC.View.design({
+            childViews: "feature1 feature2 operation go help helptext".w(),
+            feature1: Maps.DropView.design({
+                layout: {top: 5, left:5, right:5, height:30},
+                valueBinding: "Maps.featureInfoController.feature1descr",
+                textAlign: SC.ALIGN_CENTER,
+                classNames: ["maps-dropview","text-shadow"],
+                dropTargetProperty: "feature1"
+            }),
+            feature2: Maps.DropView.design({
+                layout: {top: 51, left:5, right:5, height:30},
+                valueBinding: "Maps.featureInfoController.feature2descr",
+                textAlign: SC.ALIGN_CENTER,
+                classNames: ["maps-dropview","text-shadow"],
+                dropTargetProperty: "feature2"
+            }),
+            operation: SC.SelectView.design({
+                layout: {top: 102, left:5, right:5, height:24},
+                items: [
+                    { title: "_area", value: "Area", pos: 1},
+                    { title: "_intersection", value: "Intersection", pos: 2},
+                    { title: "_union", value: "Union", pos: 3 },
+                    { title: "_buffer5", value: "Buffer5", pos: 4 },
+                    { title: "_buffer25", value: "Buffer25", pos: 5 }
+                ],
+                itemTitleKey: 'title',
+                itemValueKey: 'value',
+                itemSortKey: 'pos',
+                checkboxEnabled: YES,
+                valueBinding: "Maps.featureInfoController.operation"
+            }),
+            go: SC.SegmentedView.design({
+                layout: {top: 133, width:150, height:36, left:5},
+                items: [
+                    {title: "OK", action:"maps_PerformGeoOperation"},
+                    {title: "_clear", action:"maps_PerformGeoClear"},
+                    {title: "_close", action:"maps_PerformGeoClose"}
+                ],
+                itemTitleKey: "title",
+                itemActionKey: "action"
+            }),
             help: SC.ImageView.design({
-                layout: {top: 5, centerX:0, height:24, width:24},
+                layout: {top: 180, centerX:0, height:24, width:24},
                 value: "sc-icon-help-24"
             }),
-            helpText: SC.LabelView.design({
-                classNames: "text-shadow".w(),
-                layout: {bottom:31,top:31,left:5,right:5},
-                value: "_tagexplorer_help".loc()
-            }),
-            rendertags: SC.ButtonView.design({
-                classNames: ["borderless"],
-                layout: {bottom:0,width:0.48,height:26,right:0},
-                title: "_rendertags".loc(),
-                icon: "icon-rendertags-24",
-                action: "maps_RenderTags",
-                controlSize: SC.LARGE_CONTROL_SIZE
-            }),
-            reloadtags: SC.ButtonView.design({
-                classNames: ["borderless"],
-                layout: {bottom:0,width:0.48,height:26,left:0},
-                title: "_reloadtags".loc(),
-                icon: "icon-refresh-24",
-                action: "maps_ReloadTags",
-                controlSize: SC.LARGE_CONTROL_SIZE
+            helptext: SC.LabelView.design({
+                layout: {top: 210,left:5, right:5, bottom:5},
+                value:"_geotools_help".loc(),
+                classNames: "text-shadow".w()
             })
         })
-    }),
+    }).create(),
+
+    explorerPane: SC.PalettePane.design({
+        layout: {width: 200, height: 500, left:-210, centerY:0},
+        contentView: SC.View.design({
+            layout: {top:0,bottom:0,left:0,right:0},
+            childViews: "tags buttons".w(),
+
+            tags:SC.ScrollView.design({
+                layout: {top:0,bottom:130,left:0,right:0},
+                contentView: SC.ListView.design({
+                    classNames: ["denim"],
+                    rowHeight: 30,
+                    contentBinding: "Maps.tagsController.arrangedObjects",
+                    selectionBinding: "Maps.tagsController.selection",
+                    contentValueKey: "tag",
+                    contentCheckboxKey: "visible",
+                    //contentIconKey: "legendIcon",
+                    contentUnreadCountKey: "occurrences"
+                    //hasContentIcon: YES
+                })
+            }),
+            buttons: SC.View.design({
+                classNames: ["graduated"],
+                layout: {bottom:0,height:130,left:0,right:0},
+                childViews: "help helpText rendertags reloadtags".w(),
+                help: SC.ImageView.design({
+                    layout: {top: 5, centerX:0, height:24, width:24},
+                    value: "sc-icon-help-24"
+                }),
+                helpText: SC.LabelView.design({
+                    classNames: "text-shadow".w(),
+                    layout: {bottom:31,top:31,left:5,right:5},
+                    value: "_tagexplorer_help".loc()
+                }),
+                rendertags: SC.ButtonView.design({
+                    classNames: ["borderless"],
+                    layout: {bottom:0,width:0.48,height:26,right:0},
+                    title: "_rendertags".loc(),
+                    icon: "icon-rendertags-24",
+                    action: "maps_RenderTags",
+                    controlSize: SC.LARGE_CONTROL_SIZE
+                }),
+                reloadtags: SC.ButtonView.design({
+                    classNames: ["borderless"],
+                    layout: {bottom:0,width:0.48,height:26,left:0},
+                    title: "_reloadtags".loc(),
+                    icon: "icon-refresh-24",
+                    action: "maps_ReloadTags",
+                    controlSize: SC.LARGE_CONTROL_SIZE
+                })
+            })
+        })
+    }).create(),
 
     layerInfoView: SC.View.design({
         layout: { top: 0, bottom: 0, right: 0, left: 0 },

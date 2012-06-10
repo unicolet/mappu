@@ -195,19 +195,13 @@ Maps.viewingMapState = SC.State.extend({
 
     showingGeoToolsState: SC.State.extend({
         enterState: function() {
-            var splitView=Maps.mainPage.get("splitView");
-            Maps.openLayersController.clearGeoToolsSelection();
-
-            splitView.middleRightView.set("nowShowing", "Maps.mainPage.geotoolsPane");
-
-            if (splitView.middleRightView.get("size") == 0)
-                splitView.expandToLeft(splitView.middleRightView, 160);
-            else
-                splitView.collapseToRight(splitView.middleRightView);
+            Maps.mainPage.geotoolsPane.append();
+            Maps.mainPage.geotoolsPane.animate({right:301}, 0.4);
         },
         exitState: function() {
-            var splitView=Maps.mainPage.get("splitView");
-            splitView.collapseToRight(splitView.middleRightView);
+            Maps.mainPage.geotoolsPane.animate({right:-180}, 0.2, function () {
+                Maps.mainPage.geotoolsPane.remove();
+            });
         },
         maps_PerformGeoOperation: function() {
             var op = Maps.featureInfoController.get("operation");
@@ -247,6 +241,17 @@ Maps.viewingMapState = SC.State.extend({
             Maps.openLayersController.clearGeoToolsSelection();
             Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
         },
+        didClickOnTools: function(view) {
+            var tool = view.get("value");
+
+            if (tool == 'toolGeo') {
+                view.set("value", "toolMove");
+                this.gotoState("browsingMapState");
+            } else {
+                // bubble up
+                this.parentState.didClickOnTools(view);
+            }
+        },
         maps_PerformGeoClose: function() {
             this.gotoState("browsingMapState");
         }
@@ -254,15 +259,13 @@ Maps.viewingMapState = SC.State.extend({
 
     showingTagExplorerState: SC.State.extend({
         enterState: function(ctx) {
-            var splitView=Maps.mainPage.get("splitView");
             Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
-            splitView.labelExplorer.set("nowShowing", "Maps.mainPage.explorerPane");
+            Maps.mainPage.explorerPane.append();
+            Maps.mainPage.explorerPane.animate({left:0}, 0.2);
 
-            if (splitView.labelExplorer.get("size") == 0) {
-                splitView.expandToRight(splitView.labelExplorer, 200);
+            if (Maps.mainPage.explorerPane.get("isVisible")==NO) {
                 Maps.tagsController.refreshTagsLayer();
             } else {
-                splitView.collapseToLeft(splitView.labelExplorer);
                 Maps.tagsController.hideTagsLayer();
             }
         },
@@ -278,8 +281,10 @@ Maps.viewingMapState = SC.State.extend({
             }
         },
         exitState: function() {
-            var splitView=Maps.mainPage.get("splitView");
-            splitView.collapseToLeft(splitView.labelExplorer);
+            var newLayout=Maps.mainPage.explorerPane.layout;
+            Maps.mainPage.explorerPane.animate({left:-210}, 0.2, function () {
+                Maps.mainPage.explorerPane.remove();
+            });
             Maps.tagsController.hideTagsLayer();
         },
         maps_RenderTags: function() {
