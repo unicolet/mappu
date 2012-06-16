@@ -140,7 +140,7 @@ Maps.mainPage = SC.Page.design({
                     layout: { top: 251, height: 40, left:0, right: -1 },
                     childViews: "thumb clearq notifications loading".w(),
                     thumb: SC.ThumbView.design({
-                        layout: { left: -10, bottom: 0, height: 33, width: 29, zIndex: 1200 }
+                        layout: { left: -10, bottom: 0, height: 33, width: 29}
                     }),
                     clearq: SC.ButtonView.design({
                         layout: { centerY: 0, height: 30, left: 24, width: 100 },
@@ -403,7 +403,7 @@ Maps.mainPage = SC.Page.design({
             contentView:SC.View.extend({
                 classNames: 'popover_content_background'.w(),
                 layout: {top: 0, left: 0, right: 0, bottom: 0},
-                childViews: 'layerView layerDetailView'.w(),
+                childViews: 'layerView layerDetailView instructionsView'.w(),
                 layerView: SC.ScrollView.design({
                     hasHorizontalScroller: NO,
                     layout: { top: 0, bottom: 0, left: 0, width: 210 },
@@ -431,7 +431,21 @@ Maps.mainPage = SC.Page.design({
                 layerDetailView: SC.SceneView.design({
                     layout: { top: 0, bottom: 0, left: 211, right: 0 },
                     scenes: ["Maps.mainPage.layerInfoView","Maps.mainPage.layerLegendView"],
-                    nowShowingBinding: "Maps.openLayersController.layerPaletteNowShowing"
+                    nowShowingBinding: "Maps.openLayersController.layerPaletteNowShowing",
+                    isVisibleBinding: SC.Binding.oneWay('Maps.openLayersController.selection').transform(function(value, binding) {
+                        if(value && value.length()>0)
+                            return true;
+                        return false;
+                    })
+                }),
+                instructionsView: SC.LabelView.design({
+                    layout: { top: 150, bottom: 0, left: 240, right: 0 },
+                    isVisibleBinding: SC.Binding.oneWay('Maps.openLayersController.selection').transform(function(value, binding) {
+                        if(value && value.length()>0)
+                            return false;
+                        return true;
+                    }),
+                    value: "_layer_pane_instructions".loc()
                 })
             })
         })

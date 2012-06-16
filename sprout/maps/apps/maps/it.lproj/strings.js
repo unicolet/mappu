@@ -98,5 +98,6 @@ SC.stringsFor('it', {
     "_loading": "Sto caricando...",
     "_print_title": "Opzioni di stampa",
     "_comment": "Digitare un commento da inserire nel foglio di stampa:",
-    "_do_print": "Stampa"
+    "_do_print": "Stampa",
+    "_layer_pane_instructions":"Seleziona un livello per iniziare"
 });
