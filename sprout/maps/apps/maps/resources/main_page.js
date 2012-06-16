@@ -776,11 +776,11 @@ Maps.usageTipSheetPane = SC.SheetPane.create({
       }),
       tipText: SC.LabelView.design({
           classNames: ["help_text"],
-          layout: {top:60, left: 10, width:440, height: 240 },
+          layout: {top:60, left: 10, width:430, height: 240 },
           valueBinding: "Maps.usageTipController.tipText"
       }),
       tipImg: SC.ImageView.design({
-          layout: {top:60, right: 10, width:190, height: 240 },
+          layout: {top:60, right: 10, width:194, height: 240 },
           valueBinding: "Maps.usageTipController.tipImg",
           useImageQueue: YES
       }),
