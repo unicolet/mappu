@@ -438,7 +438,7 @@ Maps.mainPage = SC.Page.design({
     }).create(),
 
     geotoolsPane: SC.PalettePane.design({
-        layout: {width: 160, height: 500, right:-180, centerY:0},
+        layout: {width: 160, height: 400, right:-180, top:50},
         contentView: SC.View.design({
             childViews: "feature1 feature2 operation go help helptext".w(),
             feature1: Maps.DropView.design({

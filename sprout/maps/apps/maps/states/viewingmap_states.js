@@ -196,7 +196,9 @@ Maps.viewingMapState = SC.State.extend({
     showingGeoToolsState: SC.State.extend({
         enterState: function() {
             Maps.mainPage.geotoolsPane.append();
-            Maps.mainPage.geotoolsPane.animate({right:301}, 0.4);
+            setTimeout(function () {
+                SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:305}, 0.2); });
+            },0);
         },
         exitState: function() {
             Maps.mainPage.geotoolsPane.animate({right:-180}, 0.2, function () {
