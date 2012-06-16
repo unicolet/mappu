@@ -1066,7 +1066,6 @@ mapfish.PrintProtocol = OpenLayers.Class({
     encodeForURL: function(cur) {
         if (cur == null) return null;
         var type = typeof cur;
-        Ext.type(cur);
         if (type == 'string') {
             return escape(cur.replace(/[\n]/g, "\\n"));
         } else if (type == 'object' && cur.constructor == Array) {
