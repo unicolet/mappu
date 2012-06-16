@@ -88,7 +88,7 @@ Maps.OpenLayers = SC.View.extend(
             var layer = this.get("layer"),
                 map   = this.get("olmap");
 
-            this.invokeLast(function(){map.render(layer);});
+            setTimeout(function(){map.render(layer);},0);
         },
 
         initOpenLayers: function() {
