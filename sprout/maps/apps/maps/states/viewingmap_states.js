@@ -144,11 +144,11 @@ Maps.viewingMapState = SC.State.extend({
             Maps.openLayersController.getOLView().toolLength();
         }
         if (tool == 'toolGeo') {
-            this.gotoState("showingGeoToolsState");
+            this.toggleGeoTools();
             view.set("value", "toolMove");
         }
         if (tool == 'toolExplorer') {
-            this.gotoState("showingTagExplorerState");
+            this.toggleTagExplorer();
             view.set("value", "toolMove");
         }
     },
@@ -176,6 +176,100 @@ Maps.viewingMapState = SC.State.extend({
         window.open("http://maps.google.it/?ll="+Maps.openLayersController.get("lat")+","+Maps.openLayersController.get("lon")+"&t=m&z=19&vpsrc=6", "mappu_gmaps");
     },
 
+    toggleTagExplorer: function() {
+        if(Maps.mainPage.explorerPane.get("isVisibleInWindow")) {
+            this.hideTagEplorer();
+        } else {
+            this.showTagEplorer();
+        }
+    },
+
+    showTagEplorer: function() {
+        Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
+        Maps.mainPage.explorerPane.append();
+        Maps.mainPage.explorerPane.animate({left:0}, 0.2);
+
+        if (Maps.mainPage.explorerPane.get("isVisible")==NO) {
+            Maps.tagsController.refreshTagsLayer();
+        } else {
+            Maps.tagsController.hideTagsLayer();
+        }
+    },
+    hideTagEplorer: function() {
+        var newLayout=Maps.mainPage.explorerPane.layout;
+        Maps.mainPage.explorerPane.animate({left:-210}, 0.2, function () {
+            Maps.mainPage.explorerPane.remove();
+        });
+        Maps.tagsController.hideTagsLayer();
+    },
+    maps_RenderTags: function() {
+        Maps.tagsController.gatherTagPoints();
+    },
+    maps_ReloadTags: function() {
+        Maps.tagsController.get("content").refresh();
+        Maps.tagsController.hideTagsLayer();
+    },
+
+    toggleGeoTools: function() {
+        if(Maps.mainPage.geotoolsPane.get("isVisibleInWindow")) {
+            this.hideGeoTools();
+        } else {
+            this.showGeoTools();
+        }
+    },
+    showGeoTools: function() {
+        Maps.mainPage.geotoolsPane.append();
+        setTimeout(function () {
+            SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:305}, 0.2); });
+        },0);
+    },
+    hideGeoTools: function() {
+        Maps.mainPage.geotoolsPane.animate({right:-180}, 0.2, function () {
+            Maps.mainPage.geotoolsPane.remove();
+        });
+    },
+    maps_PerformGeoOperation: function() {
+        var op = Maps.featureInfoController.get("operation");
+        var geom1 = Maps.featureInfoController.get("feature1geom");
+        var geom2 = Maps.featureInfoController.get("feature2geom");
+        if (!geom1 && !geom2) {
+            SC.AlertPane.warn("_missing_params".loc(), "_select_features".loc() + op, "", "OK", this);
+        } else {
+            if (!geom2) {
+                geom2 = "";
+            }
+            if (!geom1) {
+                geom1 = "";
+            }
+            SC.Request.postUrl("/mapsocial/jts/" + op.toLowerCase(), null).notify(this, 'didPerformGeoOperation').send(geom1.toString() + "*" + geom2.toString());
+        }
+    },
+    didPerformGeoOperation: function(response) {
+        if (SC.ok(response)) {
+            var payload=null;
+            if (!response.isJSON())
+                payload = SC.$.parseJSON(response.get('body'));
+            else
+                payload = response.get("body");
+            var WKTParser = new OpenLayers.Format.WKT();
+            var features = WKTParser.read(payload['geom']);
+            Maps.openLayersController.set("measure","Area: "+Math.round(payload['area'])+" m<sup>2</sup>");
+            if (features) {
+                Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
+                Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
+            }
+        } else {
+            SC.AlertPane.warn("_op_failed".loc(), response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
+        }
+    },
+    maps_PerformGeoClear: function() {
+        Maps.openLayersController.clearGeoToolsSelection();
+        Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
+    },
+    maps_PerformGeoClose: function() {
+        this.toggleGeoTools();
+    },
+
     /*******************************************************
      *
      *                     SUB STATES
@@ -192,111 +286,6 @@ Maps.viewingMapState = SC.State.extend({
     showingSearchPaneState: SC.State.plugin("Maps.showingSearchPaneState"),
 
     showingFeatureResultPaneState: SC.State.plugin("Maps.showingFeatureResultPaneState"),
-
-    showingGeoToolsState: SC.State.extend({
-        enterState: function() {
-            Maps.mainPage.geotoolsPane.append();
-            setTimeout(function () {
-                SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:305}, 0.2); });
-            },0);
-        },
-        exitState: function() {
-            Maps.mainPage.geotoolsPane.animate({right:-180}, 0.2, function () {
-                Maps.mainPage.geotoolsPane.remove();
-            });
-        },
-        maps_PerformGeoOperation: function() {
-            var op = Maps.featureInfoController.get("operation");
-            var geom1 = Maps.featureInfoController.get("feature1geom");
-            var geom2 = Maps.featureInfoController.get("feature2geom");
-            if (!geom1 && !geom2) {
-                SC.AlertPane.warn("_missing_params".loc(), "_select_features".loc() + op, "", "OK", this);
-            } else {
-                if (!geom2) {
-                    geom2 = "";
-                }
-                if (!geom1) {
-                    geom1 = "";
-                }
-                SC.Request.postUrl("/mapsocial/jts/" + op.toLowerCase(), null).notify(this, 'didPerformGeoOperation').send(geom1.toString() + "*" + geom2.toString());
-            }
-        },
-        didPerformGeoOperation: function(response) {
-            if (SC.ok(response)) {
-                var payload=null;
-                if (!response.isJSON())
-                    payload = SC.$.parseJSON(response.get('body'));
-                else
-                    payload = response.get("body");
-                var WKTParser = new OpenLayers.Format.WKT();
-                var features = WKTParser.read(payload['geom']);
-                Maps.openLayersController.set("measure","Area: "+Math.round(payload['area'])+" m<sup>2</sup>");
-                if (features) {
-                    Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
-                    Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
-                }
-            } else {
-                SC.AlertPane.warn("_op_failed".loc(), response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
-            }
-        },
-        maps_PerformGeoClear: function() {
-            Maps.openLayersController.clearGeoToolsSelection();
-            Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
-        },
-        didClickOnTools: function(view) {
-            var tool = view.get("value");
-
-            if (tool == 'toolGeo') {
-                view.set("value", "toolMove");
-                this.gotoState("browsingMapState");
-            } else {
-                // bubble up
-                this.parentState.didClickOnTools(view);
-            }
-        },
-        maps_PerformGeoClose: function() {
-            this.gotoState("browsingMapState");
-        }
-    }),
-
-    showingTagExplorerState: SC.State.extend({
-        enterState: function(ctx) {
-            Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
-            Maps.mainPage.explorerPane.append();
-            Maps.mainPage.explorerPane.animate({left:0}, 0.2);
-
-            if (Maps.mainPage.explorerPane.get("isVisible")==NO) {
-                Maps.tagsController.refreshTagsLayer();
-            } else {
-                Maps.tagsController.hideTagsLayer();
-            }
-        },
-        didClickOnTools: function(view) {
-            var tool = view.get("value");
-
-            if (tool == 'toolExplorer') {
-                view.set("value", "toolMove");
-                this.gotoState("browsingMapState");
-            } else {
-                // bubble up
-                this.parentState.didClickOnTools(view);
-            }
-        },
-        exitState: function() {
-            var newLayout=Maps.mainPage.explorerPane.layout;
-            Maps.mainPage.explorerPane.animate({left:-210}, 0.2, function () {
-                Maps.mainPage.explorerPane.remove();
-            });
-            Maps.tagsController.hideTagsLayer();
-        },
-        maps_RenderTags: function() {
-            Maps.tagsController.gatherTagPoints();
-        },
-        maps_ReloadTags: function() {
-            Maps.tagsController.get("content").refresh();
-            Maps.tagsController.hideTagsLayer();
-        }
-    }),
 
     geoCodeState:SC.State.plugin('Maps.geoCodeState'),
 
