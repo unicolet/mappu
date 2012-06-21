@@ -40,8 +40,8 @@ sudo apt-get install -y wget
 sudo apt-get install -y expect 
 
 # add repositories
-sudo add-apt-repository ppa:pitti/postgresql 
-sudo add-apt-repository ppa:ubuntugis/ppa 
+sudo add-apt-repository -y ppa:pitti/postgresql 
+sudo add-apt-repository -y ppa:ubuntugis/ppa 
  
 # update
 sudo apt-get -y update 
@@ -209,7 +209,7 @@ Exiting.
 EOF
 		exit 1
 	fi
-) >> provision.log 2
+) >> provision.log 2>&1
 fi
 
 echo "################################################################"
@@ -297,8 +297,6 @@ sudo chown tomcat.tomcat /opt/tomcat/webapps/print-servlet.war
 
 echo "################################################################"
 echo "# Installing JAI libraries (performance)                       #"
-echo "#                                                              #"
-echo "# You will have to manually answer Y to accept license         #"
 echo "################################################################"
 (
 if [ ! -e "${REPO_DIR}/jai*.bin" ]; then
@@ -382,7 +380,8 @@ sudo a2enmod deflate
 
 sudo /etc/init.d/tomcat7 start
 
-sleep 30 
+# should improve this
+sleep 60 
 
 # download and install MapFish print comfig.yaml
 sudo wget -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
