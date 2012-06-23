@@ -41,7 +41,7 @@ Maps.socialCommentsController = SC.ArrayController.create(
 		this.invokeLater(function(){this.get("content").refresh()});
     },
 
-	addComment: function() {
+	addComment: function(view) {
         if(this.get("newCommentText")=="") {
             this.content.refresh();
         } else {
@@ -58,8 +58,8 @@ Maps.socialCommentsController = SC.ArrayController.create(
                 this.content.add(comment);
 
                 this.invokeLater(function(){
-                    Maps.mainPage.commentsTab.comments.contentView.computeLayout();
-                    Maps.mainPage.commentsTab.comments.scrollDownPage();
+                    view.parentView.comments.contentView.computeLayout();
+                    view.parentView.comments.scrollDownPage();
                 });
 
                 this.set("newCommentText","");

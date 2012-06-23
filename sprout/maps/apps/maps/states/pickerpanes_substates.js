@@ -140,8 +140,8 @@ Maps.showingFeatureResultPaneState = SC.State.extend({
         Maps.socialController.saveTags(feature);
     },
 
-    maps_AddComment:function () {
-        Maps.socialCommentsController.addComment();
+    maps_AddComment:function (view) {
+        Maps.socialCommentsController.addComment(view);
     },
 
     maps_DelComment:function () {
