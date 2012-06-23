@@ -40,8 +40,8 @@ sudo apt-get install -y wget
 sudo apt-get install -y expect 
 
 # add repositories
-sudo add-apt-repository -y ppa:pitti/postgresql 
-sudo add-apt-repository -y ppa:ubuntugis/ppa 
+sudo add-apt-repository ppa:pitti/postgresql || sudo add-apt-repository -y ppa:pitti/postgresql 
+sudo add-apt-repository ppa:ubuntugis/ppa || sudo add-apt-repository -y ppa:ubuntugis/ppa
  
 # update
 sudo apt-get -y update 
