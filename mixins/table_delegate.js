@@ -50,7 +50,7 @@ SCTable.TableDelegate = {
     function is a subroutine in an existing render() call.
   */
   renderTableCellContent: function(tableView, renderContext, rowContent, rowIndex, column, columnIndex) {
-    return renderContext.push('<div class=\"text\">%@</div>'.fmt(SC.RenderContext.escapeHTML(rowContent ? rowContent.get(column.get('valueKey')) : null)));
+    return renderContext.push('<div class=\"text\">%@</div>'.fmt(SC.RenderContext.escapeHTML(String(rowContent ? rowContent.get(column.get('valueKey')) : null))));
   },
   
   /*
