@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Mappu Web GIS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mappu, a web gis with social taste">
+    <meta name="author" content="Umberto Nicoletti">
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      
+      #main-hero {
+      	background: #C0DFF0 url('mappu_hero.png') no-repeat;
+      	background-position: -150px 10px;
+      	padding-left: 350px;
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+  
+  <a href="https://github.com/unicolet/mappu"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit" id="main-hero">
+        <h1>Welcome Mappu!</h1>
+        <p>Mappu is a web-based GIS built on the awesome <a href="http://www.sproutcore.com">Sproutcore</a> platform which just runs on top
+	of your existing <a href="http://it.wikipedia.org/wiki/Web_Map_Service">WMS</a> server and makes it easy to browse, print, comment, tag and attach data to geographic features.
+	</p>
+	<p>
+	Check out the <a href="http://31.222.191.183/static/maps/en/1.1/">demo</a> (login as demo/demo).
+	</p>
+      </div>
+
+      <div class="row">
+        <div class="span4">
+          <h2><img src="icons/44.png" style="vertical-align: text-top;"> Star your fave features</h2>
+           <p>Mappu allows you to star geographic features like you're used to with your important mail in <em>gmail</em>.</p>
+        </div>
+        <div class="span4">
+          <h2><img src="icons/73.png" style="vertical-align: text-top;"> Comment</h2>
+           <p>Comment features and view your fellow users answers or just use use comments as notes.</p>
+       </div>
+        <div class="span4">
+          <h2><img src="icons/62.png" style="vertical-align: text-top;"> Tag features</h2>
+           <p>Mappu supports tagging features and then browsing them by <em>tag</em> in a tag cloud.
+           Share tags with other users and see what others are doing.</p>
+           </div>
+      </div>
+
+      <div class="row">
+        <div class="span4">
+          <h2><img src="icons/8.png" style="vertical-align: text-top;"> Print</h2>
+           <p>Print the map to a portable (and customizable) PDF document thanks to the awesome
+           <a href="http://www.mapfish.org/doc/print/index.html">Mapfish Print</a> module (from the guys at <a href="http://www.camptocamp.org/">CampoToCamp</a>)
+           which has been integrated into Mappu so that you can focus on publishing data, not mantaining code.
+           </p>
+        </div>
+        <div class="span4">
+          <h2><img src="icons/24.png" style="vertical-align: text-top;"> Process features</h2>
+           <p>Mappu supports a lightweight processing service<a href="http://unicolet.blogspot.it/2012/01/jts-processing-grails-servlet.html"><sup>&#10013;</sup></a> built on top of <a href="http://www.vividsolutions.com/jts/jtshome.htm">JTS</a> which out of the box provides operations like buffer, union, intersection and area.</p>
+       </div>
+        <div class="span4">
+          <h2><img src="icons/53.png" style="vertical-align: text-top;"> Get connected</h2>
+           <p>Mappu supports both incoming and outgoing links:
+           <dl>
+           	<dt>Incoming
+           	<dd>thanks to Sproutcore routes Mappu can recognize link to fatures and/or geographical areas and open them automatically
+           	<dt>Ougoing
+           	<dd>Mappu can be easily configured to recognize layer groups, layers and/or single features and then generate HTML links
+           	whenever a feature matching those characteristics has been selected
+           </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="span12">
+		  <div class="row">
+		    <div class="span4">
+		    	<h3><img src="icons/97.png" style="vertical-align: text-top;"> It just works</h3>
+		    	<p>
+		    	Mappu does not mess with your existing GIS instrastructure, instead it leverages it to provide new services on top of it.
+		    	</p>
+		    	<p>
+		    	Mappu uses the industry standard WMS and WFS protocols to access your gis data. Documentation on how to integrate it with your existing infrastructure is underway.
+		    	</p>
+		    	<p>
+		    	Mappu has been extensively tested with <a href="http://geoserver.org/display/GEOS/Welcome">GeoServer</a>
+		    	and work is in progress to integrate it with <a href="http://mapserver.org/">Mapserver</a>.
+		    	In theory it should work with any server that can act as a WMS/WFS server.
+		    	</p>
+		    </div>
+		    <div class="span8">
+		      <h3><img src="aws.png" style="vertical-align: text-top;"> Try it on EC2</h3>
+		       <p>
+		       It's this simple: launch a new Unbuntu 10 or 11 instance and then supply the following user data: 
+<pre>
+#!/bin/sh -ex
+# Download and install Mappu
+curl -s https://raw.github.com/unicolet/mappu/master/vagrant/scripts/mappu.sh | /bin/bash
+</pre>
+		       </p>
+		      <h3>Try it on your server</h3>
+		       <div class="alert">
+		       <strong>Do NOT launch on production servers as the script will download and install programs, possibly overwriting your own.
+		       Launch on an empty box.</strong>
+		       </div>
+		       <p>
+		       Did you read the warning above. Done? Ok, then create a new virgin Ubuntu 10 or 11 server (can be physical or virtual) and run the following command from a root shell:
+<pre>
+curl -s https://raw.github.com/unicolet/mappu/master/vagrant/scripts/mappu.sh | /bin/bash
+</pre>
+		       </p>
+		      <h3>Try it with Vagrant</h3>
+		       <p>
+		       Check out the <a href="https://github.com/unicolet/mappu">source</a> from git, then cd into the vagrant folder and issue:
+<pre>
+mkdir install-data
+vagrant box add base http://files.vagrantup.com/lucid32.box
+vagrant up
+</pre>           
+		       </p>
+		    </div>
+		  </div>
+        </div>
+	  </div>
+	  
+	  <br/>
+	  <br/>
+
+      <div class="row">
+        <div class="span12">
+          <h3>Mappu is built to get out of the way</h3>
+           <p>I built Mappu as project for learning <a href="http://www.sproutcore.com">Sproutcore</a> and because I wanted to create a web gis
+           that looks good and does all the good stuff a web gis should do. Out of the box, without coding.
+           </p>
+           <p>
+           The list above shows all the features that are built into Mappu so that you don't have to reinvent the wheel. Some of them are mature,
+           others are more <em>experimental</em> and might crash or just not work.
+           </p>
+           <p>
+			There's plenty of great browsers out of there (Mappu is developed on Google Chrome) so don't complain if it doesn't work on IE6.
+			It should work on IE 8 and 9 though.
+           </p>
+        </div>
+	  </div>
+      <hr>
+
+      <footer>
+        <p><a href="https://twitter.com/AFactotum" class="twitter-follow-button" data-show-count="false">Follow @AFactotum</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+</html>
+
