@@ -15,7 +15,7 @@ Maps = SC.Application.create(
     /** @scope Maps.prototype */ {
 
     NAMESPACE: 'Maps',
-    VERSION: '0.1.0',
+    VERSION: '1.1',
 
     // This is your application store.  You will use this store to access all
     // of your model data.  You can also set a data source on this store to
@@ -26,10 +26,6 @@ Maps = SC.Application.create(
 
     isLoading: NO,
     bbox: null,
-
-    print: function() {
-        Maps_print();
-    },
 
     projections: {},
 
