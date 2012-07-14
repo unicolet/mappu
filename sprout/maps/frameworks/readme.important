@@ -1,0 +1,5 @@
+Mappu requires a third-party component to work.
+Clone it in this directory with following command:
+
+git clone https://github.com/jslewis/sctable.git
+
