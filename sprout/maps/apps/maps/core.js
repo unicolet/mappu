@@ -102,7 +102,19 @@ Maps = SC.Application.create(
         and/or GetFeatureInfo response.
      */
     isGEOSERVER: null,
-    isMAPSERVER: null
+    isMAPSERVER: null,
 
+    /* Utility functions */
+    formatArea: function(area) {
+        var unit="m";
+        var a=area;
+        if(a) {
+            if(a>1000) {
+                a=Math.round(area/1000);
+                unit="km";
+            }
+        }
+        return a + " " + unit +"<sup>2</sup>";
+    }
 });
 

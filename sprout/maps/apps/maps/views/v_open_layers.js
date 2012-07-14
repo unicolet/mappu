@@ -363,7 +363,7 @@ Maps.OpenLayers = SC.View.extend(
             if (order == 1) {
                 out += "Length: " + measure.toFixed(3) + " " + units;
             } else {
-                out += "Area: " + measure.toFixed(3) + " " + units + "<sup>2</sup>";
+                out += "Area: " + measure.toFixed(2) + " " + units + "<sup>2</sup>";
             }
 
             Maps.openLayersController.set('measure', out);

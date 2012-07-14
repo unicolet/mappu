@@ -11,7 +11,9 @@ Maps.viewingMapState = SC.State.extend({
     initialSubstate:'browsingMapState',
 
     enterState:function () {
+        //@if(debug)
         console.log("*** viewingMapState.enter ***");
+        //@endif
 
         Maps.getPath('loginPage.mainPane').remove();
 
@@ -253,7 +255,7 @@ Maps.viewingMapState = SC.State.extend({
                 payload = response.get("body");
             var WKTParser = new OpenLayers.Format.WKT();
             var features = WKTParser.read(payload['geom']);
-            Maps.openLayersController.set("measure","Area: "+Math.round(payload['area'])+" m<sup>2</sup>");
+            Maps.openLayersController.set("measure","Area: "+Maps.formatArea(payload['area']));
             if (features) {
                 Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
                 Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
@@ -262,6 +264,7 @@ Maps.viewingMapState = SC.State.extend({
             SC.AlertPane.warn("_op_failed".loc(), response.get("rawRequest").statusText, 'Error code: ' + response.get("rawRequest").status, "OK", this);
         }
     },
+
     maps_PerformGeoClear: function() {
         Maps.openLayersController.clearGeoToolsSelection();
         Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();

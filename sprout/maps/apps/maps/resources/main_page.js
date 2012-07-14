@@ -144,7 +144,7 @@ Maps.mainPage = SC.Page.design({
                         layout: { left: -10, bottom: 0, height: 33, width: 29}
                     }),
                     clearq: SC.ButtonView.design({
-                        layout: { centerY: 0, height: 24, left: 24, width: 90 },
+                        layout: { centerY: 0, height: 24, left: 24, width: 80 },
                         //classNames: ["borderless"],
                         title: "_clear_q".loc(),
                         icon: "icon-clear-16",
