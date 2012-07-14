@@ -21,7 +21,7 @@ SC.stringsFor('it', {
     "_howtotypetags" : "Digitare i tag separati da virgola (,)",
     "_save"   : "Salva",
     "_addcomment_tip" : "Aggiungi un commento...",
-    "_nosocial_expl" : "La feature che hai selezionato non ha un attributo ID, quindi non e' possibile associarvi alcuna informazione. E' possibile chiedere al gestore del sito di aggiungere un attributo ID al livello corrente.",
+    "_nosocial_expl" : "Seleziona una voce dall'elenco qui sopra. Se questo messaggio rimane, allora la feature che hai selezionato non ha un attributo ID, quindi non e' possibile associarvi alcuna informazione. E' possibile chiedere al gestore del sito di aggiungere un attributo ID al livello corrente.",
     "_links" : "Collegamenti",
     "_query_howto" : "Fai doppio click per scegliere una delle ricerche alfanumeriche disponibili",
     "_back" : "Indietro",
@@ -75,7 +75,7 @@ SC.stringsFor('it', {
         "della mappa esegue una interrogazione di tutte gli oggetti che si trovano a quelle coordinate. I risultati vengono visualizzati "+
         "sia in modalita' grafica sulla mappa con dei segnaposti che in modalita' analitica nella parte destra dello schermo. "+
         "Selezionando uno degli oggetti mostrati nell'elendo in alto a destra tutti gli attributi vengono mostrati nella tabella sottostante "+
-        "mentre con un doppio click viene attivato un menu che consente di associare commenti, etichette e visualizzare i collegamenti alle banche dati. "+
+        "e vengono attivati i pannelli che consentono di associare commenti, etichette e visualizzare i collegamenti alle banche dati. "+
         "</p><span class='bold'>Ricerche nelle banche dati</span><p>Per eseguire una ricerca cliccare sul pulsante <span class='em'>Interroga</span> e quindi selezionare "+
         "una delle ricerche predefinite.</p><span class='bold'>Gestione dei livelli</span><p>E' possibile personalizzare i livelli visibili nella mappa utilizzando "+
         "il pulsante <span class='em'>Livelli</span> posizionato nella toolbar. E' anche possibile regolare la trasparenza di ciascun livello.</p>"+
@@ -99,5 +99,6 @@ SC.stringsFor('it', {
     "_print_title": "Opzioni di stampa",
     "_comment": "Digitare un commento da inserire nel foglio di stampa:",
     "_do_print": "Stampa",
-    "_layer_pane_instructions":"Seleziona un livello per iniziare"
+    "_layer_pane_instructions":"Seleziona un livello per iniziare",
+    "_attributes": "Propriet&agrave;"
 });

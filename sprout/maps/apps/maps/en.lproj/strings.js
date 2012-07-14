@@ -22,7 +22,7 @@ SC.stringsFor('en', {
     "_howtotypetags" : "Use a comma (,) to separate tags",
     "_save"   : "Salva",
     "_addcomment_tip" : "Add a comment...",
-    "_nosocial_expl" : "The selected feature is missing an ID property and therefore it is not possible add anything to it. Please ask your GIS administrator to consider adding an ID field to this layer.",
+    "_nosocial_expl" : "Select a result from the list above. If this message does not disappear then the selected feature is missing an ID property and therefore it is not possible add anything to it. Please ask your GIS administrator to consider adding an ID field to this layer.",
     "_links" : "Links",
     "_query_howto" : "Double click to choose one of the available queries",
     "_back" : "Back",
@@ -89,5 +89,6 @@ SC.stringsFor('en', {
     "_print_title": "Print options",
     "_comment": "Optional comment to be added on the print:",
     "_do_print": "Print",
-    "_layer_pane_instructions":"Select a layer to get started"
+    "_layer_pane_instructions":"Select a layer to get started",
+    "_attributes": "Attributes"
 });

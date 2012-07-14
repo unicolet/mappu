@@ -19,16 +19,17 @@ Maps.LinkView = SC.ListItemView.extend(SC.ContentDisplay,
 	contentDisplayProperties: 'title url description'.w(),
 
 	render: function(context, firstTime) {
-  
-		var content = this.get("content");
-		var title = content.get("title");
-		var url = Mustache.to_html(content.get("url"), Maps.featureInfoController.get("selection").firstObject().attributes());
-		var descr = content.get("description");
-		
-		context = context.begin('div').addClass('link-summary-view');
-		context = context.begin('div').addClass('link-summary-view-url').begin('a').attr('href',url).attr('target','_mapslink').push(title).end().end();
-		context = context.begin('div').addClass('link-summary-view-desc').push(descr).end();
-		context = context.end();
+        if(Maps.featureInfoController.hasSelection()) {
+            var content = this.get("content");
+            var title = content.get("title");
+            var url = Mustache.to_html(content.get("url"), Maps.featureInfoController.get("selection").firstObject().attributes());
+            var descr = content.get("description");
+
+            context = context.begin('div').addClass('link-summary-view');
+            context = context.begin('div').addClass('link-summary-view-url').begin('a').attr('href',url).attr('target','_mapslink').push(title).end().end();
+            context = context.begin('div').addClass('link-summary-view-desc').push(descr).end();
+            context = context.end();
+        }
 	}
 });
 

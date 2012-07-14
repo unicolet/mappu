@@ -19,19 +19,6 @@ SC.Binding.labelPrefix = function(prefix) {
 var app_logo_huge = static_url('images/app-logo-huge.png');
 var icon_tools_16 = static_url('sc-icon-tools-16');
 
-Maps.nosocialTab=SC.View.extend({
-    childViews: "icon explanation".w(),
-    icon: SC.ImageView.design({
-        layout: {centerY:0, left: 10, width:24, height:24},
-        value: "sc-icon-alert-24"
-    }),
-    explanation: SC.LabelView.design({
-        layout: {centerY:0, left: 54, right:10, height: 80},
-        value: "_nosocial_expl".loc()
-    })
-});
-
-
 // This page describes the main user interface for your application.  
 Maps.mainPage = SC.Page.design({
 
@@ -131,8 +118,9 @@ Maps.mainPage = SC.Page.design({
                         contentBinding: 'Maps.featureInfoController.arrangedObjects',
                         selectionBinding: 'Maps.featureInfoController.selection',
                         contentValueKey: "name",
-                        contentCheckboxKey: "isStarred",
-                        action: "maps_featureSelected"
+                        contentCheckboxKey: "isStarred"
+                        //action: "maps_featureSelected",
+                        //actOnSelect: YES
                     })
                 }),
 
@@ -163,130 +151,20 @@ Maps.mainPage = SC.Page.design({
                     })
                 }),
 
-                featureView: SCTable.TableView.design({
-                    layout: { top: 291, bottom: -1, left:0, right: -1 },
-
-                    classNames: ["denim"],
-
-                    contentBinding: 'Maps.featureInfoAttributesController.arrangedObjects',
-                    selectionBinding: 'Maps.featureInfoAttributesController.selection',
-
-                    action: "onAttributeDoubleClick",
-                    target: "Maps.featureInfoAttributesController",
-
-                    columns: [SC.Object.create(SCTable.Column, {
-                        name: "_property".loc(),
-                        valueKey: 'property',
-                        width: 100,
-                        canSort: YES
-                    }),
-                        SC.Object.create(SCTable.Column, {
-                            name: "_value".loc(),
-                            valueKey: 'value',
-                            width: 170,
-                            canSort: YES
-                        })]
+                featureView:SC.TabView.extend({
+                    layout: { top: 300, bottom: -1, left:0, right: -1 },
+                    controlSize: SC.SMALL_CONTROL_SIZE,
+                    itemTitleKey: "title",
+                    itemValueKey: "tab",
+                    nowShowing: "Maps.featureView",
+                    items: [
+                        {title: "_attributes".loc(), tab: "Maps.featureView" },
+                        {title: "_tags".loc(), tab: "Maps.tagsTab" },
+                        {title: "_comments".loc(), tab: "Maps.commentsTab" },
+                        {title: "_links".loc(), tab: "Maps.linksTab" }
+                    ]
                 })
             })
-        })
-    }),
-
-    tagsTab: SC.View.design({
-        childViews: "noSocialTab yesSocial".w(),
-        noSocialTab: Maps.nosocialTab.design({
-            layout: {top:0,bottom:0,left:0,right:0},
-            isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').not()
-        }),
-        yesSocial: SC.View.design({
-            childViews:"star tags tagsHelp saveTags".w(),
-            isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').bool(),
-            star: SC.LabelView.design({
-                layout: {left: 10, top:15, width: 350, height: 30 },
-                valueBinding: 'Maps.socialController.starredAsText'
-            }),
-            tags: SC.TextFieldView.design({
-                isTextArea: YES,
-                layout: {left: 10, top: 50, right: 10, height: 50 },
-                valueBinding: 'Maps.socialController.tags',
-    	    hintOnFocus: NO
-            }),
-            tagsHelp: SC.LabelView.design({
-                layout: {top: 115, left: 10, width: 300},
-                value: "_howtotypetags".loc()
-            }),
-            saveTags: SC.ButtonView.design({
-                layout: {top: 115, right: 10, width: 70, height: 24},
-                title: "_save".loc(),
-                action: "maps_SaveTags",
-                titleMinWidth: 40
-            })
-        })
-    }),
-
-    commentsTab: SC.View.design({
-        childViews: "noSocialTab yesSocial".w(),
-        noSocialTab: Maps.nosocialTab.design({
-            layout: {top:0,bottom:0,left:0,right:0},
-            isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').not()
-        }),
-        yesSocial: SC.View.design({
-            childViews: "comments newComment addComment delComment".w(),
-            isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').bool(),
-            comments: SC.ScrollView.design({
-                layout: {left: 10, top:15, right: 10, bottom: 50 },
-                backgroundColor: 'white',
-                contentView: SC.ListView.design({
-                    themeName: "comments",
-                    rowHeight: 75,
-                    showAlternatingRows: YES,
-                    isSelectable: YES,
-                    contentBinding: 'Maps.socialCommentsController.arrangedObjects',
-                    selectionBinding: 'Maps.socialCommentsController.selection',
-                    contentValueKey: "readable"
-                })
-            }),
-            newComment: SC.TextFieldView.design({
-                layout: {bottom: 10, left:10, width: 295, height: 25 },
-                valueBinding: "Maps.socialCommentsController.newCommentText",
-                hint: "_addcomment_tip",
-    	    hintOnFocus: NO
-            }),
-            addComment: SC.ButtonView.design({
-                layout: {bottom: 10, right:55, width: 25, height: 24},
-                title: "+",
-                action: "maps_AddComment",
-                isEnabledBinding: SC.Binding.bool().from("Maps.socialCommentsController.newCommentText")
-            }),
-            delComment: SC.ButtonView.design({
-                layout: {bottom: 10, right:10, width: 25, height: 24},
-                title: "-",
-                action: "maps_DelComment",
-                isEnabledBinding: SC.Binding.transform(
-                    function(value, binding) {
-                        return (value && value.length() > 0) ? true : false;
-                    }).from("Maps.socialCommentsController.selection")
-            })
-        })
-    }),
-
-    linksTab: SC.View.design({
-        childViews: "links description".w(),
-        links: SC.ScrollView.design({
-            layout: {left: 0, top:0, right: 0, bottom:0},
-            backgroundColor: 'white',
-            contentView: SC.ListView.design({
-                rowHeight: 45,
-                showAlternatingRows: YES,
-                isSelectable: NO,
-                contentBinding: 'Maps.linkController.arrangedObjects',
-                selectionBinding: 'Maps.linkController.selection',
-                contentValueKey: "title",
-                exampleView: Maps.LinkView
-            })
-        }),
-        description: SC.LabelView.design({
-            title: "_links".loc(),
-            layout: {bottom: 10, right:10, width: 130, height: 30 }
         })
     }),
 
@@ -633,40 +511,6 @@ Maps.mainPage = SC.Page.design({
                 layout: {bottom:5, width: 80, height: 24, right: 5},
                 title: "_close".loc(),
                 action: "close"
-            })
-        })
-    }).create(),
-
-    featureResultPane: SC.PickerPane.design(SC.Animatable,{
-        themeName: 'popover',
-
-        removeAction: 'didCloseFeatureResultPane',
-
-        transitions: {
-            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
-        },
-
-        layout: { width: 400, height: 300 },
-        contentView: SC.WorkspaceView.extend({
-            topToolbar: null,
-            bottomToolbar: null,
-
-            contentView:SC.View.design({
-                classNames: 'popover_content_background'.w(),
-
-                childViews:"tabs".w(),
-                tabs:SC.TabView.extend({
-                    layout: {top: 10, left: 5, right: 5, bottom: 5},
-                    itemTitleKey: "title",
-                    itemValueKey: "tab",
-                    items: [
-                        //{title: "_tags".loc(), tab: ( hasSocial ? "Maps.mainPage.tagsTab" : "Maps.mainPage.nosocialTab" ) },
-                        //{title: "_comments".loc(), tab: ( hasSocial ? "Maps.mainPage.commentsTab" : "Maps.mainPage.nosocialTab" )},
-                        {title: "_tags".loc(), tab: "Maps.mainPage.tagsTab" },
-                        {title: "_comments".loc(), tab: "Maps.mainPage.commentsTab" },
-                        {title: "_links".loc(), tab: "Maps.mainPage.linksTab" }
-                    ]
-                })
             })
         })
     }).create()

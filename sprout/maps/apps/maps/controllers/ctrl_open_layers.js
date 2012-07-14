@@ -181,6 +181,7 @@ Maps.openLayersController = SC.ArrayController.create(
                 markersLayer.redraw();
                 SC.RunLoop.begin();
                 Maps.MapsDataSource.rawFeatures = event.features;
+                Maps.featureInfoController.deselectObjects(Maps.featureInfoController.get("selection"));
                 if (!Maps.features) {
                     Maps.features = Maps.store.find(Maps.FEATURE_QUERY);
                     Maps.featureInfoController.set('content', Maps.features);

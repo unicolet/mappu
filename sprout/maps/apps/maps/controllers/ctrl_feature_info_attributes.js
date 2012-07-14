@@ -12,6 +12,9 @@ Maps.featureInfoAttributesController = SC.ArrayController.create(SCTable.TableDe
             var guid = Maps.featureInfoController.selection().firstObject().get('guid');
             Maps.ATTRIBUTES_QUERY.parameters.id=guid;
             this.content.refresh();
+        } else {
+            Maps.ATTRIBUTES_QUERY.parameters.id=-1;
+            this.content.refresh();
         }
     }.observes("Maps.featureInfoController.selection"),
 

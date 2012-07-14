@@ -115,21 +115,23 @@ Maps.viewingMapState = SC.State.extend({
     // called when the user dblclicks an item in list view
     maps_featureSelected: function(listView) {
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
-        if(!selectedFeature) return;
-        var hasSocial=selectedFeature.get("social");
-        var selectionIndex = Maps.featureInfoController.indexOf(selectedFeature);
-        var view = listView.itemViewForContentIndex(selectionIndex);
-
-        if(hasSocial) {
-            Maps.socialController.set("content", selectedFeature.get("social"));
-            Maps.socialCommentsController.findComments();
+        if(!selectedFeature) {
+            Maps.socialController.set("content",null);
+            Maps.socialCommentsController.set("content",null);
+            Maps.linkController.set("content",null);
         } else {
-            Maps.socialController.set("content", null);
+            var hasSocial=selectedFeature.get("social");
+
+            if(hasSocial) {
+                Maps.socialController.set("content", selectedFeature.get("social"));
+                Maps.socialCommentsController.findComments();
+            } else {
+                Maps.socialController.set("content", null);
+            }
+            // fetch links
+            Maps.linkController.findLinks();
         }
-        // always fetch links
-        Maps.linkController.findLinks();
-        this.gotoState("showingFeatureResultPaneState", {targetView:view});
-    },
+    }.observes("Maps.featureInfoController.selection"),
 
     didClickOnTools: function(view) {
         var tool = view.get("value");
@@ -273,6 +275,21 @@ Maps.viewingMapState = SC.State.extend({
         this.toggleGeoTools();
     },
 
+    /* Moved here when I removed the FeatureInfo Pickerpane */
+    maps_SaveTags:function () {
+        var feature = Maps.featureInfoController.get("selection").firstObject();
+        Maps.socialController.saveTags(feature);
+    },
+
+    maps_AddComment:function (view) {
+        Maps.socialCommentsController.addComment(view);
+    },
+
+    maps_DelComment:function () {
+        Maps.socialCommentsController.delComment();
+    },
+
+
     /*******************************************************
      *
      *                     SUB STATES
@@ -287,8 +304,6 @@ Maps.viewingMapState = SC.State.extend({
     showingLayersPaneState: SC.State.plugin("Maps.showingLayersPaneState"),
 
     showingSearchPaneState: SC.State.plugin("Maps.showingSearchPaneState"),
-
-    showingFeatureResultPaneState: SC.State.plugin("Maps.showingFeatureResultPaneState"),
 
     geoCodeState:SC.State.plugin('Maps.geoCodeState'),
 

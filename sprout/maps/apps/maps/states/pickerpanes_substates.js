@@ -117,39 +117,3 @@ Maps.showingSearchPaneState = SC.State.extend({
         Maps.mainPage.get("layersAndSearch").set("value", "");
     }
 });
-
-Maps.showingFeatureResultPaneState = SC.State.extend({
-    enterState:function (ctx) {
-        var pickerPane = Maps.mainPage.featureResultPane;
-        // prepare animation
-        pickerPane.disableAnimation();
-        pickerPane.adjust("opacity", 0).updateStyle();
-        // append
-        pickerPane.popup(ctx.targetView, SC.PICKER_POINTER);
-        pickerPane.enableAnimation();
-        // perform animation
-        pickerPane.adjust("opacity", 1);
-    },
-
-    didCloseFeatureResultPane:function () {
-        this.gotoState("browsingMapState");
-    },
-
-    maps_SaveTags:function () {
-        var feature = Maps.featureInfoController.get("selection").firstObject();
-        Maps.socialController.saveTags(feature);
-    },
-
-    maps_AddComment:function (view) {
-        Maps.socialCommentsController.addComment(view);
-    },
-
-    maps_DelComment:function () {
-        Maps.socialCommentsController.delComment();
-    },
-
-    exitState:function () {
-        // can't animate pp removal, sob
-        Maps.mainPage.featureResultPane.remove();
-    }
-});
