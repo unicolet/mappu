@@ -220,7 +220,7 @@ Maps.viewingMapState = SC.State.extend({
     showGeoTools: function() {
         Maps.mainPage.geotoolsPane.append();
         setTimeout(function () {
-            SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:305}, 0.2); });
+            SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:Maps.mainPage.get("rightSplitPane").size+10}, 0.2); });
         },0);
     },
     hideGeoTools: function() {

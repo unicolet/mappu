@@ -246,6 +246,12 @@ div.text-shadow {
 	@include slice("images/clear.png");
 }
 
+.icon-clear-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/clear-16.png");
+}
+
 .icon-search-16 {
 	width: 16px;
 	height: 16px;

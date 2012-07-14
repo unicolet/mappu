@@ -37,6 +37,7 @@ Maps.mainPage = SC.Page.design({
 
     layersAndSearch: SC.outlet("mainPane.toolbar.layers"),
     splitView : SC.outlet("mainPane.splitview"),
+    rightSplitPane : SC.outlet("mainPane.splitview.bottomRightView"),
 
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
@@ -143,10 +144,10 @@ Maps.mainPage = SC.Page.design({
                         layout: { left: -10, bottom: 0, height: 33, width: 29}
                     }),
                     clearq: SC.ButtonView.design({
-                        layout: { centerY: 0, height: 30, left: 24, width: 100 },
-                        classNames: ["borderless"],
+                        layout: { centerY: 0, height: 24, left: 24, width: 90 },
+                        //classNames: ["borderless"],
                         title: "_clear_q".loc(),
-                        icon: "icon-clear-24",
+                        icon: "icon-clear-16",
                         action: "clearQueryResults"
                     }),
                     notifications : SC.LabelView.design({
@@ -540,16 +541,16 @@ Maps.mainPage = SC.Page.design({
                     value: "_tagexplorer_help".loc()
                 }),
                 rendertags: SC.ButtonView.design({
-                    classNames: ["borderless"],
-                    layout: {bottom:0,width:0.48,height:26,right:0},
+                    //classNames: ["borderless"],
+                    layout: {bottom:0,width:0.48,height:24,right:0},
                     title: "_rendertags".loc(),
                     icon: "icon-rendertags-24",
                     action: "maps_RenderTags",
                     controlSize: SC.LARGE_CONTROL_SIZE
                 }),
                 reloadtags: SC.ButtonView.design({
-                    classNames: ["borderless"],
-                    layout: {bottom:0,width:0.48,height:26,left:0},
+                    //classNames: ["borderless"],
+                    layout: {bottom:0,width:0.48,height:24,left:0},
                     title: "_reloadtags".loc(),
                     icon: "icon-refresh-24",
                     action: "maps_ReloadTags",
