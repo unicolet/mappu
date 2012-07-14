@@ -117,16 +117,17 @@ Maps.viewingMapState = SC.State.extend({
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
         if(!selectedFeature) {
             Maps.socialController.set("content",null);
-            Maps.socialCommentsController.set("content",null);
+            Maps.socialCommentsController.findComments("-1");
             Maps.linkController.set("content",null);
         } else {
             var hasSocial=selectedFeature.get("social");
 
             if(hasSocial) {
                 Maps.socialController.set("content", selectedFeature.get("social"));
-                Maps.socialCommentsController.findComments();
+                Maps.socialCommentsController.findComments(selectedFeature.getSocialID());
             } else {
                 Maps.socialController.set("content", null);
+                Maps.socialCommentsController.findComments("-1");
             }
             // fetch links
             Maps.linkController.findLinks();

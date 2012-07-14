@@ -302,3 +302,9 @@ div.text-shadow {
     background-size: 100% 100%;
     background-repeat:no-repeat;
 }
+
+.comment-view {
+  display: block;
+  position: relative;
+  padding: 0.2em;
+}

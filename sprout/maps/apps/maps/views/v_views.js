@@ -33,6 +33,21 @@ Maps.LinkView = SC.ListItemView.extend(SC.ContentDisplay,
 	}
 });
 
+
+Maps.CommentView = SC.ListItemView.extend(SC.ContentDisplay,
+/** @scope Maps.CommentView.prototype */ {
+
+    useStaticLayout: YES,
+
+	contentDisplayProperties: 'readable'.w(),
+
+	render: function(context, firstTime) {
+        var content = this.get("content");
+        context = context.begin('div').addClass('comment-view').push(content.get("readable")).end();
+        return context;
+	}
+});
+
 Maps.DropView = SC.LabelView.extend(
     //SC.DropTarget is now a protocol, will cause errors in production
     {

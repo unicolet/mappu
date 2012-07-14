@@ -18,17 +18,25 @@ Maps.socialCommentsController = SC.ArrayController.create(
 
     newCommentText: "",
 
-    findComments: function() {
-		Maps.COMMENT_QUERY.parameters={social: Maps.featureInfoController.get("selection").firstObject().getSocialID()};
+    findComments: function(id) {
+        //@ifdebug
+        console.log("Maps.socialCommentsController.findComments for id="+id);
+        //@endif
+
+		Maps.COMMENT_QUERY.parameters={social: id};
         var comments=this.get("content");
 		if (comments == null) {
+            //@ifdebug
+            console.log("Maps.socialCommentsController.findComments: new");
+            //@endif
 			comments = Maps.store.find(Maps.COMMENT_QUERY);
             this.set("content",comments);
 		} else {
+            //@ifdebug
+            console.log("Maps.socialCommentsController.findComments: refresh");
+            //@endif
 			comments.refresh();
 		}
-
-		return Maps.comments;
 	},
 
 	collectionViewDeleteContent: function(view, content, indexes) {

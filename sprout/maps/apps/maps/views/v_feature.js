@@ -88,32 +88,34 @@ Maps.commentsTab = SC.View.design({
         comments: SC.ScrollView.design({
             layout: {left: 10, top:15, right: 10, bottom: 50 },
             backgroundColor: 'white',
-            contentView: SC.ListView.design({
+            contentView: SC.StackedView.design({
                 themeName: "comments",
-                rowHeight: 75,
                 showAlternatingRows: YES,
                 isSelectable: YES,
                 contentBinding: 'Maps.socialCommentsController.arrangedObjects',
                 selectionBinding: 'Maps.socialCommentsController.selection',
+                exampleView: Maps.CommentView,
                 contentValueKey: "readable"
             })
         }),
         newComment: SC.TextFieldView.design({
-            layout: {bottom: 10, left:10, width: 295, height: 25 },
+            layout: {bottom: 10, left:10, right: 10, height: 24 },
             valueBinding: "Maps.socialCommentsController.newCommentText",
             hint: "_addcomment_tip",
-	    hintOnFocus: NO
+	        hintOnFocus: NO
         }),
         addComment: SC.ButtonView.design({
-            layout: {bottom: 10, right:55, width: 25, height: 24},
+            layout: {bottom: 10, right:45, width: 25, height: 24},
             title: "+",
             action: "maps_AddComment",
-            isEnabledBinding: SC.Binding.bool().from("Maps.socialCommentsController.newCommentText")
+            isEnabledBinding: SC.Binding.bool().from("Maps.socialCommentsController.newCommentText"),
+            tooltip: "_addcomment".loc()
         }),
         delComment: SC.ButtonView.design({
             layout: {bottom: 10, right:10, width: 25, height: 24},
             title: "-",
             action: "maps_DelComment",
+            tooltip: "_delcomment".loc(),
             isEnabledBinding: SC.Binding.transform(
                 function(value, binding) {
                     return (value && value.length() > 0) ? true : false;

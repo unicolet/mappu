@@ -29,9 +29,6 @@ Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null, {id:-1});
 Maps.TAGSUMMARY_QUERY = SC.Query.remote(Maps.Tag);
 Maps.GEOCODE_QUERY = SC.Query.remote(Maps.Address);
 
-/* global variables */
-Maps.comments = null;
-
 Maps.MapsDataSource = SC.DataSource.extend(
     /** @scope Maps.MapsDataSource.prototype */ {
         rawFeatures:[],
