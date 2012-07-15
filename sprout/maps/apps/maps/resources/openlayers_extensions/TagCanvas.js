@@ -296,7 +296,7 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
             this.canvas.fill();
             //this.canvas.stroke();
             this.canvas.beginPath();
-            this.canvas.arc(p0+5,p1-5,5,0,360, true);
+            this.canvas.arc(p0+5,p1-5,5,0,Math.PI*2, true);
             this.canvas.fill();
             this.canvas.stroke();
         }
