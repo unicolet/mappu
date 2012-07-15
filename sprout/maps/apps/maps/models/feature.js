@@ -40,6 +40,7 @@ Maps.Feature = SC.Record.extend(
                     Maps.Social,
                         { guid: this.attributes()["social"],
                             starred: v,
+                            tags: "",
                             x: this.attributes()["x"],
                             y: this.attributes()["y"]
                         });
