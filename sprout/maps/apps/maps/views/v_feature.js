@@ -60,7 +60,7 @@ Maps.tagsTab = SC.View.design({
             isTextArea: YES,
             layout: {left: 10, top: 50, right: 10, height: 50 },
             valueBinding: 'Maps.socialController.tags',
-	    hintOnFocus: NO
+	        hintOnFocus: NO
         }),
         tagsHelp: SC.LabelView.design({
             layout: {top: 115, left: 10, width: 300},
@@ -125,7 +125,7 @@ Maps.commentsTab = SC.View.design({
 });
 
 Maps.linksTab = SC.View.design({
-    childViews: "links description".w(),
+    childViews: "links".w(),
     links: SC.ScrollView.design({
         layout: {left: 0, top:0, right: 0, bottom:0},
         backgroundColor: 'white',
@@ -139,8 +139,4 @@ Maps.linksTab = SC.View.design({
             exampleView: Maps.LinkView
         })
     }),
-    description: SC.LabelView.design({
-        title: "_links".loc(),
-        layout: {bottom: 10, right:10, width: 130, height: 30 }
-    })
 });

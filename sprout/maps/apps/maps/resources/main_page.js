@@ -119,8 +119,6 @@ Maps.mainPage = SC.Page.design({
                         selectionBinding: 'Maps.featureInfoController.selection',
                         contentValueKey: "name",
                         contentCheckboxKey: "isStarred"
-                        //action: "maps_featureSelected",
-                        //actOnSelect: YES
                     })
                 }),
 

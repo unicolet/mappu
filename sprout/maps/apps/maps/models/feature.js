@@ -28,7 +28,13 @@ Maps.Feature = SC.Record.extend(
           if ( v != undefined ) {
               // setting
               if (this.get("social") && this.getPath("social.status")!=SC.Record.ERROR) {
-                  this.get("social").set("starred", v);
+                  /*
+                   * Here we try to prevent busy erros when the user interacts too quickly with the app, or the
+                   * backend is too slow in responding.
+                   * For the time being we simply drop the mid-flight update.
+                   */
+                  if(this.getPath("social.status") & SC.Record.READY)
+                      this.get("social").set("starred", v);
               } else {
                   var social = Maps.store.createRecord(
                     Maps.Social,
