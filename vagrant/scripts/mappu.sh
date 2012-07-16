@@ -8,6 +8,7 @@ fi
 
 REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
 MAPPU_VERSION="1.1"
+# this is just a placeholder, have a script to find latest
 TOMCAT_VERSION="7.0.27"
 GEOSERVER_PKG="geoserver-2.0.13-custom.war"
 
@@ -66,6 +67,16 @@ else
 	echo "# Installing tomcat                                            #"
 	echo "################################################################"
 	(
+	sudo cat > ${REPO_DIR}/links.pl << EOF
+#!/usr/bin/perl -w
+while (\$line = <>) {
+if (\$line =~ m/<a href=\"(.*)\">.*<\/a>/i) {
+print \$1 . "\n";
+}
+}
+EOF
+	TOMCAT_VERSION=`wget -O - http://mirror.nohup.it/apache/tomcat/tomcat-7/ | grep v7 | perl ${REPO_DIR}/links.pl | tail -1 | sed 's/v//' | sed 's/\///'`
+
 	if [ ! -e ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz ]; then 
 		wget http://mirror.nohup.it/apache/tomcat/tomcat-7/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz > /dev/null 2>&1
 		sudo cp apache-tomcat-${TOMCAT_VERSION}.tar.gz ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz
