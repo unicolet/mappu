@@ -29,7 +29,7 @@ Screenhots are hosted in the media folder.
 
 A demo is available on a temporary cloud server:
 
-http://31.222.191.183/static/maps/en/1.0/
+http://31.222.191.183/static/maps/en/1.1/
 
 login with demo/demo
 
