@@ -11,6 +11,7 @@ MAPPU_VERSION="1.1"
 # this is just a placeholder, have a script to find latest
 TOMCAT_VERSION="7.0.27"
 GEOSERVER_PKG="geoserver-2.0.13-custom.war"
+INDEXHTML="/var/www/index.html"
 
 # x86_64 or i686, i586, etc
 ARCH=`uname -m`
@@ -26,6 +27,7 @@ echo "# Adding repositories, updating and installing base pkgs       #"
 echo "# LOCAL REPO=${REPO_DIR} USER=$USER"
 echo "################################################################"
 (
+
 # have apt-get choose the faster mirror
 sudo perl -pi.bak -e "s/http:\/\/us\.archive\.ubuntu\.com\/ubuntu\//mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/" /etc/apt/sources.list
 sudo perl -pi.bak2 -e "s/http:\/\/security\.ubuntu\.com\/ubuntu/mirror:\/\/mirrors\.ubuntu\.com\/mirrors\.txt/" /etc/apt/sources.list
@@ -398,6 +400,12 @@ sleep 60
 sudo wget -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
 
 sudo /etc/init.d/apache2 restart
+
+# replace home page...
+sudo mv ${INDEXHTML} ${INDEXHTML}.bak
+sudo ln -s /var/www/static/maps/en/1.1/index.html ${INDEXHTML}
+sudo ln -s /var/www/static/maps/it/1.1/source /var/www/source
+
 ) >> provision.log 2>&1 
 
 URL=`sudo ifconfig eth1 | awk -F: '/inet addr/ {print $2} ' | awk '{printf("http://%s/static/maps/en/1.1/\n",$1); }'`
