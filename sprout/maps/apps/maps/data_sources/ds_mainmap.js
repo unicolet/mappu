@@ -33,8 +33,6 @@ Maps.MapsDataSource = SC.DataSource.extend(
     /** @scope Maps.MapsDataSource.prototype */ {
         rawFeatures:[],
 
-        //geocoder: new google.maps.Geocoder(),
-
         fetch: function(store, query) {
             if (query.recordType === Maps.Address) {
                 //@if(debug)
