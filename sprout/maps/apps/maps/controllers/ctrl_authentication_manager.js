@@ -82,6 +82,12 @@ Maps.authenticationManager = SC.ObjectController.create({
     },
 
     whenUserLoaded: function() {
+        //@if(debug)
+        console.log("-- Maps.authenticationManager.whenUserLoaded. Testing ? "+Maps.__isTesting);
+        if(Maps.__isTesting) return;
+        console.log("-- Maps.authenticationManager.whenUserLoaded. Processing event");
+        //@endif
+
         var content = this.get("content");
         if (content && content.get("status") == SC.Record.READY_CLEAN) {
             if (this.getPath("content.authenticated")) {

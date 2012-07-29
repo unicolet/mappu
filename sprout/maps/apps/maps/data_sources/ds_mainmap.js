@@ -159,7 +159,9 @@ Maps.MapsDataSource = SC.DataSource.extend(
         },
 
         retrieveRecord: function(store, storeKey, id) {
-            //console.log("in Maps.MapsDataSource.retrieveRecord() id=" + id);
+            //@if(debug)
+            console.log("in Maps.MapsDataSource.retrieveRecord() id=" + id);
+            //@endif
             var recordType = SC.Store.recordTypeFor(storeKey);
             if (recordType === Maps.Social) {
                 SC.Request.getUrl('/mapsocial/social/' + id + '?alt=json').set('isJSON', YES)
@@ -226,7 +228,9 @@ Maps.MapsDataSource = SC.DataSource.extend(
         },
 
         createRecord: function(store, storeKey) {
-            //console.log("in Maps.MapsDataSource.createRecord() for " + store.idFor(storeKey));
+            //@if(debug)
+            console.log("in Maps.MapsDataSource.createRecord() for " + store.idFor(storeKey));
+            //@endif
             var url = null;
             if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Attribute)) {
                 // fictional record, only serves the UI
@@ -246,7 +250,9 @@ Maps.MapsDataSource = SC.DataSource.extend(
         },
 
         didCreateRecord: function(response, store, storeKey) {
-            //console.log("Did create record");
+            //@if(debug)
+            console.log("In Maps.MapsDataSource.didCreateRecord for storeKey="+storeKey);
+            //@endif
             if (SC.ok(response)) {
                 var dataHash = response.get('body').content;
                 store.dataSourceDidComplete(storeKey, null, dataHash.guid);
