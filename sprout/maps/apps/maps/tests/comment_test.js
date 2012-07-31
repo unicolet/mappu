@@ -66,6 +66,21 @@ function __checkCommentsFind() {
     start();
 }
 
+test("comment.store.integration.find.none", function () {
+    // Pause the test runner. If start() is not called within 2 seconds, fail the test.
+    stop(2000);
+    Maps.COMMENT_QUERY.parameters={social: -99};
+    __comments.refresh();
+
+    // Give our store time to find the comments
+    setTimeout(__checkCommentsFindNone, 1500);
+});
+
+function __checkCommentsFindNone() {
+    ok(__comments.length() == 0 , 'No comments with that id');
+    start();
+}
+
 test("comment.store.integration.delete", function () {
     // Pause the test runner. If start() is not called within 2 seconds, fail the test.
     stop(2000);
@@ -86,10 +101,10 @@ test("comment.logout",function (){
     stop(2000);
     Maps.authenticationManager.logout();
 
-    setTimeout(__checkLogin,1500);
+    setTimeout(__checkLogout,1500);
 });
 
-function __checkLogin() {
+function __checkLogout() {
     ok( ! Maps.authenticationManager.getPath("content.authenticated"), "logged out");
     start();
 };
