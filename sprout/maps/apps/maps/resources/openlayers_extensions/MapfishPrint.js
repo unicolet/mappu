@@ -500,25 +500,11 @@ mapfish.PrintProtocol = OpenLayers.Class({
      */
     openPdf: function(answer, success, popup, context) {
         OpenLayers.Console.info(answer.getURL);
-        if (SC.browser.isIE || SC.browser.isOpera) {
-            // OK, my friend IE on XP SP2 (or higher) tends to have this:
-            // http://support.microsoft.com/kb/883255
-
-            // For Opera, it tends to not respect the Content-disposition
-            // header and overwrite the current tab with the PDF
-
-            // I found no way to detect it, so we put a nice popup.
-            popup.call(context, answer);
-
-        } else {
-            // FF2, FF3 or Safari: easier to deal with.
-            // This won't erase the current window since the URL returns with
-            // a "Content-disposition: attachment" header and thus will propose
-            // to save or open using the PDF reader.
-            window.location = answer.getURL;
-            if(success)
-                success.call(context);
-        }
+        // should IE be handled differently? Hopefully IE8+ should be able to handle
+        // Content-Disposition correctly
+        window.location = answer.getURL;
+        if(success)
+            success.call(context);
     },
 
     /**
