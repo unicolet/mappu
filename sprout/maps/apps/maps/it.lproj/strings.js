@@ -100,5 +100,7 @@ SC.stringsFor('it', {
     "_comment": "Digitare un commento da inserire nel foglio di stampa:",
     "_do_print": "Stampa",
     "_layer_pane_instructions":"Seleziona un livello per iniziare",
-    "_attributes": "Propriet&agrave;"
+    "_attributes": "Propriet&agrave;",
+    "_addcomment": "Aggiungi un commento",
+    "_delcomment": "Cancella il commento selezionato"
 });

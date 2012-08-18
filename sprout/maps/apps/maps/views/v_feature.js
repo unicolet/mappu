@@ -63,7 +63,7 @@ Maps.tagsTab = SC.View.design({
 	        hintOnFocus: NO
         }),
         tagsHelp: SC.LabelView.design({
-            layout: {top: 115, left: 10, width: 300},
+            layout: {top: 119, left: 10, width: 300, height: 24},
             value: "_howtotypetags".loc()
         }),
         saveTags: SC.ButtonView.design({
@@ -109,13 +109,13 @@ Maps.commentsTab = SC.View.design({
             title: "+",
             action: "maps_AddComment",
             isEnabledBinding: SC.Binding.bool().from("Maps.socialCommentsController.newCommentText"),
-            tooltip: "_addcomment".loc()
+            toolTip: "_addcomment".loc()
         }),
         delComment: SC.ButtonView.design({
             layout: {bottom: 10, right:10, width: 25, height: 24},
             title: "-",
             action: "maps_DelComment",
-            tooltip: "_delcomment".loc(),
+            toolTip: "_delcomment".loc(),
             isEnabledBinding: SC.Binding.transform(
                 function(value, binding) {
                     return (value && value.length() > 0) ? true : false;

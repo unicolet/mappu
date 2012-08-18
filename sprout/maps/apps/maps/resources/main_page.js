@@ -137,7 +137,6 @@ Maps.mainPage = SC.Page.design({
                         action: "clearQueryResults"
                     }),
                     notifications : SC.LabelView.design({
-                        classNames: ['text-shadow'],
                         layout: { centerY: 0, height: 20, right: 45, left: 120 },
                         escapeHTML: NO,
                         valueBinding: "Maps.openLayersController.measure"
@@ -336,14 +335,14 @@ Maps.mainPage = SC.Page.design({
                 layout: {top: 5, left:5, right:5, height:30},
                 valueBinding: "Maps.featureInfoController.feature1descr",
                 textAlign: SC.ALIGN_CENTER,
-                classNames: ["maps-dropview","text-shadow"],
+                classNames: ["maps-dropview"],
                 dropTargetProperty: "feature1"
             }),
             feature2: Maps.DropView.design({
                 layout: {top: 51, left:5, right:5, height:30},
                 valueBinding: "Maps.featureInfoController.feature2descr",
                 textAlign: SC.ALIGN_CENTER,
-                classNames: ["maps-dropview","text-shadow"],
+                classNames: ["maps-dropview"],
                 dropTargetProperty: "feature2"
             }),
             operation: SC.SelectView.design({
@@ -377,8 +376,7 @@ Maps.mainPage = SC.Page.design({
             }),
             helptext: SC.LabelView.design({
                 layout: {top: 210,left:5, right:5, bottom:5},
-                value:"_geotools_help".loc(),
-                classNames: "text-shadow".w()
+                value:"_geotools_help".loc()
             })
         })
     }).create(),
@@ -412,7 +410,6 @@ Maps.mainPage = SC.Page.design({
                     value: "sc-icon-help-24"
                 }),
                 helpText: SC.LabelView.design({
-                    classNames: "text-shadow".w(),
                     layout: {bottom:31,top:31,left:5,right:5},
                     value: "_tagexplorer_help".loc()
                 }),

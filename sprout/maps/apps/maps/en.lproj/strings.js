@@ -90,5 +90,7 @@ SC.stringsFor('en', {
     "_comment": "Optional comment to be added on the print:",
     "_do_print": "Print",
     "_layer_pane_instructions":"Select a layer to get started",
-    "_attributes": "Attributes"
+    "_attributes": "Attributes",
+    "_addcomment": "Add a comment",
+    "_delcomment": "Delete selected comment"
 });
