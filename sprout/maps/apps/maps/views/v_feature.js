@@ -125,7 +125,13 @@ Maps.commentsTab = SC.View.design({
 });
 
 Maps.linksTab = SC.View.design({
-    childViews: "links".w(),
+    childViews: "links noLinks".w(),
+    noLinks:  SC.LabelView.design({
+        classNames: ["translucent","centered"],
+        layout: {centerX:0, centerY:0, width:100, height: 33 },
+        isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').not(),
+        value: "_select_above".loc()
+    }),
     links: SC.ScrollView.design({
         layout: {left: 0, top:0, right: 0, bottom:0},
         backgroundColor: 'white',
@@ -138,5 +144,5 @@ Maps.linksTab = SC.View.design({
             contentValueKey: "title",
             exampleView: Maps.LinkView
         })
-    }),
+    })
 });

@@ -102,5 +102,6 @@ SC.stringsFor('it', {
     "_layer_pane_instructions":"Seleziona un livello per iniziare",
     "_attributes": "Propriet&agrave;",
     "_addcomment": "Aggiungi un commento",
-    "_delcomment": "Cancella il commento selezionato"
+    "_delcomment": "Cancella il commento selezionato",
+    "_select_above": "Selezionare un risultato sopra"
 });

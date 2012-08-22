@@ -20,7 +20,7 @@ SC.stringsFor('en', {
     "_property" : "Property",
     "_value"    : "Value",
     "_howtotypetags" : "Use a comma (,) to separate tags",
-    "_save"   : "Salva",
+    "_save"   : "Save",
     "_addcomment_tip" : "Add a comment...",
     "_nosocial_expl" : "Select a result from the list above. If this message does not disappear then the selected feature is missing an ID property and therefore it is not possible add anything to it. Please ask your GIS administrator to consider adding an ID field to this layer.",
     "_links" : "Links",
@@ -92,5 +92,6 @@ SC.stringsFor('en', {
     "_layer_pane_instructions":"Select a layer to get started",
     "_attributes": "Attributes",
     "_addcomment": "Add a comment",
-    "_delcomment": "Delete selected comment"
+    "_delcomment": "Delete selected comment",
+    "_select_above": "Please select a result above"
 });
