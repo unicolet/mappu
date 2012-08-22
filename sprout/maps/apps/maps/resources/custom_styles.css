@@ -161,6 +161,13 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
 	    	border: 1px solid #bbb;
             background-color: #dddddd;
 
+
+            box-shadow: 6px 6px 7px #333;
+            /* For IE 8 */
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#333333')";
+            /* For IE 5.5 - 7 */
+            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#333333');
+
             .formlabel {
                 color: black;
                 font-family: 'Gudea', cursive;
@@ -292,11 +299,12 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
 
 /* Image license: CC http://creativity103.com/collections/Lightwaves/slides/twisted_lights.html */
 .hippie_background {
-    background-image: static_url("glowing_twisted_lights.jpg");
-    -moz-background-size: 100% 100%; /* Firefox 3.6 */
-    -webkit-background-size: 100% 100%; /* Firefox 3.6 */
-    background-size: 100% 100%;
-    background-repeat:no-repeat;
+    background-image: static_url("linen.jpg");
+    /*-moz-background-size: 100% 100%; *//* Firefox 3.6 */
+    /*-webkit-background-size: 100% 100%; *//* Firefox 3.6 */
+    /*background-size: 100% 100%;*/
+    /*background-repeat:no-repeat;*/
+    background-repeat: repeat;
 }
 
 .comment-view {
