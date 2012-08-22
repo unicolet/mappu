@@ -373,6 +373,8 @@ ProxyPass /mapsocial ajp://127.0.0.1:8009/mapsocial
 <Location /mapsocial>
 Order Allow,Deny
 Allow from All
+ExpiresActive On
+ExpiresDefault "now"
 </Location>
 
 ProxyPass /print-servlet ajp://127.0.0.1:8009/print-servlet
@@ -390,6 +392,7 @@ sudo a2enmod proxy proxy_ajp
 sudo a2enmod cache
 sudo a2enmod disk_cache
 sudo a2enmod deflate
+sudo a2enmod expires
 
 sudo /etc/init.d/tomcat7 start
 
