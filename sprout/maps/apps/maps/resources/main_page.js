@@ -124,32 +124,33 @@ Maps.mainPage = SC.Page.design({
 
                 buttons: SC.View.design({
                     classNames: ["graduated"],
-                    layout: { top: 251, height: 40, left:0, right: -1 },
+                    layout: { top: 251, height: 60, left:0, right: -1 },
                     childViews: "thumb clearq notifications loading".w(),
                     thumb: SC.ThumbView.design({
-                        layout: { left: -10, bottom: 0, height: 33, width: 29}
+                        layout: { left: -10, centerY: 0, height: 33, width: 29}
                     }),
                     clearq: SC.ButtonView.design({
-                        layout: { centerY: 0, height: 24, left: 24, width: 80 },
+                        layout: { top: 10, height: 24, left: 24, width: 80 },
                         //classNames: ["borderless"],
                         title: "_clear_q".loc(),
                         icon: "icon-clear-16",
                         action: "clearQueryResults"
                     }),
                     notifications : SC.LabelView.design({
-                        layout: { centerY: 0, height: 20, right: 45, left: 120 },
+                        layout: { top: 10, height: 20, right: 45, left: 120 },
                         escapeHTML: NO,
-                        valueBinding: "Maps.openLayersController.measure"
+                        valueBinding: SC.Binding.oneWay("Maps.openLayersController.measure")
                     }),
-                    loading:SC.ImageView.design({
-                        layout: { top: 0, bottom:0, width:40, right: 0 },
-                        value: "spinner",
-                        isVisibleBinding: "Maps.isLoading"
+                    loading: SC.ProgressView.design({
+                      layout: { centerX: 0, height: 6, width: 200, bottom: 10 },
+                      isIndeterminate: NO,
+                      isRunning: YES,
+                      isVisibleBinding: SC.Binding.oneWay("Maps.isLoading")
                     })
                 }),
 
                 featureView:SC.TabView.extend({
-                    layout: { top: 300, bottom: -1, left:0, right: -1 },
+                    layout: { top: 311, bottom: -1, left:0, right: -1 },
                     controlSize: SC.SMALL_CONTROL_SIZE,
                     itemTitleKey: "title",
                     itemValueKey: "tab",
