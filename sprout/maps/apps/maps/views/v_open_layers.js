@@ -182,6 +182,7 @@ Maps.OpenLayers = SC.View.extend(
         addControls: function(map) {
             map.addControl(new OpenLayers.Control.MousePosition());
             map.addControl(new OpenLayers.Control.Scale());
+            map.addControl(new OpenLayers.Control.LoadingPanel());
 
             // style the sketch fancy
             var sketchSymbolizers = {
