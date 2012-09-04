@@ -7,5 +7,8 @@
 
 Maps.printController = SC.ObjectController.create({
     title: APPCONFIG.title,
-    commentText: ""
+    commentText: "",
+
+    // controls the display of the 'please wait' overlay while printing
+    isPrinting: false
 });

@@ -103,5 +103,6 @@ SC.stringsFor('it', {
     "_attributes": "Propriet&agrave;",
     "_addcomment": "Aggiungi un commento",
     "_delcomment": "Cancella il commento selezionato",
-    "_select_above": "Selezionare un risultato sopra"
+    "_select_above": "Selezionare un risultato sopra",
+    "_please_wait": "Attendere prego...",
 });

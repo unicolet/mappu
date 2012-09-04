@@ -9,7 +9,17 @@ Maps.printSheetPane = SC.SheetPane.design({
     layout: {width:550, height:180, centerX:0},
     contentView: SC.View.extend({
         layout: {top:10,bottom:5,left:5,right:10},
-        childViews: "icon title commentLbl commentText printBtn closeBtn printExtensionBtn".w(),
+        childViews: "icon title commentLbl commentText printBtn closeBtn printExtensionBtn workingoverlay".w(),
+
+        workingoverlay: SC.LabelView.design({
+            classNames: ["translucent"],
+            layout: {left: 0, bottom:30, top:0, right:0},
+            value: "_please_wait".loc(),
+            fontWeight: SC.BOLD_WEIGHT,
+            textAlign: SC.ALIGN_CENTER,
+            isVisibleBinding: SC.Binding.oneWay("Maps.printController.isPrinting").bool()
+        }),
+
         icon: SC.ImageView.design({
             layout: {left: 5, centerY:0, height:16, width:16},
             value: "icon-print-16"

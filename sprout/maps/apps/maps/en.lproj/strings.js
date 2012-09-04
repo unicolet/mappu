@@ -93,5 +93,6 @@ SC.stringsFor('en', {
     "_attributes": "Attributes",
     "_addcomment": "Add a comment",
     "_delcomment": "Delete selected comment",
-    "_select_above": "Please select a result above"
+    "_select_above": "Please select a result above",
+    "_please_wait": "Please wait..."
 });

@@ -11,6 +11,9 @@ Maps.printingMapState = SC.State.extend({
     },
 
     exitState: function(ctx) {
+        Maps.set("isLoading", false);
+        Maps.printController.set("isPrinting", false);
+
         Maps.printSheetPane.remove();
     },
 
@@ -57,6 +60,9 @@ Maps.printingMapState = SC.State.extend({
     },
 
     mapfishPrint: function(){
+        Maps.set("isLoading", true);
+        Maps.printController.set("isPrinting", true);
+
         var map=Maps.openLayersController.getOLMAP();
         var printer=new mapfish.PrintProtocol(map,printConfig);
         printer.spec.layout="A4 landscape";
@@ -69,10 +75,15 @@ Maps.printingMapState = SC.State.extend({
                     mapTitle: Maps.printController.get("title")
                 }
             ];
-        printer.createPDF(this.didMapfishPrint, this.didMapfishPrint, this.didMapfishPrint, this);
+        printer.createPDF(this.didMapfishPrint, this.didMapfishPrint, this.didMapfishPrintError, this);
     },
 
     didMapfishPrint: function(){
+        this.gotoState("browsingMapState");
+    },
+
+    didMapfishPrintError: function(request){
+        SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + " ("+request.status+") " + request.statusText, "", "OK", this);
         this.gotoState("browsingMapState");
     },
 
