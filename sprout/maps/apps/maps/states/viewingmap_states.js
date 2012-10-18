@@ -18,14 +18,7 @@ Maps.viewingMapState = SC.State.extend({
         Maps.getPath('loginPage.mainPane').remove();
 
         var page = Maps.getPath('mainPage.mainPane');
-        // prepare animation
-        page.disableAnimation();
-        page.adjust("opacity", 0).updateStyle();
-        // append
         page.append();
-        page.enableAnimation();
-        // perform animation
-        page.adjust("opacity", 1);
 
         SC.routes.add('zoom/:lat/:lon/:level', Maps, Maps.zoomRoute);
         SC.routes.add('find/:layer/:query', Maps, Maps.findRoute);
@@ -51,12 +44,7 @@ Maps.viewingMapState = SC.State.extend({
 
     exitState:function () {
         var page = Maps.getPath('mainPage.mainPane');
-        // prepare animation
-        page.adjust("opacity", 0);
-        // append
-        setTimeout(function () {
-            page.remove();
-        }, 1500);
+        page.remove();
 
         Maps.openLayersController.set('content', null);
         Maps.authenticationManager.set('content', null);

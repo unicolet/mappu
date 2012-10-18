@@ -373,7 +373,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 // in rest 404 is used to notify of not existing records, so it's generally not an error worth notifying
                 if (response.status != 404) {
                     status=response.status;
-                    SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + status, "", "OK", this);
+                    SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + status, "", "++OK", this);
                 }
             }
         }

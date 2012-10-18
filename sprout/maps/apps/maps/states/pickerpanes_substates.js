@@ -10,13 +10,11 @@ Maps.showingLayersPaneState = SC.State.extend({
     enterState:function () {
         if (!SC.browser.isIE) {
             // prepare animation
-            Maps.mainPage.layerPalette.disableAnimation();
-            Maps.mainPage.layerPalette.adjust("opacity", 0).updateStyle();
+            Maps.mainPage.layerPalette.adjust("opacity", 0);
             // append
             Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
-            Maps.mainPage.layerPalette.enableAnimation();
             // perform animation
-            Maps.mainPage.layerPalette.adjust("opacity", 1);
+            Maps.mainPage.layerPalette.animate({opacity:1}, 0.5);
         } else {
             Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
         }
@@ -57,13 +55,10 @@ Maps.showingSearchPaneState = SC.State.extend({
     enterState:function () {
         if (!SC.browser.isIE) {
             // prepare animation
-            Maps.mainPage.layerSearchPane.disableAnimation();
-            Maps.mainPage.layerSearchPane.adjust("opacity", 0).updateStyle();
+            Maps.mainPage.layerSearchPane.adjust("opacity", 0);
             // append
             Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
-            Maps.mainPage.layerSearchPane.enableAnimation();
-            // perform animation
-            Maps.mainPage.layerSearchPane.adjust("opacity", 1);
+            Maps.mainPage.layerSearchPane.animate({opacity:1}, 0.5);
         } else {
             Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
         }

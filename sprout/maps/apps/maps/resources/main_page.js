@@ -29,12 +29,8 @@ Maps.mainPage = SC.Page.design({
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
-    mainPane: SC.MainPane.design(SC.Animatable, {
+      mainPane: SC.MainPane.design( {
         childViews: 'toolbar splitview'.w(),
-
-        transitions: {
-            opacity: { duration: 1.5, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT } // CSS-transition-only timing function (JavaScript gets linear)
-        },
 
         defaultResponder: 'Maps.statechart',
 
@@ -49,7 +45,7 @@ Maps.mainPage = SC.Page.design({
                 classNames: "app-logo".w()
             }),
             layers : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, centerX: ( $(window).width()<1024 ? 0-130: 0), width: 160 },
+                layout: { centerY: 0, height: 30, centerX: ( $(window).width()<1024 ? 0-130: 0), width: 170 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
                     {title: "_layers".loc(), action: 'LAYERS', icon: "icon-layers-16"},
@@ -143,7 +139,7 @@ Maps.mainPage = SC.Page.design({
                     }),
                     loading: SC.ProgressView.design({
                       layout: { centerX: 0, height: 6, width: 200, bottom: 10 },
-                      isIndeterminate: NO,
+                      isIndeterminate: YES,
                       isRunning: YES,
                       isVisibleBinding: SC.Binding.oneWay("Maps.isLoading")
                     })
@@ -219,14 +215,10 @@ Maps.mainPage = SC.Page.design({
         })
     }),
 
-    layerSearchPane : SC.PickerPane.design(SC.Animatable, {
+    layerSearchPane : SC.PickerPane.design({
         themeName: 'popover',
 
         removeAction: "didCloseSearchPalette",
-
-        transitions: {
-            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
-        },
 
         layout: { height: 200, width: 400},
         contentView: SC.WorkspaceView.extend({
@@ -242,14 +234,10 @@ Maps.mainPage = SC.Page.design({
         })
     }).create(),
 
-    layerPalette : SC.PickerPane.extend(SC.Animatable, {
+    layerPalette : SC.PickerPane.extend({
         themeName: 'popover',
 
         removeAction: "didCloseLayerPalette",
-
-        transitions: {
-            opacity: { duration: .25, timing: SC.Animatable.TRANSITION_CSS_EASE_IN_OUT }
-        },
 
         layout: { width: 500, height: 400 },
         contentView: SC.WorkspaceView.extend({

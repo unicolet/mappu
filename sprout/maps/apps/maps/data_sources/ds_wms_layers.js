@@ -50,7 +50,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
             console.log("In didFetchCapabilitiesResponse. Is response OK? " + SC.ok(response));
             //@endif
             if (SC.ok(response)) {
-                try {
+                //try {
                     var records = [];
                     var content = response.get('body');
 
@@ -97,7 +97,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     //@endif
                     for (var i = 0; i < tmpProjections.length; i++) {
                         //@if(debug)
-                        console.log("Requiring remote load of projection " + tmpProjections[i]);
+                        console.log("["+i+"] Requiring remote load of projection " + tmpProjections[i]);
                         //@endif
                         var proj = new Proj4js.Proj(tmpProjections[i], this.whenProjReady(tmpProjections[i], response, store, query, capabilities));
                     }
@@ -108,10 +108,10 @@ Maps.LayerDataSource = SC.DataSource.extend(
                         this.doFetchLayers(response, store, query, capabilities);
                     }
 
-                } catch (e) {
-                    store.dataSourceDidErrorQuery(query, response);
-                    this.notifyError({status:e});
-                }
+                //} catch (e) {
+                //    store.dataSourceDidErrorQuery(query, response);
+                //    this.notifyError({status:e});
+               // }
             } else {
                 store.dataSourceDidErrorQuery(query, response);
                 this.notifyError(response);
@@ -119,6 +119,9 @@ Maps.LayerDataSource = SC.DataSource.extend(
         },
 
         doFetchLayers:function (response, store, query, capabilities) {
+            //@if(debug)
+            console.log("Proceeding to load layer definitions...");
+            //@endif
             var records = [];
             var numLayers = capabilities.capability.layers.length;
             var layers = capabilities.capability.layers;
@@ -219,7 +222,6 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
         updateRecord:function (store, storeKey) {
             var dataHash = store.readDataHash(storeKey);
-            //Maps.openLayersController.toggleLayer(dataHash['name'], dataHash['isVisible']);
             store.dataSourceDidComplete(storeKey, null);
             return YES;
         },
@@ -229,6 +231,6 @@ Maps.LayerDataSource = SC.DataSource.extend(
         },
 
         notifyError:function (response) {
-            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
+            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "--OK", this);
         }
     });
