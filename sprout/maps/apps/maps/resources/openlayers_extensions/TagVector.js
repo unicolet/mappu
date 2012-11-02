@@ -246,12 +246,13 @@ Maps.TagVector = OpenLayers.Class(OpenLayers.Layer, {
      * {<OpenLayers.Layer.Vector>} A new vector layer
      */
     initialize: function(name, options) {
-        
+
+        // Broke on upgrade to 2.12
         // concatenate events specific to vector with those from the base
-        this.EVENT_TYPES =
-            OpenLayers.Layer.Vector.prototype.EVENT_TYPES.concat(
-            OpenLayers.Layer.prototype.EVENT_TYPES
-        );
+        //this.EVENT_TYPES =
+        //    OpenLayers.Layer.Vector.prototype.EVENT_TYPES.concat(
+        //    OpenLayers.Layer.prototype.EVENT_TYPES
+        //);
 
         OpenLayers.Layer.prototype.initialize.apply(this, arguments);
 
