@@ -77,14 +77,22 @@ Maps.tagsTab = SC.View.design({
 
 Maps.commentsTab = SC.View.design({
     classNames: ["denim"],
-    childViews: "noSocialTab yesSocial".w(),
-    noSocialTab: Maps.nosocialTab.design({
+    childViews: "noSelectionTab yesSelectionTab".w(),
+    noSelectionTab: Maps.nosocialTab.design({
         layout: {top:0,bottom:0,left:0,right:0},
-        isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').not()
+        isVisibleBinding: SC.Binding.oneWay('Maps.featureInfoController.selection').transform(function(value, binding) {
+            if(!value || value.length()==0)
+                return true;
+            return false;
+        })
     }),
-    yesSocial: SC.View.design({
+    yesSelectionTab: SC.View.design({
         childViews: "comments newComment addComment delComment".w(),
-        isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').bool(),
+        isVisibleBinding: SC.Binding.oneWay('Maps.featureInfoController.selection').transform(function(value, binding) {
+            if(!value || value.length()==0)
+                return false;
+            return true;
+        }),
         comments: SC.ScrollView.design({
             layout: {left: 10, top:15, right: 10, bottom: 50 },
             backgroundColor: 'white',
