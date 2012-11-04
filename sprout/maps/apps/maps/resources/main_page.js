@@ -113,7 +113,7 @@ Maps.mainPage = SC.Page.design({
                         rowHeight: 30,
                         contentBinding: 'Maps.featureInfoController.arrangedObjects',
                         selectionBinding: 'Maps.featureInfoController.selection',
-                        contentValueKey: "name",
+                        contentValueKey: "intelligentName",
                         contentCheckboxKey: "isStarred",
                         exampleView: Maps.FeatureListItemView,
                         hasContentRightIcon: YES,

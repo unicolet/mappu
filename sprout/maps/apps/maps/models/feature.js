@@ -22,6 +22,24 @@ Maps.Feature = SC.Record.extend(
 
   name: SC.Record.attr(String),
 
+  intelligentName: function() {
+      var nameRegex=/n[ao]me/i;
+      var descrRegex=/descr/i;
+      var theAttributes=this.attributes();
+      for(var k in theAttributes) {
+          if(nameRegex.test(k) && k != "name") {
+            return this.get("name")+" ("+ theAttributes[k]+")";
+          }
+      }
+      for(var k in theAttributes) {
+          if(descrRegex.test(k)) {
+            return this.get("name")+" ("+ theAttributes[k]+")";
+          }
+      }
+      // fallback to name
+      return this.get("name");
+  }.property("name").cacheable(true),
+
   isStarred: function(k,v) {
       // if the feature has no social attribute, then no use...
       if(this.attributes()["social"] && this.attributes()["social"] != undefined) {
