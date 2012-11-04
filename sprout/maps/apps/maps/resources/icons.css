@@ -1,0 +1,120 @@
+
+.icon-google-earth-24 {
+    width: 25px;
+    height: 25px;
+    background-image: static_url('images/google_earth_icon.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-refresh-24 {
+    width: 25px;
+    height: 25px;
+    background-image: static_url('images/refresh.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-rendertags-24 {
+    width: 25px;
+    height: 25px;
+    background-image: static_url('images/eye.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-print-16 {
+    width: 16px;
+    height: 16px;
+    @include slice("images/printer.png");
+}
+
+.icon-logout-16 {
+    width: 17px;
+    height: 17px;
+    background-image: static_url('images/door_in.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-menu-open {
+    width: 15px;
+    height: 10px;
+    background-image: static_url('images/disclose-down.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-streetview-16 {
+    width: 18px;
+    height: 18px;
+    background-image: static_url('images/streetview.png');
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.icon-clear-24 {
+	width: 24px;
+	height: 24px;
+	@include slice("images/clear.png");
+}
+
+.icon-clear-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/clear-16.png");
+}
+
+.icon-search-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/search.png");
+}
+
+.icon-explore-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/explore.png");
+}
+
+.icon-layers-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/layers.png");
+}
+
+.icon-measure-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/measure.png");
+}
+
+.icon-area-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/area.png");
+}
+
+.icon-settings-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/settings.png");
+}
+
+.icon-tips-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/tips.png");
+}
+
+.icon-zoom-inactive-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/115.png");
+}
+
+.spinner {
+    background-image: static_url('images/spinner.gif');
+    background-repeat:no-repeat;
+    background-position:center;
+}

@@ -62,5 +62,13 @@ Maps.Feature = SC.Record.extend(
 
   getSocialID: function() {
       return this.attributes()['social'];
+  },
+
+  rightIconKey: function(k,v) {
+      return "icon-zoom-inactive-16";
+  }.property(),
+
+  lonlat: function() {
+      return new OpenLayers.LonLat(this.attributes()["x"], this.attributes()["y"]);
   }
 }) ;

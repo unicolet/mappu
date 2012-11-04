@@ -109,12 +109,16 @@ Maps.mainPage = SC.Page.design({
                     hasHorizontalScroller: NO,
                     backgroundColor: 'white',
                     contentView: SC.ListView.design({
-                        classNames: ["maps-chkbox-starred","denim"],
+                        classNames: ["maps-chkbox-starred","denim","feature-list-item-view"],
                         rowHeight: 30,
                         contentBinding: 'Maps.featureInfoController.arrangedObjects',
                         selectionBinding: 'Maps.featureInfoController.selection',
                         contentValueKey: "name",
-                        contentCheckboxKey: "isStarred"
+                        contentCheckboxKey: "isStarred",
+                        exampleView: Maps.FeatureListItemView,
+                        hasContentRightIcon: YES,
+                        contentRightIconKey: "rightIconKey",
+                        rightIconAction: "zoomToFeature"
                     })
                 }),
 

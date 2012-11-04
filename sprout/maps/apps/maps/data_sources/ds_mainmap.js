@@ -354,7 +354,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                         var record = features[i].data;
                         record['guid'] = i + 1;
                         record['name'] = features[i].id;
-                        record['GROUP'] = ""; // TO BE FIXED!
+                        record['GROUP'] = ""; //TODO: fix this
                         record['LAYER'] = features[i].type;
                         if (features[i].data['ID'])
                             record['social'] = "" + ':' + features[i].type + ':' + features[i].data['ID'];

@@ -154,6 +154,19 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
         background: linear-gradient(top, #72a5dc 0%,#3c76c4 50%); /* W3C */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#72a5dc', endColorstr='#3c76c4',GradientType=0 ); /* IE6-9 */
     }
+
+    $theme.feature-list-item-view {
+        img.right-icon {
+            width: 16px;
+            height: 16px;
+            @include slice("images/115.png");
+
+            &.active {
+                @include slice("images/115_active.png");
+            }
+        }
+    }
+
 }
 
 @theme(comments) {
@@ -199,159 +212,6 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
     }
 }
 
-.spinner {
-    background-image: static_url('images/spinner.gif');
-    background-repeat:no-repeat;
-    background-position:center;
-}
-
-.icon-google-earth-24 {
-    width: 25px;
-    height: 25px;
-    background-image: static_url('images/google_earth_icon.png');
-    background-repeat:no-repeat;
-    background-position:center;
-}
-
-.icon-refresh-24 {
-    width: 25px;
-    height: 25px;
-    background-image: static_url('images/refresh.png');
-    background-repeat:no-repeat;
-    background-position:center;
-}
-
-.icon-rendertags-24 {
-    width: 25px;
-    height: 25px;
-    background-image: static_url('images/eye.png');
-    background-repeat:no-repeat;
-    background-position:center;
-}
-
-.icon-print-16 {
-    width: 16px;
-    height: 16px;
-    @include slice("images/printer.png");
-}
-
-.icon-logout-16 {
-    width: 17px;
-    height: 17px;
-    background-image: static_url('images/door_in.png');
-    background-repeat:no-repeat;
-    background-position:center;
-}
-
-.icon-menu-open {
-    width: 15px;
-    height: 10px;
-    background-image: static_url('images/disclose-down.png');
-    background-repeat:no-repeat;
-    background-position:center;
-}
-
-.icon-streetview-16 {
-    width: 18px;
-    height: 18px;
-    background-image: static_url('images/streetview.png');
-    background-repeat:no-repeat;
-    background-position:center;
-}
-
-.icon-clear-24 {
-	width: 24px;
-	height: 24px;
-	@include slice("images/clear.png");
-}
-
-.icon-clear-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/clear-16.png");
-}
-
-.icon-search-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/search.png");
-}
-
-.icon-explore-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/explore.png");
-}
-
-.icon-layers-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/layers.png");
-}
-
-.icon-measure-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/measure.png");
-}
-
-.icon-area-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/area.png");
-}
-
-.icon-settings-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/settings.png");
-}
-
-.icon-tips-16 {
-	width: 16px;
-	height: 16px;
-	@include slice("images/tips.png");
-}
-
-/* code for loading animation, all CSS3 */
-.olControlLoadingPanel {
-    top: 50%;
-    left: 50%;
-    position: relative;
-    display: none;
-
-	background-color: rgba(0,0,0,0);
-	border:7px solid rgba(0,183,229,0.9);
-	opacity:.9;
-	border-top:7px solid rgba(0,0,0,0);
-	border-left:7px solid rgba(0,0,0,0);
-	border-radius:20px;
-	box-shadow: 0 0 35px #2187e7;
-	width:20px;
-	height:20px;
-	-moz-animation:spin .5s infinite linear;
-    -webkit-animation:spin .5s infinite linear;
-    animation:spin .5s infinite linear;
-}
-
-@-moz-keyframes spin {
-	0% { -moz-transform:rotate(0deg); }
-	100% { -moz-transform:rotate(360deg); }
-}
-@-moz-keyframes spinoff {
-	0% { -moz-transform:rotate(0deg); }
-	100% { -moz-transform:rotate(-360deg); }
-}
-@-webkit-keyframes spin {
-	0% { -webkit-transform:rotate(0deg); }
-	100% { -webkit-transform:rotate(360deg); }
-}
-@-webkit-keyframes spinoff {
-	0% { -webkit-transform:rotate(0deg); }
-	100% { -webkit-transform:rotate(-360deg); }
-}
-/* EOF for code for loading animation, all CSS3 */
-
 .hippie_background {
     background-image: static_url("linen.jpg");
     /*-moz-background-size: 100% 100%; *//* Firefox 3.6 */
@@ -366,3 +226,5 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
   position: relative;
   padding: 0.2em;
 }
+
+sc_require("../views/featuredetailslistitemview/v_featuredetails.css");

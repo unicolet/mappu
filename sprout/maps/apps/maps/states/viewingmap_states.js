@@ -278,6 +278,12 @@ Maps.viewingMapState = SC.State.extend({
         Maps.socialCommentsController.delComment();
     },
 
+    zoomToFeature: function(v) {
+        var feature;
+        if(v && (feature=v.get("content"))) {
+            Maps.openLayersController.getOLMAP().panTo(feature.lonlat());
+        }
+    },
 
     /*******************************************************
      *
