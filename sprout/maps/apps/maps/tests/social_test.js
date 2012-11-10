@@ -38,18 +38,26 @@ test("social.id.required",function(){
                             Maps.Feature, {
                                 "social": "-1",
                                 name: "test"} );
-    stop(2000);
+    stop(4000);
 
-    ok(feature.get('status') === SC.Record.BUSY_CREATING, 'Status is BUSY_CREATING (actual: '+feature.get('status')+')');
+    /*
+        The following checks are highly sensitive to network and execution speed.
+        They might sometime fail if network is too slow or the browser is busy.
+     */
+    var status=feature.get('status');
+    ok(status === SC.Record.BUSY_CREATING || status === SC.Record.READY_NEW, 'Status is BUSY_CREATING (actual: '+feature.get('status')+')');
     ok(!feature.get("isStarred"), "feature id -1 is not starred");
     __feature=feature;
 
-    setTimeout(__checkStarred, 1500);
+    setTimeout(__checkStarred, 3500);
 });
 
 function __checkStarred() {
     ok(starred == __feature.get("isStarred"), "feature id -1 is not starred");
     ok("-1" == __feature.getSocialID(),"social id = -1");
+    // as we did not tell the store to commit, status should still be BUSY_CREATING
+    var status=__feature.get('status');
+    ok(status === SC.Record.BUSY_CREATING, 'Status is not BUSY_CREATING (actual: '+status+')');
     start();
 }
 
