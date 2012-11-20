@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://31.222.191.183/static/maps/en/1.1/" />
+<title>mappu</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">mappu</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://localhost:4020/maps/en/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//input</td>
+	<td>demo</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input</td>
+	<td>demo</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=//input[@type=&quot;password&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>xpath=//input[@type=&quot;password&quot;]</td>
+	<td>demo</td>
+</tr>
+<tr>
+	<td>mouseDown</td>
+	<td>xpath=//label[contains(text(),&quot;Login&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseUp</td>
+	<td>xpath=//label[contains(text(),&quot;Login&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>10000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=//span[contains(text(),&quot;Show tips&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseDown</td>
+	<td>xpath=//label[contains(text(),&quot;Close&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseUp</td>
+	<td>xpath=//label[contains(text(),&quot;Close&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xpath=//img[contains(@src,&quot;/geoserver&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>xpath=//span[contains(text(),&quot;Show tips&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseDownAt</td>
+	<td>xpath=//label[text()=&quot;Layers&quot;]</td>
+	<td>1,1</td>
+</tr>
+<tr>
+	<td>mouseUpAt</td>
+	<td>xpath=//label[text()=&quot;Layers&quot;]</td>
+	<td>1,1</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>2000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseDown</td>
+	<td>xpath=//div[@role=&quot;checkbox&quot;]/span[contains(@class,&quot;button&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseUp</td>
+	<td>xpath=//div[@role=&quot;checkbox&quot;]/span[contains(@class,&quot;button&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>500</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xpath=//body</td>
+	<td>10,20</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=//img[contains(@src,&quot;/geoserver&quot;)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseMoveAt</td>
+	<td>xpath=//div[contains(@id,&quot;_OpenLayers_ViewPort&quot;)]</td>
+	<td>200,200</td>
+</tr>
+<tr>
+	<td>mouseDownAt</td>
+	<td>xpath=//div[contains(@id,&quot;_OpenLayers_ViewPort&quot;)]</td>
+	<td>200,200</td>
+</tr>
+<tr>
+	<td>mouseUpAt</td>
+	<td>xpath=//div[contains(@id,&quot;_OpenLayers_ViewPort&quot;)]</td>
+	<td>200,200</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xpath=//div[contains(@id,&quot;_OpenLayers_ViewPort&quot;)]</td>
+	<td>200,200</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseDown</td>
+	<td>xpath=//label[contains(text(),'demo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>mouseUp</td>
+	<td>xpath=//label[contains(text(),'demo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>1000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xpath=//div[contains(*//text(),'Logout')]</td>
+	<td>1,1</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>xpath=//input</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
