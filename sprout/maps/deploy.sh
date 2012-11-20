@@ -18,4 +18,13 @@ echo "done."
 echo -n "[Version=${VERSION}] Uploading..."
 s3cmd put --acl-public --guess-mime-type mappu-build-${VERSION}.tgz s3://s3-mappu/mappu-build-${VERSION}.tgz
 echo "done."
+
+echo -n "[Version=${VERSION}] Creating rpm,deb and uploading..."
+rm mappu-build-${VERSION}.tgz
+fpm -s dir -a all -t rpm -n "mappu-ui" -v ${VERSION} --prefix=/var/www static/
+fpm -s dir -a all -t deb -n "mappu-ui" -v ${VERSION} --prefix=/var/www static/
+s3cmd put --acl-public --guess-mime-type mappu-ui-${VERSION}-1.noarch.rpm s3://s3-mappu/mappu-${VERSION}-1.noarch.rpm
+s3cmd put --acl-public --guess-mime-type mappu-ui_${VERSION}_all.deb s3://s3-mappu/mappu-${VERSION}_all.deb
+echo "done."
+
 cd - 
