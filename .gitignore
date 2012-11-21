@@ -4,3 +4,4 @@ frameworks/sctable
 vagrant/install-data/*
 sprout/maps/apps/maps/.idea/**
 sprout/maps/apps/maps/.idea/*
+.idea/**
