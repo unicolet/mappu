@@ -80,19 +80,11 @@ Maps.commentsTab = SC.View.design({
     childViews: "noSelectionTab yesSelectionTab".w(),
     noSelectionTab: Maps.nosocialTab.design({
         layout: {top:0,bottom:0,left:0,right:0},
-        isVisibleBinding: SC.Binding.oneWay('Maps.featureInfoController.selection').transform(function(value, binding) {
-            if(!value || value.length()==0)
-                return true;
-            return false;
-        })
+        isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').not()
     }),
     yesSelectionTab: SC.View.design({
         childViews: "comments newComment addComment delComment".w(),
-        isVisibleBinding: SC.Binding.oneWay('Maps.featureInfoController.selection').transform(function(value, binding) {
-            if(!value || value.length()==0)
-                return false;
-            return true;
-        }),
+        isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').bool(),
         comments: SC.ScrollView.design({
             layout: {left: 10, top:15, right: 10, bottom: 50 },
             backgroundColor: 'white',
@@ -137,7 +129,9 @@ Maps.linksTab = SC.View.design({
     noLinks:  SC.LabelView.design({
         classNames: ["translucent","centered"],
         layout: {centerX:0, centerY:0, width:100, height: 33 },
-        isVisibleBinding: SC.Binding.oneWay('Maps.socialController.content').not(),
+        isVisibleBinding: SC.Binding.oneWay('Maps.featureInfoController.selection').transform(function(value, binding) {
+            return !value || value.length() == 0;
+        }),
         value: "_select_above".loc()
     }),
     links: SC.ScrollView.design({

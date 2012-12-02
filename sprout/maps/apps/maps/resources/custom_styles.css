@@ -226,5 +226,3 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
   position: relative;
   padding: 0.2em;
 }
-
-sc_require("../views/featuredetailslistitemview/v_featuredetails.css");

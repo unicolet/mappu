@@ -19,6 +19,8 @@ Maps.socialCommentsController = SC.ArrayController.create(
     newCommentText: "",
 
     findComments: function(id) {
+        if(id===false) return;
+
         //@ifdebug
         console.log("Maps.socialCommentsController.findComments for id="+id);
         //@endif

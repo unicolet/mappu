@@ -105,7 +105,7 @@ Maps.viewingMapState = SC.State.extend({
         var selectedFeature = Maps.featureInfoController.get("selection").firstObject();
         if(!selectedFeature) {
             Maps.socialController.set("content",null);
-            Maps.socialCommentsController.findComments("-1");
+            Maps.socialCommentsController.findComments(false);
             Maps.linkController.set("content",null);
         } else {
             var hasSocial=selectedFeature.get("social");
@@ -115,7 +115,7 @@ Maps.viewingMapState = SC.State.extend({
                 Maps.socialCommentsController.findComments(selectedFeature.getSocialID());
             } else {
                 Maps.socialController.set("content", null);
-                Maps.socialCommentsController.findComments("-1");
+                Maps.socialCommentsController.findComments(false);
             }
             // fetch links
             Maps.linkController.findLinks();
