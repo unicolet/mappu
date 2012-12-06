@@ -7,7 +7,6 @@ if getent passwd vagrant ; then
 fi
 
 REMOTE_REPO="https://s3.amazonaws.com/s3-mappu"
-MAPPU_VERSION="1.1"
 # this is just a placeholder, have a script to find latest
 TOMCAT_VERSION="7.0.27"
 GEOSERVER_PKG="geoserver-2.0.13-custom.war"
@@ -50,6 +49,7 @@ sudo add-apt-repository ppa:ubuntugis/ppa || sudo add-apt-repository -y ppa:ubun
 sudo apt-get -y update 
 ) >> provision.log 2>&1
 
+
 echo "################################################################"
 echo "# Installing postgres, postgis and apache2                     #"
 echo "################################################################"
@@ -77,10 +77,10 @@ print \$1 . "\n";
 }
 }
 EOF
-	TOMCAT_VERSION=`wget -O - http://mirror.nohup.it/apache/tomcat/tomcat-7/ | grep v7 | perl ${REPO_DIR}/links.pl | tail -1 | sed 's/v//' | sed 's/\///'`
+	TOMCAT_VERSION=`wget -q -O - http://mirror.nohup.it/apache/tomcat/tomcat-7/ | grep v7 | perl ${REPO_DIR}/links.pl | tail -1 | sed 's/v//' | sed 's/\///'`
 
 	if [ ! -e ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz ]; then 
-		wget http://mirror.nohup.it/apache/tomcat/tomcat-7/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz > /dev/null 2>&1
+		wget -q http://mirror.nohup.it/apache/tomcat/tomcat-7/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz > /dev/null 2>&1
 		sudo cp apache-tomcat-${TOMCAT_VERSION}.tar.gz ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz
 	fi
 	tar -zxf ${REPO_DIR}/apache-tomcat-${TOMCAT_VERSION}.tar.gz 
@@ -186,7 +186,7 @@ else
 	# checking for jdk in shared folder
 	# check platform spcific jdk
 	if [ "$ARCH" == "x86_64" ]; then
-		wget ${REMOTE_REPO}/jdk-6u31-linux-x64.bin
+		wget -q ${REMOTE_REPO}/jdk-6u31-linux-x64.bin
 		chmod u+x jdk-6u31-linux-x64.bin
 		echo yes | ./jdk-6u31-linux-x64.bin
 		sudo mv jdk1.6.0_31 /opt/
@@ -194,7 +194,7 @@ else
 		jdk=`ls -1 ${REPO_DIR}/jdk-6*x64*.bin | head -1`
 	fi
 	if [ "$jdk" == "" ]; then
-		wget ${REMOTE_REPO}/jdk-6u31-linux-i586.bin
+		wget -q ${REMOTE_REPO}/jdk-6u31-linux-i586.bin
 		chmod u+x jdk-6u31-linux-i586.bin
 		echo yes | ./jdk-6u31-linux-i586.bin
 		sudo mv jdk1.6.0_31 /opt/
@@ -242,13 +242,14 @@ echo "################################################################"
 echo "# Updating postgres database                                   #"
 echo "################################################################"
 
+export MAPPU_BACKEND_VERSION=`wget -q -O - ${REMOTE_REPO}/mappu-backend.version`
 export JAVA_HOME=/opt/jdk
 export PATH=$JAVA_HOME/bin:$PATH
 
-export WARFILE=${REPO_DIR}/mapsocial-0.1.war
+export WARFILE=${REPO_DIR}/mapsocial-${MAPPU_BACKEND_VERSION}.war
 if [ ! -e $WARFILE ]; then
 	# download from s3
-	wget ${REMOTE_REPO}/mapsocial-0.1.war && mv mapsocial-0.1.war ${REPO_DIR}/
+	wget -q ${REMOTE_REPO}/mapsocial-${MAPPU_BACKEND_VERSION}.war && mv mapsocial-${MAPPU_BACKEND_VERSION}.war ${REPO_DIR}/
 fi;
 
 (
@@ -264,19 +265,20 @@ echo "# Installing/Upgrading backend web app                         #"
 echo "################################################################"
 (
 sudo rm -f /opt/tomcat/webapps/mapsocial.war
-sudo cp ${REPO_DIR}/mapsocial-0.1.war /opt/tomcat/webapps/mapsocial.war
+sudo cp ${REPO_DIR}/mapsocial-${MAPPU_BACKEND_VERSION}.war /opt/tomcat/webapps/mapsocial.war
 sudo chown tomcat.tomcat /opt/tomcat/webapps/mapsocial.war
 ) >> provision.log 2>&1
 
 
+export MAPPU_UI_VERSION=`wget -q -O - ${REMOTE_REPO}/mappu-ui.version`
 echo "################################################################"
 echo "# Installing Sproutcore frontend                               #"
 echo "################################################################"
 (
-export SCAPP=${REPO_DIR}/mappu-build-${MAPPU_VERSION}.tgz
+export SCAPP=${REPO_DIR}/mappu-build-${MAPPU_UI_VERSION}.tgz
 if [ ! -e $SCAPP ]; then
         # download from s3
-        wget ${REMOTE_REPO}/mappu-build-${MAPPU_VERSION}.tgz && mv mappu-build-${MAPPU_VERSION}.tgz ${REPO_DIR}/
+        wget -q ${REMOTE_REPO}/mappu-build-${MAPPU_UI_VERSION}.tgz && mv mappu-build-${MAPPU_UI_VERSION}.tgz ${REPO_DIR}/
 fi;
 
 sudo tar -zxf $SCAPP -C /var/www/
@@ -315,12 +317,12 @@ echo "################################################################"
 if [ ! -e "${REPO_DIR}/jai*.bin" ]; then
 	if [ "$ARCH" == "x86_64" ]; then
 		JAI_ARCH=amd64
-		wget http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-amd64-jdk.bin
-		wget http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-amd64-jdk.bin
+		wget -q http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-amd64-jdk.bin
+		wget -q http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-amd64-jdk.bin
 	else
 		JAI_ARCH=i586
-		wget http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-i586-jdk.bin
-		wget http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-i586-jdk.bin
+		wget -q http://download.java.net/media/jai-imageio/builds/release/1.1/jai_imageio-1_1-lib-linux-i586-jdk.bin
+		wget -q http://download.java.net/media/jai/builds/release/1_1_3/jai-1_1_3-lib-linux-i586-jdk.bin
 	fi
 	sudo cp jai-1_1_3-lib-linux-${JAI_ARCH}-jdk.bin ${REPO_DIR}/
 	sudo cp jai_imageio-1_1-lib-linux-${JAI_ARCH}-jdk.bin ${REPO_DIR}/
@@ -400,18 +402,18 @@ sudo /etc/init.d/tomcat7 start
 sleep 60 
 
 # download and install MapFish print comfig.yaml
-sudo wget -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
+sudo wget -q -O /opt/tomcat/webapps/print-servlet/config.yaml ${REMOTE_REPO}/config.yaml
 
 sudo /etc/init.d/apache2 restart
 
 # replace home page...
 sudo mv ${INDEXHTML} ${INDEXHTML}.bak
-sudo ln -s /var/www/static/maps/en/1.1/index.html ${INDEXHTML}
-sudo ln -s /var/www/static/maps/it/1.1/source /var/www/source
+sudo ln -s /var/www/static/maps/en/${MAPPU_UI_VERSION}/index.html ${INDEXHTML}
+sudo ln -s /var/www/static/maps/en/${MAPPU_UI_VERSION}/source /var/www/source
 
 ) >> provision.log 2>&1 
 
-URL=`sudo ifconfig eth1 | awk -F: '/inet addr/ {print $2} ' | awk '{printf("http://%s/static/maps/en/1.1/\n",$1); }'`
+URL=`sudo ifconfig eth1 | awk -F: '/inet addr/ {print $2} ' | awk '{printf("http://%s/\n",$1); }'`
 
 echo ""
 echo "Installation completed, point your browser to:"
