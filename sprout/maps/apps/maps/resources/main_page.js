@@ -408,7 +408,7 @@ Maps.mainPage = SC.Page.design({
                 }),
                 rendertags: SC.ButtonView.design({
                     //classNames: ["borderless"],
-                    layout: {bottom:0,width:0.48,height:24,right:0},
+                    layout: {bottom:0,width:0.56,height:24,right:0},
                     title: "_rendertags".loc(),
                     icon: "icon-rendertags-24",
                     action: "maps_RenderTags",
