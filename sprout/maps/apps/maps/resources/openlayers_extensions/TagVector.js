@@ -144,6 +144,12 @@ Maps.TagVector = OpenLayers.Class(OpenLayers.Layer, {
      * {Array(<object.x,object.y>)}
      */
     features: null,
+
+    /**
+     * Property: tags
+     * The tags as selected by the user in the UI as a comma-joined string.
+     */
+    tags: null,
     
     /** 
      * Property: filter
@@ -563,6 +569,14 @@ Maps.TagVector = OpenLayers.Class(OpenLayers.Layer, {
      * options - {Object}
      */
     addFeatures: function(features, options) {
+        // process tags
+        this.renderer.tagMapper = {};
+        var selectedTags=this.tags.split(',');
+        for(var i= 0, l=selectedTags.length;i<l;i++) {
+            var tag=selectedTags[i].trim();
+            this.renderer.tagMapper[tag]=i;
+        }
+
         if (!(OpenLayers.Util.isArray(features))) {
             features = [features];
         }
@@ -751,7 +765,7 @@ Maps.TagVector = OpenLayers.Class(OpenLayers.Layer, {
         }
 
         var drawn = this.renderer.drawFeature(feature, style);
-        //TODO-DONE (done for mappu as we don't use SVG) remove the check for null when we get rid of Renderer.SVG
+
         if (drawn) {
             this.unrenderedFeatures[feature.id] = feature;
         } else {

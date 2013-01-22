@@ -390,7 +390,8 @@ Maps.mainPage = SC.Page.design({
                     contentValueKey: "tag",
                     contentCheckboxKey: "visible",
                     //contentIconKey: "legendIcon",
-                    contentUnreadCountKey: "occurrences"
+                    contentUnreadCountKey: "occurrences",
+                    isSelectable: NO
                     //hasContentIcon: YES
                 })
             }),

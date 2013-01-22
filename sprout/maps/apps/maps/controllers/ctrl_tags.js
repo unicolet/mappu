@@ -28,9 +28,11 @@ Maps.tagsController = SC.ArrayController.create(
         Maps.set("isLoading", true);
         var layer = this.maybeAddVectorLayer();
         if(layer) {
-            layer.protocol.params={'tags': this.get("selectedTags")};
+            var tags = this.get("selectedTags");
+            layer.tags=tags;
+            layer.protocol.params={'tags': tags};
             // no tags requeste, just empty the layer
-            if(!this.get("selectedTags") || this.get("selectedTags")=="") {
+            if(!tags || tags=="") {
                 layer.removeAllFeatures();
             } else {
                 layer.strategies[0].refresh();

@@ -54,6 +54,18 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
      *     the renderer was locked.
      */
     pendingRedraw: false,
+
+    angles : [0, Math.PI*(30/180), Math.PI * (60/180), Math.PI * (90/180)],
+
+    anchors: [
+        [5,5,15,5,15,-5,5,-5],
+        [],
+        [],
+        []
+    ],
+
+    tagMapper: {},
+
     
     /**
      * Constructor: OpenLayers.Renderer.TagCanvas
@@ -71,6 +83,18 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
         if (this.hitDetection) {
             this.hitCanvas = document.createElement("canvas");
             this.hitContext = this.hitCanvas.getContext("2d");
+        }
+        for (var i=1; i<4; i++) {
+            for(var j=0, l=this.anchors[0].length; j<l; j=j+2) {
+                var x=this.anchors[0][j];
+                var y=this.anchors[0][j+1];
+
+                var newx=( 0.5 + ( x*Math.cos(this.angles[i])+y*Math.sin(this.angles[i]) ) | 0 );
+                var newy=( 0.5 + ( y*Math.cos(this.angles[i])-x*Math.sin(this.angles[i]) ) | 0 );
+
+                this.anchors[i].push(newx);
+                this.anchors[i].push(newy);
+            }
         }
     },
 
@@ -264,41 +288,47 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
         //
         var p0 = (0.5 + pt[0]) | 0;
         var p1 = (0.5 + pt[1]) | 0;
-        if(!isNaN(p0) && !isNaN(p1)) {
-            // Set the style properties.
-            this.canvas.fillStyle   = '#169C19';
-            this.canvas.strokeStyle = '#3F6C3F';
-            this.canvas.lineWidth   = 1;
+        if (!(!isNaN(p0) && !isNaN(p1))) {
+        } else {
+            // Visit http://colorbrewer2.org/ for more schemes
+            // Permalink for this one: http://colorbrewer2.org/index.php?type=sequential&scheme=YlGnBu&n=4
+            var fills = ['#ffffcc', '#a1dab4', '#41b6c4', '#225ea8'];
+            var strokes = ['#3F6C3F', '#3F6C3F', '#3F6C3F', '#3F6C3F'];
 
-            //this.canvas.beginPath();
-            // Start from the top-left point.s
+            // behave when older APIs do not return a tag attribute
+            var featureTags = null;
+            for (var key in this.tagMapper) {
+                if(this.tagMapper.hasOwnProperty(key)) {
+                    featureTags = [key];
+                    break;
+                }
+            }
+            if (geometry.tags) {
+                featureTags = geometry.tags.split(',');
+            }
+            for (var i = 0, l = featureTags.length; i < l; i++) {
+                var tag = featureTags[i].trim();
+                if (this.tagMapper[tag] != undefined) {
+                    var idx = this.tagMapper[tag];
+                    // Set the style properties.
+                    this.canvas.fillStyle = fills[idx];
+                    this.canvas.strokeStyle = strokes[idx];
+                    this.canvas.lineWidth = 1;
 
-//            var width=15, height=5;
-//
-//            this.canvas.moveTo(p0, p1); // give the (x,y) coordinates
-//            this.canvas.lineTo(p0+height, p1+height);
-//            this.canvas.lineTo(p0+width, p1+height);
-//            this.canvas.lineTo(p0+width, p1-height);
-//            this.canvas.lineTo(p0+height, p1-height);
-//            this.canvas.lineTo(p0, p1);
-//
-//            // Done! Now fill the shape, and draw the stroke.
-//            // Note: your shape will not be visible until you call any of the two methods.
-//            this.canvas.fill();
-//            this.canvas.stroke();
-//            this.canvas.closePath();
+                    this.canvas.beginPath();
+                    this.canvas.moveTo(p0, p1); // give the (x,y) coordinates
+                    for (var j = 0, len = this.anchors[idx].length; j < len; j = j + 2) {
+                        this.canvas.lineTo(p0 + this.anchors[idx][j], p1 + this.anchors[idx][j + 1]);
+                    }
+                    this.canvas.lineTo(p0, p1);
 
-            this.canvas.beginPath();
-            this.canvas.moveTo(p0-1, p1+1);
-            this.canvas.lineTo(p0, p1-5);
-            this.canvas.lineTo(p0+5, p1);
-            this.canvas.moveTo(p0-1, p1+1);
-            this.canvas.fill();
-            //this.canvas.stroke();
-            this.canvas.beginPath();
-            this.canvas.arc(p0+5,p1-5,5,0,Math.PI*2, true);
-            this.canvas.fill();
-            this.canvas.stroke();
+                    // Done! Now fill the shape, and draw the stroke.
+                    // Note: your shape will not be visible until you call any of the two methods.
+                    this.canvas.fill();
+                    this.canvas.stroke();
+                    this.canvas.closePath();
+                }
+            }
         }
     },
     
