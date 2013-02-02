@@ -1,51 +1,34 @@
-.feature-view {}
-
-.feature-details-title {}
-.feature-view table {padding:0;margin:0;line-height:1;border:0;width:100%;}
-.feature-details-row {padding:0;margin:0;line-height: 1;}
-td.feature-details-key {padding:0.2em;margin:0;line-height: 1;border:0;}
-td.feature-details-value {padding:0.2em;margin:0;line-height: 1;border:0;}
-td.even {background-color: #F2F2F2;color: black;}
-td.odd {background-color: #C3C3C3;color: black;}
-
-div.no-feature-details {padding:0.7em;line-height:1.6;font-style:italic;color:#333333;}
-
-div.extra-small span.sc-button-inner {min-width:0px;}
-div.extra-small img {margin:0; left:0; top:0; right:0; bottom:0; }
-
-div.maps-chkbox-starred .sc-list-item-view .sc-checkbox-view.sel span.button { background: transparent static_url('images/starred.png') top right no-repeat; }
-
-div.maps-chkbox-starred .sc-list-item-view .sc-checkbox-view span.button { background: transparent static_url('images/unstarred.png') top right no-repeat; }
-
-div.link-summary-view {
-    margin: 0.2em;
-}
-
-div.maps-dropview {
-	font-style:italic;
-	vertical-align: middle;
-	padding-top: 10px;
-    border: 1px dashed #ccc;
-}
-
-.drag-entered {
-	background-color: #608AB9;
-}
-
-.sc-pane.sc-panel > .sc-view {
-    background-color: transparent;
-}
-
-div.ace.dark.popover.maps.sc-view.popover_content_background {
-    background: #F2F2F2;
-}
-
-.sc-label-view.sc-regular-size.app-logo {
-    font-family: 'Gudea', serif;
-    font-size: 25px;
-}
-
 @theme(maps) {
+    .sc-view.popover_content_background {
+        background: #F2F2F2;
+    }
+
+    .sc-label-view.sc-regular-size.app-logo {
+        font-family: 'Gudea', serif;
+        font-size: 25px;
+    }
+
+    .comment-view {
+      display: block;
+      position: relative;
+      padding: 0.2em;
+    }
+
+    div.link-summary-view {
+        margin: 0.2em;
+    }
+
+    div.maps-dropview {
+    	font-style:italic;
+    	vertical-align: middle;
+    	padding-top: 10px;
+        border: 1px dashed #ccc;
+    }
+
+    .drag-entered {
+    	background-color: #608AB9;
+    }
+
     $theme.centered {
         text-align: center;
     }
@@ -76,6 +59,30 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
             background: transparent;
         }
     }
+
+    div.maps-chkbox-starred .sc-list-item-view {
+        .sc-checkbox-view {
+            span.button {
+                background: transparent static_url('images/unstarred.png') top right no-repeat;
+            }
+            &.active {
+                span.button {
+                    background: transparent static_url('images/star_pressed.png') top right no-repeat;
+                }
+            }
+            &.sel.active {
+                span.button {
+                    background: transparent static_url('images/star_pressed.png') top right no-repeat;
+                }
+            }
+            &.sel {
+                span.button {
+                    background: transparent static_url('images/starred.png') top right no-repeat;
+                }
+            }
+        }
+    }
+
 
     /* buttons used in button bars */
     $theme.button.borderless {
@@ -221,8 +228,9 @@ div.ace.dark.popover.maps.sc-view.popover_content_background {
     background-repeat: repeat;
 }
 
-.comment-view {
-  display: block;
-  position: relative;
-  padding: 0.2em;
+
+
+/* fix transparent background on some browsers (iOS) */
+.sc-pane.sc-panel > .sc-view {
+    background-color: transparent;
 }
