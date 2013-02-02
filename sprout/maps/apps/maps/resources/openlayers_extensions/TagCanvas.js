@@ -290,9 +290,10 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
         var p1 = (0.5 + pt[1]) | 0;
         if (!(!isNaN(p0) && !isNaN(p1))) {
         } else {
-            // Visit http://colorbrewer2.org/ for more schemes
-            // Permalink for this one: http://colorbrewer2.org/index.php?type=sequential&scheme=YlGnBu&n=4
             var fills = ['#ffffcc', '#a1dab4', '#41b6c4', '#225ea8'];
+            if (Maps.TagPaletteColors)
+                fills=Maps.TagPaletteColors;
+
             var strokes = ['#3F6C3F', '#3F6C3F', '#3F6C3F', '#3F6C3F'];
 
             // behave when older APIs do not return a tag attribute

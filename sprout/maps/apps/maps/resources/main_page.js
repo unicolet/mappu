@@ -389,10 +389,10 @@ Maps.mainPage = SC.Page.design({
                     selectionBinding: "Maps.tagsController.selection",
                     contentValueKey: "tag",
                     contentCheckboxKey: "visible",
-                    //contentIconKey: "legendIcon",
+                    contentIconKey: "paletteColor",
                     contentUnreadCountKey: "occurrences",
-                    isSelectable: NO
-                    //hasContentIcon: YES
+                    isSelectable: NO,
+                    hasContentIcon: YES
                 })
             }),
             buttons: SC.View.design({

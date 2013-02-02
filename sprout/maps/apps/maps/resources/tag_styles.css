@@ -1,0 +1,28 @@
+img.icon {
+    $icon_width: 16px;
+    $icon_height: 16px;
+
+    &.tag0 {
+        background-color: #ffffcc;
+        width: $icon_width;
+        height: $icon_height;
+    }
+
+    &.tag1 {
+        background-color: #a1dab4;
+        width: $icon_width;
+        height: $icon_height;
+    }
+
+    &.tag2 {
+        background-color: #41b6c4;
+        width: $icon_width;
+        height: $icon_height;
+    }
+
+    &.tag3 {
+        background-color: #225ea8;
+        width: $icon_width;
+        height: $icon_height;
+    }
+}

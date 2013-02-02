@@ -72,13 +72,16 @@ Maps.tagsController = SC.ArrayController.create(
         for(var i=0; i<tagSummaries.length() ;i++) {
             var item=tagSummaries.objectAt(i);
             if(item.get("visible")) {
-                count++;
-                if(count<=countMax) {
+                if(count<countMax) {
+                    item.applyPaletteColor(count);
                     if(selectedTags=="")
                         selectedTags=item.get("tag");
                     else
                         selectedTags=selectedTags+","+item.get("tag");
                 }
+                count++;
+            } else {
+                item.resetPaletteColor();
             }
         }
         if(count>countMax) {
