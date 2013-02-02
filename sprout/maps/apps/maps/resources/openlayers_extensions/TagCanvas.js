@@ -304,7 +304,7 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
                 }
             }
             if (geometry.tags) {
-                featureTags = geometry.tags.split(',');
+                featureTags = geometry.tags.split(',').sort();
             }
             for (var i = 0, l = featureTags.length; i < l; i++) {
                 var tag = featureTags[i].trim();
