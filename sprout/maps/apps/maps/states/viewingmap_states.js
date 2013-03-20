@@ -274,8 +274,8 @@ Maps.viewingMapState = SC.State.extend({
         Maps.socialCommentsController.addComment(view);
     },
 
-    maps_DelComment:function () {
-        Maps.socialCommentsController.delComment();
+    maps_DelComment:function (view) {
+        Maps.socialCommentsController.delComment(view);
     },
 
     zoomToFeature: function(v) {

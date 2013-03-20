@@ -16,6 +16,8 @@ Maps.socialCommentsController = SC.ArrayController.create(
 	SC.CollectionViewDelegate,
 /** @scope Maps.socialCommentsController.prototype */ {
 
+    destroyOnRemoval: YES,
+
     newCommentText: "",
 
     findComments: function(id) {
@@ -41,16 +43,6 @@ Maps.socialCommentsController = SC.ArrayController.create(
 		}
 	},
 
-	collectionViewDeleteContent: function(view, content, indexes) {
-		// destroy the records
-		var records = indexes.map(function(idx) {return this.objectAt(idx);}, this);
-		records.invoke('destroy');
-		
-		this.deselectObjects(this.get('selection'));
-		
-		this.invokeLater(function(){this.get("content").refresh()});
-    },
-
 	addComment: function(view) {
         if(this.get("newCommentText")=="") {
             this.content.refresh();
@@ -58,7 +50,9 @@ Maps.socialCommentsController = SC.ArrayController.create(
             var guid = Maps.featureInfoController.get("selection").firstObject().getSocialID();
 
             if (guid!=null && guid!=undefined) {
+                //@ifdebug
                 console.log("Adding comment to guid: "+guid);
+                //@endif
                 var comment = Maps.store.createRecord(
                     Maps.Comment, {
                         "social": guid,
@@ -77,11 +71,8 @@ Maps.socialCommentsController = SC.ArrayController.create(
         }
 	  },
 
-    delComment: function() {
-        var comment=this.get("selection").firstObject();
-        if(comment) {
-            this.content.remove(comment);
-            comment.destroy();
-        }
+    delComment: function(view) {
+        this.removeObject(this.get("selection").firstObject());
+        view.parentView.comments.contentView.reload();
     }
 });
