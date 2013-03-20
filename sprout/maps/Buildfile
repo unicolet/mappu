@@ -15,7 +15,7 @@ proxy "/wxs", :to => "localhost"
 proxy "/wms", :to => "localhost"
 proxy "/cgi-bin", :to => "localhost"
 proxy "/geoserver", :to => "mappu"
-proxy "/mapsocial", :to => "mappu"
+proxy "/mapsocial", :to => "localhost:3000"
 proxy "/geocache", :to => "mappu"
 proxy "/print-servlet", :to => "mappu"
 

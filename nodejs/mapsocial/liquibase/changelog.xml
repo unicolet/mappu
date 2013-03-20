@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"
+    logicalFilePath="mappu_changelog">
+    <changeSet author="unicoletti (generated)" id="1326791384723-1">
+        <createTable schemaName="public" tableName="authority">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="authority_pkey"/>
+            </column>
+            <column name="version" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-2">
+        <createTable schemaName="public" tableName="comment">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="comment_pkey"/>
+            </column>
+            <column name="version" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="social" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-3">
+        <createTable schemaName="public" tableName="layer_query">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="layer_query_pkey"/>
+            </column>
+            <column name="version" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="filter_string" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="layer" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-4">
+        <createTable schemaName="public" tableName="link">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="link_pkey"/>
+            </column>
+            <column name="version" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="feature_id" type="VARCHAR(255)"/>
+            <column name="layer" type="VARCHAR(255)"/>
+            <column name="layer_group" type="VARCHAR(255)"/>
+            <column name="url" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-5">
+        <createTable schemaName="public" tableName="person">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="person_pkey"/>
+            </column>
+            <column name="version" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_expired" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_locked" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_expired" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-6">
+        <createTable schemaName="public" tableName="person_authority">
+            <column name="authority_id" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="person_id" type="int8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-7">
+        <createTable schemaName="public" tableName="social">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="social_pkey"/>
+            </column>
+            <column name="social_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="starred" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tags" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="x" type="FLOAT8(17)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="y" type="FLOAT8(17)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="int8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-8">
+        <createTable schemaName="public" tableName="social_tags">
+            <column name="social_id" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-9">
+        <createTable schemaName="public" tableName="tags">
+            <column name="tag" type="VARCHAR(100)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tags_pkey"/>
+            </column>
+            <column name="occurrences" type="int8"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-10">
+        <createTable schemaName="public" tableName="usage_tip">
+            <column name="id" type="int8">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="usage_tip_pkey"/>
+            </column>
+            <column name="version" type="int8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_data" type="bytea"/>
+            <column name="language" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mime_type" type="VARCHAR(255)"/>
+            <column name="text" type="VARCHAR(2000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-11">
+        <addPrimaryKey columnNames="authority_id, person_id"
+            constraintName="person_authority_pkey" schemaName="public" tableName="person_authority"/>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-12">
+        <addUniqueConstraint columnNames="authority"
+            constraintName="authority_authority_key" schemaName="public" tableName="authority"/>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-13">
+        <addUniqueConstraint columnNames="username"
+            constraintName="person_username_key" schemaName="public" tableName="person"/>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-14">
+        <addUniqueConstraint columnNames="social_id, username"
+            constraintName="social_social_id_key" schemaName="public" tableName="social"/>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-15">
+        <createIndex indexName="idx_social_x" schemaName="public"
+            tableName="social" unique="false">
+            <column name="x"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-16">
+        <createIndex indexName="idx_social_y" schemaName="public"
+            tableName="social" unique="false">
+            <column name="y"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-17">
+        <createIndex indexName="idx_socialtags_sid" schemaName="public"
+            tableName="social_tags" unique="false">
+            <column name="social_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-18">
+        <createIndex indexName="idx_socialtags_tags" schemaName="public"
+            tableName="social_tags" unique="false">
+            <column name="tag"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-19">
+        <addForeignKeyConstraint baseColumnNames="authority_id"
+            baseTableName="person_authority"
+            baseTableSchemaName="public"
+            constraintName="fk2c8236d938dec663" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id"
+            referencedTableName="authority" referencedTableSchemaName="public"/>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-20">
+        <addForeignKeyConstraint baseColumnNames="person_id"
+            baseTableName="person_authority"
+            baseTableSchemaName="public"
+            constraintName="fk2c8236d9b9844ab1" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id"
+            referencedTableName="person" referencedTableSchemaName="public"/>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-21">
+        <createSequence schemaName="public" sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-22">
+       	<createProcedure>
+CREATE OR REPLACE FUNCTION make_plpgsql()
+RETURNS VOID
+LANGUAGE SQL
+AS $$
+CREATE LANGUAGE plpgsql;
+$$;
+ 
+SELECT
+    CASE
+    WHEN EXISTS(
+        SELECT 1
+        FROM pg_catalog.pg_language
+        WHERE lanname='plpgsql'
+    )
+    THEN NULL
+    ELSE make_plpgsql() END;
+ 
+DROP FUNCTION make_plpgsql();
+    	</createProcedure> 
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-23">
+    	<createProcedure>
+create or replace function update_tags()
+returns trigger as '
+declare 
+  w_tagcursor refcursor;
+  w_tag varchar;
+  w_tag_exists int;
+
+begin
+
+  if TG_OP=''INSERT'' THEN
+    OPEN w_tagcursor FOR SELECT trim(tag) as tag FROM regexp_split_to_table(new.tags, E'','') AS tag;
+    LOOP
+        FETCH w_tagcursor into w_tag;
+        EXIT WHEN NOT FOUND;
+
+        IF w_tag &lt;&gt; '''' THEN
+            INSERT INTO social_tags(social_id, tag) VALUES (NEW.id, w_tag);
+            SELECT 1 into w_tag_exists FROM TAGS where tag=w_tag;
+            IF w_tag_exists = 1 THEN
+                UPDATE tags set occurrences=occurrences+1 WHERE tag = w_tag;
+            ELSE
+                insert into tags (tag, occurrences) values (w_tag, 1);
+            END IF;
+        END IF;
+    END LOOP;
+    CLOSE w_tagcursor;
+  end if;
+
+  if TG_OP=''UPDATE'' THEN
+    IF COALESCE(new.tags,''0'') &lt;&gt; COALESCE(old.tags,''0'') THEN
+                DELETE FROM social_tags WHERE SOCIAL_ID=NEW.id;
+                OPEN w_tagcursor FOR SELECT trim(tag) as tag FROM regexp_split_to_table(old.tags, E'','') AS tag;
+                LOOP
+                    FETCH w_tagcursor into w_tag;
+                    EXIT WHEN NOT FOUND;
+
+                    UPDATE tags set occurrences=occurrences-1 WHERE tag = w_tag;
+                END LOOP;
+                CLOSE w_tagcursor;
+                OPEN w_tagcursor FOR SELECT trim(tag) as tag FROM regexp_split_to_table(new.tags, E'','') AS tag;
+                LOOP
+                    FETCH w_tagcursor into w_tag;
+                    EXIT WHEN NOT FOUND;
+
+                    IF w_tag &lt;&gt; '''' THEN
+                        INSERT INTO social_tags(social_id, tag) VALUES (NEW.id, w_tag);
+                        SELECT 1 into w_tag_exists FROM TAGS where tag=w_tag;
+                        IF w_tag_exists = 1 THEN
+                            UPDATE tags set occurrences=occurrences+1 WHERE tag = w_tag;
+                        ELSE
+                            insert into tags (tag, occurrences) values (w_tag, 1);
+                        END IF;
+                    END IF;
+                END LOOP;
+                CLOSE w_tagcursor;
+        END IF;
+  end if;
+
+  if TG_OP=''DELETE'' then
+    UPDATE tags SET occurrences=occurrences-1 WHERE tag in (SELECT trim(tag) as tag FROM regexp_split_to_table(OLD.tags, E'','') AS tag);
+
+    DELETE FROM social_tags WHERE SOCIAL_ID=OLD.id;
+  end if;
+
+  return new;
+end;
+' language plpgsql;
+    	</createProcedure>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-24">
+       	<createProcedure>
+create trigger trg_update_tags_social 
+  after insert or update or delete
+  on social for each row 
+  execute procedure update_tags();
+    	</createProcedure> 
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-25">
+       	<sql splitStatements="false" endDelimiter="">
+CREATE OR REPLACE FUNCTION major_version() RETURNS smallint
+AS $BODY$ 
+    SELECT substring(version() from $$(\d+)\.\d+\.\d+$$)::smallint;
+$BODY$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION adjustByteaOutput() RETURNS void
+AS $BODY$
+DECLARE
+BEGIN
+    IF major_version() = 9 THEN
+        execute( 'ALTER DATABASE '||current_database()||' SET bytea_output=''escape''');
+    END IF;
+    RETURN;
+END;
+$BODY$ LANGUAGE plpgsql;
+
+select adjustByteaOutput();
+    	</sql> 
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-26">
+    	<comment>add enabled column to usage tips</comment>
+    	<addColumn tableName="usage_tip">
+    		<column name="enabled" defaultValueBoolean="true" type="bool">
+    			<constraints nullable="false"/>
+    		</column>
+    	</addColumn>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-27" context="TEST" runAlways="true">
+    	<comment>clean test db and add one comment to pass unit tests</comment>
+    	<delete tableName="comment">
+    	</delete>
+    	<insert tableName="comment">
+            <column name="id" valueNumeric="1"/>
+            <column name="version" valueNumeric="1"/>
+            <column name="date_created" valueDate="2012-11-11T01:02:30"/>
+            <column name="last_updated" valueDate="2012-11-11T01:02:30"/>
+            <column name="social" value="topp:states:1"/>
+            <column name="text" value="this is the comment text"/>
+            <column name="username" value="demo"/>
+        </insert>
+    	<delete tableName="social">
+    	</delete>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-28" context="TEST" runAlways="true">
+    	<comment>add (disabled) demo user</comment>
+    	<delete tableName="person">
+		<where>username='demo'</where>
+    	</delete>
+      	<insert tableName="person">
+            <column name="id" valueNumeric="2"/>
+            <column name="version" valueNumeric="1"/>
+            <column name="account_expired" valueBoolean="false"/>
+            <column name="account_locked" valueBoolean="false"/>
+            <column name="password_expired" valueBoolean="false"/>
+            <column name="enabled" valueBoolean="false"/>
+            <column name="password" value="2a97516c354b68848cdbd8f54a226a0a55b21ed138e207ad6c5cbb9c00aa5aea"/>
+            <column name="username" value="demo"/>
+        </insert>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-29" context="TEST" runAlways="true">
+        <comment>enable demo user</comment>
+    	<update tableName="person">
+            <column name="enabled" valueBoolean="true"/>
+		<where>username='demo'</where>
+    	</update>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-30" context="TEST" runAlways="true">
+        <comment>insert link data for tests</comment>
+     	<delete tableName="link">
+    	</delete>
+    	<insert tableName="link">
+            <column name="id" valueNumeric="1"/>
+            <column name="version" valueNumeric="1"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="feature_id" value=""/>
+            <column name="layer" value="states"/>
+            <column name="layer_group" value="top"/>
+            <column name="url" value="the_url"/>
+            <column name="description" value="descr"/>
+            <column name="title" value="title"/>
+        </insert>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-31" context="TEST" runAlways="true">
+        <comment>insert social data for tests</comment>
+     	<delete tableName="social">
+    	</delete>
+    	<insert tableName="social">
+            <column name="id" valueNumeric="1"/>
+            <column name="social_id" value="topp:states:1"/>
+            <column name="starred" valueBoolean="true"/>
+            <column name="tags" value="alpha,tango"/>
+            <column name="username" value="demo"/>
+            <column name="x" value="10.5"/>
+            <column name="y" value="20.4"/>
+            <column name="version" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-32" context="TEST" runAlways="true">
+        <comment>insert usage tip data for tests</comment>
+     	<delete tableName="usage_tip">
+    	</delete>
+        <insert tableName="usage_tip">
+               <column name="id" valueNumeric="1"/>
+               <column name="title" value="Example title"/>
+               <column name="language" value="en"/>
+               <column name="text" value="Example text"/>
+               <column name="enabled" valueBoolean="true"/>
+               <column name="version" value="1"/>
+           </insert>
+        <insert tableName="usage_tip">
+               <column name="id" valueNumeric="2"/>
+               <column name="title" value="Disabled tip"/>
+               <column name="language" value="en"/>
+               <column name="text" value="Disabled tip text"/>
+               <column name="enabled" valueBoolean="false"/>
+               <column name="version" value="1"/>
+           </insert>
+    </changeSet>
+</databaseChangeLog>
