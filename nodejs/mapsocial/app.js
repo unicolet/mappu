@@ -59,6 +59,8 @@ app.get   (app_context+'/login/', user.keepAlive);
 app.get   (app_context+'/logout', user.logout);
 app.get   (app_context+'/layerQuery', mappu.layerQuery);
 app.get   (app_context+'/link', mappu.link);
+app.get   (app_context+'/social/tagSummary',mappu.tagSummary);
+app.get   (app_context+'/social/tags',mappu.tagSummary);
 app.get   (app_context+'/social/:id', mappu.social);
 app.post  (app_context+'/social/:id', mappu.socialSave);
 app.get   (app_context+'/social/:id/comments', mappu.comments);

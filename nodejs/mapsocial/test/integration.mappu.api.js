@@ -155,4 +155,22 @@ describe('Mappu API', function () {
             .get('/tips/img/1')
             .expect(404, done);
     });
+
+    it('GET /social/tagSummary should return 200', function (done) {
+        http.request()
+            .get('/social/tagSummary')
+            .expect(200, done);
+    });
+
+    it('GET /social/tagSummary should return data', function (done) {
+        http.request()
+            .get('/social/tagSummary')
+            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false},{"guid":"a","tag":"a","occurrences":1,"visible":false},{"guid":"b","tag":"b","occurrences":1,"visible":false},{"guid":"c","tag":"c","occurrences":1,"visible":false}]}', done);
+    });
+
+    it('GET /social/tags should return data', function (done) {
+        http.request()
+            .get('/social/tags?tags=alpha,tango&bbox=1000,0,1000,0')
+            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false},{"guid":"a","tag":"a","occurrences":1,"visible":false},{"guid":"b","tag":"b","occurrences":1,"visible":false},{"guid":"c","tag":"c","occurrences":1,"visible":false}]}', done);
+    });
 });

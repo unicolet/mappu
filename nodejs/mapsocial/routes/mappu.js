@@ -271,3 +271,90 @@ exports.tipImg=function(req,res) {
         });
     }, conn);
 };
+
+exports.tagSummary=function(req,res) {
+    // for testing, must be fixed
+    var username=req.session.user ? req.session.user.username : "demo";
+    var conn=null;
+
+    var handleError=function(err) {
+        release();
+        console.log(err);
+        res.send(500, JSON.stringify(err));
+        return;
+    };
+
+    var release=function() {
+        if(conn) res.db.release(conn);
+    };
+
+    var end=function(http_code, data) {
+        release();
+        res.send(http_code, JSON.stringify(data));
+        return;
+    };
+
+    res.db.acquire(function (err, connection) {
+        if(err) handleError(err);
+        conn=connection;
+        var params=[];
+        conn.query("select tag guid, tag, occurrences, false visible from tags where occurrences>0 order by occurrences desc", params, function(err, result) {
+            if(!err) {
+                end(200, {content:result.rows});
+            } else {
+                handleError(err);
+            }
+        });
+    }, conn);
+};
+
+exports.tags=function(req,res) {
+    // for testing, must be fixed
+    var username=req.session.user ? req.session.user.username : "demo";
+    var conn=null;
+
+    var handleError=function(err) {
+        release();
+        console.log(err);
+        res.send(500, JSON.stringify(err));
+        return;
+    };
+
+    var release=function() {
+        if(conn) res.db.release(conn);
+    };
+
+    var end=function(http_code, data) {
+        release();
+        res.send(http_code, JSON.stringify(data));
+        return;
+    };
+
+    res.db.acquire(function (err, connection) {
+        if(err) handleError(err);
+        conn=connection;
+        var tags=req.query.tags.split(',');
+        var bbox=req.query.bbox.split(',');
+
+        var params=[];
+        params.concat(tags);
+        params.concat(bbox);
+        var placeholders = [];
+        for(var i=0, l=params.length;i<l;i++) {
+            placeholders.push("?");
+        }
+        var query = 'select distinct s.id ,s.tags tags ,s.x x, s.y y from social_tags as st, social as s where st.social_id=s.id '+
+                        'and st.tag in ('+( placeholders.join(",") ) +' ) '+
+                        'and s.x <= ? and s.x >= ? and s.y <= ? and s.y >= ?';
+
+        console.log(params);
+
+        conn.query(query, params, function(err, result) {
+            if(!err) {
+                end(200, {content:result.rows});
+            } else {
+                handleError(err);
+            }
+        });
+    }, conn);
+};

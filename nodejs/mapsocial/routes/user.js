@@ -65,7 +65,7 @@ exports.keepAlive = function(req, res) {
 };
 
 exports.logout = function(req, res) {
-    req.session=null;
+    delete req.session.user;
     res.send(JSON.stringify({
         'success': true
     }));
