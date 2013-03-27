@@ -10,6 +10,7 @@ var express = require('express')
     , db = require('./modules/connection')
     , auth = require('./modules/auth')
     , mappu = require('./routes/mappu')
+    , jts = require('./routes/jts')
     , redis = require('redis');
 
 var app_context = process.env.NODE_APP_CONTEXT ? process.env.NODE_APP_CONTEXT : "";
@@ -18,6 +19,21 @@ var cookie_secret = process.env.NODE_COOKIE_SECRET ? process.env.NODE_COOKIE_SEC
 var app = express();
 var redisInstance = redis.createClient();
 var RedisStore = require('connect-redis')(express);
+
+// utility function to make the raw request stream available
+// used by jts functions
+saveRawBody = function(req, res, next) {
+    var data='';
+    req.setEncoding('utf8');
+    req.on('data', function(chunk) {
+       data += chunk;
+    });
+
+    req.on('end', function() {
+        req.rawBody = data;
+        next();
+    });
+};
 
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
@@ -68,6 +84,7 @@ app.post  (app_context+'/comment/', mappu.saveComment);
 app.delete(app_context+'/comment/:id', mappu.deleteComment);
 app.get   (app_context+'/tips/next', mappu.nextTip);
 app.get   (app_context+'/tips/img/:id',mappu.tipImg);
+app.post  (app_context+'/jts/:operation', saveRawBody, jts.processJstsRequest);
 
 if (!module.parent) {
     http.createServer(app).listen(app.get('port'), function () {
