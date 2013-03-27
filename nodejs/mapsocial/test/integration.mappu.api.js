@@ -170,7 +170,14 @@ describe('Mappu API', function () {
 
     it('GET /social/tags should return data', function (done) {
         http.request()
-            .get('/social/tags?tags=alpha,tango&bbox=1000,0,1000,0')
-            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false},{"guid":"a","tag":"a","occurrences":1,"visible":false},{"guid":"b","tag":"b","occurrences":1,"visible":false},{"guid":"c","tag":"c","occurrences":1,"visible":false}]}', done);
+            .get('/social/tags?tags=alpha,tango&bbox=0,0,1000.00,1000.00')
+            .expect('{"content":[{"id":1,"tags":"alpha,tango","x":10.5,"y":20.4}]}', done);
     });
+
+    it('GET /social/tags with wrong bbox should return no data', function (done) {
+        http.request()
+            .get('/social/tags?tags=alpha,tango&bbox=-18586546.025509,1788073.5773642,-3225760.8234573,7726924.9261826')
+            .expect('{"content":[]}', done);
+    });
+
 });

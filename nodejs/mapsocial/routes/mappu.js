@@ -337,17 +337,18 @@ exports.tags=function(req,res) {
         var bbox=req.query.bbox.split(',');
 
         var params=[];
-        params.concat(tags);
-        params.concat(bbox);
-        var placeholders = [];
-        for(var i=0, l=params.length;i<l;i++) {
-            placeholders.push("?");
+        var tagsPlaceholders = [];
+        for(var i=0, l=tags.length, offset=bbox.length;i<l;i++) {
+            tagsPlaceholders.push("$"+(i+offset+1)); // 5 is bbox length
         }
+        params=params.concat(bbox.map(function(el,idx,array){
+                    return parseFloat(el);
+        }));
+        params=params.concat(tags);
+        // 1000.00,0.00,1000.00,0.00
         var query = 'select distinct s.id ,s.tags tags ,s.x x, s.y y from social_tags as st, social as s where st.social_id=s.id '+
-                        'and st.tag in ('+( placeholders.join(",") ) +' ) '+
-                        'and s.x <= ? and s.x >= ? and s.y <= ? and s.y >= ?';
-
-        console.log(params);
+                        'and s.x <= $3 and s.x >= $1 and s.y <= $4 and s.y >= $2 ' +
+                        'and st.tag in ('+( tagsPlaceholders.join(",") ) +')';
 
         conn.query(query, params, function(err, result) {
             if(!err) {
