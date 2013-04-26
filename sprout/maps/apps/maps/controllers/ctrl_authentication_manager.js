@@ -136,7 +136,7 @@ Maps.authenticationManager = SC.ObjectController.create({
             //@if(debug)
             console.log("sessionKeepAlive: must revalidate");
             //@endif
-            SC.AlertPane.warn("_session_expired".loc(), "_session_expired_detail".loc() + response.status, "", "OK", this);
+            SC.AlertPane.warn("_session_expired".loc(), "_session_expired_detail".loc(), "", "OK", this);
         }
     },
 
