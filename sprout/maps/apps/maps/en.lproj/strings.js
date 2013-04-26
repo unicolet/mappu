@@ -94,5 +94,7 @@ SC.stringsFor('en', {
     "_addcomment": "Add a comment",
     "_delcomment": "Delete selected comment",
     "_select_above": "Please select a result above",
-    "_please_wait": "Please wait..."
+    "_please_wait": "Please wait...",
+    "_only_show_mine" : "Only show my tags",
+    "_only_show_mine_tip" : "Tags are shared among all users"
 });

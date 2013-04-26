@@ -105,4 +105,6 @@ SC.stringsFor('it', {
     "_delcomment": "Cancella il commento selezionato",
     "_select_above": "Selezionare un risultato sopra",
     "_please_wait": "Attendere prego...",
+    "_only_show_mine" : "Mostra solo i miei tag",
+    "_only_show_mine_tip" : "I tag (etichette) salvati nel sistema sono condivisi fra tutti gli utenti"
 });

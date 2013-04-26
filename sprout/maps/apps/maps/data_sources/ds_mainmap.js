@@ -26,7 +26,7 @@ Maps.COMMENT_QUERY.set("isEditable", YES);
 Maps.LINK_QUERY = SC.Query.remote(Maps.Link, null, {});
 Maps.LAYERQUERY_QUERY = SC.Query.remote(Maps.LayerQuery, {});
 Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null, {id:-1});
-Maps.TAGSUMMARY_QUERY = SC.Query.remote(Maps.Tag);
+Maps.TAGSUMMARY_QUERY = SC.Query.remote(Maps.Tag, null, {});
 Maps.GEOCODE_QUERY = SC.Query.remote(Maps.Address);
 
 Maps.MapsDataSource = SC.DataSource.extend(
@@ -61,8 +61,8 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 return YES;
             }
             if (query === Maps.TAGSUMMARY_QUERY) {
-                //console.log("Maps.MapsDataSource.fetch() - Maps.TagSummary");
-                SC.Request.getUrl('/mapsocial/social/tagSummary')
+                var params=(Maps.tagsController.get("onlyShowMine") ? "?mine" : "");
+                SC.Request.getUrl('/mapsocial/social/tagSummary'+params )
                     .set('isJSON', YES)
                     .notify(this, 'didFetchTagSummary', store, query)
                     .send();

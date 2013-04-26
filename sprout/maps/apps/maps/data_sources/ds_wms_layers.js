@@ -231,6 +231,6 @@ Maps.LayerDataSource = SC.DataSource.extend(
         },
 
         notifyError:function (response) {
-            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "--OK", this);
+            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + response.status, "", "OK", this);
         }
     });

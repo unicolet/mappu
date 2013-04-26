@@ -19,10 +19,19 @@ Maps.tagsController = SC.ArrayController.create(
     selectedTags: '',
 
     /*
+      Only show the tags that have been created by the current logged in user.
+     */
+    onlyShowMine: YES,
+
+    /*
      * Max number of tags to render. Used to safeguard against performance degradation when
      * large number of tags come into play.
     */
     maxTagsToRender: 4,
+
+    didOnlyShowMineChange: function() {
+        this.get("content").refresh();
+    }.observes("onlyShowMine"),
 
     updateHTTPProtocolFilter: function() {
         Maps.set("isLoading", true);
