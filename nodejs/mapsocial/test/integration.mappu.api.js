@@ -168,10 +168,28 @@ describe('Mappu API', function () {
             .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false},{"guid":"a","tag":"a","occurrences":1,"visible":false},{"guid":"b","tag":"b","occurrences":1,"visible":false},{"guid":"c","tag":"c","occurrences":1,"visible":false}]}', done);
     });
 
+    it('GET /social/tagSummary?mine should return data', function (done) {
+        http.request()
+            .get('/social/tagSummary?mine')
+            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false}]}', done);
+    });
+
     it('GET /social/tags should return data', function (done) {
         http.request()
             .get('/social/tags?tags=alpha,tango&bbox=0,0,1000.00,1000.00')
             .expect('{"content":[{"id":1,"tags":"alpha,tango","x":10.5,"y":20.4}]}', done);
+    });
+
+    it('GET /social/tags?mine&tags=a,b should return no data because I don\'t own them', function (done) {
+        http.request()
+            .get('/social/tags?mine&tags=a,b&bbox=0,0,1000.00,1000.00')
+            .expect('{"content":[]}', done);
+    });
+
+    it('GET /social/tags?tags=a,b should return data because I requested all tags', function (done) {
+        http.request()
+            .get('/social/tags?tags=a,b&bbox=0,0,1000.00,1000.00')
+            .expect(new RegExp('\\{"content":\\[\\{"id":[0-9]*,"tags":"a,b,c","x":1.5,"y":2.4\\}\\]\\}'), done);
     });
 
     it('GET /social/tags with wrong bbox should return no data', function (done) {

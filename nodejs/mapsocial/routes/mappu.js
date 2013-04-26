@@ -294,11 +294,19 @@ exports.tagSummary=function(req,res) {
         return;
     };
 
+    var all_tags="select tag guid, tag, occurrences, false visible from tags where occurrences>0 order by occurrences desc";
+    var my_tags="select t.tag guid, t.tag, t.occurrences, false visible from tags t, social_tags st, social s where s.username=$1 and t.tag=st.tag and s.id=st.social_id and t.occurrences>0 order by t.occurrences desc";
+
     res.db.acquire(function (err, connection) {
         if(err) handleError(err);
         conn=connection;
         var params=[];
-        conn.query("select tag guid, tag, occurrences, false visible from tags where occurrences>0 order by occurrences desc", params, function(err, result) {
+        var query=all_tags;
+        if( req.query["mine"] !== undefined ) {
+            query=my_tags;
+            params.push(username);
+        }
+        conn.query(query, params, function(err, result) {
             if(!err) {
                 end(200, {content:result.rows});
             } else {
@@ -349,6 +357,10 @@ exports.tags=function(req,res) {
         var query = 'select distinct s.id ,s.tags tags ,s.x x, s.y y from social_tags as st, social as s where st.social_id=s.id '+
                         'and s.x <= $3 and s.x >= $1 and s.y <= $4 and s.y >= $2 ' +
                         'and st.tag in ('+( tagsPlaceholders.join(",") ) +')';
+        if( req.query["mine"] !== undefined ) {
+            params.push(username);
+            query=query+" and s.username=$"+params.length;
+        }
 
         conn.query(query, params, function(err, result) {
             if(!err) {
