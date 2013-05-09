@@ -9,6 +9,6 @@ run_prod:
 	NODE_APP_CONTEXT="/mapsocial" NODE_DB_URL="postgres://social:social@localhost/social"  nodejs app.js
 
 liquibase_prod:
-	java -jar liquibase/liquibase-1.9.3.jar --classpath=liquibase/postgresql-8.3-603.jdbc3.jar --changeLogFile=liquibase/changelog.xml --driver=org.postgresql.Driver --username=${DB_USER} --password=${DB_PASSWORD} --url=jdbc:postgresql://${DB_HOST}/${DB_NAME} update
+	java -jar liquibase/liquibase-1.9.3.jar --contexts=PROD --classpath=liquibase/postgresql-8.3-603.jdbc3.jar --changeLogFile=liquibase/changelog.xml --driver=org.postgresql.Driver --username=${DB_USER} --password=${DB_PASSWORD} --url=jdbc:postgresql://${DB_HOST}/${DB_NAME} update
 
 .PHONY: test run
