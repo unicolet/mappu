@@ -462,4 +462,41 @@ select adjustByteaOutput();
                <column name="version" value="1"/>
            </insert>
     </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-33">
+        <comment>add default admin user and roles</comment>
+        <insert tableName="person">
+            <column name="id" valueNumeric="1"/>
+            <column name="version" valueNumeric="1"/>
+            <column name="account_expired" valueBoolean="false"/>
+            <column name="account_locked" valueBoolean="false"/>
+            <column name="password_expired" valueBoolean="false"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="password" value="0876dfca6d6fedf99b2ab87b6e2fed4bd4051ede78a8a9135b500b2e94d99b88"/>
+            <column name="username" value="admin"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" valueNumeric="1"/>
+            <column name="version" valueNumeric="1"/>
+            <column name="authority" value="ROLE_USER"/>
+	</insert>
+        <insert tableName="authority">
+            <column name="id" valueNumeric="2"/>
+            <column name="version" valueNumeric="1"/>
+            <column name="authority" value="ROLE_ADMIN"/>
+	</insert>
+        <insert tableName="person_authority">
+            <column name="person_id" valueNumeric="1"/>
+            <column name="authority_id" valueNumeric="1"/>
+	</insert>
+        <insert tableName="person_authority">
+            <column name="person_id" valueNumeric="1"/>
+            <column name="authority_id" valueNumeric="2"/>
+	</insert>
+    </changeSet>
+    <changeSet author="unicoletti (generated)" id="1326791384723-34">
+        <comment>account for test data, or we will have colliding keys</comment>
+        <createProcedure>
+        ALTER SEQUENCE hibernate_sequence RESTART WITH 100;
+        </createProcedure>
+    </changeSet>
 </databaseChangeLog>
