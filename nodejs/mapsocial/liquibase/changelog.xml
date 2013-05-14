@@ -387,7 +387,7 @@ select adjustByteaOutput();
     	<delete tableName="social">
     	</delete>
     </changeSet>
-    <changeSet author="unicoletti" id="1326791384723-28" context="TEST" runAlways="true">
+    <changeSet author="unicoletti" id="1326791384723-28" context="TEST">
     	<comment>add (disabled) demo user</comment>
     	<delete tableName="person">
 		<where>username='demo'</where>
@@ -403,7 +403,7 @@ select adjustByteaOutput();
             <column name="username" value="demo"/>
         </insert>
     </changeSet>
-    <changeSet author="unicoletti" id="1326791384723-29" context="TEST" runAlways="true">
+    <changeSet author="unicoletti" id="1326791384723-29" context="TEST">
         <comment>enable demo user</comment>
     	<update tableName="person">
             <column name="enabled" valueBoolean="true"/>
@@ -498,5 +498,15 @@ select adjustByteaOutput();
         <createProcedure>
         ALTER SEQUENCE hibernate_sequence RESTART WITH 100;
         </createProcedure>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-35" context="TEST">
+        <preConditions onFail="CONTINUE">
+            <sqlCheck expectedResult="0">select count(1) from person_authority where person_id=2 and authority_id=1</sqlCheck>
+        </preConditions>
+        <comment>add demo user user to USER role</comment>
+        <insert tableName="person_authority">
+            <column name="person_id" valueNumeric="2"/>
+            <column name="authority_id" valueNumeric="1"/>
+	</insert>
     </changeSet>
 </databaseChangeLog>
