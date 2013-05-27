@@ -2,6 +2,7 @@
 exports.find=function(req,res,cb,conn) {
     var connection=res.db;
     if(conn!=null) { connection=conn; }
+    console.log("");
     connection.query("select social_id guid, tags, username, starred, x, y from social where social_id = $1", [req.params.id], function(err, result) {
         var social={};
         var http_code=404;

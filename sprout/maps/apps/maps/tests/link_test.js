@@ -40,7 +40,6 @@ function __checkLinksFind() {
 }
 
 test("link.local.query", function() {
-    stop(2000);
     var q=SC.Query.local(Maps.Link,
                     "( ( layer={layer} AND layerGroup={group} AND featureId={fid} ) "+
                     "OR ( layer={layer} AND layerGroup={group} AND featureId!={fid} ) "+
@@ -48,17 +47,11 @@ test("link.local.query", function() {
         {fid:1, layer:"states", group:"top"}
     );
     __query=Maps.store.find(q);
-    setTimeout(__checkLocalFind, 1500);
-});
-
-function __checkLocalFind() {
     ok(__query.length()>=1, "at least one link");
     ok(__query.get('status') === SC.Record.BUSY_LOADING, 'Status is BUSY_LOADING (actual '+__query.get('status')+')');
-    start();
-}
+});
 
 test("link.local.query.fail", function() {
-    stop(2000);
     var q=SC.Query.local(Maps.Link,
                     "( ( layer={layer} AND layerGroup={group} AND featureId={fid} ) "+
                     "OR ( layer={layer} AND layerGroup={group} AND featureId!={fid} ) "+
@@ -66,14 +59,9 @@ test("link.local.query.fail", function() {
         {fid:1, layer:"NONE", group:"NONE"}
     );
     __query=Maps.store.find(q);
-    setTimeout(__checkLocalFindFail, 1500);
-});
-
-function __checkLocalFindFail() {
     ok(__query.length()==0, "no link");
     ok(__query.get('status') === SC.Record.BUSY_LOADING, 'Status is BUSY_LOADING (actual '+__query.get('status')+')');
-    start();
-}
+});
 
 test("link.logout",function (){
     stop(2000);

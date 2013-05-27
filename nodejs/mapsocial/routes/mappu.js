@@ -4,16 +4,16 @@ var social=require('../models/social');
 exports.layerQuery=function(req, res) {
     res.db.query("select id guid, name, description, layer, filter_string \"filterString\" from layer_query", [], function(err, result) {
         var queries=[];
-        if (!err && result.rows.length==1)
+        if (!err && result.rows.length>=1)
             queries=result.rows;
         res.send(JSON.stringify({content:queries}));
     });
 };
 
 exports.link=function(req, res) {
-    res.db.query("select id guid, name, feature_id \"featureId\", layer, layer_group \"layerGroup\", url, description, title from link where enabled=true", [], function(err, result) {
+    res.db.query("select id guid, feature_id \"featureId\", layer, layer_group \"layerGroup\", url, description, title from link where enabled=true", [], function(err, result) {
         var links=[];
-        if (!err && result.rows.length==1)
+        if (!err && result.rows.length>=1)
             links=result.rows;
         res.send(JSON.stringify({content:links}));
     });

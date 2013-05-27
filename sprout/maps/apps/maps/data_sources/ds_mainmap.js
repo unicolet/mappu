@@ -194,7 +194,9 @@ Maps.MapsDataSource = SC.DataSource.extend(
         didRetrieveRecord: function(response, params) {
             var store = params.store,
                 storeKey = params.storeKey;
-
+            //@if(debug)
+            console.log("Got response, is it OK? "+SC.ok(response)+" status="+response.status);
+            //@endif
             if (SC.ok(response)) {
                 var dataHash = response.get('body').content;
                 store.dataSourceDidComplete(storeKey, dataHash);
