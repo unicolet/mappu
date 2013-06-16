@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+   - "0.10"
+
+services:
+   - redis
+   - postgresql
+
+before_script:
+   - psql -c 'create user social_test with password 'social';' -U postgres
+   - psql -c 'create database social_test with owner social_test;' -U postgres
+
+script: "cd nodejs/mapsocial && make test"
