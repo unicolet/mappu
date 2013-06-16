@@ -69,7 +69,7 @@ test("social.id.integration.create",function(){
 
     ok(!__feature.get("isStarred"), "feature id -1 is not starred");
     ok("-1" == __feature.getSocialID(),"social id = -1");
-    ok(__feature.getPath('social.status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN(actual: '+__feature.getPath('social.status')+')');
+    ok(__feature.getPath('social.status') === SC.Record.ERROR, '[before commit] Status is ERROR (actual: '+__feature.getPath('social.status')+')');
 
     SC.RunLoop.begin();
     __feature.set("isStarred",YES);
@@ -85,7 +85,7 @@ function __checkSocial() {
     ok(2 == __feature.getPath('social.y'), "y is not 2");
     ok("" == __feature.getPath('social.tags'), "tags is not empty");
     ok(__starred == __feature.getPath('social.starred'), "starred is not "+__starred);
-    ok(__feature.getPath('social.status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN (actual: '+__feature.getPath('social.status')+')');
+    ok(__feature.getPath('social.status') === SC.Record.READY_CLEAN, '[after commit] Status is READY_CLEAN (actual: '+__feature.getPath('social.status')+')');
     start();
 }
 

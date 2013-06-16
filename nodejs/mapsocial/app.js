@@ -79,6 +79,7 @@ app.get   (app_context+'/social/tagSummary',mappu.tagSummary);
 app.get   (app_context+'/social/tags',mappu.tags);
 app.get   (app_context+'/social/:id', mappu.social);
 app.post  (app_context+'/social/:id', mappu.socialSave);
+app.put   (app_context+'/social/:id', mappu.socialSave);
 app.get   (app_context+'/social/:id/comments', mappu.comments);
 app.post  (app_context+'/comment/', mappu.saveComment);
 app.delete(app_context+'/comment/:id', mappu.deleteComment);

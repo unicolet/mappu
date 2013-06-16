@@ -38,7 +38,13 @@ describe('Mappu API', function () {
     it('GET /link without params should return a list', function (done) {
         http.request()
             .get('/link')
-            .expect("{\"content\":[]}", done);
+            .expect("{\"content\":[{\"guid\":1,\"featureId\":\"\",\"layer\":\"states\",\"layerGroup\":\"top\",\"url\":\"the_url\",\"description\":\"descr\",\"title\":\"title\"}]}", done);
+    });
+
+    it('GET /social/topp:states:1?alt=json returns one item', function (done) {
+        http.request()
+            .get('/social/topp:states:1?alt=json')
+            .expect("{\"content\":{\"guid\":\"topp:states:1\",\"tags\":\"alpha,tango\",\"username\":\"demo\",\"starred\":true,\"x\":10.5,\"y\":20.4}}", done);
     });
 
     it('GET /social/topp:states:1 returns one item', function (done) {
@@ -73,9 +79,22 @@ describe('Mappu API', function () {
     });
 
     it('POST /social/topp:states:2 should update', function (done) {
-        var post_data=qs.stringify({"x":"1.5","y":"2.4","tags":"a,b,c","starred":true});
+        var post_data=qs.stringify({"x":"1.5","y":"2.5","tags":"a,b,c","starred":true});
         http.request()
             .post('/social/topp:states:2')
+            .set('Content-Type','application/x-www-form-urlencoded')
+            .set('Content-length',post_data.length)
+            .write(post_data)
+            .end(function(res) {
+                res.body.should.equal("{\"content\":{\"guid\":\"topp:states:2\",\"tags\":\"a,b,c\",\"username\":\"admin\",\"starred\":true,\"x\":1.5,\"y\":2.5}}");
+                done();
+            });
+    });
+
+    it('PUT /social/topp:states:2 should update', function (done) {
+        var post_data=qs.stringify({"x":"1.5","y":"2.4","tags":"a,b,c","starred":true});
+        http.request()
+            .put('/social/topp:states:2')
             .set('Content-Type','application/x-www-form-urlencoded')
             .set('Content-length',post_data.length)
             .write(post_data)
