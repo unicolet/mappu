@@ -509,4 +509,14 @@ select adjustByteaOutput();
             <column name="authority_id" valueNumeric="1"/>
 	</insert>
     </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-36" context="TEST" runAlways="true">
+        <comment>enable admin user (during integration tests we disable it)</comment>
+        <update tableName="person">
+                    <column name="enabled" valueBoolean="true"/>
+        		<where>username='admin'</where>
+        </update>
+        <delete tableName="person">
+            <where>username='admin2'</where>
+        </delete>
+    </changeSet>
 </databaseChangeLog>
