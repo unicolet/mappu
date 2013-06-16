@@ -3,6 +3,8 @@ Mappu
 
 Yet another web gis (with social taste).
 
+[![Build Status](https://travis-ci.org/unicolet/mappu.png?branch=master)](https://travis-ci.org/unicolet/mappu)
+
 What is Mappu?
 --------------
 
