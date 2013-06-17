@@ -38,6 +38,31 @@ function buffer(req,res, distance) {
     res.send(200,JSON.stringify({"geom":buffer.toString(),"area":buffer.getArea()}));
 }
 
+function intersection(req,res) {
+    var geometries = extractGeometries(req);
+    if(geometries.length==2) {
+        var intersection=geometries[0].intersection(geometries[1]);
+        res.send(200,JSON.stringify({"geom":intersection.toString(),"area":intersection.getArea()}));
+    } else {
+        res.send(400,"Please specify two geometries");
+    }
+}
+
+function union(req,res) {
+    var geometries = extractGeometries(req);
+    if(geometries.length==2) {
+        var union=geometries[0].union(geometries[1]);
+        res.send(200,JSON.stringify({"geom":union.toString(),"area":union.getArea()}));
+    } else {
+        res.send(400,"Please specify two geometries");
+    }
+}
+
+function area(req,res) {
+    var feature = extractGeometries(req)[0];
+    res.send(200,JSON.stringify({"geom":feature.toString(),"area":feature.getArea()}));
+}
+
 function selfSnap(g) {
     var snapTol = jsts.operation.overlay.snap.GeometrySnapper.computeOverlaySnapTolerance(g);
     var snapper = new jsts.operation.overlay.snap.GeometrySnapper(g);
