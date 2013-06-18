@@ -362,6 +362,11 @@ exports.tags=function(req,res) {
             query=query+" and s.username=$"+params.length;
         }
 
+        if( req.query["layer"] !== undefined ) {
+            params.push(req.query["layer"]+":%");
+            query=query+" and s.social_id like $"+params.length;
+        }
+
         conn.query(query, params, function(err, result) {
             if(!err) {
                 end(200, {content:result.rows});
