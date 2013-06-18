@@ -24,6 +24,11 @@ Maps.tagsController = SC.ArrayController.create(
     onlyShowMine: YES,
 
     /*
+        Only show the tags that apply to the currently select layer.
+     */
+    selectedLayer: null,
+
+    /*
      * Max number of tags to render. Used to safeguard against performance degradation when
      * large number of tags come into play.
     */
@@ -31,15 +36,17 @@ Maps.tagsController = SC.ArrayController.create(
 
     didOnlyShowMineChange: function() {
         this.get("content").refresh();
-    }.observes("onlyShowMine"),
+    }.observes("onlyShowMine","selectedLayer"),
 
     updateHTTPProtocolFilter: function() {
         Maps.set("isLoading", true);
         var layer = this.maybeAddVectorLayer();
         if(layer) {
             var tags = this.get("selectedTags");
+            var selectedLayer = this.get("selectedLayer");
             layer.tags=tags;
-            layer.protocol.params={'tags': tags};
+            layer.protocol.params['tags']=tags;
+            layer.protocol.params['layer']=selectedLayer;
             // no tags requeste, just empty the layer
             if(!tags || tags=="") {
                 layer.removeAllFeatures();
@@ -48,7 +55,7 @@ Maps.tagsController = SC.ArrayController.create(
             }
             layer.setVisibility(true);
         }
-    }.observes("selectedTags"),
+    }.observes("selectedTags","selectedLayer"),
 
     hideTagsLayer: function() {
         var vectorLayer = null;

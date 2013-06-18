@@ -61,7 +61,8 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 return YES;
             }
             if (query === Maps.TAGSUMMARY_QUERY) {
-                var params=(Maps.tagsController.get("onlyShowMine") ? "?mine" : "");
+                var params  = "?layer="+Maps.tagsController.get("selectedLayer");
+                params      = params + (Maps.tagsController.get("onlyShowMine") ? "&mine" : "");
                 SC.Request.getUrl('/mapsocial/social/tagSummary'+params )
                     .set('isJSON', YES)
                     .notify(this, 'didFetchTagSummary', store, query)

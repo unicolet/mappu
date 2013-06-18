@@ -381,7 +381,7 @@ Maps.mainPage = SC.Page.design({
             childViews: "tags buttons".w(),
 
             tags:SC.ScrollView.design({
-                layout: {top:0,bottom:160,left:0,right:0},
+                layout: {top:0,bottom:130,left:0,right:0},
                 contentView: SC.ListView.design({
                     classNames: ["denim"],
                     rowHeight: 30,
@@ -397,20 +397,27 @@ Maps.mainPage = SC.Page.design({
             }),
             buttons: SC.View.design({
                 classNames: ["graduated"],
-                layout: {bottom:0,height:160,left:0,right:0},
-                childViews: "mine help helpText rendertags reloadtags".w(),
-                mine: SC.CheckboxView.design({
+                layout: {bottom:0,height:190,left:0,right:0},
+                childViews: "onlyShowLayer mine help helpText rendertags reloadtags".w(),
+                onlyShowLayer: SC.SelectView.design({
                     layout: {top: 5, left:5, height:24, right:5},
+                    valueBinding: "Maps.tagsController.selectedLayer",
+                    itemsBinding: SC.Binding.oneWay("Maps.openLayersController.content"),
+                    itemTitleKey: 'title',
+                    itemValueKey: 'name'
+                }),
+                mine: SC.CheckboxView.design({
+                    layout: {top: 35, left:5, height:24, right:5},
                     title: "_only_show_mine".loc(),
                     toolTip: "_only_show_mine_tip".loc(),
                     valueBinding: "Maps.tagsController.onlyShowMine"
                 }),
                 help: SC.ImageView.design({
-                    layout: {top: 35, centerX:0, height:24, width:24},
+                    layout: {top: 65, centerX:0, height:24, width:24},
                     value: "sc-icon-help-24"
                 }),
                 helpText: SC.LabelView.design({
-                    layout: {bottom:31,top:61,left:5,right:5},
+                    layout: {bottom:31,top:91,left:5,right:5},
                     value: "_tagexplorer_help".loc()
                 }),
                 rendertags: SC.ButtonView.design({
