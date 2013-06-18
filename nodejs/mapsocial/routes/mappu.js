@@ -294,19 +294,27 @@ exports.tagSummary=function(req,res) {
         return;
     };
 
-    var all_tags="select tag guid, tag, occurrences, false visible from tags where occurrences>0 order by occurrences desc";
-    var my_tags="select t.tag guid, t.tag, t.occurrences, false visible from tags t, social_tags st, social s where s.username=$1 and t.tag=st.tag and s.id=st.social_id and t.occurrences>0 order by t.occurrences desc";
+    var order_clause=" order by occurrences desc";
+    var all_tags="select tag guid, tag, occurrences, false visible from tags where occurrences>0 ";
+    var filtered_tags="select t.tag guid, t.tag, t.occurrences, false visible from tags t, social_tags st, social s where t.tag=st.tag and s.id=st.social_id and t.occurrences>0 ";
 
     res.db.acquire(function (err, connection) {
         if(err) handleError(err);
         conn=connection;
         var params=[];
         var query=all_tags;
-        if( req.query["mine"] !== undefined ) {
-            query=my_tags;
-            params.push(username);
+        if( req.query["mine"] !== undefined || req.query["layer"] !== undefined) {
+            query=filtered_tags;
         }
-        conn.query(query, params, function(err, result) {
+        if( req.query["mine"] !== undefined ) {
+            params.push(username);
+            query=query + " and s.username=$"+params.length;
+        }
+        if( req.query["layer"] !== undefined ) {
+            params.push(req.query["layer"]+":%");
+            query=query+" and s.social_id like $"+params.length;
+        }
+        conn.query(query + order_clause, params, function(err, result) {
             if(!err) {
                 end(200, {content:result.rows});
             } else {

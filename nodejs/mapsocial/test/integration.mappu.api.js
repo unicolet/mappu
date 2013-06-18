@@ -193,6 +193,18 @@ describe('Mappu API', function () {
             .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false}]}', done);
     });
 
+    it('GET /social/tagSummary?layer=topp:states&mine should return data', function (done) {
+        http.request()
+            .get('/social/tagSummary?layer=topp:states&mine')
+            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false}]}', done);
+    });
+
+    it('GET /social/tagSummary?layer=fictional should not return data', function (done) {
+        http.request()
+            .get('/social/tagSummary?layer=fictional')
+            .expect('{"content":[]}', done);
+    });
+
     it('GET /social/tags should return data', function (done) {
         http.request()
             .get('/social/tags?tags=alpha,tango&bbox=0,0,1000.00,1000.00')
