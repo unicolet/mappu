@@ -15,7 +15,7 @@ exports.find=function(req,res,id,cb,conn) {
     connection.query("select id guid, username, enabled from person where id=$1",[id], function(err, result) {
         var user=null;
         if (!err && result.rows.length==1)
-            user=result.rows;
+            user=result.rows[0];
         cb(200, {content:user});
     });
 };

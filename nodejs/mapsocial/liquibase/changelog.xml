@@ -519,4 +519,10 @@ select adjustByteaOutput();
             <where>username='admin2'</where>
         </delete>
     </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-37" context="TEST" runAlways="true">
+        <comment>delete users created by tests</comment>
+        <delete tableName="person">
+            <where>id>2</where>
+        </delete>
+    </changeSet>
 </databaseChangeLog>

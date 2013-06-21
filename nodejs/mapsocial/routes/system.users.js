@@ -32,11 +32,17 @@ exports.save = function(req,res) {
 
     };
 
+    if(req.body.enabled==='true') {
+	req.body.enabled=true;
+    } else if(req.body.enabled==='false') {
+	req.body.enabled=false;
+    }
+
     res.db.acquire(function (err, conn) {
         if (req.params.id) { // found, hence update
             var db_id=req.params.id;
 
-            var params=[(req.body.enabled != 'false'),db_id];
+            var params=[req.body.enabled,db_id];
             var query="update person set enabled=$1 where id=$2";
 
             var enc_password=null;
@@ -44,7 +50,7 @@ exports.save = function(req,res) {
                 enc_password=crypto.createHash("sha256")
                     .update(req.body.password)
                     .digest('hex');
-                    params=[(req.body.enabled != 'false'),enc_password,db_id];
+                    params=[req.body.enabled,enc_password,db_id];
                     query="update person set enabled=$1,password=$2 where id=$3";
             }
             conn.query(query, params, function(err, result) {
@@ -62,7 +68,7 @@ exports.save = function(req,res) {
                     var enc_password=crypto.createHash("sha256")
                         .update(req.body.password)
                         .digest('hex');
-                    var params=[id,req.body.username,(req.body.enabled != 'false'), enc_password];
+                    var params=[id,req.body.username,req.body.enabled, enc_password];
                     conn.query("insert into person (id,username,enabled,password,version,account_expired,account_locked,password_expired) values($1,$2,$3,$4,1,false,false,false)", params, function(err, result) {
                         if(!err) {
                             user.find(req,res,id,function(s, data) {

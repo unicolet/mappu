@@ -4,7 +4,7 @@ var app = require('../app')
     , should = require('should');
 
 
-var new_comment_guid=[];
+var new_user_guid=[];
 
 describe('Mappu Settings API', function () {
 
@@ -42,9 +42,9 @@ describe('Mappu Settings API', function () {
             .end(function(res) {
                 res.statusCode.should.equal(200);
                 var user = JSON.parse(res.body).content;
-                user[0].should.have.property('username','admin');
-                user[0].should.have.property('enabled',false);
-                user[0].should.have.property('guid',1);
+                user.should.have.property('username','admin');
+                user.should.have.property('enabled',false);
+                user.should.have.property('guid',1);
                 done();
             });
     });
@@ -59,9 +59,9 @@ describe('Mappu Settings API', function () {
             .end(function(res) {
                 res.statusCode.should.equal(200);
                 var user = JSON.parse(res.body).content;
-                user[0].should.have.property('username','admin');
-                user[0].should.have.property('enabled',true);
-                user[0].should.have.property('guid',1);
+                user.should.have.property('username','admin');
+                user.should.have.property('enabled',true);
+                user.should.have.property('guid',1);
                 done();
             });
     });
@@ -69,34 +69,34 @@ describe('Mappu Settings API', function () {
     it('POST /users/ should insert a user', function (done) {
         var post_data=qs.stringify({'guid':1,'username':'admin2','enabled':false,'password':'abcdef'});
         http.request()
-            .post('/users')
+            .post('/users/')
             .set('Content-Type','application/x-www-form-urlencoded')
             .set('Content-length',post_data.length)
             .write(post_data)
             .end(function(res) {
                 res.statusCode.should.equal(200);
                 var user = JSON.parse(res.body).content;
-                user[0].should.have.property('username','admin2');
-                user[0].should.have.property('enabled',false);
-                user[0].guid.should.be.greaterThan(2);
-                new_comment_guid.push(user[0].guid);
+                user.should.have.property('username','admin2');
+                user.should.have.property('enabled',false);
+                user.guid.should.be.greaterThan(2);
+                new_user_guid.push(user.guid);
                 done();
             });
     });
 
-    it('PUT /users/new_guid should update user, with password also changes password', function (done) {
-        var post_data=qs.stringify({'guid':new_comment_guid[0],'username':'admin2','enabled':true,password:'changeme'});
+    it('PUT /users/ should update user, with password also changes password', function (done) {
+        var post_data=qs.stringify({'guid':new_user_guid[0],'username':'admin2','enabled':true,password:'changeme'});
         http.request()
-            .put('/users/'+new_comment_guid[0])
+            .put('/users/'+new_user_guid[0])
             .set('Content-Type','application/x-www-form-urlencoded')
             .set('Content-length',post_data.length)
             .write(post_data)
             .end(function(res) {
                 res.statusCode.should.equal(200);
                 var user = JSON.parse(res.body).content;
-                user[0].should.have.property('username','admin2');
-                user[0].should.have.property('enabled',true);
-                user[0].should.have.property('guid',new_comment_guid[0]);
+                user.should.have.property('username','admin2');
+                user.should.have.property('enabled',true);
+                user.should.have.property('guid',new_user_guid[0]);
                 done();
             });
     });

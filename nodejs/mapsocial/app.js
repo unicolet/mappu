@@ -91,7 +91,7 @@ app.post  (app_context+'/jts/:operation', saveRawBody, jts.processJstsRequest);
 // settings api
 app.get   (app_context+'/users/list', system_users.list);
 app.put   (app_context+'/users/:id', system_users.save);
-app.post   (app_context+'/users', system_users.save);
+app.post   (app_context+'/users/', system_users.save);
 
 if (!module.parent) {
     http.createServer(app).listen(app.get('port'), function () {
