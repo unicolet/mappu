@@ -25,5 +25,10 @@ Maps.Tag = SC.Record.extend(
 
 // Visit http://colorbrewer2.org/ for more schemes
 // Permalink for this one: http://colorbrewer2.org/index.php?type=sequential&scheme=YlGnBu&n=4
-Maps.TagPaletteColors = ['#ffffcc', '#a1dab4', '#41b6c4', '#225ea8'];
+Maps.TagPaletteColors = ["#D7191C","#FDAE61","#ABDDA4","#2B83BA"];
+Maps.StrokePaletteColors = ['#000', '#000', '#000', '#000'];
+// june/2013: moved to a more visible palette, considering a white border
+//Maps.TagPaletteColors = ['#ffffcc', '#a1dab4', '#41b6c4', '#225ea8'];
+//Maps.StrokePaletteColors = ['#3F6C3F', '#3F6C3F', '#3F6C3F', '#3F6C3F'];
+
 Maps.TagPaletteStyles = ['tag0', 'tag1', 'tag2', 'tag3'];

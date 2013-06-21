@@ -3,26 +3,30 @@ img.icon {
     $icon_height: 16px;
 
     &.tag0 {
-        background-color: #ffffcc;
+        background-color: #D7191C;
         width: $icon_width;
         height: $icon_height;
+        border: 1px solid #3F6C3F;
     }
 
     &.tag1 {
-        background-color: #a1dab4;
+        background-color: #FDAE61;
         width: $icon_width;
         height: $icon_height;
+        border: 1px solid #3F6C3F;
     }
 
     &.tag2 {
-        background-color: #41b6c4;
+        background-color: #ABDDA4;
         width: $icon_width;
         height: $icon_height;
+        border: 1px solid #3F6C3F;
     }
 
     &.tag3 {
-        background-color: #225ea8;
+        background-color: #2B83BA;
         width: $icon_width;
         height: $icon_height;
+        border: 1px solid #3F6C3F;
     }
 }

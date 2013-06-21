@@ -295,6 +295,8 @@ Maps.TagCanvas = OpenLayers.Class(OpenLayers.Renderer, {
                 fills=Maps.TagPaletteColors;
 
             var strokes = ['#3F6C3F', '#3F6C3F', '#3F6C3F', '#3F6C3F'];
+            if (Maps.StrokePaletteColors)
+                strokes=Maps.StrokePaletteColors;
 
             // behave when older APIs do not return a tag attribute
             var featureTags = null;
