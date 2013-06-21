@@ -348,8 +348,12 @@ Maps.MapsDataSource = SC.DataSource.extend(
                         record['name'] = features[i].fid;
                         record['GROUP'] = features[i].gml.featureNSPrefix;
                         record['LAYER'] = features[i].gml.featureType;
-                        if (features[i].data['ID'])
-                            record['social'] = features[i].gml.featureNSPrefix + ':' + features[i].gml.featureType + ':' + features[i].data['ID'];
+                        var feature_id = features[i].data['ID'];
+                        if(!feature_id) {
+                            feature_id = features[i].data['id'];
+                        }
+                        if (feature_id)
+                            record['social'] = features[i].gml.featureNSPrefix + ':' + features[i].gml.featureType + ':' + feature_id;
                         else
                             record['social'] = null;
                     }
@@ -359,8 +363,12 @@ Maps.MapsDataSource = SC.DataSource.extend(
                         record['name'] = features[i].id;
                         record['GROUP'] = ""; //TODO: fix this
                         record['LAYER'] = features[i].type;
-                        if (features[i].data['ID'])
-                            record['social'] = "" + ':' + features[i].type + ':' + features[i].data['ID'];
+                        var feature_id = features[i].data['ID'];
+                        if(!feature_id) {
+                            feature_id = features[i].data['id'];
+                        }
+                        if (feature_id)
+                            record['social'] = "" + ':' + features[i].type + ':' + feature_id;
                         else
                             record['social'] = null;
                     }
