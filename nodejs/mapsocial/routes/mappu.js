@@ -295,8 +295,8 @@ exports.tagSummary=function(req,res) {
     };
 
     var order_clause=" order by occurrences desc";
-    var all_tags="select tag guid, tag, occurrences, false visible from tags where occurrences>0 ";
-    var filtered_tags="select t.tag guid, t.tag, t.occurrences, false visible from tags t, social_tags st, social s where t.tag=st.tag and s.id=st.social_id and t.occurrences>0 ";
+    var all_tags="select distinct tag guid, tag, occurrences, false visible from tags where occurrences>0 ";
+    var filtered_tags="select distinct t.tag guid, t.tag, t.occurrences, false visible from tags t, social_tags st, social s where t.tag=st.tag and s.id=st.social_id and t.occurrences>0 ";
 
     res.db.acquire(function (err, connection) {
         if(err) handleError(err);

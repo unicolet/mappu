@@ -509,4 +509,20 @@ select adjustByteaOutput();
             <column name="authority_id" valueNumeric="1"/>
 	</insert>
     </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-36" context="TEST" runAlways="true">
+        <preConditions onFail="CONTINUE">
+            <sqlCheck expectedResult="0">select count(1) from social where id=3</sqlCheck>
+        </preConditions>
+        <comment>insert social data for tests on tag retrieval (avoid duplicates)</comment>
+    	<insert tableName="social">
+            <column name="id" valueNumeric="3"/>
+            <column name="social_id" value="topp:states:3"/>
+            <column name="starred" valueBoolean="true"/>
+            <column name="tags" value="alpha,tango"/>
+            <column name="username" value="demo"/>
+            <column name="x" value="11.5"/>
+            <column name="y" value="23.4"/>
+            <column name="version" value="1"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

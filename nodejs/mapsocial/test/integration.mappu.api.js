@@ -184,19 +184,19 @@ describe('Mappu API', function () {
     it('GET /social/tagSummary should return data', function (done) {
         http.request()
             .get('/social/tagSummary')
-            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false},{"guid":"a","tag":"a","occurrences":1,"visible":false},{"guid":"b","tag":"b","occurrences":1,"visible":false},{"guid":"c","tag":"c","occurrences":1,"visible":false}]}', done);
+            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":2,"visible":false},{"guid":"tango","tag":"tango","occurrences":2,"visible":false},{"guid":"a","tag":"a","occurrences":1,"visible":false},{"guid":"b","tag":"b","occurrences":1,"visible":false},{"guid":"c","tag":"c","occurrences":1,"visible":false}]}', done);
     });
 
     it('GET /social/tagSummary?mine should return data', function (done) {
         http.request()
             .get('/social/tagSummary?mine')
-            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false}]}', done);
+            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":2,"visible":false},{"guid":"tango","tag":"tango","occurrences":2,"visible":false}]}', done);
     });
 
     it('GET /social/tagSummary?layer=topp:states&mine should return data', function (done) {
         http.request()
             .get('/social/tagSummary?layer=topp:states&mine')
-            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":1,"visible":false},{"guid":"tango","tag":"tango","occurrences":1,"visible":false}]}', done);
+            .expect('{"content":[{"guid":"alpha","tag":"alpha","occurrences":2,"visible":false},{"guid":"tango","tag":"tango","occurrences":2,"visible":false}]}', done);
     });
 
     it('GET /social/tagSummary?layer=fictional should not return data', function (done) {
@@ -208,7 +208,7 @@ describe('Mappu API', function () {
     it('GET /social/tags should return data', function (done) {
         http.request()
             .get('/social/tags?tags=alpha,tango&bbox=0,0,1000.00,1000.00')
-            .expect('{"content":[{"id":1,"tags":"alpha,tango","x":10.5,"y":20.4}]}', done);
+            .expect('{"content":[{"id":1,"tags":"alpha,tango","x":10.5,"y":20.4},{"id":3,"tags":"alpha,tango","x":11.5,"y":23.4}]}', done);
     });
 
     it('GET /social/tags?mine&tags=a,b should return no data because I don\'t own them', function (done) {
