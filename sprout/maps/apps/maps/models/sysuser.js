@@ -10,4 +10,4 @@ Maps.SysUser = SC.Record.extend({
 
     username: SC.Record.attr(String),
     authenticated: SC.Record.attr(Boolean)
-}) ;
+});

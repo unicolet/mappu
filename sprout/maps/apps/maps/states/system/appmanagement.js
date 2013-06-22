@@ -10,6 +10,11 @@ Maps.appManagementState = SC.State.extend({
         //@if(debug)
         console.log("*** appManagementState.enter ***");
         //@endif
+
+        // start loading data
+        Maps.systemUsersController.load();
+
+
         if (!SC.browser.isIE) {
             // prepare animation
             Maps.appManagementPane.adjust("opacity", 0);
@@ -20,6 +25,12 @@ Maps.appManagementState = SC.State.extend({
         } else {
             Maps.appManagementPane.append();
         }
+    },
+
+    createUser: function() {
+        //@if(debug)
+        console.log("*** appManagementState.createUser ***");
+        //@endif
     },
 
     exitState:function () {
