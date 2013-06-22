@@ -302,5 +302,7 @@ Maps.viewingMapState = SC.State.extend({
 
     geoCodeState:SC.State.plugin('Maps.geoCodeState'),
 
-    printingMapState: SC.State.plugin('Maps.printingMapState')
+    printingMapState: SC.State.plugin('Maps.printingMapState'),
+
+    appManagementState: SC.State.plugin('Maps.appManagementState')
 });

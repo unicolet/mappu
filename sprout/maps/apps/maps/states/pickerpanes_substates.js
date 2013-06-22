@@ -26,7 +26,7 @@ Maps.showingLayersPaneState = SC.State.extend({
     },
 
     showAdvancedOptions:function () {
-        window.open(APPCONFIG.advanced_options);
+        this.gotoState("appManagementState");
     },
 
     legend:NO,
