@@ -47,7 +47,7 @@ Maps.appManagementPane = SC.PanelPane.design({
         users: SC.View.design({
             layout: {top:0,bottom:0,right:0,left:155},
             isVisibleBinding: SC.Binding.single(".parentView.sourceList.value").equals("users"),
-            childViews: "list form create save cancel changepassword".w(),
+            childViews: "list form create save cancel changepassword errors".w(),
             list: SC.ScrollView.design({
                 layout: {left:0, top:0, bottom:29, width:200 },
                 contentView : SC.ListView.design({
@@ -90,6 +90,12 @@ Maps.appManagementPane = SC.PanelPane.design({
                     isPassword: YES,
                     isEditableBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
                 }))
+            }),
+            errors: SC.LabelView.design({
+                layout: {left: 210, bottom:60, width: 200, height: 70},
+                valueBinding: SC.Binding.from("Maps.systemUserController.validationErrors"),
+                isVisibleBinding: SC.Binding.from("Maps.systemUserController.validationErrors").bool(),
+                icon: "sc-icon-alert-16"
             }),
             cancel: SC.ButtonView.design({
                 layout: {right:20, height:24, bottom:0, width:100 },

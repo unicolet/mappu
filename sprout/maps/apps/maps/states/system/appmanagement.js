@@ -55,10 +55,12 @@ Maps.appManagementState = SC.State.extend({
         },
 
         save: function() {
-            this.nestedStore.commitChanges(NO);
-            Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
-                Maps.statechart.gotoState("viewingManagerPane");
-            });
+            if(Maps.systemUserController.validate()) {
+                this.nestedStore.commitChanges(NO);
+                Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
+                    Maps.statechart.gotoState("viewingManagerPane");
+                });
+            }
         },
 
         cancel: function() {
@@ -84,10 +86,12 @@ Maps.appManagementState = SC.State.extend({
         },
 
         save: function() {
-            this.nestedStore.commitChanges(NO);
-            Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
-                Maps.statechart.gotoState("viewingManagerPane");
-            });
+            if(Maps.systemUserController.validate()) {
+                this.nestedStore.commitChanges(NO);
+                Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
+                    Maps.statechart.gotoState("viewingManagerPane");
+                });
+            }
         },
 
         cancel: function() {

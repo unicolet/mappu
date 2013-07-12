@@ -155,3 +155,8 @@ function __checkSysUserCreateNestedStore() {
     __user=null;
     if(__nestedStore) { __nestedStore.destroy(); __nestedStore=null; }
 }
+
+test("sysuser.validation", function () {
+    ok(Maps.systemUserController.userExists("admin"), "user admin exists");
+    ok(!Maps.systemUserController.userExists("gandalf"), "user gandalf does not exist");
+});

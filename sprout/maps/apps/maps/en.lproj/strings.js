@@ -106,5 +106,7 @@ SC.stringsFor('en', {
     "_password:": "Password:",
     "_passwordrepeat:": "Retype password:",
     "_please_select_an_item": "Please select an item from the list on the left",
-    "_cancel": "Cancel"
+    "_cancel": "Cancel",
+    "_pwd_not_match": " Passwords don't match",
+    "_user_exists": " User already exists"
 });
