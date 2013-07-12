@@ -510,11 +510,15 @@ select adjustByteaOutput();
 	</insert>
     </changeSet>
     <changeSet author="unicoletti" id="1326791384723-36" context="TEST" runAlways="true">
+        <validCheckSum>adfaa9b9f2387933953ecfde653ccf</validCheckSum>
         <comment>enable admin user (during integration tests we disable it)</comment>
         <update tableName="person">
                     <column name="enabled" valueBoolean="true"/>
         		<where>username='admin'</where>
         </update>
+        <delete tableName="person_authority">
+            <where>person_id>2</where>
+        </delete>
         <delete tableName="person">
             <where>username='admin2'</where>
         </delete>

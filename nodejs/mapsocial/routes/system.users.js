@@ -33,9 +33,9 @@ exports.save = function(req,res) {
     };
 
     if(req.body.enabled==='true') {
-	req.body.enabled=true;
+	    req.body.enabled=true;
     } else if(req.body.enabled==='false') {
-	req.body.enabled=false;
+	    req.body.enabled=false;
     }
 
     res.db.acquire(function (err, conn) {
@@ -72,9 +72,16 @@ exports.save = function(req,res) {
                         var params=[id,req.body.username,req.body.enabled, enc_password];
                         conn.query("insert into person (id,username,enabled,password,version,account_expired,account_locked,password_expired) values($1,$2,$3,$4,1,false,false,false)", params, function(err, result) {
                             if(!err) {
-                                user.find(req,res,id,function(s, data) {
-                                    end(http_code, data);
-                                }, conn);
+                                console.log("id="+id);
+                                conn.query("insert into person_authority (person_id, authority_id) values($1,1)", [id], function(err, result) {
+                                    if(!err) {
+                                        user.find(req,res,id,function(s, data) {
+                                            end(http_code, data);
+                                        }, conn);
+                                    } else {
+                                        handleError(err);
+                                    }
+                                });
                             } else {
                                 handleError(err);
                             }

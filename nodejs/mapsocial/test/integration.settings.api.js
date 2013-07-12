@@ -67,7 +67,7 @@ describe('Mappu Settings API', function () {
     });
 
     it('POST /users/ should insert a user', function (done) {
-        var post_data=qs.stringify({'guid':1,'username':'admin2','enabled':false,'password':'abcdef'});
+        var post_data=qs.stringify({'guid':1,'username':'admin2','enabled':false,'password':'abcdef','passwordRepeat':'abcdef'});
         http.request()
             .post('/users/')
             .set('Content-Type','application/x-www-form-urlencoded')
@@ -85,7 +85,7 @@ describe('Mappu Settings API', function () {
     });
 
     it('PUT /users/ should update user, with password also changes password', function (done) {
-        var post_data=qs.stringify({'guid':new_user_guid[0],'username':'admin2','enabled':true,password:'changeme'});
+        var post_data=qs.stringify({'guid':new_user_guid[0],'username':'admin2','enabled':true,password:'changeme','passwordRepeat':'abcdef'});
         http.request()
             .put('/users/'+new_user_guid[0])
             .set('Content-Type','application/x-www-form-urlencoded')
