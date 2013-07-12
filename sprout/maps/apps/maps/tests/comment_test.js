@@ -7,7 +7,7 @@
 
 module("Maps.comment");
 
-var __comment, __comments;
+var __comment, __comments, __ns;
 Maps.__isTesting=true;
 
 test("comment.readable.property", function () {
@@ -50,6 +50,8 @@ function __checkCommentCreate() {
     ok(__comment.get('id'), "id is not null ("+__comment.get('id')+","+__comment.get('text')+")");
     ok(__comment.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
     start();
+
+    if(__ns) { __ns.destroy(); __ns = null; }
 }
 
 test("comment.store.integration.find", function () {

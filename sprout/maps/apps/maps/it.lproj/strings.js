@@ -106,5 +106,17 @@ SC.stringsFor('it', {
     "_select_above": "Selezionare un risultato sopra",
     "_please_wait": "Attendere prego...",
     "_only_show_mine" : "Mostra solo i miei tag",
-    "_only_show_mine_tip" : "I tag (etichette) salvati nel sistema sono condivisi fra tutti gli utenti"
+    "_only_show_mine_tip" : "I tag (etichette) salvati nel sistema sono condivisi fra tutti gli utenti",
+    "_users": "Utenti",
+    "_close": "Chiudi",
+    "_create": "Nuovo",
+    "_changepwd": "Cambia password",
+    "_Username:": "Username:",
+    "_Enabled:": "Attivo:",
+    "_password:": "Password:",
+    "_passwordrepeat:": "Ridigitare la password:",
+    "_please_select_an_item": "Selezionare una voce dall'elenco a sinistra per iniziare",
+    "_cancel": "Annulla",
+    "_pwd_not_match": " Le password non corrispondono",
+    "_user_exists": " Esiste un utente con lo stesso username"
 });

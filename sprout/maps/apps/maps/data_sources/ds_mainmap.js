@@ -19,6 +19,7 @@ sc_require("models/layer_query");
 sc_require("models/attribute");
 sc_require("models/tag");
 sc_require("models/address");
+sc_require("models/sysuser");
 
 Maps.FEATURE_QUERY = SC.Query.remote(Maps.Feature, {});
 Maps.COMMENT_QUERY = SC.Query.remote(Maps.Comment, "social = {social}", {social: ""});
@@ -28,12 +29,24 @@ Maps.LAYERQUERY_QUERY = SC.Query.remote(Maps.LayerQuery, {});
 Maps.ATTRIBUTES_QUERY = SC.Query.remote(Maps.Attribute, null, {id:-1});
 Maps.TAGSUMMARY_QUERY = SC.Query.remote(Maps.Tag, null, {});
 Maps.GEOCODE_QUERY = SC.Query.remote(Maps.Address);
+Maps.SYSUSER_QUERY = SC.Query.remote(Maps.SysUser, null, {});
 
 Maps.MapsDataSource = SC.DataSource.extend(
     /** @scope Maps.MapsDataSource.prototype */ {
         rawFeatures:[],
 
         fetch: function(store, query) {
+            if (query.recordType === Maps.SysUser) {
+                if (query.isLocal()) {
+                    return YES;
+                } else {
+                    SC.Request.getUrl('/mapsocial/users/list')
+                        .set('isJSON', YES)
+                        .notify(this, 'didFetchRecords', store, query)
+                        .send();
+                }
+                return YES;
+            }
             if (query.recordType === Maps.Address) {
                 //@if(debug)
                 console.log("Geocoding lat,lon = "+query.parameters.lat+","+query.parameters.lon);
@@ -108,6 +121,16 @@ Maps.MapsDataSource = SC.DataSource.extend(
             return NO;
         },
 
+        didFetchRecords: function(response, store, query) {
+            if (SC.ok(response)) {
+                var storeKeys = store.loadRecords(query.recordType, response.get('body').content);
+                store.loadQueryResults(query, storeKeys);
+            } else {
+                store.dataSourceDidErrorQuery(query, response);
+                this.notifyError(response);
+            }
+        },
+
         didFetchTagSummary : function(response, store, query) {
             if (SC.ok(response)) {
                 var storeKeys = store.loadRecords(Maps.Tag, response.get('body').content);
@@ -117,7 +140,6 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 this.notifyError(response);
             }
         },
-
 
         didFetchLayerQueries : function(response, store, query) {
             if (SC.ok(response)) {
@@ -242,6 +264,8 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 url = '/mapsocial/social/' + store.idFor(storeKey) + '?alt=json';
             } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Comment)) {
                 url = '/mapsocial/comment/'
+            } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.SysUser)) {
+                url = '/mapsocial/users/'
             }
             if (url) {
                 SC.Request.postUrl(url).set('isJSON', YES)
@@ -278,6 +302,8 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 url = '/mapsocial/social/' + store.idFor(storeKey) + '?alt=json';
             } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Comment)) {
                 url = '/mapsocial/comment/' + store.idFor(storeKey) + '?alt=json'
+            } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.SysUser)) {
+                url = '/mapsocial/users/' + store.idFor(storeKey) + '?alt=json'
             }
             if (url) {
                 SC.Request.putUrl(url).set('isJSON', YES)

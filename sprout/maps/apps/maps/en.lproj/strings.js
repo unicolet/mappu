@@ -96,5 +96,17 @@ SC.stringsFor('en', {
     "_select_above": "Please select a result above",
     "_please_wait": "Please wait...",
     "_only_show_mine" : "Only show my tags",
-    "_only_show_mine_tip" : "Tags are shared among all users"
+    "_only_show_mine_tip" : "Tags are shared among all users",
+    "_users": "Users",
+    "_close": "Close",
+    "_create": "New",
+    "_changepwd": "Change password",
+    "_Username:": "Username:",
+    "_Enabled:": "Enabled:",
+    "_password:": "Password:",
+    "_passwordrepeat:": "Retype password:",
+    "_please_select_an_item": "Please select an item from the list on the left",
+    "_cancel": "Cancel",
+    "_pwd_not_match": " Passwords don't match",
+    "_user_exists": " User already exists"
 });

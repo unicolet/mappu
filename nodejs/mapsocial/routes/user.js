@@ -7,7 +7,7 @@ var crypto = require('crypto');
 exports.login = function(req, res) {
     if(req.body && req.body.j_username && req.body.j_password) {
         var encrypted_password=crypto.createHash("sha256").update(req.body.j_password).digest('hex');
-        res.db.query("SELECT username FROM person WHERE username = $1 AND \"password\" = $2", [req.body.j_username, encrypted_password], function(err, result) {
+        res.db.query("SELECT username FROM person WHERE username = $1 AND \"password\" = $2 and enabled=true", [req.body.j_username, encrypted_password], function(err, result) {
             var success = (!err && result.rows.length==1);
             if(success) {
                 // save user in session

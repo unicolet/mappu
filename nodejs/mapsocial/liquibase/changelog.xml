@@ -510,10 +510,14 @@ select adjustByteaOutput();
 	</insert>
     </changeSet>
     <changeSet author="unicoletti" id="1326791384723-36" context="TEST" runAlways="true">
-        <preConditions onFail="CONTINUE">
-            <sqlCheck expectedResult="0">select count(1) from social where id=3</sqlCheck>
-        </preConditions>
-        <comment>insert social data for tests on tag retrieval (avoid duplicates)</comment>
+        <validCheckSum>adfaa9b9f2387933953ecfde653ccf</validCheckSum>
+        <comment>
+            insert social data for tests on tag retrieval 
+            enable admin user (during integration tests we disable it)
+        </comment>
+        <delete tableName="social">
+            <where>id=3</where>
+        </delete>
     	<insert tableName="social">
             <column name="id" valueNumeric="3"/>
             <column name="social_id" value="topp:states:3"/>
@@ -524,5 +528,22 @@ select adjustByteaOutput();
             <column name="y" value="23.4"/>
             <column name="version" value="1"/>
         </insert>
+        <update tableName="person">
+            <column name="enabled" valueBoolean="true"/>
+        	<where>username='admin'</where>
+        </update>
+        <delete tableName="person_authority">
+            <where>person_id>2</where>
+        </delete>
+        <delete tableName="person">
+            <where>username='admin2'</where>
+        </delete>
+    </changeSet>
+    <changeSet author="unicoletti" id="1326791384723-37" context="TEST" runAlways="true">
+        <comment>delete users created by tests</comment>
+        <delete tableName="person">
+            <where>id>2</where>
+        </delete>
+>>>>>>> experimental/userapi
     </changeSet>
 </databaseChangeLog>

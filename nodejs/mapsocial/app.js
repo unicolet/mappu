@@ -11,7 +11,8 @@ var express = require('express')
     , auth = require('./modules/auth')
     , mappu = require('./routes/mappu')
     , jts = require('./routes/jts')
-    , redis = require('redis');
+    , redis = require('redis')
+    , system_users = require('./routes/system.users.js');
 
 var app_context = process.env.NODE_APP_CONTEXT ? process.env.NODE_APP_CONTEXT : "";
 var cookie_secret = process.env.NODE_COOKIE_SECRET ? process.env.NODE_COOKIE_SECRET : "yadayadayada";
@@ -57,7 +58,8 @@ app.configure(function () {
             {path:app_context+"/j_spring_security_check", roles:["EVERYONE"]},
             {path:app_context+"/logout", roles:["EVERYONE"]},
             {path:app_context+"/login/userInfo", roles:["EVERYONE"]},
-            {path:app_context+"/**", roles:["ROLE_USER"]}
+            {path:app_context+"/**", roles:["ROLE_USER"]},
+            {path:app_context+"/users/**", roles:["ROLE_ADMIN"]}
         ]
     ));
     app.use(app.router);
@@ -86,6 +88,11 @@ app.delete(app_context+'/comment/:id', mappu.deleteComment);
 app.get   (app_context+'/tips/next', mappu.nextTip);
 app.get   (app_context+'/tips/img/:id',mappu.tipImg);
 app.post  (app_context+'/jts/:operation', saveRawBody, jts.processJstsRequest);
+
+// settings api
+app.get   (app_context+'/users/list', system_users.list);
+app.put   (app_context+'/users/:id', system_users.save);
+app.post   (app_context+'/users/', system_users.save);
 
 if (!module.parent) {
     http.createServer(app).listen(app.get('port'), function () {
