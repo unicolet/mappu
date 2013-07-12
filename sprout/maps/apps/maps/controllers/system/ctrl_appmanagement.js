@@ -14,7 +14,7 @@ Maps.appManagementController = SC.ObjectController.create({
             treeItemChildren:[
                 SC.Object.create({
                     name:'_users'.loc(),
-                    icon:'sc-icon-user-16',
+                    icon:'sc-icon-group-16',
                     view: "users"
                 })
             ]

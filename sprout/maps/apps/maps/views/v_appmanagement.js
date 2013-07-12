@@ -36,7 +36,7 @@ Maps.appManagementPane = SC.PanelPane.design({
         }),
         exit: SC.ButtonView.design({
             layout: {left:0, height:24, bottom:0, width:150 },
-            title: "_exit".loc(),
+            title: "_close".loc(),
             action: "exit"
         }),
         informational: SC.LabelView.design({
@@ -47,7 +47,7 @@ Maps.appManagementPane = SC.PanelPane.design({
         users: SC.View.design({
             layout: {top:0,bottom:0,right:0,left:155},
             isVisibleBinding: SC.Binding.single(".parentView.sourceList.value").equals("users"),
-            childViews: "list form create save cancel".w(),
+            childViews: "list form create save cancel changepassword".w(),
             list: SC.ScrollView.design({
                 layout: {left:0, top:0, bottom:29, width:200 },
                 contentView : SC.ListView.design({
@@ -55,17 +55,21 @@ Maps.appManagementPane = SC.PanelPane.design({
                     selectionBinding: "Maps.systemUsersController.selection",
                     contentBinding: "Maps.systemUsersController.arrangedObjects",
                     contentValueKey: "username",
+                    hasContentIcon:YES,
+                    contentIconKey: "icon",
                     actOnSelect: YES,
                     action: function(view) {
                         var sel=this.get("selection");
                         if(sel && sel.firstObject()) {
                             Maps.systemUserController.set("content", sel.firstObject());
+                        } else {
+                            Maps.systemUserController.set("content", null);
                         }
                     }
                 })
             }),
             form: SC.FormView.design({
-                layout: {left:205, top:0, bottom:30, right:0 },
+                layout: {left:210, top:0, bottom:30, right:0 },
                 childViews: "username enabled password passwordRepeat".w(),
                 contentBinding: 'Maps.systemUserController',
 
@@ -78,11 +82,13 @@ Maps.appManagementPane = SC.PanelPane.design({
                 })),
                 password: SC.FormView.row("_password:".loc(), SC.TextFieldView.extend({
                     layout: {height: 20, width: 150},
-                    isVisibleBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
+                    isPassword: YES,
+                    isEditableBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
                 })),
-                passwordRepeat: SC.FormView.row("_password:".loc(), SC.TextFieldView.extend({
+                passwordRepeat: SC.FormView.row("_passwordrepeat:".loc(), SC.TextFieldView.extend({
                     layout: {height: 20, width: 150},
-                    isVisibleBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
+                    isPassword: YES,
+                    isEditableBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
                 }))
             }),
             cancel: SC.ButtonView.design({
@@ -98,9 +104,15 @@ Maps.appManagementPane = SC.PanelPane.design({
                 isVisibleBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
             }),
             create: SC.ButtonView.design({
-                layout: {left:0, centerY:0, height:24, bottom:0, width:200 },
+                layout: {left:0, height:24, bottom:0, width:70 },
                 title: "_create".loc(),
                 action: "createUser"
+            }),
+            changepassword: SC.ButtonView.design({
+                layout: {left:75, height:24, bottom:0, width:125 },
+                title: "_changepwd".loc(),
+                action: "changePassword",
+                isEnabledBinding: SC.Binding.single("Maps.systemUserController.content").bool()
             })
         })
     })

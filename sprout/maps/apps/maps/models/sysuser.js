@@ -7,5 +7,8 @@
 
 Maps.SysUser = SC.Record.extend({
     username: SC.Record.attr(String),
-    enabled: SC.Record.attr(Boolean)
+    enabled: SC.Record.attr(Boolean),
+
+    // used by the list view in the admin section
+    icon: "sc-icon-user-16"
 });

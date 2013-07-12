@@ -32,11 +32,16 @@ Maps.appManagementState = SC.State.extend({
     viewingManagerPane: SC.State.extend({
         enterState: function() {
             // start loading data
+            console.log("reloading users");
             Maps.systemUsersController.load();
         },
 
         createUser: function() {
             this.gotoState("creatingUser")
+        },
+
+        changePassword: function() {
+            this.gotoState("changingPassword")
         }
     }),
 
@@ -51,18 +56,49 @@ Maps.appManagementState = SC.State.extend({
 
         save: function() {
             this.nestedStore.commitChanges(NO);
-            this.gotoState("appManagementState");
+            Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
+                Maps.statechart.gotoState("viewingManagerPane");
+            });
         },
 
         cancel: function() {
             this.nestedStore.discardChanges();
-            this.gotoState("appManagementState");
+            this.gotoState("viewingManagerPane");
         },
 
         exitState: function() {
             this.nestedStore.destroy();
             this.nestedStore=null;
             Maps.systemUserController.set("isCreating", NO);
+        }
+    }),
+
+    changingPassword :SC.State.extend({
+        nestedStore: null,
+
+        enterState: function() {
+            this.nestedStore = Maps.store.chain();
+            var id=Maps.systemUserController.getPath("content.guid");
+            Maps.systemUserController.set("content",this.nestedStore.find(Maps.SysUser, id));
+            Maps.systemUserController.set("isChangingPassword", YES);
+        },
+
+        save: function() {
+            this.nestedStore.commitChanges(NO);
+            Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
+                Maps.statechart.gotoState("viewingManagerPane");
+            });
+        },
+
+        cancel: function() {
+            this.nestedStore.discardChanges();
+            this.gotoState("viewingManagerPane");
+        },
+
+        exitState: function() {
+            this.nestedStore.destroy();
+            this.nestedStore=null;
+            Maps.systemUserController.set("isChangingPassword", NO);
         }
     })
 });

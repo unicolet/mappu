@@ -37,10 +37,14 @@ Maps.MapsDataSource = SC.DataSource.extend(
 
         fetch: function(store, query) {
             if (query.recordType === Maps.SysUser) {
-                SC.Request.getUrl('/mapsocial/users/list')
-                    .set('isJSON', YES)
-                    .notify(this, 'didFetchRecords', store, query)
-                    .send();
+                if (query.isLocal()) {
+                    return YES;
+                } else {
+                    SC.Request.getUrl('/mapsocial/users/list')
+                        .set('isJSON', YES)
+                        .notify(this, 'didFetchRecords', store, query)
+                        .send();
+                }
                 return YES;
             }
             if (query.recordType === Maps.Address) {
