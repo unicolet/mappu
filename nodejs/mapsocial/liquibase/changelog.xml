@@ -544,6 +544,5 @@ select adjustByteaOutput();
         <delete tableName="person">
             <where>id>2</where>
         </delete>
->>>>>>> experimental/userapi
     </changeSet>
 </databaseChangeLog>
