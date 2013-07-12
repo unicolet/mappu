@@ -58,7 +58,8 @@ app.configure(function () {
             {path:app_context+"/j_spring_security_check", roles:["EVERYONE"]},
             {path:app_context+"/logout", roles:["EVERYONE"]},
             {path:app_context+"/login/userInfo", roles:["EVERYONE"]},
-            {path:app_context+"/**", roles:["ROLE_USER"]}
+            {path:app_context+"/**", roles:["ROLE_USER"]},
+            {path:app_context+"/users/**", roles:["ROLE_ADMIN"]}
         ]
     ));
     app.use(app.router);
