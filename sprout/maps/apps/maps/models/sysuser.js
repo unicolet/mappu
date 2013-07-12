@@ -6,8 +6,6 @@
 */
 
 Maps.SysUser = SC.Record.extend({
-    location: "/mapsocial/users/",
-
     username: SC.Record.attr(String),
     enabled: SC.Record.attr(Boolean)
 });
