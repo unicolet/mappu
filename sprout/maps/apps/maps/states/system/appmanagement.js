@@ -6,15 +6,9 @@
  */
 
 Maps.appManagementState = SC.State.extend({
+    initialSubstate:'viewingManagerPane',
+
     enterState:function () {
-        //@if(debug)
-        console.log("*** appManagementState.enter ***");
-        //@endif
-
-        // start loading data
-        Maps.systemUsersController.load();
-
-
         if (!SC.browser.isIE) {
             // prepare animation
             Maps.appManagementPane.adjust("opacity", 0);
@@ -27,16 +21,48 @@ Maps.appManagementState = SC.State.extend({
         }
     },
 
-    createUser: function() {
-        //@if(debug)
-        console.log("*** appManagementState.createUser ***");
-        //@endif
+    exit: function() {
+        this.gotoState("browsingMapState");
     },
 
     exitState:function () {
-        //@if(debug)
-        console.log("*** appManagementState.exit ***");
-        //@endif
         Maps.appManagementPane.remove();
-    }
+    },
+
+    viewingManagerPane: SC.State.extend({
+        enterState: function() {
+            // start loading data
+            Maps.systemUsersController.load();
+        },
+
+        createUser: function() {
+            this.gotoState("creatingUser")
+        }
+    }),
+
+    creatingUser :SC.State.extend({
+        nestedStore: null,
+
+        enterState: function() {
+            this.nestedStore = Maps.store.chain();
+            Maps.systemUserController.set("content",this.nestedStore.createRecord(Maps.SysUser, {enabled: true}));
+            Maps.systemUserController.set("isCreating", YES);
+        },
+
+        save: function() {
+            this.nestedStore.commitChanges(NO);
+            this.gotoState("appManagementState");
+        },
+
+        cancel: function() {
+            this.nestedStore.discardChanges();
+            this.gotoState("appManagementState");
+        },
+
+        exitState: function() {
+            this.nestedStore.destroy();
+            this.nestedStore=null;
+            Maps.systemUserController.set("isCreating", NO);
+        }
+    })
 });

@@ -9,7 +9,7 @@ module("Maps.sysuser");
 
 Maps.__isTesting=true;
 
-var __users, __user=null;
+var __users, __user=null, __nestedStore;
 
 test("sysuser.sanity.check", function () {
     ok(true,"sanity check");
@@ -64,13 +64,36 @@ function __checkSysUserSave() {
     start();
 }
 
+test("sysuser.nestedstore.save.integration", function () {
+    stop(1000);
+    __nestedStore = Maps.store.chain();
+    __user = __nestedStore.find(Maps.SysUser, 1);
+    SC.RunLoop.begin();
+    __user.set("enabled", true);
+    __nestedStore.commitChanges(NO);
+    SC.RunLoop.end();
+    // Give our store 1 second to commit records to the remote server
+    setTimeout(__checkSysUserSaveNestedStore, 800);
+});
+
+function __checkSysUserSaveNestedStore() {
+    ok(__user.get('username'), "username property is present");
+    ok(__user.get('enabled')!==undefined, "enabled property is present");
+    ok(__user.get('enabled')==true, "user is enabled");
+    ok(__user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN (actual: '+__user.get('status')+')');
+    start();
+
+    if(__nestedStore) { __nestedStore.destroy(); __nestedStore=null; }
+}
+
 test("sysuser.store.create.integration", function () {
     stop(1000);
     __user = Maps.store.createRecord(
         Maps.SysUser, {
             username: "sc_tests_"+(Math.random()*100),
             enabled: true,
-            password:'changeme'
+            password:'changeme',
+            passwordRepeat: 'changeme'
             });
 
     SC.RunLoop.begin();
@@ -85,6 +108,31 @@ function __checkSysUserCreate() {
     ok(__user.get('username'), "username property is present");
     ok(__user.get('enabled')!==undefined, "enabled property is present");
     ok(__user.get('enabled')==true, "user is enabled");
-    ok(__user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN');
+    ok(__user.get('status') === SC.Record.READY_CLEAN, 'Status is READY_CLEAN (actual: '+__user.get('status')+')');
     start();
+    // dump on console
+    console.log(__user.get('attributes'));
+    __user=null;
+    if(__nestedStore) { __nestedStore.destroy(); __nestedStore=null; }
 }
+
+test("sysuser.nestedstore.create.integration", function () {
+    stop(1000);
+    __nestedStore = Maps.store.chain();
+    __user = __nestedStore.createRecord(
+        Maps.SysUser,
+        {
+            username: "sc_tests_"+(Math.random()*100),
+            enabled: true,
+            password:'changeme',
+            passwordRepeat: 'changeme'
+        }
+    );
+
+    SC.RunLoop.begin();
+    __nestedStore.commitChanges(NO);
+    SC.RunLoop.end();
+
+    // Give our store 1 second to commit records to the remote server
+    setTimeout(__checkSysUserCreate, 800);
+});

@@ -15,10 +15,10 @@ Maps.appManagementPane = SC.PanelPane.design({
     layout:{width:800, height:300, centerX:0, centerY:0},
     contentView:SC.View.extend({
         layout:{top:5, bottom:5, left:5, right:5},
-        childViews:"sourceList informational users".w(),
+        childViews:"sourceList exit informational users".w(),
 
         sourceList:SC.SourceListView.design({
-            layout:{ bottom:0, left:0, width:150, top:0 },
+            layout:{ bottom:29, left:0, width:150, top:0 },
             contentBinding: SC.Binding.oneWay("Maps.appManagementController.sourceListTree"),
             exampleView:SC.ListItemView.extend({
                 hasContentIcon:YES,
@@ -34,6 +34,11 @@ Maps.appManagementPane = SC.PanelPane.design({
                 return theView;
             }.property("selection").cacheable(true)
         }),
+        exit: SC.ButtonView.design({
+            layout: {left:0, height:24, bottom:0, width:150 },
+            title: "_exit".loc(),
+            action: "exit"
+        }),
         informational: SC.LabelView.design({
             layout: {centerX:0, centerY:0, width: 200, height: 30},
             value: "_please_select_an_item".loc(),
@@ -42,7 +47,7 @@ Maps.appManagementPane = SC.PanelPane.design({
         users: SC.View.design({
             layout: {top:0,bottom:0,right:0,left:155},
             isVisibleBinding: SC.Binding.single(".parentView.sourceList.value").equals("users"),
-            childViews: "list form create".w(),
+            childViews: "list form create save cancel".w(),
             list: SC.ScrollView.design({
                 layout: {left:0, top:0, bottom:29, width:200 },
                 contentView : SC.ListView.design({
@@ -60,7 +65,7 @@ Maps.appManagementPane = SC.PanelPane.design({
                 })
             }),
             form: SC.FormView.design({
-                layout: {left:205, top:0, bottom:0, right:0 },
+                layout: {left:205, top:0, bottom:30, right:0 },
                 childViews: "username enabled password passwordRepeat".w(),
                 contentBinding: 'Maps.systemUserController',
 
@@ -79,6 +84,18 @@ Maps.appManagementPane = SC.PanelPane.design({
                     layout: {height: 20, width: 150},
                     isVisibleBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
                 }))
+            }),
+            cancel: SC.ButtonView.design({
+                layout: {right:20, height:24, bottom:0, width:100 },
+                title: "_cancel".loc(),
+                action: "cancel",
+                isVisibleBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
+            }),
+            save: SC.ButtonView.design({
+                layout: {right:140, height:24, bottom:0, width:100 },
+                title: "_save".loc(),
+                action: "save",
+                isVisibleBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
             }),
             create: SC.ButtonView.design({
                 layout: {left:0, centerY:0, height:24, bottom:0, width:200 },

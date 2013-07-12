@@ -65,19 +65,23 @@ exports.save = function(req,res) {
         } else { // insert
             user.nextid(req,res,function(http_code, id) {
                 if(id) {
-                    var enc_password=crypto.createHash("sha256")
-                        .update(req.body.password)
-                        .digest('hex');
-                    var params=[id,req.body.username,req.body.enabled, enc_password];
-                    conn.query("insert into person (id,username,enabled,password,version,account_expired,account_locked,password_expired) values($1,$2,$3,$4,1,false,false,false)", params, function(err, result) {
-                        if(!err) {
-                            user.find(req,res,id,function(s, data) {
-                                end(http_code, data);
-                            }, conn);
-                        } else {
-                            handleError(err);
-                        }
-                    });
+                    if(req.body.password && req.body.passwordRepeat && req.body.password==req.body.passwordRepeat) {
+                        var enc_password=crypto.createHash("sha256")
+                            .update(req.body.password)
+                            .digest('hex');
+                        var params=[id,req.body.username,req.body.enabled, enc_password];
+                        conn.query("insert into person (id,username,enabled,password,version,account_expired,account_locked,password_expired) values($1,$2,$3,$4,1,false,false,false)", params, function(err, result) {
+                            if(!err) {
+                                user.find(req,res,id,function(s, data) {
+                                    end(http_code, data);
+                                }, conn);
+                            } else {
+                                handleError(err);
+                            }
+                        });
+                    } else {
+                        end(400, "Missing password or password mismatch");
+                    }
                 } else {
                     handleError(err);
                 }
