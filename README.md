@@ -18,16 +18,15 @@ Mappu is a web-based gis which strives to:
 Getting Mappu
 -------------
 
-I'm working on a vagrant script that will make it as easy as
-possible to provision a vm with all the necessary software
-installed automatically.
+Note: as of june 2013 this is being rewritten as a SaltStack state.
+See:
 
-The script is in the *vagrant* folder.
+http://github.com/unicolet/mappu-deploy-tooling
 
 Screenshot/demo
 ---------------
 
-Screenhots are hosted in the media folder.
+Screenshots are hosted in the media folder.
 
 A demo is available on a temporary cloud server:
 
