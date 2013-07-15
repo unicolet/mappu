@@ -266,7 +266,9 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 url = '/mapsocial/comment/'
             } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.SysUser)) {
                 url = '/mapsocial/users/'
-            }
+            } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Link)) {
+            url = '/mapsocial/links/'
+        }
             if (url) {
                 SC.Request.postUrl(url).set('isJSON', YES)
                     .notify(this, this.didCreateRecord, store, storeKey)
@@ -304,6 +306,8 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 url = '/mapsocial/comment/' + store.idFor(storeKey) + '?alt=json'
             } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.SysUser)) {
                 url = '/mapsocial/users/' + store.idFor(storeKey) + '?alt=json'
+            } else if (SC.kindOf(store.recordTypeFor(storeKey), Maps.Link)) {
+                url = '/mapsocial/links/' + store.idFor(storeKey) + '?alt=json'
             }
             if (url) {
                 SC.Request.putUrl(url).set('isJSON', YES)
