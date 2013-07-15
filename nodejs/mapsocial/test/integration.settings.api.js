@@ -6,7 +6,7 @@ var app = require('../app')
 
 var new_user_guid=[];
 
-describe('Mappu Settings API', function () {
+describe('Mappu Settings API - Users', function () {
 
     before(function (done) {
         app.auth.enable(false);

@@ -12,7 +12,8 @@ var express = require('express')
     , mappu = require('./routes/mappu')
     , jts = require('./routes/jts')
     , redis = require('redis')
-    , system_users = require('./routes/system.users.js');
+    , system_users = require('./routes/system.users.js')
+    , system_links = require('./routes/system.links.js');
 
 var app_context = process.env.NODE_APP_CONTEXT ? process.env.NODE_APP_CONTEXT : "";
 var cookie_secret = process.env.NODE_COOKIE_SECRET ? process.env.NODE_COOKIE_SECRET : "yadayadayada";
@@ -93,6 +94,10 @@ app.post  (app_context+'/jts/:operation', saveRawBody, jts.processJstsRequest);
 app.get   (app_context+'/users/list', system_users.list);
 app.put   (app_context+'/users/:id', system_users.save);
 app.post   (app_context+'/users/', system_users.save);
+
+app.get   (app_context+'/links/list', system_links.list);
+app.put   (app_context+'/links/:id', system_links.save);
+app.post   (app_context+'/links/', system_links.save);
 
 if (!module.parent) {
     http.createServer(app).listen(app.get('port'), function () {

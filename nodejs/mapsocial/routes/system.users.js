@@ -3,11 +3,9 @@ var user=require('../models/user')
 
 
 exports.list = function(req,res) {
-    res.db.query("select id guid, username, enabled from person order by id asc", [], function(err, result) {
-        user.list(req,res,function(http_code, data) {
-            res.send(http_code, JSON.stringify(data));
-        }, null);
-    });
+    user.list(req,res,function(http_code, data) {
+        res.send(http_code, JSON.stringify(data));
+    }, null);
 };
 
 exports.save = function(req,res) {
@@ -17,7 +15,6 @@ exports.save = function(req,res) {
 
     var handleError=function(err) {
         release();
-        console.log(err);
         res.send(500, JSON.stringify(err));
 
     };
@@ -72,7 +69,6 @@ exports.save = function(req,res) {
                         var params=[id,req.body.username,req.body.enabled, enc_password];
                         conn.query("insert into person (id,username,enabled,password,version,account_expired,account_locked,password_expired) values($1,$2,$3,$4,1,false,false,false)", params, function(err, result) {
                             if(!err) {
-                                console.log("id="+id);
                                 conn.query("insert into person_authority (person_id, authority_id) values($1,1)", [id], function(err, result) {
                                     if(!err) {
                                         user.find(req,res,id,function(s, data) {
