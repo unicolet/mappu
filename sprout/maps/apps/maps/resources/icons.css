@@ -118,3 +118,9 @@
     background-repeat:no-repeat;
     background-position:center;
 }
+
+.sc-icon-magnet-16 {
+    width: 16px;
+    height: 16px;
+    @include slice("images/sc-icon-magnet-16.png");
+}

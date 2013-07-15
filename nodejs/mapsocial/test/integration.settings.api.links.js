@@ -26,11 +26,11 @@ describe('Mappu Settings API - Links', function () {
                 var links = JSON.parse(res.body).content;
                 links.should.have.lengthOf(1);
                 links[0].should.have.property('layer','states');
-                links[0].should.have.property('layer_group','top');
+                links[0].should.have.property('layerGroup','top');
                 links[0].should.have.property('url','the_url');
                 links[0].should.have.property('description','descr');
                 links[0].should.have.property('title','title');
-                links[0].should.have.property('feature_id','');
+                links[0].should.have.property('featureId','');
                 links[0].should.have.property('enabled',true);
                 links[0].should.have.property('guid',1);
                 done();
@@ -38,7 +38,7 @@ describe('Mappu Settings API - Links', function () {
     });
 
     it('PUT /links/1 should save a link', function (done) {
-        var post_data=qs.stringify({ guid: 1, enabled: false,layer: 'states',layer_group: 'top',feature_id: '',url: 'the_url',description: 'descr',title: 'changed' });
+        var post_data=qs.stringify({ guid: 1, enabled: false,layer: 'states',layerGroup: 'top',featureId: '',url: 'the_url',description: 'descr',title: 'changed' });
         http.request()
             .put('/links/1')
             .set('Content-Type','application/x-www-form-urlencoded')
@@ -48,11 +48,11 @@ describe('Mappu Settings API - Links', function () {
                 res.statusCode.should.equal(200);
                 var links = JSON.parse(res.body).content;
                 links.should.have.property('layer','states');
-                links.should.have.property('layer_group','top');
+                links.should.have.property('layerGroup','top');
                 links.should.have.property('url','the_url');
                 links.should.have.property('description','descr');
                 links.should.have.property('title','changed');
-                links.should.have.property('feature_id','');
+                links.should.have.property('featureId','');
                 links.should.have.property('enabled',false);
                 links.should.have.property('guid',1);
                 done();
@@ -60,7 +60,7 @@ describe('Mappu Settings API - Links', function () {
     });
 
     it('PUT /links/1 should save a link (reverse previous)', function (done) {
-        var post_data=qs.stringify({ guid: 1, enabled: true,layer: 'states',layer_group: 'top',feature_id: '',url: 'the_url',description: 'descr',title: 'title' });
+        var post_data=qs.stringify({ guid: 1, enabled: true,layer: 'states',layerGroup: 'top',featureId: '',url: 'the_url',description: 'descr',title: 'title' });
         http.request()
             .put('/links/1')
             .set('Content-Type','application/x-www-form-urlencoded')
@@ -70,11 +70,11 @@ describe('Mappu Settings API - Links', function () {
                 res.statusCode.should.equal(200);
                 var links = JSON.parse(res.body).content;
                 links.should.have.property('layer','states');
-                links.should.have.property('layer_group','top');
+                links.should.have.property('layerGroup','top');
                 links.should.have.property('url','the_url');
                 links.should.have.property('description','descr');
                 links.should.have.property('title','title');
-                links.should.have.property('feature_id','');
+                links.should.have.property('featureId','');
                 links.should.have.property('enabled',true);
                 links.should.have.property('guid',1);
                 done();
@@ -82,7 +82,7 @@ describe('Mappu Settings API - Links', function () {
     });
 
     it('POST /links/ should insert a link', function (done) {
-        var post_data=qs.stringify({ enabled: true,layer: '_states',layer_group: '_top',feature_id: '',url: '_the_url',description: '_descr',title: '_title' });
+        var post_data=qs.stringify({ enabled: true,layer: '_states',layerGroup: '_top',featureId: '',url: '_the_url',description: '_descr',title: '_title' });
         http.request()
             .post('/links/')
             .set('Content-Type','application/x-www-form-urlencoded')
@@ -92,11 +92,11 @@ describe('Mappu Settings API - Links', function () {
                 res.statusCode.should.equal(200);
                 var link = JSON.parse(res.body).content;
                 link.should.have.property('layer','_states');
-                link.should.have.property('layer_group','_top');
+                link.should.have.property('layerGroup','_top');
                 link.should.have.property('url','_the_url');
                 link.should.have.property('description','_descr');
                 link.should.have.property('title','_title');
-                link.should.have.property('feature_id','');
+                link.should.have.property('featureId','');
                 link.should.have.property('enabled',true);
                 link.guid.should.be.above(1)
                 new_link_guid.push(link.guid)
@@ -105,7 +105,7 @@ describe('Mappu Settings API - Links', function () {
     });
 
     it('PUT /links/<new_guid> should update link, with password also changes password', function (done) {
-        var post_data=qs.stringify({ guid: new_link_guid[0], enabled: false,layer: 'states',layer_group: 'top',feature_id: '',url: 'the_url',description: 'descr',title: 'title' });
+        var post_data=qs.stringify({ guid: new_link_guid[0], enabled: false,layer: 'states',layerGroup: 'top',featureId: '',url: 'the_url',description: 'descr',title: 'title' });
         http.request()
             .put('/links/'+new_link_guid[0])
             .set('Content-Type','application/x-www-form-urlencoded')
@@ -115,11 +115,11 @@ describe('Mappu Settings API - Links', function () {
                 res.statusCode.should.equal(200);
                 var link = JSON.parse(res.body).content;
                 link.should.have.property('layer','states');
-                link.should.have.property('layer_group','top');
+                link.should.have.property('layerGroup','top');
                 link.should.have.property('url','the_url');
                 link.should.have.property('description','descr');
                 link.should.have.property('title','title');
-                link.should.have.property('feature_id','');
+                link.should.have.property('featureId','');
                 link.should.have.property('enabled',false);
                 link.guid.should.be.equal(new_link_guid[0]);
                 done();

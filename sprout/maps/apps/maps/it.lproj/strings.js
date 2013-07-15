@@ -118,5 +118,11 @@ SC.stringsFor('it', {
     "_please_select_an_item": "Selezionare una voce dall'elenco a sinistra per iniziare",
     "_cancel": "Annulla",
     "_pwd_not_match": " Le password non corrispondono",
-    "_user_exists": " Esiste un utente con lo stesso username"
+    "_user_exists": " Esiste un utente con lo stesso username",
+    "_edit": "Modifica",
+    "_Title:": "Titolo:",
+    "_Layer:": "Layer:",
+    "_LayerGroup:": "Layer group:",
+    "_Description:": "Descrizione:",
+    "_Url:": "URL:"
 });

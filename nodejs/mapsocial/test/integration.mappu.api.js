@@ -38,7 +38,7 @@ describe('Mappu API', function () {
     it('GET /link without params should return a list', function (done) {
         http.request()
             .get('/link')
-            .expect("{\"content\":[{\"guid\":1,\"featureId\":\"\",\"layer\":\"states\",\"layerGroup\":\"top\",\"url\":\"the_url\",\"description\":\"descr\",\"title\":\"title\"}]}", done);
+            .expect("{\"content\":[{\"guid\":1,\"enabled\":true,\"featureId\":\"\",\"layer\":\"states\",\"layerGroup\":\"top\",\"url\":\"the_url\",\"description\":\"descr\",\"title\":\"title\"}]}", done);
     });
 
     it('GET /social/topp:states:1?alt=json returns one item', function (done) {

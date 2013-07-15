@@ -41,7 +41,7 @@ exports.save = function(req,res) {
         if (req.params.id) { // found, hence update
             var db_id=req.params.id;
 
-            var params=[db_id, req.body.enabled, req.body.title, req.body.layer,req.body.layer_group,req.body.feature_id,req.body.url,req.body.description];
+            var params=[db_id, req.body.enabled, req.body.title, req.body.layer,req.body.layerGroup,req.body.featureId,req.body.url,req.body.description];
             var query="update link set enabled=$2,title=$3,layer=$4,layer_group=$5,feature_id=$6,url=$7,description=$8 where id=$1";
 
             conn.query(query, params, function(err, result) {
@@ -56,7 +56,7 @@ exports.save = function(req,res) {
         } else { // insert
             link.nextid(req,res,function(http_code, id) {
                 if(id) {
-                    var params=[id, req.body.enabled, req.body.title, req.body.layer,req.body.layer_group,req.body.feature_id,req.body.url,req.body.description];
+                    var params=[id, req.body.enabled, req.body.title, req.body.layer,req.body.layerGroup,req.body.featureId,req.body.url,req.body.description];
                     conn.query("insert into link (id,version,enabled,title,layer,layer_group,feature_id,url,description) values($1,1,$2,$3,$4,$5,$6,$7,$8)", params, function(err, result) {
                         if(!err) {
                             link.find(req,res,id,function(s, data) {

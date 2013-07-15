@@ -32,8 +32,8 @@ Maps.appManagementState = SC.State.extend({
     viewingManagerPane: SC.State.extend({
         enterState: function() {
             // start loading data
-            console.log("reloading users");
             Maps.systemUsersController.load();
+            Maps.systemLinksController.load();
         },
 
         createUser: function() {
@@ -42,6 +42,14 @@ Maps.appManagementState = SC.State.extend({
 
         changePassword: function() {
             this.gotoState("changingPassword")
+        },
+
+        createLink: function() {
+            this.gotoState("creatingLink");
+        },
+
+        editLink: function() {
+            this.gotoState("editingLink");
         }
     }),
 
@@ -72,6 +80,66 @@ Maps.appManagementState = SC.State.extend({
             this.nestedStore.destroy();
             this.nestedStore=null;
             Maps.systemUserController.set("isCreating", NO);
+        }
+    }),
+
+    creatingLink :SC.State.extend({
+        nestedStore: null,
+
+        enterState: function() {
+            this.nestedStore = Maps.store.chain();
+            Maps.systemLinkController.set("content",this.nestedStore.createRecord(Maps.Link, {enabled: true}));
+            Maps.systemLinkController.set("isEditing", YES);
+        },
+
+        save: function() {
+            if(Maps.systemLinkController.validate()) {
+                this.nestedStore.commitChanges(NO);
+                Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
+                    Maps.statechart.gotoState("viewingManagerPane");
+                });
+            }
+        },
+
+        cancel: function() {
+            this.nestedStore.discardChanges();
+            this.gotoState("viewingManagerPane");
+        },
+
+        exitState: function() {
+            this.nestedStore.destroy();
+            this.nestedStore=null;
+            Maps.systemLinkController.set("isEditing", NO);
+        }
+    }),
+
+    editingLink :SC.State.extend({
+        nestedStore: null,
+
+        enterState: function() {
+            this.nestedStore = Maps.store.chain();
+            Maps.systemLinkController.set("content",this.nestedStore.find(Maps.Link, Maps.systemLinkController.get("id")));
+            Maps.systemLinkController.set("isEditing", YES);
+        },
+
+        save: function() {
+            if(Maps.systemLinkController.validate()) {
+                this.nestedStore.commitChanges(NO);
+                Maps.store.commitRecords(undefined, undefined, undefined, undefined, function(){
+                    Maps.statechart.gotoState("viewingManagerPane");
+                });
+            }
+        },
+
+        cancel: function() {
+            this.nestedStore.discardChanges();
+            this.gotoState("viewingManagerPane");
+        },
+
+        exitState: function() {
+            this.nestedStore.destroy();
+            this.nestedStore=null;
+            Maps.systemLinkController.set("isEditing", NO);
         }
     }),
 

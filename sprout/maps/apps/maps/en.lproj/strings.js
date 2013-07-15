@@ -108,5 +108,11 @@ SC.stringsFor('en', {
     "_please_select_an_item": "Please select an item from the list on the left",
     "_cancel": "Cancel",
     "_pwd_not_match": " Passwords don't match",
-    "_user_exists": " User already exists"
+    "_user_exists": " User already exists",
+    "_edit": "Edit",
+    "_Title:": "Title:",
+    "_Layer:": "Layer:",
+    "_LayerGroup:": "Layer group:",
+    "_Description:": "Description:",
+    "_Url:": "URL:"
 });

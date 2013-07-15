@@ -16,6 +16,11 @@ Maps.appManagementController = SC.ObjectController.create({
                     name:'_users'.loc(),
                     icon:'sc-icon-group-16',
                     view: "users"
+                }),
+                SC.Object.create({
+                    name:'_links'.loc(),
+                    icon:'sc-icon-magnet-16',
+                    view: "links"
                 })
             ]
         }),

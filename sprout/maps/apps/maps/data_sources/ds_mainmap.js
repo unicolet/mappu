@@ -88,7 +88,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                     .notify(this, 'didFetchLayerQueries', store, query)
                     .send();
                 return YES;
-            } else if (query.recordType === Maps.Link) {
+            } else if (query === Maps.LINK_QUERY) {
                 if (query.isLocal()) {
                     return YES;
                 } else {
@@ -99,6 +99,12 @@ Maps.MapsDataSource = SC.DataSource.extend(
                         .send();
                     return YES;
                 }
+            }  else if (query.recordType === Maps.Link) {
+                SC.Request.getUrl('/mapsocial/links/list')
+                    .set('isJSON', YES)
+                    .notify(this, 'didFetchRecords', store, query)
+                    .send();
+                return YES;
             } else if (query.recordType === Maps.Comment) {
                 //console.log("Maps.MapsDataSource.fetch() - Maps.Comment for id=" + query.parameters['social']);
                 SC.Request.getUrl('/mapsocial/social/' + query.parameters['social'] + '/comments')

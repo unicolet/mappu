@@ -1,7 +1,7 @@
 exports.list=function(req,res,cb,conn) {
     var connection=res.db;
     if(conn!=null) { connection=conn; }
-    connection.query("select id guid, enabled, layer, layer_group, feature_id, url, description, title from link", function(err, result) {
+    connection.query("select id guid, enabled, layer, layer_group \"layerGroup\", feature_id \"featureId\", url, description, title from link", function(err, result) {
         var links=[];
         if (!err && result.rows.length>=1)
             links=result.rows;
@@ -12,7 +12,7 @@ exports.list=function(req,res,cb,conn) {
 exports.find=function(req,res,id,cb,conn) {
     var connection=res.db;
     if(conn!=null) { connection=conn; }
-    connection.query("select id guid, enabled, layer, layer_group, feature_id, url, description, title from link where id=$1",[id], function(err, result) {
+    connection.query("select id guid, enabled, layer, layer_group \"layerGroup\", feature_id \"featureId\", url, description, title from link where id=$1",[id], function(err, result) {
         var user=null;
         if (!err && result.rows.length==1)
             user=result.rows[0];

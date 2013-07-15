@@ -11,7 +11,7 @@ exports.layerQuery=function(req, res) {
 };
 
 exports.link=function(req, res) {
-    res.db.query("select id guid, feature_id \"featureId\", layer, layer_group \"layerGroup\", url, description, title from link where enabled=true", [], function(err, result) {
+    res.db.query("select id guid, enabled, feature_id \"featureId\", layer, layer_group \"layerGroup\", url, description, title from link where enabled=true", [], function(err, result) {
         var links=[];
         if (!err && result.rows.length>=1)
             links=result.rows;
