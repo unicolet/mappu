@@ -510,7 +510,7 @@ select adjustByteaOutput();
 	</insert>
     </changeSet>
     <changeSet author="unicoletti" id="1326791384723-36" context="TEST" runAlways="true">
-        <validCheckSum>adfaa9b9f2387933953ecfde653ccf</validCheckSum>
+        <validCheckSum>948e4af4c595609b1a7295ea1e5a582</validCheckSum>
         <comment>
             insert social data for tests on tag retrieval 
             enable admin user (during integration tests we disable it)
