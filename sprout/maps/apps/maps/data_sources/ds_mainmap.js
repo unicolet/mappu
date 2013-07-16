@@ -99,10 +99,10 @@ Maps.MapsDataSource = SC.DataSource.extend(
                         .send();
                     return YES;
                 }
-            }  else if (query.recordType === Maps.Link) {
+            }  else if (query.recordType === Maps.Link && query.isRemote()) {
                 SC.Request.getUrl('/mapsocial/links/list')
                     .set('isJSON', YES)
-                    .notify(this, 'didFetchRecords', store, query)
+                    .notify(this, 'didFetchLinks', store, query)
                     .send();
                 return YES;
             } else if (query.recordType === Maps.Comment) {
