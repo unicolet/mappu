@@ -12,7 +12,7 @@ SC.Binding.equals = function(expectedValue) {
 } ;
 
 Maps.appManagementPane = SC.PanelPane.design({
-    layout:{width:800, height:300, centerX:0, centerY:0},
+    layout:{left:0, top:0, bottom:0, right: 400},
     contentView:SC.View.extend({
         layout:{top:5, bottom:5, left:5, right:5},
         childViews:"sourceList exit informational users links".w(),

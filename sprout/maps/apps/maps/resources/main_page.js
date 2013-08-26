@@ -150,7 +150,7 @@ Maps.mainPage = SC.Page.design({
                 }),
 
                 featureView:SC.TabView.extend({
-                    layout: { top: 311, bottom: -1, left:0, right: -1 },
+                    layout: { top: 311, bottom: -1, left:-1, right: -1 },
                     controlSize: SC.SMALL_CONTROL_SIZE,
                     itemTitleKey: "title",
                     itemValueKey: "tab",
