@@ -220,8 +220,6 @@ Maps.mainPage = SC.Page.design({
     }),
 
     layerSearchPane : SC.PickerPane.design({
-        themeName: 'popover',
-
         removeAction: "didCloseSearchPalette",
 
         layout: { height: 200, width: 400},
@@ -239,8 +237,6 @@ Maps.mainPage = SC.Page.design({
     }).create(),
 
     layerPalette : SC.PickerPane.extend({
-        themeName: 'popover',
-
         removeAction: "didCloseLayerPalette",
 
         layout: { width: 500, height: 400 },
