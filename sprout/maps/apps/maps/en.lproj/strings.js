@@ -29,7 +29,7 @@ SC.stringsFor('en', {
     "_run"  : "Run",
     "_streets_satellite" : "Streets Satellite",
     "_info" : "Info",
-    "_opacity" : "Opacity",
+    "_opacity" : "Opacity:",
     "_intersection" : "Intersection",
     "_union" : "Union",
     "_area" : "Area",

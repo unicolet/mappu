@@ -28,7 +28,7 @@ SC.stringsFor('it', {
     "_run"  : "Esegui",
     "_streets_satellite" : "Streets Satellite",
     "_info" : "Informazioni",
-    "_opacity" : "Trasparenza",
+    "_opacity" : "Trasparenza:",
     "_intersection" : "Intersezione",
     "_union" : "Unione",
     "_area" : "Area",
