@@ -144,7 +144,7 @@ Maps.mainPage = SC.Page.design({
                         action: "clearQueryResults"
                     }),
                     notifications : SC.LabelView.design({
-                        layout: { top: 10, height: 20, right: 45, left: 120 },
+                        layout: { top: 14, height: 20, right: 15, left: 140 },
                         escapeHTML: NO,
                         valueBinding: SC.Binding.oneWay("Maps.openLayersController.measure")
                     })
