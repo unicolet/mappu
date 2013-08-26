@@ -30,12 +30,19 @@ Maps.mainPage = SC.Page.design({
     // Add childViews to this pane for views to display immediately on page
     // load.
       mainPane: SC.MainPane.design( {
-        childViews: 'toolbar splitview'.w(),
+        childViews: 'toolbar splitview loading'.w(),
 
         defaultResponder: 'Maps.statechart',
 
+        loading: SC.ProgressView.design({
+            layout: { top: 0, height: 6, left: -2, right: -2, zIndex: 10 },
+            isIndeterminate: YES,
+            isRunning: YES,
+            isVisibleBinding: SC.Binding.oneWay("Maps.isLoading")
+        }),
+
         toolbar : SC.ToolbarView.design({
-            layout: { top: 0, left: 0, right: 0, height: 44 },
+            layout: { top: 6, left: 0, right: 0, height: 44 },
             anchorLocation: SC.ANCHOR_TOP,
             childViews : 'logo layers tools menu'.w(),
 
@@ -124,8 +131,8 @@ Maps.mainPage = SC.Page.design({
 
                 buttons: SC.View.design({
                     classNames: ["graduated"],
-                    layout: { top: 251, height: 60, left:0, right: -1 },
-                    childViews: "thumb clearq notifications loading".w(),
+                    layout: { top: 251, height: 50, left:0, right: -1 },
+                    childViews: "thumb clearq notifications".w(),
                     thumb: SC.ThumbView.design({
                         layout: { left: -10, centerY: 0, height: 33, width: 29}
                     }),
@@ -140,17 +147,11 @@ Maps.mainPage = SC.Page.design({
                         layout: { top: 10, height: 20, right: 45, left: 120 },
                         escapeHTML: NO,
                         valueBinding: SC.Binding.oneWay("Maps.openLayersController.measure")
-                    }),
-                    loading: SC.ProgressView.design({
-                      layout: { centerX: 0, height: 6, width: 200, bottom: 10 },
-                      isIndeterminate: YES,
-                      isRunning: YES,
-                      isVisibleBinding: SC.Binding.oneWay("Maps.isLoading")
                     })
                 }),
 
                 featureView:SC.TabView.extend({
-                    layout: { top: 311, bottom: -1, left:-1, right: -1 },
+                    layout: { top: 301, bottom: -1, left:-1, right: -1 },
                     controlSize: SC.SMALL_CONTROL_SIZE,
                     itemTitleKey: "title",
                     itemValueKey: "tab",
