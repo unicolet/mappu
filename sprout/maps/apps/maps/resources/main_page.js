@@ -100,7 +100,7 @@ Maps.mainPage = SC.Page.design({
 
          bottomRightView: SC.View.design({
             classNames: ["bottomRightView"],
-            layout: { top: 60, width: 299, bottom:15, right: 15, zIndex: 99 },
+            layout: { top: 60, width: 299, bottom:50, right: 15, zIndex: 99 },
             childViews: "resultsView buttons featureView".w(),
             resultsView: SC.ScrollView.design({
                 layout: { top: 0, left: 0, height:250, right: -1 },
