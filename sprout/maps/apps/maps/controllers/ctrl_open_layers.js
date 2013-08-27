@@ -30,16 +30,16 @@ Maps.openLayersController = SC.ArrayController.create(
             var olmap = this.getOLMAP();
             if (olmap) {
                 olmap.destroy();
-                Maps.mainPage.mainPane.splitview.topLeftView.set("olmap", null);
+                Maps.mainPage.get("openLayersView").set("olmap", null);
             }
         },
 
         getOLMAP: function() {
-            return Maps.mainPage.mainPane.splitview.topLeftView.get("olmap");
+            return Maps.mainPage.get("openLayersView").get("olmap");
         },
 
         getOLView: function() {
-            return Maps.mainPage.mainPane.splitview.topLeftView;
+            return Maps.mainPage.get("openLayersView");
         },
 
         getFeatureInfoLayer: function() {

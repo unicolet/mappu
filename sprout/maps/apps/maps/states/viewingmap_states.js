@@ -212,8 +212,10 @@ Maps.viewingMapState = SC.State.extend({
     },
     showGeoTools: function() {
         Maps.mainPage.geotoolsPane.append();
+        var targetViewLayout=Maps.mainPage.get("rightSplitPane").layout;
+        var rightOffset = targetViewLayout.width + targetViewLayout.right + 10;
         setTimeout(function () {
-            SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:Maps.mainPage.get("rightSplitPane").size+10}, 0.2); });
+            SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:rightOffset}, 0.2); });
         },0);
     },
     hideGeoTools: function() {

@@ -23,14 +23,15 @@ var icon_tools_16 = static_url('sc-icon-tools-16');
 Maps.mainPage = SC.Page.design({
 
     layersAndSearch: SC.outlet("mainPane.toolbar.layers"),
-    splitView : SC.outlet("mainPane.splitview"),
-    rightSplitPane : SC.outlet("mainPane.splitview.bottomRightView"),
+    openLayersView : SC.outlet("mainPane.topLeftView"),
+    rightSplitPane : SC.outlet("mainPane.bottomRightView"),
 
+    //mainPane.splitview: null,
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
       mainPane: SC.MainPane.design( {
-        childViews: 'toolbar splitview loading'.w(),
+        childViews: 'toolbar topLeftView bottomRightView loading'.w(),
 
         defaultResponder: 'Maps.statechart',
 
@@ -88,81 +89,67 @@ Maps.mainPage = SC.Page.design({
             })
         }),
 
-        splitview : SC.SplitView.design({
-            // these methods overriden from default because the default (wrongly) returns 100 when size==0
-            splitViewGetSizeForChild: function(splitView, child) {
-                return child.get('size') === undefined ? 100 : child.get('size');
-            },
+      topLeftView: Maps.OpenLayers.design({
+          layout: { top: 45, left: 0, bottom:0, right: 0 },
 
-            layout: { top: 45, left: 0, bottom:0, right: 0 },
-            layoutDirection: SC.LAYOUT_HORIZONTAL,
-            childViews: 'topLeftView bottomRightView'.w(),
+          layerId: 'olmap',
 
-            topLeftView: Maps.OpenLayers.design( SC.SplitChild, {
-                layout: { top: 0, left: 0, bottom:0, right: 300 },
+          contentBinding: "Maps.openLayersController.content",
+          exampleView: Maps.OpenLayersLayer
+      }),
 
-                layerId: 'olmap',
-
-                contentBinding: "Maps.openLayersController.content",
-                exampleView: Maps.OpenLayersLayer
+         bottomRightView: SC.View.design({
+            classNames: ["bottomRightView"],
+            layout: { top: 60, width: 299, bottom:15, right: 15, zIndex: 99 },
+            childViews: "resultsView buttons featureView".w(),
+            resultsView: SC.ScrollView.design({
+                layout: { top: 0, left: 0, height:250, right: -1 },
+                hasHorizontalScroller: NO,
+                backgroundColor: 'white',
+                contentView: SC.ListView.design({
+                    classNames: ["maps-chkbox-starred","denim","feature-list-item-view"],
+                    rowHeight: 30,
+                    contentBinding: 'Maps.featureInfoController.arrangedObjects',
+                    selectionBinding: 'Maps.featureInfoController.selection',
+                    contentValueKey: "intelligentName",
+                    contentCheckboxKey: "isStarred",
+                    exampleView: Maps.FeatureListItemView,
+                    hasContentRightIcon: YES,
+                    contentRightIconKey: "rightIconKey",
+                    rightIconAction: "zoomToFeature"
+                })
             }),
 
-            bottomRightView: SC.View.design(SC.SplitChild, {
-                size: 300,
-                layout: { top: 0, width: 299, bottom:0, right: 0 },
-                childViews: "resultsView buttons featureView".w(),
-                resultsView: SC.ScrollView.design({
-                    layout: { top: 0, left: 0, height:250, right: -1 },
-                    hasHorizontalScroller: NO,
-                    backgroundColor: 'white',
-                    contentView: SC.ListView.design({
-                        classNames: ["maps-chkbox-starred","denim","feature-list-item-view"],
-                        rowHeight: 30,
-                        contentBinding: 'Maps.featureInfoController.arrangedObjects',
-                        selectionBinding: 'Maps.featureInfoController.selection',
-                        contentValueKey: "intelligentName",
-                        contentCheckboxKey: "isStarred",
-                        exampleView: Maps.FeatureListItemView,
-                        hasContentRightIcon: YES,
-                        contentRightIconKey: "rightIconKey",
-                        rightIconAction: "zoomToFeature"
-                    })
+            buttons: SC.View.design({
+                classNames: ["graduated"],
+                layout: { top: 251, height: 50, left:0, right: -1 },
+                childViews: "clearq notifications".w(),
+                clearq: SC.ButtonView.design({
+                    layout: { top: 10, height: 24, left: 14, width: 80 },
+                    //classNames: ["borderless"],
+                    title: "_clear_q".loc(),
+                    icon: "icon-clear-16",
+                    action: "clearQueryResults"
                 }),
-
-                buttons: SC.View.design({
-                    classNames: ["graduated"],
-                    layout: { top: 251, height: 50, left:0, right: -1 },
-                    childViews: "thumb clearq notifications".w(),
-                    thumb: SC.ThumbView.design({
-                        layout: { left: -10, centerY: 0, height: 33, width: 29}
-                    }),
-                    clearq: SC.ButtonView.design({
-                        layout: { top: 10, height: 24, left: 24, width: 80 },
-                        //classNames: ["borderless"],
-                        title: "_clear_q".loc(),
-                        icon: "icon-clear-16",
-                        action: "clearQueryResults"
-                    }),
-                    notifications : SC.LabelView.design({
-                        layout: { top: 14, height: 20, right: 15, left: 140 },
-                        escapeHTML: NO,
-                        valueBinding: SC.Binding.oneWay("Maps.openLayersController.measure")
-                    })
-                }),
-
-                featureView:SC.TabView.extend({
-                    layout: { top: 301, bottom: -1, left:-1, right: -1 },
-                    controlSize: SC.SMALL_CONTROL_SIZE,
-                    itemTitleKey: "title",
-                    itemValueKey: "tab",
-                    nowShowing: "Maps.featureView",
-                    items: [
-                        {title: "_attributes".loc(), tab: "Maps.featureView" },
-                        {title: "_tags".loc(), tab: "Maps.tagsTab" },
-                        {title: "_comments".loc(), tab: "Maps.commentsTab" },
-                        {title: "_links".loc(), tab: "Maps.linksTab" }
-                    ]
+                notifications : SC.LabelView.design({
+                    layout: { top: 14, height: 20, right: 15, left: 140 },
+                    escapeHTML: NO,
+                    valueBinding: SC.Binding.oneWay("Maps.openLayersController.measure")
                 })
+            }),
+
+            featureView:SC.TabView.extend({
+                layout: { top: 301, bottom: -1, left:-1, right: -1 },
+                controlSize: SC.SMALL_CONTROL_SIZE,
+                itemTitleKey: "title",
+                itemValueKey: "tab",
+                nowShowing: "Maps.featureView",
+                items: [
+                    {title: "_attributes".loc(), tab: "Maps.featureView" },
+                    {title: "_tags".loc(), tab: "Maps.tagsTab" },
+                    {title: "_comments".loc(), tab: "Maps.commentsTab" },
+                    {title: "_links".loc(), tab: "Maps.linksTab" }
+                ]
             })
         })
     }),
@@ -318,7 +305,7 @@ Maps.mainPage = SC.Page.design({
     }).create(),
 
     geotoolsPane: SC.PalettePane.design({
-        layout: {width: 160, height: 400, right:-180, top:50},
+        layout: {width: 160, height: 400, right:-180, top: 65},
         contentView: SC.View.design({
             childViews: "feature1 feature2 operation go help helptext".w(),
             feature1: Maps.DropView.design({

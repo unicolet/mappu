@@ -157,6 +157,11 @@
     $theme.split-divider .line {
         background: #999;
     }
+
+    $theme.bottomRightView {
+        background: #CCC;
+        border: 1px solid #999;
+    }
 }
 
 @theme(comments) {
