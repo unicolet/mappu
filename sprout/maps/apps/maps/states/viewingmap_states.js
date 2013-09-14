@@ -85,7 +85,8 @@ Maps.viewingMapState = SC.State.extend({
 
     /* callback to logout */
     didLogout:function () {
-        this.gotoState('notLoggedIn');
+        // clear all data by reloading app
+        window.location.reload();
     },
 
     didChooseLayersOrSearch: function(view) {
@@ -178,9 +179,13 @@ Maps.viewingMapState = SC.State.extend({
     },
 
     showTagEplorer: function() {
+        this.hideGeoTools();
+
         Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
         Maps.mainPage.explorerPane.append();
-        Maps.mainPage.explorerPane.animate({left:0}, 0.2);
+        var targetViewLayout=Maps.mainPage.get("rightSplitPane").layout;
+        var rightOffset = targetViewLayout.width + targetViewLayout.right - 3;
+        Maps.mainPage.explorerPane.animate({right:rightOffset}, 0.2);
 
         if (Maps.mainPage.explorerPane.get("isVisible")==NO) {
             Maps.tagsController.refreshTagsLayer();
@@ -190,7 +195,7 @@ Maps.viewingMapState = SC.State.extend({
     },
     hideTagEplorer: function() {
         var newLayout=Maps.mainPage.explorerPane.layout;
-        Maps.mainPage.explorerPane.animate({left:-210}, 0.2, function () {
+        Maps.mainPage.explorerPane.animate({right:20}, 0.2, function () {
             Maps.mainPage.explorerPane.remove();
         });
         Maps.tagsController.hideTagsLayer();
@@ -211,6 +216,8 @@ Maps.viewingMapState = SC.State.extend({
         }
     },
     showGeoTools: function() {
+        this.hideTagEplorer();
+
         Maps.mainPage.geotoolsPane.append();
         var targetViewLayout=Maps.mainPage.get("rightSplitPane").layout;
         var rightOffset = targetViewLayout.width + targetViewLayout.right - 3;

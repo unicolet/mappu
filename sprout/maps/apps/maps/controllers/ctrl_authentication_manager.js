@@ -31,9 +31,11 @@ Maps.authenticationManager = SC.ObjectController.create({
     /* called to reinitialize this object and prepare for a new session */
     reset: function() {
         this.beginPropertyChanges();
+        var result=!SC.none(this.get("content"));
         this.set('content', null);
         this.set('message', '');
         this.endPropertyChanges();
+        return result;
     },
 
     logout: function() {
