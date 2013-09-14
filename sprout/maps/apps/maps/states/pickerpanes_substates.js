@@ -69,8 +69,10 @@ Maps.showingSearchPaneState = SC.State.extend({
         this.gotoState("browsingMapState");
     },
 
-    maps_GoToEditQuery:function () {
-        Maps.openLayersController.goToEditQuery();
+    maps_GoToEditQuery:function (view) {
+        if(Maps.layerQueryController.get("selection").firstObject()) {
+            Maps.openLayersController.goToEditQuery();
+        }
     },
 
     layerQueryBack:function () {

@@ -180,16 +180,15 @@ Maps.mainPage = SC.Page.design({
         title: SC.LabelView.design({
             layout: {top:5, left:5, right:5},
             valueBinding: SC.Binding.from("Maps.layerQueryController.selection").transform(function(value, isForward) {
-                if (isForward) {
+                if (isForward && value.firstObject()) {
                     return value.firstObject().get("description")
                 }
             })
         }),
         form: Maps.FormView.design({
             layout: {top: 36, left:5, right:5, height: 72},
-            // does not seem to work ???
             valueBinding: SC.Binding.from("Maps.layerQueryController.selection").transform(function(value, isForward) {
-                if (isForward) {
+                if (isForward && value.firstObject()) {
                     return value.firstObject().get("filterString")
                 }
             })
