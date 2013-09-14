@@ -17,6 +17,8 @@ Maps = SC.Application.create(
     NAMESPACE: 'Maps',
     VERSION: '1.1',
 
+    RIGHT_TOOL_BOX_PANE_ZINDEX: 100,
+
     // This is your application store.  You will use this store to access all
     // of your model data.  You can also set a data source on this store to
     // connect to a backend server.  The default setup below connects the store

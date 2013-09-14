@@ -213,13 +213,13 @@ Maps.viewingMapState = SC.State.extend({
     showGeoTools: function() {
         Maps.mainPage.geotoolsPane.append();
         var targetViewLayout=Maps.mainPage.get("rightSplitPane").layout;
-        var rightOffset = targetViewLayout.width + targetViewLayout.right + 10;
+        var rightOffset = targetViewLayout.width + targetViewLayout.right - 3;
         setTimeout(function () {
             SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:rightOffset}, 0.2); });
         },0);
     },
     hideGeoTools: function() {
-        Maps.mainPage.geotoolsPane.animate({right:-180}, 0.2, function () {
+        Maps.mainPage.geotoolsPane.animate({right:20}, 0.2, function () {
             Maps.mainPage.geotoolsPane.remove();
         });
     },

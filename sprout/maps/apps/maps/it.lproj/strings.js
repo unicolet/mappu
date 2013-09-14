@@ -99,7 +99,7 @@ SC.stringsFor('it', {
     "_print_title": "Opzioni di stampa",
     "_comment": "Digitare un commento da inserire nel foglio di stampa:",
     "_do_print": "Stampa",
-    "_layer_pane_instructions":"Seleziona un livello per iniziare",
+    "_layer_pane_instructions":"Seleziona un livello\nper modificare l'opacit&agrave; e\nvisualizzarne le informazioni",
     "_attributes": "Propriet&agrave;",
     "_addcomment": "Aggiungi un commento",
     "_delcomment": "Cancella il commento selezionato",

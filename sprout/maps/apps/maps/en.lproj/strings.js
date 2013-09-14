@@ -89,7 +89,7 @@ SC.stringsFor('en', {
     "_print_title": "Print options",
     "_comment": "Optional comment to be added on the print:",
     "_do_print": "Print",
-    "_layer_pane_instructions":"Select a layer to get started",
+    "_layer_pane_instructions":"Select a layer\nto get set opacity and\nview its properties",
     "_attributes": "Attributes",
     "_addcomment": "Add a comment",
     "_delcomment": "Delete selected comment",

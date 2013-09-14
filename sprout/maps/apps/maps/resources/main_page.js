@@ -36,7 +36,7 @@ Maps.mainPage = SC.Page.design({
         defaultResponder: 'Maps.statechart',
 
         loading: SC.ProgressView.design({
-            layout: { top: 0, height: 6, left: -2, right: -2, zIndex: 10 },
+            layout: { top: 0, height: 4, left: -2, right: -2, zIndex: Maps.RIGHT_TOOL_BOX_PANE_ZINDEX+1},
             isIndeterminate: YES,
             isRunning: YES,
             isVisibleBinding: SC.Binding.oneWay("Maps.isLoading")
@@ -100,7 +100,7 @@ Maps.mainPage = SC.Page.design({
 
          bottomRightView: SC.View.design({
             classNames: ["bottomRightView"],
-            layout: { top: 60, width: 299, bottom:50, right: 15, zIndex: 99 },
+            layout: { top: 60, width: 299, bottom:50, right: 15, zIndex: Maps.RIGHT_TOOL_BOX_PANE_ZINDEX },
             childViews: "resultsView buttons featureView".w(),
             resultsView: SC.ScrollView.design({
                 layout: { top: 0, left: 0, height:250, right: -1 },
@@ -292,12 +292,16 @@ Maps.mainPage = SC.Page.design({
                     })
                 }),
                 instructionsView: SC.LabelView.design({
-                    layout: { top: 150, bottom: 0, left: 240, right: 0 },
+                    classNames: ["rotated_tip"],
+                    textAlign: SC.ALIGN_CENTER,
+
+                    layout: { top: 0, bottom: 0, left: 251, right: 50 },
                     isVisibleBinding: SC.Binding.oneWay('Maps.openLayersController.selection').transform(function(value, binding) {
                         if(value && value.length()>0)
                             return false;
                         return true;
                     }),
+                    escapeHTML: NO,
                     value: "_layer_pane_instructions".loc()
                 })
             })
@@ -305,25 +309,27 @@ Maps.mainPage = SC.Page.design({
     }).create(),
 
     geotoolsPane: SC.PalettePane.design({
-        layout: {width: 160, height: 400, right:-180, top: 65},
+        classNames: ["remove-shadow"],
+        isAnchored: YES, // prevent dragging
+        layout: {width: 170, height: 400, right:20, top: 70, zIndex:  Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-1},
         contentView: SC.View.design({
             childViews: "feature1 feature2 operation go help helptext".w(),
             feature1: Maps.DropView.design({
-                layout: {top: 5, left:5, right:5, height:30},
+                layout: {top: 5, left:5, right:10, height:30},
                 valueBinding: "Maps.featureInfoController.feature1descr",
                 textAlign: SC.ALIGN_CENTER,
                 classNames: ["maps-dropview"],
                 dropTargetProperty: "feature1"
             }),
             feature2: Maps.DropView.design({
-                layout: {top: 51, left:5, right:5, height:30},
+                layout: {top: 51, left:5, right:10, height:30},
                 valueBinding: "Maps.featureInfoController.feature2descr",
                 textAlign: SC.ALIGN_CENTER,
                 classNames: ["maps-dropview"],
                 dropTargetProperty: "feature2"
             }),
             operation: SC.SelectView.design({
-                layout: {top: 102, left:5, right:5, height:24},
+                layout: {top: 102, left:5, right:10, height:24},
                 items: [
                     { title: "_area", value: "Area", pos: 1},
                     { title: "_intersection", value: "Intersection", pos: 2},
@@ -352,13 +358,16 @@ Maps.mainPage = SC.Page.design({
                 value: "sc-icon-help-24"
             }),
             helptext: SC.LabelView.design({
-                layout: {top: 210,left:5, right:5, bottom:5},
+                textAlign: SC.ALIGN_CENTER,
+                layout: {top: 210,left:5, right:10, bottom:5},
+
                 value:"_geotools_help".loc()
             })
         })
     }).create(),
 
     explorerPane: SC.PalettePane.design({
+        isAnchored: YES, // prevent dragging
         layout: {width: 200, height: 500, left:-210, centerY:0},
         contentView: SC.View.design({
             layout: {top:0,bottom:0,left:0,right:0},
