@@ -38,6 +38,7 @@ Maps = SC.Application.create(
         Maps.projections['EPSG:3003'] = new OpenLayers.Projection('EPSG:3003');
         Maps.projections['EPSG:900913'] = new OpenLayers.Projection('EPSG:900913');
         Maps.projections['EPSG:4326'] = new OpenLayers.Projection('EPSG:4326');
+        Maps.projections['EPSG:3410'] = new OpenLayers.Projection('EPSG:3410');
     },
 
     /**
@@ -105,10 +106,10 @@ Maps = SC.Application.create(
     /* Utility functions */
     formatArea: function(area) {
         var unit="m";
-        var a=area;
-        if(a) {
-            if(a>1000) {
-                a=Math.round(area/1000);
+        var a=Math.round(area);
+        if(area) {
+            if(area>1000000) {
+                a=Math.round(area/1000000);
                 unit="km";
             }
         }

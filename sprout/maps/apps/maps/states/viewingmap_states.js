@@ -255,8 +255,18 @@ Maps.viewingMapState = SC.State.extend({
                 payload = response.get("body");
             var WKTParser = new OpenLayers.Format.WKT();
             var features = WKTParser.read(payload['geom']);
+            //@if(debug)
+            console.log(payload);
+            //@endif
             Maps.openLayersController.set("measure","Area: "+Maps.formatArea(payload['area']));
             if (features) {
+                if(features.length) {
+                    for(var i=0, l=features.length;i<l;i++) {
+                        features[i].geometry.transform(Maps.projections['EPSG:3410'], Maps.projections['EPSG:900913']);
+                    }
+                } else if(features.geometry){
+                    features.geometry.transform(Maps.projections['EPSG:3410'], Maps.projections['EPSG:900913']);
+                }
                 Maps.openLayersController.getGeotoolsLayer().removeAllFeatures();
                 Maps.openLayersController.getGeotoolsLayer().addFeatures(features);
             }

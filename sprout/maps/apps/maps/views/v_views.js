@@ -96,7 +96,7 @@ Maps.DropView = SC.LabelView.extend(
 		Maps.featureInfoController.set(this.get("dropTargetProperty"),record.attributes()["name"]);
 		
 		var marker = Maps.openLayersController.getMarkersLayer().markers[Maps.featureInfoController.indexOf(record)];
-		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom",marker.data.feature.geometry.clone());
+		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom", (marker.data.feature.wgs84_geometry ? marker.data.feature.wgs84_geometry : marker.data.feature.geometry) );
 		
 		ret=SC.DRAG_LINK;
 
@@ -110,12 +110,10 @@ Maps.DropView = SC.LabelView.extend(
 	},
 	
 	dragEntered: function(drag, evt) {
-		//console.log("dragEntered");
 		SC.$(this.get('layer')).addClass("drag-entered");
 	},
 	
 	dragExited: function(drag, evt) {
-		//console.log("dragExited");
 		SC.$(this.get('layer')).removeClass("drag-entered");
 	}
 });
