@@ -20,13 +20,18 @@ Maps.LinkView = SC.ListItemView.extend(SC.ContentDisplay,
 
 	render: function(context, firstTime) {
         if(Maps.featureInfoController.hasSelection()) {
+            var attributes = Maps.featureInfoController.get("selection").firstObject().attributes();
             var content = this.get("content");
-            var title = content.get("title");
-            var url = Mustache.to_html(content.get("url"), Maps.featureInfoController.get("selection").firstObject().attributes());
-            var descr = content.get("description");
+            var title = Mustache.to_html(content.get("title"), attributes);
+            var url = Mustache.to_html(content.get("url"), attributes);
+            var descr = Mustache.to_html(content.get("description"), attributes);
 
             context = context.begin('div').addClass('link-summary-view');
-            context = context.begin('div').addClass('link-summary-view-url').begin('a').attr('href',url).attr('target','_mapslink').push(title).end().end();
+            context = context.begin('div').addClass('link-summary-view-url').begin('a').attr('href',url);
+            if(url.charAt(0)!=="#") {
+                context.attr('target','_mapslink');
+            }
+            context.push(title).end().end();
             context = context.begin('div').addClass('link-summary-view-desc').push(descr).end();
             context = context.end();
         }
