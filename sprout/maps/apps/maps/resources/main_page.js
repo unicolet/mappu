@@ -308,7 +308,6 @@ Maps.mainPage = SC.Page.design({
     }).create(),
 
     geotoolsPane: SC.PalettePane.design({
-        classNames: ["remove-shadow"],
         isAnchored: YES, // prevent dragging
         layout: {width:170, height:400, right:20, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-1},
         contentView: SC.View.design({
