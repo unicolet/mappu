@@ -85,6 +85,10 @@ Maps.openLayersController = SC.ArrayController.create(
             }
         },
 
+        handleMoveEnd: function(event) {
+            SC.routes.informLocation('location', 'pan/'+event.object.center.lat+'/'+event.object.center.lon+'/'+event.object.zoom);
+        },
+
         // lat lon where the mouse was last ctrl-clicked
         lat:null,
         lon:null,
@@ -119,11 +123,41 @@ Maps.openLayersController = SC.ArrayController.create(
             }
         }),
 
+        layerQuery: function(layer, query) {
+            var wfs = new OpenLayers.Protocol.HTTP({
+                url:WMSCONFIG.wfs_server_path + "?service=wfs&version=1.0.0&request=GetFeature&typename=" + layer,
+                format:new OpenLayers.Format.GML({})
+            });
+
+            // start spinner
+            Maps.set("isLoading", YES);
+
+            wfs.read({
+                params:{
+                    "CQL_FILTER": query
+                },
+                callback: this.loadWFSFeatures
+            });
+        },
+
+        loadWFSFeatures: function(response) {
+//            try {
+                var gml = new OpenLayers.Format.GML({extractAttributes:true});
+                response.features = gml.read(response.priv.responseXML);
+                Maps.openLayersController.showInfo(response);
+//            } catch (e) {
+//                console.log(e);
+//                SC.AlertPane.warn("_op_failed".loc(), response.error, '_no_info_avail'.loc(), "OK", this);
+//            }
+        },
+
         /*
          * This function is called by the OpenLayers featureInfo control.
          * It's a really ugly piece of code because it mixes controller, datasource and view
          * instructions.
          * Until I don't come up with a better solution it has to stay this way though.
+         *
+         * Transform should almost always be true
          *
          */
         showInfo: function(event) {
@@ -145,6 +179,9 @@ Maps.openLayersController = SC.ArrayController.create(
                 for (var i = 0; i < event.features.length; i++) {
                     var feature = event.features[i];
                     var c = feature.geometry.getCentroid();
+                    //@if(debug)
+                    console.log("Centroid before: "+ c.x+","+ c.y);
+                    //@endif
 
                     this.detectServerType(event);
                     if(Maps.isGEOSERVER) {
@@ -157,16 +194,12 @@ Maps.openLayersController = SC.ArrayController.create(
                                 var sourceProjection = ownerLayer.get("srs");
                             }
                             if(sourceProjection) {
-                                //@if(debug)
-                                console.log("Transforming from "+sourceProjection+" to EPSG:3410");
-                                console.log(feature.geometry);
-                                //@endif
                                 feature.wgs84_geometry=feature.geometry.clone().transform(Maps.projections[sourceProjection], Maps.projections['EPSG:3410']);
-                                //@if(debug)
-                                console.log(feature.wgs84_geometry);
-                                //@endif
                             }
                             if (sourceProjection && sourceProjection != 'EPSG:900913') {
+                                //@if(debug)
+                                console.log("Transforming from "+sourceProjection+" to EPSG:900913");
+                                //@endif
                                 c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                                 feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                             }
@@ -177,6 +210,10 @@ Maps.openLayersController = SC.ArrayController.create(
                     // save the centroid as a feature attibute, we'll need it later
                     feature.data['x'] = c.x;
                     feature.data['y'] = c.y;
+
+                    //@if(debug)
+                    console.log("Centroid after: "+ c.x+","+ c.y);
+                    //@endif
 
                     var marker = new OpenLayers.Marker(new OpenLayers.LonLat(c.x, c.y), icon.clone());
                     marker.data = {'feature':feature, 'idx':i};

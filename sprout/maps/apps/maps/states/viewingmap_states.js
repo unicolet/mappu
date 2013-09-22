@@ -17,11 +17,15 @@ Maps.viewingMapState = SC.State.extend({
 
         Maps.getPath('loginPage.mainPane').remove();
 
+        SC.routes.add('zoom/:lat/:lon/:level', Maps, Maps.zoomRoute);
+        SC.routes.add('pan/:lat/:lon/:level', Maps, Maps.panRoute);
+        SC.routes.add('find/:layer/:query', Maps, Maps.findRoute);
+        // trigger location change detection immediately or the map will zoom to
+        // its extent by default
+        SC.routes.ping();
+
         var page = Maps.getPath('mainPage.mainPane');
         page.append();
-
-        SC.routes.add('zoom/:lat/:lon/:level', Maps, Maps.zoomRoute);
-        SC.routes.add('find/:layer/:query', Maps, Maps.findRoute);
 
         Maps.openLayersController.set('content', Maps.openLayersController.get("tmp"));
 
