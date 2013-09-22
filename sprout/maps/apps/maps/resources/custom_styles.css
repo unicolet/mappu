@@ -164,8 +164,6 @@
     }
 
     $theme.rotated_tip {
-        background: transparent static_url('arrow.png') no-repeat;
-        padding-top: 90px;
         color: #5D5D5D;
         font-size: 14px;
         font-family: Architects Daughter, cursive;
@@ -173,6 +171,15 @@
         -webkit-transform:rotate(-20deg);
         -ms-transform:rotate(-20deg);
         transform:rotate(-20deg);
+
+        &.arrow_left {
+            background: transparent static_url('arrow.png') no-repeat;
+            padding-top: 90px;
+        }
+        &.arrow_up {
+            background: transparent static_url('arrow_up.png') no-repeat;
+            padding-top: 130px;
+        }
     }
 }
 

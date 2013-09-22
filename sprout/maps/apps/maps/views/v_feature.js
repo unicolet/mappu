@@ -127,8 +127,8 @@ Maps.commentsTab = SC.View.design({
 Maps.linksTab = SC.View.design({
     childViews: "links noLinks".w(),
     noLinks:  SC.LabelView.design({
-        classNames: ["translucent","centered"],
-        layout: {centerX:0, centerY:0, width:100, height: 33 },
+        classNames: ["rotated_tip"],
+        layout: {centerY:0, centerX:0, height: 60, width: 130 },
         isVisibleBinding: SC.Binding.oneWay('Maps.featureInfoController.selection').transform(function(value, binding) {
             return !value || value.length() == 0;
         }),

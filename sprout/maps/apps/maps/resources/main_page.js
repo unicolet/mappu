@@ -291,7 +291,7 @@ Maps.mainPage = SC.Page.design({
                     })
                 }),
                 instructionsView: SC.LabelView.design({
-                    classNames: ["rotated_tip"],
+                    classNames: ["rotated_tip","arrow_left"],
                     textAlign: SC.ALIGN_CENTER,
 
                     layout: { top: 0, bottom: 0, left: 251, right: 50 },
