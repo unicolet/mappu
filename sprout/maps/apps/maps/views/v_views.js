@@ -101,7 +101,7 @@ Maps.DropView = SC.LabelView.extend(
 		Maps.featureInfoController.set(this.get("dropTargetProperty"),record.attributes()["name"]);
 		
 		var marker = Maps.openLayersController.getMarkersLayer().markers[Maps.featureInfoController.indexOf(record)];
-		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom", (marker.data.feature.wgs84_geometry ? marker.data.feature.wgs84_geometry : marker.data.feature.geometry) );
+		Maps.featureInfoController.set(this.get("dropTargetProperty")+"geom", marker.data.feature.wgs84_geometry );
 		
 		ret=SC.DRAG_LINK;
 

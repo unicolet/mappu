@@ -115,7 +115,7 @@ Maps = SC.Application.create(
         var a=Math.round(area);
         if(area) {
             if(area>1000000) {
-                a=Math.round(area/1000000);
+                a=(area/1000000).toFixed(2);
                 unit="km";
             }
         }

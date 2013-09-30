@@ -259,9 +259,6 @@ Maps.viewingMapState = SC.State.extend({
                 payload = response.get("body");
             var WKTParser = new OpenLayers.Format.WKT();
             var features = WKTParser.read(payload['geom']);
-            //@if(debug)
-            console.log(payload);
-            //@endif
             Maps.openLayersController.set("measure","Area: "+Maps.formatArea(payload['area']));
             if (features) {
                 if(features.length) {

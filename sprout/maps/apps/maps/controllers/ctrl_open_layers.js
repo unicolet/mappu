@@ -194,7 +194,8 @@ Maps.openLayersController = SC.ArrayController.create(
                                 var sourceProjection = ownerLayer.get("srs");
                             }
                             if(sourceProjection) {
-                                feature.wgs84_geometry=feature.geometry.clone().transform(Maps.projections[sourceProjection], Maps.projections['EPSG:3410']);
+                                var geom=feature.geometry.clone().transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                feature.wgs84_geometry=geom.transform(Maps.projections['EPSG:900913'], Maps.projections['EPSG:3410']);
                             }
                             if (sourceProjection && sourceProjection != 'EPSG:900913') {
                                 //@if(debug)
