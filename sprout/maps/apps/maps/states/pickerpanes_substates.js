@@ -80,32 +80,7 @@ Maps.showingSearchPaneState = SC.State.extend({
     },
 
     layerQueryRun:function () {
-        var wfs = new OpenLayers.Protocol.HTTP({
-            url:WMSCONFIG.wfs_server_path + "?service=wfs&version=1.0&request=GetFeature&typename=" + Maps.layerQueryController.getTypeName(),
-            format:new OpenLayers.Format.GML.v3({})
-        });
-
-        // start spinner
-        Maps.set("isLoading", YES);
-
-        wfs.read({
-            params:{
-                "CQL_FILTER":Maps.layerQueryController.getCQLFilter()
-            },
-            callback:this.didFetchWfsFeatures
-        });
-    },
-
-    didFetchWfsFeatures:function (response, options) {
-        try {
-            var gml = new OpenLayers.Format.GML({extractAttributes:true});
-            response.features = gml.read(response.priv.responseXML);
-            Maps.openLayersController.showInfo(response);
-        } catch (e) {
-            SC.AlertPane.warn("_op_failed".loc(), response.error, '_no_info_avail'.loc(), "OK", this);
-        }
-        // stop spinner
-        Maps.set("isLoading", NO);
+        Maps.layerQueryController.layerQuery(Maps.layerQueryController.getTypeName(), Maps.layerQueryController.getCQLFilter());
     },
 
     exitState:function () {
