@@ -25,13 +25,15 @@ Maps.mainPage = SC.Page.design({
     layersAndSearch: SC.outlet("mainPane.toolbar.layers"),
     openLayersView : SC.outlet("mainPane.topLeftView"),
     rightSplitPane : SC.outlet("mainPane.bottomRightView"),
+    geotoolsPane   : SC.outlet("mainPane.geotoolsPane"),
+    explorerPane   : SC.outlet("mainPane.explorerPane"),
 
     //mainPane.splitview: null,
     // The main pane is made visible on screen as soon as your app is loaded.
     // Add childViews to this pane for views to display immediately on page
     // load.
       mainPane: SC.MainPane.design( {
-        childViews: 'toolbar topLeftView bottomRightView loading'.w(),
+        childViews: 'toolbar topLeftView bottomRightView loading geotoolsPane explorerPane'.w(),
 
         defaultResponder: 'Maps.statechart',
 
@@ -151,7 +153,133 @@ Maps.mainPage = SC.Page.design({
                     {title: "_links".loc(), tab: "Maps.linksTab" }
                 ]
             })
-        })
+        }),
+
+        geotoolsPane: SC.View.design({
+              classNames: ["tray"],
+              layout: {width:170, height:400, right:20, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-1},
+              childViews: "toolsui".w(),
+              toolsui: SC.View.design({
+                  childViews: "feature1 feature2 operation go help helptext".w(),
+                  feature1: Maps.DropView.design({
+                      layout: {top: 5, left:5, right:10, height:30},
+                      valueBinding: "Maps.featureInfoController.feature1descr",
+                      textAlign: SC.ALIGN_CENTER,
+                      classNames: ["maps-dropview"],
+                      dropTargetProperty: "feature1"
+                  }),
+                  feature2: Maps.DropView.design({
+                      layout: {top: 51, left:5, right:10, height:30},
+                      valueBinding: "Maps.featureInfoController.feature2descr",
+                      textAlign: SC.ALIGN_CENTER,
+                      classNames: ["maps-dropview"],
+                      dropTargetProperty: "feature2"
+                  }),
+                  operation: SC.SelectView.design({
+                      layout: {top: 102, left:5, right:10, height:24},
+                      items: [
+                          { title: "_area", value: "Area", pos: 1},
+                          { title: "_intersection", value: "Intersection", pos: 2},
+                          { title: "_union", value: "Union", pos: 3 },
+                          { title: "_buffer5", value: "Buffer5", pos: 4 },
+                          { title: "_buffer25", value: "Buffer25", pos: 5 }
+                      ],
+                      itemTitleKey: 'title',
+                      itemValueKey: 'value',
+                      itemSortKey: 'pos',
+                      checkboxEnabled: YES,
+                      valueBinding: "Maps.featureInfoController.operation"
+                  }),
+                  go: SC.SegmentedView.design({
+                      layout: {top: 133, width:150, height:36, left:5},
+                      items: [
+                          {title: "OK", action:"maps_PerformGeoOperation"},
+                          {title: "_clear", action:"maps_PerformGeoClear"},
+                          {title: "_close", action:"maps_PerformGeoClose"}
+                      ],
+                      itemTitleKey: "title",
+                      itemActionKey: "action"
+                  }),
+                  help: SC.ImageView.design({
+                      layout: {top: 180, centerX:0, height:24, width:24},
+                      value: "sc-icon-help-24"
+                  }),
+                  helptext: SC.LabelView.design({
+                      textAlign: SC.ALIGN_CENTER,
+                      layout: {top: 210,left:5, right:10, bottom:5},
+
+                      value:"_geotools_help".loc()
+                  })
+              })
+          }),
+
+          explorerPane: SC.View.design({
+              classNames: ["tray"],
+              layout: {width:210, height:500, right:20, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-2},
+              childViews: "explorerui".w(),
+              explorerui: SC.View.design({
+                  layout: {top:0,bottom:0,left:0,right:0},
+                  childViews: "tags buttons".w(),
+
+                  tags:SC.ScrollView.design({
+                      layout: {top:0,bottom:130,left:0,right:0},
+                      contentView: SC.ListView.design({
+                          classNames: ["denim"],
+                          rowHeight: 30,
+                          contentBinding: "Maps.tagsController.arrangedObjects",
+                          selectionBinding: "Maps.tagsController.selection",
+                          contentValueKey: "tag",
+                          contentCheckboxKey: "visible",
+                          contentIconKey: "paletteColor",
+                          contentUnreadCountKey: "occurrences",
+                          isSelectable: NO,
+                          hasContentIcon: YES
+                      })
+                  }),
+                  buttons: SC.View.design({
+                      classNames: ["graduated"],
+                      layout: {bottom:0,height:190,left:0,right:0},
+                      childViews: "onlyShowLayer mine help helpText rendertags reloadtags".w(),
+                      onlyShowLayer: SC.SelectView.design({
+                          layout: {top: 5, left:5, height:24, right:15},
+                          valueBinding: "Maps.tagsController.selectedLayer",
+                          itemsBinding: SC.Binding.oneWay("Maps.openLayersController.content"),
+                          itemTitleKey: 'title',
+                          itemValueKey: 'name'
+                      }),
+                      mine: SC.CheckboxView.design({
+                          layout: {top: 35, left:5, height:24, right:15},
+                          title: "_only_show_mine".loc(),
+                          toolTip: "_only_show_mine_tip".loc(),
+                          valueBinding: "Maps.tagsController.onlyShowMine"
+                      }),
+                      help: SC.ImageView.design({
+                          layout: {top: 65, centerX:0, height:24, width:24},
+                          value: "sc-icon-help-24"
+                      }),
+                      helpText: SC.LabelView.design({
+                          layout: {bottom:31,top:91,left:5,right:15},
+                          value: "_tagexplorer_help".loc()
+                      }),
+                      rendertags: SC.ButtonView.design({
+                          //classNames: ["borderless"],
+                          layout: {bottom:0,width:0.56,height:24,right:10},
+                          title: "_rendertags".loc(),
+                          icon: "icon-rendertags-24",
+                          action: "maps_RenderTags",
+                          controlSize: SC.LARGE_CONTROL_SIZE
+                      }),
+                      reloadtags: SC.ButtonView.design({
+                          //classNames: ["borderless"],
+                          layout: {bottom:0,width:0.48,height:24,left:0},
+                          title: "_reloadtags".loc(),
+                          icon: "icon-refresh-24",
+                          action: "maps_ReloadTags",
+                          controlSize: SC.LARGE_CONTROL_SIZE
+                      })
+                  })
+              })
+          })
     }),
 
     queryListPane: SC.View.design({
@@ -302,130 +430,6 @@ Maps.mainPage = SC.Page.design({
                     }),
                     escapeHTML: NO,
                     value: "_layer_pane_instructions".loc()
-                })
-            })
-        })
-    }).create(),
-
-    geotoolsPane: SC.PalettePane.design({
-        isAnchored: YES, // prevent dragging
-        layout: {width:170, height:400, right:20, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-1},
-        contentView: SC.View.design({
-            childViews: "feature1 feature2 operation go help helptext".w(),
-            feature1: Maps.DropView.design({
-                layout: {top: 5, left:5, right:10, height:30},
-                valueBinding: "Maps.featureInfoController.feature1descr",
-                textAlign: SC.ALIGN_CENTER,
-                classNames: ["maps-dropview"],
-                dropTargetProperty: "feature1"
-            }),
-            feature2: Maps.DropView.design({
-                layout: {top: 51, left:5, right:10, height:30},
-                valueBinding: "Maps.featureInfoController.feature2descr",
-                textAlign: SC.ALIGN_CENTER,
-                classNames: ["maps-dropview"],
-                dropTargetProperty: "feature2"
-            }),
-            operation: SC.SelectView.design({
-                layout: {top: 102, left:5, right:10, height:24},
-                items: [
-                    { title: "_area", value: "Area", pos: 1},
-                    { title: "_intersection", value: "Intersection", pos: 2},
-                    { title: "_union", value: "Union", pos: 3 },
-                    { title: "_buffer5", value: "Buffer5", pos: 4 },
-                    { title: "_buffer25", value: "Buffer25", pos: 5 }
-                ],
-                itemTitleKey: 'title',
-                itemValueKey: 'value',
-                itemSortKey: 'pos',
-                checkboxEnabled: YES,
-                valueBinding: "Maps.featureInfoController.operation"
-            }),
-            go: SC.SegmentedView.design({
-                layout: {top: 133, width:150, height:36, left:5},
-                items: [
-                    {title: "OK", action:"maps_PerformGeoOperation"},
-                    {title: "_clear", action:"maps_PerformGeoClear"},
-                    {title: "_close", action:"maps_PerformGeoClose"}
-                ],
-                itemTitleKey: "title",
-                itemActionKey: "action"
-            }),
-            help: SC.ImageView.design({
-                layout: {top: 180, centerX:0, height:24, width:24},
-                value: "sc-icon-help-24"
-            }),
-            helptext: SC.LabelView.design({
-                textAlign: SC.ALIGN_CENTER,
-                layout: {top: 210,left:5, right:10, bottom:5},
-
-                value:"_geotools_help".loc()
-            })
-        })
-    }).create(),
-
-    explorerPane: SC.PalettePane.design({
-        isAnchored: YES, // prevent dragging
-        layout: {width:210, height:500, right:20, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-2},
-        contentView: SC.View.design({
-            layout: {top:0,bottom:0,left:0,right:0},
-            childViews: "tags buttons".w(),
-
-            tags:SC.ScrollView.design({
-                layout: {top:0,bottom:130,left:0,right:0},
-                contentView: SC.ListView.design({
-                    classNames: ["denim"],
-                    rowHeight: 30,
-                    contentBinding: "Maps.tagsController.arrangedObjects",
-                    selectionBinding: "Maps.tagsController.selection",
-                    contentValueKey: "tag",
-                    contentCheckboxKey: "visible",
-                    contentIconKey: "paletteColor",
-                    contentUnreadCountKey: "occurrences",
-                    isSelectable: NO,
-                    hasContentIcon: YES
-                })
-            }),
-            buttons: SC.View.design({
-                classNames: ["graduated"],
-                layout: {bottom:0,height:190,left:0,right:0},
-                childViews: "onlyShowLayer mine help helpText rendertags reloadtags".w(),
-                onlyShowLayer: SC.SelectView.design({
-                    layout: {top: 5, left:5, height:24, right:15},
-                    valueBinding: "Maps.tagsController.selectedLayer",
-                    itemsBinding: SC.Binding.oneWay("Maps.openLayersController.content"),
-                    itemTitleKey: 'title',
-                    itemValueKey: 'name'
-                }),
-                mine: SC.CheckboxView.design({
-                    layout: {top: 35, left:5, height:24, right:15},
-                    title: "_only_show_mine".loc(),
-                    toolTip: "_only_show_mine_tip".loc(),
-                    valueBinding: "Maps.tagsController.onlyShowMine"
-                }),
-                help: SC.ImageView.design({
-                    layout: {top: 65, centerX:0, height:24, width:24},
-                    value: "sc-icon-help-24"
-                }),
-                helpText: SC.LabelView.design({
-                    layout: {bottom:31,top:91,left:5,right:15},
-                    value: "_tagexplorer_help".loc()
-                }),
-                rendertags: SC.ButtonView.design({
-                    //classNames: ["borderless"],
-                    layout: {bottom:0,width:0.56,height:24,right:10},
-                    title: "_rendertags".loc(),
-                    icon: "icon-rendertags-24",
-                    action: "maps_RenderTags",
-                    controlSize: SC.LARGE_CONTROL_SIZE
-                }),
-                reloadtags: SC.ButtonView.design({
-                    //classNames: ["borderless"],
-                    layout: {bottom:0,width:0.48,height:24,left:0},
-                    title: "_reloadtags".loc(),
-                    icon: "icon-refresh-24",
-                    action: "maps_ReloadTags",
-                    controlSize: SC.LARGE_CONTROL_SIZE
                 })
             })
         })

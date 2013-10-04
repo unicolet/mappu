@@ -175,7 +175,7 @@ Maps.viewingMapState = SC.State.extend({
     },
 
     toggleTagExplorer: function() {
-        if(Maps.mainPage.explorerPane.get("isVisibleInWindow")) {
+        if(Maps.mainPage.get('explorerPane').layout.right!==20) {
             this.hideTagEplorer();
         } else {
             this.showTagEplorer();
@@ -186,22 +186,15 @@ Maps.viewingMapState = SC.State.extend({
         this.hideGeoTools();
 
         Maps.tagsController.set('content', Maps.store.find(Maps.TAGSUMMARY_QUERY));
-        Maps.mainPage.explorerPane.append();
         var targetViewLayout=Maps.mainPage.get("rightSplitPane").layout;
         var rightOffset = targetViewLayout.width + targetViewLayout.right - 3;
-        Maps.mainPage.explorerPane.animate({right:rightOffset}, 0.2);
+        Maps.mainPage.get('explorerPane').animate({right:rightOffset}, 0.2);
 
-        if (Maps.mainPage.explorerPane.get("isVisible")==NO) {
-            Maps.tagsController.refreshTagsLayer();
-        } else {
-            Maps.tagsController.hideTagsLayer();
-        }
+        Maps.tagsController.refreshTagsLayer();
     },
     hideTagEplorer: function() {
-        var newLayout=Maps.mainPage.explorerPane.layout;
-        Maps.mainPage.explorerPane.animate({right:20}, 0.2, function () {
-            Maps.mainPage.explorerPane.remove();
-        });
+        var newLayout=Maps.mainPage.get('explorerPane').layout;
+        Maps.mainPage.get('explorerPane').animate({right:20}, 0.2);
         Maps.tagsController.hideTagsLayer();
     },
     maps_RenderTags: function() {
@@ -213,7 +206,7 @@ Maps.viewingMapState = SC.State.extend({
     },
 
     toggleGeoTools: function() {
-        if(Maps.mainPage.geotoolsPane.get("isVisibleInWindow")) {
+        if(Maps.mainPage.get('geotoolsPane').layout.right!==20) {
             this.hideGeoTools();
         } else {
             this.showGeoTools();
@@ -222,17 +215,14 @@ Maps.viewingMapState = SC.State.extend({
     showGeoTools: function() {
         this.hideTagEplorer();
 
-        Maps.mainPage.geotoolsPane.append();
         var targetViewLayout=Maps.mainPage.get("rightSplitPane").layout;
         var rightOffset = targetViewLayout.width + targetViewLayout.right - 3;
         setTimeout(function () {
-            SC.run(function () { Maps.mainPage.geotoolsPane.animate({right:rightOffset}, 0.2); });
+            SC.run(function () { Maps.mainPage.get('geotoolsPane').animate({right:rightOffset}, 0.2); });
         },0);
     },
     hideGeoTools: function() {
-        Maps.mainPage.geotoolsPane.animate({right:20}, 0.2, function () {
-            Maps.mainPage.geotoolsPane.remove();
-        });
+        Maps.mainPage.get('geotoolsPane').animate({right:20}, 0.2);
     },
     maps_PerformGeoOperation: function() {
         var op = Maps.featureInfoController.get("operation");

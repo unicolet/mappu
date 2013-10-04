@@ -163,6 +163,11 @@
         border: 1px solid #999;
     }
 
+    $theme.tray {
+        background: #F5F5F5;
+        border: 1px solid #999;
+    }
+
     $theme.rotated_tip {
         color: #5D5D5D;
         font-size: 14px;

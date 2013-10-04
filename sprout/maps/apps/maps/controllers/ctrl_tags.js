@@ -35,7 +35,8 @@ Maps.tagsController = SC.ArrayController.create(
     maxTagsToRender: 4,
 
     didOnlyShowMineChange: function() {
-        this.get("content").refresh();
+        var content=this.get("content");
+        if(content) content.refresh();
     }.observes("onlyShowMine","selectedLayer"),
 
     updateHTTPProtocolFilter: function() {
