@@ -259,7 +259,7 @@ Maps.mainPage = SC.Page.design({
               explorerui: SC.View.design({
                   classNames: ["tray_overflow"],
                   layout: {top:0,bottom:0,left:0,right:0},
-                  childViews: "handle tags buttons".w(),
+                  childViews: "handle tags notags buttons".w(),
 
                   handle: SC.View.design({
                     classNames: ["tray_button"],
@@ -289,6 +289,13 @@ Maps.mainPage = SC.Page.design({
                           isSelectable: NO,
                           hasContentIcon: YES
                       })
+                  }),
+                  notags: SC.LabelView.design({
+                      classNames: ["rotated_tip"],
+                      textAlign: SC.ALIGN_CENTER,
+                      layout: {width:200, height:100,centerX:15,centerY:-50},
+                      value: "_no_tags".loc(),
+                      isVisibleBinding: SC.Binding.oneWay("Maps.tagsController.[].length").bool().not()
                   }),
                   buttons: SC.View.design({
                       classNames: ["graduated"],
