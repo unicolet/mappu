@@ -173,17 +173,28 @@ Maps.mainPage = SC.Page.design({
               childViews: "toolsui".w(),
               toolsui: SC.View.design({
                   classNames: ["tray_overflow"],
-                  childViews: "button feature1 feature2 operation go help helptext".w(),
-                  button: SC.ImageView.design({
+                  childViews: "handle feature1 feature2 operation go help helptext".w(),
+                  handle: SC.View.design({
                       classNames: ["tray_button"],
-                      layout: {top: 5, width: 20, height: 20, left: -21},
-                      value: 'sc-icon-tools-16',
-                      click: function() {
-                          var rootResponder = this.getPath('pane.rootResponder')
-                          rootResponder.sendAction('toggleGeoTools', '', this, this.get('pane'))
-                      },
+                      layout: {top: 5, width: 30, height: 40, left: -31},
+                      childViews: "icon".w(),
                       isVisibleBinding: SC.Binding.oneWay("Maps.featureInfoController.[].length").bool(),
-                      toolTip: "_geotools_tooltip".loc()
+                      icon: SC.ImageView.design({
+                          layout: {top: 12, width: 16, height: 16, left: 7 },
+                          value: 'sc-icon-tools-16',
+                          toolTip: "_geotools_tooltip".loc()
+                      }),
+                      click: function() {
+                        var rootResponder = this.getPath('pane.rootResponder')
+                        rootResponder.sendAction('toggleGeoTools', '', this, this.get('pane'))
+                      },
+                      firstTimeVisible: true,
+                      _maps_isVisibleDidChange: function() {
+                         if(this.get('isVisible') && this.firstTimeVisible) {
+                            this.$().addClass('pulse');
+                            this.firstTimeVisible=false;
+                         }
+                      }.observes('isVisible')
                   }),
                   feature1: Maps.DropView.design({
                       layout: {top: 5, left:5, right:10, height:30},
@@ -240,7 +251,7 @@ Maps.mainPage = SC.Page.design({
           explorerPane: SC.View.design({
               classNames: ["tray"],
               closedLayoutRight: 104,
-              layout: {width:210, height:500, right:this.closedLayoutRight||104, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-2},
+              layout: {width:210, height:450, right:this.closedLayoutRight||104, top:120, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-2},
               isOpen: function() {
                 return this.layout.right!==this.closedLayoutRight;
               },
@@ -248,18 +259,22 @@ Maps.mainPage = SC.Page.design({
               explorerui: SC.View.design({
                   classNames: ["tray_overflow"],
                   layout: {top:0,bottom:0,left:0,right:0},
-                  childViews: "button tags buttons".w(),
+                  childViews: "handle tags buttons".w(),
 
-                  button: SC.ImageView.design({
+                  handle: SC.View.design({
                     classNames: ["tray_button"],
-                    layout: {top: 28, width: 20, height: 20, left: -21 },
-                    value: "icon-explore-16",
+                    layout: {top: 5, width: 30, height: 40, left: -31 },
+                    childViews: "icon".w(),
+                    icon: SC.ImageView.design({
+                        layout: {top: 12, width: 16, height: 16, left: 7 },
+                        value: "icon-explore-16",
+                        toolTip: "_explore_tooltip".loc()
+                    }),
                     click: function() {
-                        var rootResponder = this.getPath('pane.rootResponder')
-                        rootResponder.sendAction('toggleTagExplorer', '', this, this.get('pane'))
-                    },
-                    toolTip: "_explore_tooltip".loc()
-                }),
+                      var rootResponder = this.getPath('pane.rootResponder')
+                      rootResponder.sendAction('toggleTagExplorer', '', this, this.get('pane'))
+                    }
+                  }),
                   tags:SC.ScrollView.design({
                       layout: {top:0,bottom:130,left:0,right:0},
                       contentView: SC.ListView.design({

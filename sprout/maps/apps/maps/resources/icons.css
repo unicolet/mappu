@@ -80,7 +80,7 @@
 .icon-explore-16 {
 	width: 16px;
 	height: 16px;
-	@include slice("images/explore.png", $offset: 2 2);
+	@include slice("images/explore.png");
 }
 
 .icon-layers-16 {
@@ -134,5 +134,5 @@
 .sc-icon-tools-16 {
     width: 16px;
     height: 16px;
-    @include slice("images/sc-icon-tools-16.png", $offset: 2 2);
+    @include slice("images/sc-icon-tools-16.png");
 }
