@@ -24,14 +24,16 @@ Maps.Feature = SC.Record.extend(
 
   intelligentName: function() {
       var nameRegex=/n[ao]me/i;
+      var namRegex=/n[ao]m/i;
       var descrRegex=/descr/i;
       var theAttributes=this.attributes();
       for(var k in theAttributes) {
-          if(nameRegex.test(k) && k != "name") {
+          if(nameRegex.test(k) && k.toLowerCase() != "name") {
             return this.get("name")+" ("+ theAttributes[k]+")";
           }
-      }
-      for(var k in theAttributes) {
+          if(namRegex.test(k) && k.toLowerCase() != "name") {
+            return this.get("name")+" ("+ theAttributes[k]+")";
+          }
           if(descrRegex.test(k)) {
             return this.get("name")+" ("+ theAttributes[k]+")";
           }
