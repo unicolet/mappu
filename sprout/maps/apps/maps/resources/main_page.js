@@ -403,7 +403,12 @@ Maps.mainPage = SC.Page.design({
                 legendBtn: SC.ButtonView.design({
                     layout: {width: 80, centerY: 0, right: 40, height: 24},
                     titleBinding: "Maps.openLayersController.legendBtnText",
-                    action: "toggleLegend"
+                    action: "toggleLegend",
+                    isEnabledBinding: SC.Binding.oneWay("Maps.openLayersController.selection").transform(function(value, binding) {
+                        if(value && value.length()>0)
+                            return true;
+                        return false;
+                    })
                 })
             }),
             bottomToolbar: null,
