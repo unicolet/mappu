@@ -14,4 +14,7 @@ SC.ready(function() {
     Maps.initProjections();
 
     Maps.statechart.initStatechart();
+
+    // quick fix for https://github.com/sproutcore/sproutcore/issues/1097
+    SC.platform.touch=NO;
 });
