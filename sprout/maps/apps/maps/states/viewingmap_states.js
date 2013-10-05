@@ -297,6 +297,12 @@ Maps.viewingMapState = SC.State.extend({
         }
     },
 
+    // invoked by the popup warning when the user clicks on the map to
+    // perform a query and there are no active layers
+    openLayerPane: function() {
+        this.gotoState('showingLayersPaneState');
+    },
+
     /*******************************************************
      *
      *                     SUB STATES

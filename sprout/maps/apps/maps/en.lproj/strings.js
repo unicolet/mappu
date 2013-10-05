@@ -115,5 +115,10 @@ SC.stringsFor('en', {
     "_LayerGroup:": "Layer group:",
     "_Description:": "Description:",
     "_Url:": "URL:",
-    "_geotools_tooltip": "Click to access the Geo Tools tray (area, intersection, union, etc)"
+    "_geotools_tooltip": "Click to access the Geo Tools tray (area, intersection, union, etc)",
+    "_explore_tooltip": "Click to access the Tag browser tray",
+    "_featureinfo_instructions": "Click on the map to query it and get started",
+    "_no_queriable_layers_title": "No active layers",
+    "_no_queriable_layers_detail": "You have not enabled any layer, therefore it is not possibile to query the map. Click OK to open the layer palette."
+
 });

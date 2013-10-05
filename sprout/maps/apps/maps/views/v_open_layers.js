@@ -252,6 +252,15 @@ Maps.OpenLayers = SC.View.extend(
                 });
             featureInfoControl.events.register("getfeatureinfo", Maps.openLayersController, Maps.openLayersController.showInfo);
             featureInfoControl.events.register("beforegetfeatureinfo", Maps.openLayersController, function(){Maps.set("isLoading",YES);});
+            featureInfoControl.events.register("nogetfeatureinfo", Maps.openLayersController, function(){
+                Maps.set("isLoading",NO);
+                SC.AlertPane.warn({
+                    message: "_no_queriable_layers_title".loc(),
+                    description: "_no_queriable_layers_detail".loc(),
+                    buttons: [{title: "OK", action: "openLayerPane"}]
+                });
+            });
+
             map.addControl(featureInfoControl);
 
             featureInfoControl.activate();

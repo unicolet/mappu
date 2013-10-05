@@ -125,5 +125,9 @@ SC.stringsFor('it', {
     "_LayerGroup:": "Layer group:",
     "_Description:": "Descrizione:",
     "_Url:": "URL:",
-    "_geotools_tooltip": "Fai click per accedere al cassetto dei Geo Strumenti (area, intersezione, unione, ecc)"
+    "_geotools_tooltip": "Fai click per accedere al cassetto dei Geo Strumenti (area, intersezione, unione, ecc)",
+    "_explore_tooltip": "Fai click per accedere al cassetto di esplorazione dei tag",
+    "_featureinfo_instructions": "Clicca sulla mappa per eseguire interrogazioni ed iniziare",
+    "_no_queriable_layers_title": "Nessun livello attivo",
+    "_no_queriable_layers_detail": "Non e' stato attivato nessun livello, quindi non e' possibile eseguire interrogazioni. Clicca OK per iniziare la scelta dei livelli"
 });

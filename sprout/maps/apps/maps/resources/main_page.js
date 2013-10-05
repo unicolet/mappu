@@ -101,7 +101,8 @@ Maps.mainPage = SC.Page.design({
          bottomRightView: SC.View.design({
             classNames: ["bottomRightView"],
             layout: { top: 60, width: 299, bottom:50, right: 15, zIndex: Maps.RIGHT_TOOL_BOX_PANE_ZINDEX },
-            childViews: "resultsView buttons featureView".w(),
+            childViews: "resultsView noResultsView buttons featureView".w(),
+
             resultsView: SC.ScrollView.design({
                 layout: { top: 0, left: 0, height:250, right: -1 },
                 hasHorizontalScroller: NO,
@@ -118,6 +119,15 @@ Maps.mainPage = SC.Page.design({
                     contentRightIconKey: "rightIconKey",
                     rightIconAction: "zoomToFeature"
                 })
+            }),
+            noResultsView:  SC.LabelView.design({
+                classNames: ["rotated_tip","arrow_left"],
+                textAlign: SC.ALIGN_CENTER,
+
+                layout: { top: 50, left: 50, height:250, right: -1 },
+                isVisibleBinding: SC.Binding.oneWay("Maps.featureInfoController.[].length").bool().not(),
+                escapeHTML: NO,
+                value: "_featureinfo_instructions".loc()
             }),
 
             buttons: SC.View.design({
@@ -247,7 +257,8 @@ Maps.mainPage = SC.Page.design({
                     click: function() {
                         var rootResponder = this.getPath('pane.rootResponder')
                         rootResponder.sendAction('toggleTagExplorer', '', this, this.get('pane'))
-                    }
+                    },
+                    toolTip: "_explore_tooltip".loc()
                 }),
                   tags:SC.ScrollView.design({
                       layout: {top:0,bottom:130,left:0,right:0},
