@@ -36,7 +36,7 @@ SC.stringsFor('it', {
     "_buffer25" : "Buffer 25m",
     "_clear"  : "Pulisci",
     "_close"  : "Chiudi",
-    "_username" : "Utente :",
+    "_username" : "utente",
     "_drop_here" : "Trascina qui",
     "_tags" : "Etichette",
     "_comments" : "Commenti",

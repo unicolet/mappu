@@ -219,17 +219,13 @@
         font-size: 30px;
 
         .loginform {
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-	    	border: 1px solid #bbb;
-            background-color: #dddddd;
+            background-color: #D56357;
+            background-color: rgba(213,99,87,0.7);
 
-
-            box-shadow: 0px 0px 20px #333;
-            /* For IE 8 */
-            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=20, Direction=0, Color='#333333')";
-            /* For IE 5.5 - 7 */
-            filter: progid:DXImageTransform.Microsoft.Shadow(Strength=20, Direction=0, Color='#333333');
+            .white {
+                color: #FFFBFB;
+                font-family: 'Gudea', serif;
+            }
 
             .formlabel {
                 color: black;
@@ -248,10 +244,6 @@
 
 .hippie_background {
     background-image: static_url("linen.jpg");
-    /*-moz-background-size: 100% 100%; *//* Firefox 3.6 */
-    /*-webkit-background-size: 100% 100%; *//* Firefox 3.6 */
-    /*background-size: 100% 100%;*/
-    /*background-repeat:no-repeat;*/
     background-repeat: repeat;
 }
 

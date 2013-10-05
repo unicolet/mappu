@@ -591,53 +591,57 @@ Maps.loginPage = SC.Page.design({
             canLoadInBackground: YES
         }),
         loginform:SC.View.design({
-            layout: {width: 500, height: 300, left: ( $(window).width()<=1024 ? 600-130: 600), centerY: 0},
+            layout: {width:400, bottom:-1, top:-1, left:( $(window).width()<=1024 ? 600-130: 600) },
             classNames:"loginform".w(),
 
-            childViews: 'labelU login labelP password button message loading'.w(),
-            labelU: SC.LabelView.design({
-                layout: {top:45, width:200, left:15, height:50},
-                value: "_username".loc(),
-                classNames:"formlabel".w(),
+            //childViews: 'labelU login labelP password button message loading'.w(),
+            childViews: 'title login password button message loading'.w(),
+            title: SC.LabelView.design({
+                classNames: ["white"],
+                layout: {top:30, width:200, left:15, height:50},
+                value: APPCONFIG.title,
                 controlSize: SC.HUGE_CONTROL_SIZE
             }),
             login: SC.TextFieldView.design({
-                layout: {top:45, right:25, left:155, height:50},
+                layout: {top:245, right:15, left:15, height:50},
                 valueBinding: "Maps.authenticationManager.inputUsername",
                 controlSize: SC.HUGE_CONTROL_SIZE,
-		hintOnFocus: NO
+		        //hintOnFocus: NO,
+                shouldRenderBorder: NO,
+                hint: "_username".loc()
             }),
             labelP: SC.LabelView.design({
-                layout: {top:105, width:200, left:15, height:50},
+                layout: {top:305, width:200, left:15, height:50},
                 value: "Password: ",
                 classNames:"formlabel".w(),
                 controlSize: SC.HUGE_CONTROL_SIZE
             }),
             password: SC.TextFieldView.design({
-                layout: {top:105, right:25, left:155, height:50},
+                layout: {top:305, right:15, left:15, height:50},
                 valueBinding: "Maps.authenticationManager.inputPassword",
                 isPassword: YES,
                 controlSize: SC.HUGE_CONTROL_SIZE,
-		hintOnFocus: NO
+		        //hintOnFocus: NO,
+                shouldRenderBorder: NO,
+                hint: "password".loc()
             }),
             message: SC.LabelView.design({
-                layout: {top:165, right:25, left:15, height:50},
+                layout: {top:365, right:15, left:15, height:50},
                 valueBinding: "Maps.authenticationManager.message",
                 isVisibleBinding: "Maps.authenticationManager.message",
                 classNames:"loginmessage".w(),
                 controlSize: SC.HUGE_CONTROL_SIZE
             }),
             button: SC.ButtonView.design({
-                layout: {top:220, right:35, width:55, height:30},
+                layout: {top:420, right:15, width:55, height:30},
                 title:"Login",
                 controlSize:SC.HUGE_CONTROL_SIZE,
-                themeName: 'round',
                 action: "submitLogin",
                 target: "Maps.authenticationManager",
                 isEnabledBinding: "Maps.authenticationManager.inputUsername"
             }),
             loading:SC.ImageView.design({
-                layout: {top:220, right:5, width:25, height:30},
+                layout: {top:420, right:85, width:25, height:30},
                 value: "spinner",
                 isVisibleBinding: "Maps.isLoading"
             })
