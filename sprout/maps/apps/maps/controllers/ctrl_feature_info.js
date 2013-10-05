@@ -61,7 +61,7 @@ Maps.featureInfoController = SC.ArrayController.create(
 		if (this.get("feature1")!=null) {
 			this.set("feature1descr",this.get("feature1"));
 		} else {
-			this.set("feature1descr","Drop here");
+			this.set("feature1descr","_drop_here".loc());
 		}
 	}.observes("feature1"),
 	
@@ -69,7 +69,7 @@ Maps.featureInfoController = SC.ArrayController.create(
 		if (this.get("feature2")!=null) {
 			this.set("feature2descr",this.get("feature2"));
 		} else {
-			this.set("feature2descr","Drop here");
+			this.set("feature2descr","_drop_here".loc());
 		}
 	}.observes("feature2"),
 

@@ -175,13 +175,12 @@ Maps.viewingMapState = SC.State.extend({
     },
 
     toggleTagExplorer: function() {
-        if(Maps.mainPage.get('explorerPane').layout.right!==20) {
+        if(Maps.mainPage.get('explorerPane').isOpen()) {
             this.hideTagEplorer();
         } else {
             this.showTagEplorer();
         }
     },
-
     showTagEplorer: function() {
         this.hideGeoTools();
 
@@ -193,10 +192,12 @@ Maps.viewingMapState = SC.State.extend({
         Maps.tagsController.refreshTagsLayer();
     },
     hideTagEplorer: function() {
-        var newLayout=Maps.mainPage.get('explorerPane').layout;
-        Maps.mainPage.get('explorerPane').animate({right:20}, 0.2);
+        var explorerPane=Maps.mainPage.get('explorerPane'),
+            newLayout=explorerPane.layout;
+        Maps.mainPage.get('explorerPane').animate({right:explorerPane.closedLayoutRight}, 0.2);
         Maps.tagsController.hideTagsLayer();
     },
+
     maps_RenderTags: function() {
         Maps.tagsController.gatherTagPoints();
     },
@@ -206,7 +207,7 @@ Maps.viewingMapState = SC.State.extend({
     },
 
     toggleGeoTools: function() {
-        if(Maps.mainPage.get('geotoolsPane').layout.right!==20) {
+        if(Maps.mainPage.get('geotoolsPane').isOpen()) {
             this.hideGeoTools();
         } else {
             this.showGeoTools();
@@ -222,7 +223,8 @@ Maps.viewingMapState = SC.State.extend({
         },0);
     },
     hideGeoTools: function() {
-        Maps.mainPage.get('geotoolsPane').animate({right:20}, 0.2);
+        var geotoolsPane = Maps.mainPage.get('geotoolsPane')
+        geotoolsPane.animate({right:geotoolsPane.closedLayoutRight}, 0.2);
     },
     maps_PerformGeoOperation: function() {
         var op = Maps.featureInfoController.get("operation");

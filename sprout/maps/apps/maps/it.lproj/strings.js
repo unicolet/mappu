@@ -124,5 +124,6 @@ SC.stringsFor('it', {
     "_Layer:": "Layer:",
     "_LayerGroup:": "Layer group:",
     "_Description:": "Descrizione:",
-    "_Url:": "URL:"
+    "_Url:": "URL:",
+    "_geotools_tooltip": "Fai click per accedere al cassetto dei Geo Strumenti (area, intersezione, unione, ecc)"
 });

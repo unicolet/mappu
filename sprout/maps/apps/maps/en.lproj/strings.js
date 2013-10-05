@@ -114,5 +114,6 @@ SC.stringsFor('en', {
     "_Layer:": "Layer:",
     "_LayerGroup:": "Layer group:",
     "_Description:": "Description:",
-    "_Url:": "URL:"
+    "_Url:": "URL:",
+    "_geotools_tooltip": "Click to access the Geo Tools tray (area, intersection, union, etc)"
 });

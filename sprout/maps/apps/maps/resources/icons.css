@@ -65,6 +65,12 @@
 	@include slice("images/clear-16.png");
 }
 
+.icon-pan-16 {
+	width: 16px;
+	height: 16px;
+	@include slice("images/pan.png");
+}
+
 .icon-search-16 {
 	width: 16px;
 	height: 16px;
@@ -74,7 +80,7 @@
 .icon-explore-16 {
 	width: 16px;
 	height: 16px;
-	@include slice("images/explore.png");
+	@include slice("images/explore.png", $offset: 2 2);
 }
 
 .icon-layers-16 {
@@ -123,4 +129,10 @@
     width: 16px;
     height: 16px;
     @include slice("images/sc-icon-magnet-16.png");
+}
+
+.sc-icon-tools-16 {
+    width: 16px;
+    height: 16px;
+    @include slice("images/sc-icon-tools-16.png", $offset: 2 2);
 }

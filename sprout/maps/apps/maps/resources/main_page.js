@@ -69,14 +69,12 @@ Maps.mainPage = SC.Page.design({
                 action: 'didChooseLayersOrSearch'
             }),
             tools : SC.SegmentedView.design({
-                layout: { centerY: 0, height: 30, centerX: ( $(window).width()<1024 ? 280-130: 280), width: 400 },
+                layout: { centerY: 0, height: 30, centerX: 210, width: 250 },
                 controlSize: SC.LARGE_CONTROL_SIZE,
                 items : [
-                    {title: "_pan".loc(), action: 'toolMove', icon:""},
+                    {title: "_pan".loc(), action: 'toolMove', icon:"icon-pan-16"},
                     {title: "_area".loc(), action: 'toolArea', icon:"icon-area-16"},
-                    {title: "_length".loc(), action: 'toolLength', icon:"icon-measure-16"},
-                    {title: "_geotools".loc(), action: 'toolGeo', icon: icon_tools_16},
-                    {title: "_explorer".loc(), action: 'toolExplorer', icon: "icon-explore-16"}
+                    {title: "_length".loc(), action: 'toolLength', icon:"icon-measure-16"}
                 ],
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
@@ -157,10 +155,26 @@ Maps.mainPage = SC.Page.design({
 
         geotoolsPane: SC.View.design({
               classNames: ["tray"],
-              layout: {width:170, height:400, right:20, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-1},
+              closedLayoutRight: 144,
+              layout: {width:170, height:400, right:this.closedLayoutRight||144, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-1},
+              isOpen: function() {
+                return this.layout.right!==this.closedLayoutRight;
+              },
               childViews: "toolsui".w(),
               toolsui: SC.View.design({
-                  childViews: "feature1 feature2 operation go help helptext".w(),
+                  classNames: ["tray_overflow"],
+                  childViews: "button feature1 feature2 operation go help helptext".w(),
+                  button: SC.ImageView.design({
+                      classNames: ["tray_button"],
+                      layout: {top: 5, width: 20, height: 20, left: -21},
+                      value: 'sc-icon-tools-16',
+                      click: function() {
+                          var rootResponder = this.getPath('pane.rootResponder')
+                          rootResponder.sendAction('toggleGeoTools', '', this, this.get('pane'))
+                      },
+                      isVisibleBinding: SC.Binding.oneWay("Maps.featureInfoController.[].length").bool(),
+                      toolTip: "_geotools_tooltip".loc()
+                  }),
                   feature1: Maps.DropView.design({
                       layout: {top: 5, left:5, right:10, height:30},
                       valueBinding: "Maps.featureInfoController.feature1descr",
@@ -215,12 +229,26 @@ Maps.mainPage = SC.Page.design({
 
           explorerPane: SC.View.design({
               classNames: ["tray"],
-              layout: {width:210, height:500, right:20, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-2},
+              closedLayoutRight: 104,
+              layout: {width:210, height:500, right:this.closedLayoutRight||104, top:70, zIndex:Maps.RIGHT_TOOL_BOX_PANE_ZINDEX-2},
+              isOpen: function() {
+                return this.layout.right!==this.closedLayoutRight;
+              },
               childViews: "explorerui".w(),
               explorerui: SC.View.design({
+                  classNames: ["tray_overflow"],
                   layout: {top:0,bottom:0,left:0,right:0},
-                  childViews: "tags buttons".w(),
+                  childViews: "button tags buttons".w(),
 
+                  button: SC.ImageView.design({
+                    classNames: ["tray_button"],
+                    layout: {top: 28, width: 20, height: 20, left: -21 },
+                    value: "icon-explore-16",
+                    click: function() {
+                        var rootResponder = this.getPath('pane.rootResponder')
+                        rootResponder.sendAction('toggleTagExplorer', '', this, this.get('pane'))
+                    }
+                }),
                   tags:SC.ScrollView.design({
                       layout: {top:0,bottom:130,left:0,right:0},
                       contentView: SC.ListView.design({

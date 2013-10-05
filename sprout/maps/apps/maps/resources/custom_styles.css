@@ -166,6 +166,21 @@
     $theme.tray {
         background: #F5F5F5;
         border: 1px solid #999;
+        overflow: visible;
+
+        .tray_overflow {
+            overflow: visible;
+        }
+        .tray_button {
+            background: #F5F5F5;
+            border-left: 1px solid #999;
+            border-top: 1px solid #999;
+            border-bottom: 1px solid #999;
+            border-right: 0;
+            border-radius: 3px;
+            border-top-right-radius:0;
+            border-bottom-right-radius:0;
+        }
     }
 
     $theme.rotated_tip {
