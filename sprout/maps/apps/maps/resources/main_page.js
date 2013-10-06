@@ -185,13 +185,21 @@ Maps.mainPage = SC.Page.design({
                           toolTip: "_geotools_tooltip".loc()
                       }),
                       click: function() {
-                        var rootResponder = this.getPath('pane.rootResponder')
-                        rootResponder.sendAction('toggleGeoTools', '', this, this.get('pane'))
+                          var rootResponder = this.getPath('pane.rootResponder');
+                          rootResponder.sendAction('toggleGeoTools', '', this, this.get('pane'));
+                          return YES;
+                      },
+                      touchStart: function() {
+                          return YES;
+                      },
+                      touchEnd: function() {
+                          this.click();
+                          return YES;
                       },
                       firstTimeVisible: true,
                       _maps_isVisibleDidChange: function() {
                          if(this.get('isVisible') && this.firstTimeVisible) {
-                            this.$().addClass('pulse');
+                            this.$().addClass('bounce');
                             this.firstTimeVisible=false;
                          }
                       }.observes('isVisible')
@@ -271,8 +279,15 @@ Maps.mainPage = SC.Page.design({
                         toolTip: "_explore_tooltip".loc()
                     }),
                     click: function() {
-                      var rootResponder = this.getPath('pane.rootResponder')
-                      rootResponder.sendAction('toggleTagExplorer', '', this, this.get('pane'))
+                      var rootResponder = this.getPath('pane.rootResponder');
+                      rootResponder.sendAction('toggleTagExplorer', '', this, this.get('pane'));
+                    },
+                    touchStart: function() {
+                        return YES;
+                    },
+                    touchEnd: function() {
+                        this.click();
+                        return YES;
                     }
                   }),
                   tags:SC.ScrollView.design({

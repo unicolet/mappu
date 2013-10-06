@@ -16,5 +16,7 @@ SC.ready(function() {
     Maps.statechart.initStatechart();
 
     // quick fix for https://github.com/sproutcore/sproutcore/issues/1097
-    SC.platform.touch=NO;
+    if(SC.browser.os === SC.OS.win) {
+        SC.platform.touch=NO;
+    }
 });
