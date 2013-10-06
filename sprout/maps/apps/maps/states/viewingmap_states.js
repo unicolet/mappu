@@ -303,6 +303,10 @@ Maps.viewingMapState = SC.State.extend({
         this.gotoState('showingLayersPaneState');
     },
 
+    showAdvancedOptions:function () {
+        this.gotoState("appManagementState");
+    },
+
     /*******************************************************
      *
      *                     SUB STATES

@@ -25,10 +25,6 @@ Maps.showingLayersPaneState = SC.State.extend({
         this.gotoState("browsingMapState");
     },
 
-    showAdvancedOptions:function () {
-        this.gotoState("appManagementState");
-    },
-
     legend:NO,
     toggleLegend:function () {
         if (!this.legend)

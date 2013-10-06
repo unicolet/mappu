@@ -433,7 +433,7 @@ Maps.mainPage = SC.Page.design({
         layout: { width: 500, height: 400 },
         contentView: SC.WorkspaceView.extend({
             topToolbar: SC.ToolbarView.design({
-                childViews: "advancedBtn legendBtn googleView".w(),
+                childViews: "legendBtn googleView".w(),
                 googleView: SC.RadioView.design({
                     layout: {centerY: 0, left: 30, width:200, height: 16},
                     items: '_streets_satellite'.loc().w(),
@@ -441,15 +441,8 @@ Maps.mainPage = SC.Page.design({
                     height: 24,
                     layoutDirection: SC.LAYOUT_HORIZONTAL
                 }),
-                advancedBtn: SC.ImageButtonView.design({
-                    layout: {width: 30, centerY: 0, right: 0, height: 16},
-                    image: "icon-settings-16",
-                    action: "showAdvancedOptions",
-                    isVisibleBinding: "Maps.authenticationManager.isAdmin",
-                    toolTip: "_settings".loc()
-                }),
                 legendBtn: SC.ButtonView.design({
-                    layout: {width: 80, centerY: 0, right: 40, height: 24},
+                    layout: {width: 80, centerY: 0, right: 15, height: 24},
                     titleBinding: "Maps.openLayersController.legendBtnText",
                     action: "toggleLegend",
                     isEnabledBinding: SC.Binding.oneWay("Maps.openLayersController.selection").transform(function(value, binding) {

@@ -37,7 +37,8 @@ var APPCONFIG = {
     admin_user: "admin",
     advanced_options: "/mapsocial/",
     // disable tips globally
-    showTips: true
+    showTips: true,
+    enablePrinting: true
 };
 
 
