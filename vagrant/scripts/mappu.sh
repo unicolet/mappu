@@ -23,8 +23,8 @@ test -d mappu-deploy-tooling || /usr/bin/git clone https://github.com/unicolet/m
 cd mappu-deploy-tooling
 /usr/bin/git pull
 /bin/cp -f salt/minion.conf /etc/salt/minion
-test /srv/salt || /bin/ln -s $PWD/salt/states/salt /srv/salt
-test /srv/pillar || /bin/ln -s $PWD/salt/states/pillar /srv/pillar
+test -h /srv/salt || /bin/ln -s $PWD/salt/states/salt /srv/salt
+test -h /srv/pillar || /bin/ln -s $PWD/salt/states/pillar /srv/pillar
 /etc/init.d/salt-minion restart
 
 # apply states
