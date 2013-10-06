@@ -76,6 +76,7 @@ Maps.mainPage = SC.Page.design({
                     {title: "_area".loc(), action: 'toolArea', icon:"icon-area-16"},
                     {title: "_length".loc(), action: 'toolLength', icon:"icon-measure-16"}
                 ],
+                value: 'toolMove',
                 itemIconKey: 'icon',
                 itemTitleKey : 'title',
                 itemValueKey : 'action',
