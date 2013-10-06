@@ -392,28 +392,31 @@ Maps.openLayersController = SC.ArrayController.create(
             content.beginPropertyChanges();
 
             // Actual re-ordering
-            var oldIndex = record.get('order');  // -1 to convert from ranking # to index
+            var oldIndex = record.get('order')-1;  // -1 to convert from ranking # to index
             //@if(debug)
             console.log("reordering item[" + oldIndex + "]=" + record.get('name') + " to " + proposedInsertionIndex);
             //@endif
-            if (proposedInsertionIndex < oldIndex) {
+            if (proposedInsertionIndex > oldIndex) {
                 // Move up list
-                for (var i = proposedInsertionIndex; i < oldIndex; i++) {
+                for (var i = proposedInsertionIndex; i > oldIndex; i--) {
                     //@if(debug)
-                    console.log("Moving item[" + i + "]=" + this.objectAt(i).get('name') + " up to " + (i + 1));
+                    console.log("[UP] Moving item[" + i + "]=" + this.objectAt(i).get('name') + " up to " + i);
                     //@endif
-                    this.objectAt(i).set('order', i + 1);  // add 1 to convert from ranking to sequence #
+                    this.objectAt(i).set('order', i);  // add 1 to convert from ranking to sequence #
                 }
             } else {
                 // Move down list
-                for (var i = oldIndex; i < proposedInsertionIndex; i++) {
+                for (var i = oldIndex - 1; i >= proposedInsertionIndex; i--) {
                     //@if(debug)
-                    console.log("Moving item[" + i + "]=" + this.objectAt(i).get('name') + " down to " + (i - 1));
+                    console.log("[DOWN] Moving item[" + i + "]=" + this.objectAt(i).get('name') + " down to " + (i+2));
                     //@endif
-                    this.objectAt(i).set('order', i - 1);  // add 1 to convert from ranking to sequence #
+                    this.objectAt(i).set('order', (i+2));  // add 1 to convert from ranking to sequence #
                 }
             }
-            record.set('order', proposedInsertionIndex);
+            //@if(debug)
+            console.log("[LAST] Moving item[" + oldIndex + "] to " + proposedInsertionIndex);
+            //@endif
+            record.set('order', proposedInsertionIndex + 1);
 
             // Restart notifications
             content.endPropertyChanges();

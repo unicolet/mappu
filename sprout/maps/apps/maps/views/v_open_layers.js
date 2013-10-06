@@ -394,65 +394,51 @@ Maps.OpenLayersLayer = SC.View.extend(SC.ContentDisplay, {
         var layer = this.get("content");
 
         var wms = this.wmsLayersCache[layer.get("name")];
-        if(layer.get('visible')) {
-            if (!wms) {
-                // now build the WMS layer
-                wms = new OpenLayers.Layer.WMS(
-                    layer.get('name'),
-                    ( WMSCONFIG.use_cache ? WMSCONFIG.server_cache_path : WMSCONFIG.server_path ),
-                    {
-                        layers: layer.get('name'),
-                        'transparent':'true'
-                    },
-                    {
-                        'opacity': layer.get('opacity')/10,
-                        'visibility': layer.get('visible'),
-                        'isBaseLayer': false,
-                        //'wrapDateLine': true,
-                        'buffer': 0
-                        //'tileSize': new OpenLayers.Size(512, 512),
-                        //'maxExtent': layer.get('maxExtent'),
-                        //'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
-                    }
-                );
-                // add to the map, the set index to preserve ordering
-                map.addLayer(wms);
-                //@if(debug)
-                console.log(layer.get("name")+".setLayerIndex="+(layer.get("order")-1));
-                //@endif
-                map.setLayerIndex(wms, layer.get("order")-1);
-                // save it into the cache
-                this.wmsLayersCache[layer.get("name")]=wms;
-            } else {
-                wms.setVisibility(layer.get('visible'));
-                wms.setOpacity(layer.get('opacity')/10);
-
-                if(layer.get("cql_filter")!=null) {
-                    wms.mergeNewParams({"cql_filter": layer.get("cql_filter")});
-                    wms.url=WMSCONFIG.server_path;
-                } else {
-                    wms.mergeNewParams({"cql_filter": null});
-                    wms.url=WMSCONFIG.server_cache_path;
+        if (!wms) {
+            // now build the WMS layer
+            wms = new OpenLayers.Layer.WMS(
+                layer.get('name'),
+                ( WMSCONFIG.use_cache ? WMSCONFIG.server_cache_path : WMSCONFIG.server_path ),
+                {
+                    layers: layer.get('name'),
+                    'transparent':'true'
+                },
+                {
+                    'opacity': layer.get('opacity')/10,
+                    'visibility': layer.get('visible'),
+                    'isBaseLayer': false,
+                    //'wrapDateLine': true,
+                    'buffer': 0
+                    //'tileSize': new OpenLayers.Size(512, 512),
+                    //'maxExtent': layer.get('maxExtent'),
+                    //'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
                 }
-                // if removed, re-add it
-                if(map.getLayersByName(layer.get("name")).length==0) {
-                    map.addLayer(wms);
-                }
-                map.setLayerIndex(wms, layer.get("order")-1);
-                wms.redraw();
-            }
+            );
+            // add to the map, the set index to preserve ordering
+            map.addLayer(wms);
+            //@if(debug)
+            console.log(layer.get("name")+".setLayerIndex="+(layer.get("order")-1));
+            //@endif
+            map.setLayerIndex(wms, layer.get("order")-1);
+            // save it into the cache
+            this.wmsLayersCache[layer.get("name")]=wms;
         } else {
-            // if on the map, remove layer from map
-            if(map.getLayersByName(layer.get("name")).length>0) {
-                if(WMSCONFIG.remove_wms_layers_when_not_used) {
-                    map.removeLayer(wms);
-                } else {
-                    map.setLayerIndex(wms, layer.get("order")-1);
-                    wms.setVisibility(layer.get('visible'));
-                    wms.redraw();
-                }
-            }
-        }
+            wms.setVisibility(layer.get('visible'));
+            wms.setOpacity(layer.get('opacity')/10);
 
+            if(layer.get("cql_filter")!=null) {
+                wms.mergeNewParams({"cql_filter": layer.get("cql_filter")});
+                wms.url=WMSCONFIG.server_path;
+            } else {
+                wms.mergeNewParams({"cql_filter": null});
+                wms.url=WMSCONFIG.server_cache_path;
+            }
+            // if removed, re-add it
+            if(map.getLayersByName(layer.get("name")).length==0) {
+                map.addLayer(wms);
+            }
+            map.setLayerIndex(wms, layer.get("order")-1);
+            wms.redraw();
+        }
     }
 });
