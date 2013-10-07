@@ -135,7 +135,7 @@
 		    <div class="span8">
 		      <h3><img src="aws.png" style="vertical-align: text-top;"> Try it on EC2</h3>
 		       <p>
-		       It's this simple: launch a new Unbuntu 10 or 11 instance and then supply the following user data: 
+		       It's this simple: launch a new <a href="https://aws.amazon.com/marketplace/pp/B00A6KUVBW/ref=brs_res_product_title?ie=UTF8&sr=0-34&qid=1381162029607">Centos 6</a> instance and then supply the following user data: 
 <pre>
 #!/bin/sh -ex
 # Download and install Mappu
@@ -148,17 +148,17 @@ curl -s https://raw.github.com/unicolet/mappu/master/vagrant/scripts/mappu.sh | 
 		       Launch on an empty box.</strong>
 		       </div>
 		       <p>
-		       Did you read the warning above. Done? Ok, then create a new virgin Ubuntu 10 or 11 server (can be physical or virtual) and run the following command from a root shell:
+		       Did you read the warning above. Done? Ok, then create a new virgin Centos 6 server (can be physical or virtual) and run the following command from a root shell:
 <pre>
 curl -s https://raw.github.com/unicolet/mappu/master/vagrant/scripts/mappu.sh | /bin/bash
 </pre>
 		       </p>
 		      <h3>Try it with Vagrant</h3>
 		       <p>
-		       Check out the <a href="https://github.com/unicolet/mappu">source</a> from git, then cd into the vagrant folder and issue:
+		       Check out the <a href="https://github.com/unicolet/mappu-deploy-tooling">source</a> from git, then cd into the folder and issue:
 <pre>
-mkdir install-data
-vagrant box add base http://files.vagrantup.com/lucid32.box
+vagrant box add centos6 https://dl.dropbox.com/u/7225008/Vagrant/CentOS-6.3-x86_64-minimal.box
+vagrant plugin install vagrant-salt
 vagrant up
 </pre>           
 		       </p>
