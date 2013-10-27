@@ -33,6 +33,12 @@ Maps.mainPage = SC.Page.design({
     // Add childViews to this pane for views to display immediately on page
     // load.
       mainPane: SC.MainPane.design( {
+
+        transitionIn: SC.View.SLIDE_IN,
+        transitionInOptions: {direction: 'left', delay: 0.2},
+        transitionOut: SC.View.SLIDE_OUT,
+        transitionOutOptions: {direction: 'right'},
+
         childViews: 'toolbar topLeftView bottomRightView loading geotoolsPane explorerPane'.w(),
 
         defaultResponder: 'Maps.statechart',
@@ -179,7 +185,6 @@ Maps.mainPage = SC.Page.design({
                       classNames: ["tray_button"],
                       layout: {top: 5, width: 30, height: 40, left: -31},
                       childViews: "icon".w(),
-                      isVisibleBinding: SC.Binding.oneWay("Maps.featureInfoController.[].length").bool(),
                       icon: SC.ImageView.design({
                           layout: {top: 12, width: 16, height: 16, left: 7 },
                           value: 'sc-icon-tools-16',
@@ -203,7 +208,7 @@ Maps.mainPage = SC.Page.design({
                             this.$().addClass('bounce');
                             this.firstTimeVisible=false;
                          }
-                      }.observes('isVisible')
+                      }.observes('Maps.featureInfoController.[].length')
                   }),
                   feature1: Maps.DropView.design({
                       layout: {top: 5, left:5, right:10, height:30},
@@ -590,6 +595,12 @@ Maps.mainPage = SC.Page.design({
 
 Maps.loginPage = SC.Page.design({
     mainPane: SC.MainPane.design({
+
+        transitionIn: SC.View.SLIDE_IN,
+        transitionInOptions: {direction: 'right'},
+        transitionOut: SC.View.SLIDE_OUT,
+        transitionOutOptions: {direction: 'left', duration: 0.2},
+
         classNames: ["hippie_background"],
         themeName: "loginPane",
         layout:{top:0,bottom:0,left:0,right:0},

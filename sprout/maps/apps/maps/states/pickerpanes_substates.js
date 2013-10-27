@@ -12,11 +12,11 @@ Maps.showingLayersPaneState = SC.State.extend({
             // prepare animation
             Maps.mainPage.layerPalette.adjust("opacity", 0);
             // append
-            Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
+            Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER, [3, 0, 1, 2, 3]);
             // perform animation
-            Maps.mainPage.layerPalette.animate({opacity:1}, 0.5);
+            Maps.mainPage.layerPalette.animate({opacity:1}, 0.3);
         } else {
-            Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER);
+            Maps.mainPage.layerPalette.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER, [3, 0, 1, 2, 3]);
         }
         Maps.openLayersController.goToDetail();
     },
@@ -54,7 +54,7 @@ Maps.showingSearchPaneState = SC.State.extend({
             Maps.mainPage.layerSearchPane.adjust("opacity", 0);
             // append
             Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER,[3, 0, 1, 2, 3]);
-            Maps.mainPage.layerSearchPane.animate({opacity:1}, 0.5);
+            Maps.mainPage.layerSearchPane.animate({opacity:1}, 0.3);
         } else {
             Maps.mainPage.layerSearchPane.popup(Maps.mainPage.get("layersAndSearch"), SC.PICKER_POINTER,[3, 0, 1, 2, 3]);
         }

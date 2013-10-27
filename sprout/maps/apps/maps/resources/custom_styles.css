@@ -1,6 +1,10 @@
 @theme(maps) {
-    .sc-view.popover_content_background {
+    .sc-view.popover_content_background, $theme.panel div.panel-background div {
         background: #F2F2F2;
+    }
+
+    $theme.border {
+        border: 1px solid #999;
     }
 
     .sc-label-view.sc-regular-size.app-logo {

@@ -103,6 +103,7 @@ Maps.viewingMapState = SC.State.extend({
     clearQueryResults: function() {
         Maps.openLayersController.clearFeatures();
         Maps.featureInfoAttributesController.clearFeatureAttributes();
+        Maps.openLayersController.set('measure','');
     },
 
     // called when the user dblclicks an item in list view
@@ -140,14 +141,6 @@ Maps.viewingMapState = SC.State.extend({
         }
         if (tool == 'toolLength') {
             Maps.openLayersController.getOLView().toolLength();
-        }
-        if (tool == 'toolGeo') {
-            this.toggleGeoTools();
-            view.set("value", "toolMove");
-        }
-        if (tool == 'toolExplorer') {
-            this.toggleTagExplorer();
-            view.set("value", "toolMove");
         }
     },
 

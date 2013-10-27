@@ -9,16 +9,7 @@ Maps.appManagementState = SC.State.extend({
     initialSubstate:'viewingManagerPane',
 
     enterState:function () {
-        if (!SC.browser.isIE) {
-            // prepare animation
-            Maps.appManagementPane.adjust("opacity", 0);
-            // append
-            Maps.appManagementPane.append();
-            // perform animation
-            Maps.appManagementPane.animate({opacity:1}, 0.5);
-        } else {
-            Maps.appManagementPane.append();
-        }
+        Maps.appManagementPane.append();
     },
 
     exit: function() {

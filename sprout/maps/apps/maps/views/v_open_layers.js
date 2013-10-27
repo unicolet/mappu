@@ -42,6 +42,7 @@ Maps.OpenLayers = SC.View.extend(
         MARKERS_LAYER_NAME:"_MARKERS",
         olmap: null,
 
+        didShowNoFeatureInfoResultsWarning: false,
         /*
          * since these events will be handled by OL pretend we handled them or we will
          * handle them twice.
@@ -169,6 +170,13 @@ Maps.OpenLayers = SC.View.extend(
 
             map.addLayer(googleStreets);
             map.addLayer(googleHybrid);
+
+            try {
+                // disable tilt: need to do it this way until OL merges: http://trac.osgeo.org/openlayers/ticket/3615
+                googleHybrid.mapObject.setTilt(0);
+            } catch(e) {
+                console.log("Error disabling Google Satellite imagery tilt");
+            }
         },
 
 
@@ -254,6 +262,7 @@ Maps.OpenLayers = SC.View.extend(
             featureInfoControl.events.register("beforegetfeatureinfo", Maps.openLayersController, function(){Maps.set("isLoading",YES);});
             featureInfoControl.events.register("nogetfeatureinfo", Maps.openLayersController, function(){
                 Maps.set("isLoading",NO);
+                Maps.openLayersController.didShowNoFeatureInfoResultsWarning=true;
                 SC.AlertPane.warn({
                     message: "_no_queriable_layers_title".loc(),
                     description: "_no_queriable_layers_detail".loc(),

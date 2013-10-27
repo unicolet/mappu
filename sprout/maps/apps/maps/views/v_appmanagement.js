@@ -12,12 +12,17 @@ SC.Binding.equals = function(expectedValue) {
 } ;
 
 Maps.appManagementPane = SC.PanelPane.design({
-    layout:{left:0, top:0, bottom:0, right: 400},
+    transitionIn: SC.View.SLIDE_IN,
+    transitionInOptions: {direction: 'right'},
+    transitionOut: SC.View.SLIDE_OUT,
+    transitionOutOptions: {direction: 'left'},
+    layout:{left:0, centerY:0, height:500, width: 700},
     contentView:SC.View.extend({
         layout:{top:5, bottom:5, left:5, right:5},
         childViews:"sourceList exit informational users links".w(),
 
         sourceList:SC.SourceListView.design({
+            classNames: "border".w(),
             layout:{ bottom:29, left:0, width:150, top:0 },
             contentBinding: SC.Binding.oneWay("Maps.appManagementController.sourceListTree"),
             exampleView:SC.ListItemView.extend({
@@ -49,6 +54,7 @@ Maps.appManagementPane = SC.PanelPane.design({
             isVisibleBinding: SC.Binding.oneWay(".parentView.sourceList.value").equals("users"),
             childViews: "list form create save cancel changepassword errors".w(),
             list: SC.ScrollView.design({
+                classNames: "border".w(),
                 layout: {left:0, top:0, bottom:29, width:200 },
                 contentView : SC.ListView.design({
                     layout:{top:0,bottom:0,right:0,left:0},
@@ -74,6 +80,7 @@ Maps.appManagementPane = SC.PanelPane.design({
                 contentBinding: 'Maps.systemUserController',
 
                 username: SC.FormView.row("_Username:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isEditableBinding: SC.Binding.single("Maps.systemUserController.isCreating")
                 })),
@@ -81,11 +88,13 @@ Maps.appManagementPane = SC.PanelPane.design({
                   layout: {width: 150, height: 40, centerY: 0}
                 })),
                 password: SC.FormView.row("_password:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isPassword: YES,
                     isEditableBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
                 })),
                 passwordRepeat: SC.FormView.row("_passwordrepeat:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isPassword: YES,
                     isEditableBinding: SC.Binding.or("Maps.systemUserController.isCreating", "Maps.systemUserController.isChangingPassword")
@@ -126,6 +135,7 @@ Maps.appManagementPane = SC.PanelPane.design({
             isVisibleBinding: SC.Binding.oneWay(".parentView.sourceList.value").equals("links"),
             childViews: "list form create save cancel errors edit".w(),
             list: SC.ScrollView.design({
+                classNames: "border".w(),
                 layout: {left:0, top:0, bottom:29, width:200 },
                 contentView : SC.ListView.design({
                     layout:{top:0,bottom:0,right:0,left:0},
@@ -149,6 +159,7 @@ Maps.appManagementPane = SC.PanelPane.design({
                 contentBinding: 'Maps.systemLinkController',
 
                 title: SC.FormView.row("_Title:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isEditableBinding: SC.Binding.oneWay("Maps.systemLinkController.isEditing")
                 })),
@@ -156,18 +167,22 @@ Maps.appManagementPane = SC.PanelPane.design({
                   layout: {width: 150, height: 40, centerY: 0}
                 })),
                 layer: SC.FormView.row("_Layer:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isEditableBinding: SC.Binding.oneWay("Maps.systemLinkController.isEditing")
                 })),
                 layerGroup: SC.FormView.row("_LayerGroup:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isEditableBinding: SC.Binding.oneWay("Maps.systemLinkController.isEditing")
                 })),
                 description: SC.FormView.row("_Description:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isEditableBinding: SC.Binding.oneWay("Maps.systemLinkController.isEditing")
                 })),
                 url: SC.FormView.row("_Url:".loc(), SC.TextFieldView.extend({
+                    shouldRenderBorder: NO,
                     layout: {height: 20, width: 150},
                     isEditableBinding: SC.Binding.oneWay("Maps.systemLinkController.isEditing")
                 }))
