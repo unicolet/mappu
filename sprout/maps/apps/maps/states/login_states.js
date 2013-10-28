@@ -40,7 +40,8 @@ Maps.notLoggedInState = SC.State.extend({
         Maps.authenticationManager.reset();
         Maps.getPath('loginPage.mainPane').append();
 
-        if (SC.browser.isIE) {
+        // warn users running Mappu on IE 8 or lower that there might be issues
+        if (SC.browser.isIE && SC.browser.compare(SC.browser.version,9)<0) {
             SC.AlertPane.warn({
                 message:"_msie_unsupported".loc(),
                 description:"_msie_unsupported_body".loc(),
