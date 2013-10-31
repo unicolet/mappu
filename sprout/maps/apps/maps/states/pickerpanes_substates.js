@@ -76,7 +76,7 @@ Maps.showingSearchPaneState = SC.State.extend({
     },
 
     layerQueryRun:function () {
-        Maps.layerQueryController.layerQuery(Maps.layerQueryController.getTypeName(), Maps.layerQueryController.getCQLFilter());
+        Maps.openLayersController.layerQuery(Maps.layerQueryController.getTypeName(), Maps.layerQueryController.getCQLFilter());
     },
 
     exitState:function () {
