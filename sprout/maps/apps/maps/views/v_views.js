@@ -33,7 +33,7 @@ Maps.LinkView = SC.ListItemView.extend(SC.ContentDisplay,
             }
             context.push(title).end().end();
             context = context.begin('div').addClass('link-summary-view-desc').push(descr).end();
-            context = context.end();
+            context = context.end().end();
         }
 	}
 });
