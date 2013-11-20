@@ -178,53 +178,55 @@ Maps.openLayersController = SC.ArrayController.create(
 
                 for (var i = 0; i < event.features.length; i++) {
                     var feature = event.features[i];
-                    var c = feature.geometry.getCentroid();
-                    //@if(debug)
-                    console.log("Centroid before: "+ c.x+","+ c.y);
-                    //@endif
+                    if(feature.geometry!==null) {
+                        var c = feature.geometry.getCentroid();
+                        //@if(debug)
+                        console.log("Centroid before: "+ c.x+","+ c.y);
+                        //@endif
 
-                    this.detectServerType(event);
-                    if(Maps.isGEOSERVER) {
-                        // apply transform to the feature geometry only if we detect geoserver
-                        // and the owner layer srs is not EPSG:900913
-                        try {
-                            var ownerLayer = Maps.openLayersController.get("content").findProperty("name", feature.gml.featureNSPrefix + ':' + feature.gml.featureType);
-                            var sourceProjection = WMSCONFIG.default_srs;
-                            if (ownerLayer) {
-                                var sourceProjection = ownerLayer.get("srs");
+                        this.detectServerType(event);
+                        if(Maps.isGEOSERVER) {
+                            // apply transform to the feature geometry only if we detect geoserver
+                            // and the owner layer srs is not EPSG:900913
+                            try {
+                                var ownerLayer = Maps.openLayersController.get("content").findProperty("name", feature.gml.featureNSPrefix + ':' + feature.gml.featureType);
+                                var sourceProjection = WMSCONFIG.default_srs;
+                                if (ownerLayer) {
+                                    var sourceProjection = ownerLayer.get("srs");
+                                }
+                                if(sourceProjection) {
+                                    var geom=feature.geometry.clone().transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                    feature.wgs84_geometry=geom.transform(Maps.projections['EPSG:900913'], Maps.projections['EPSG:3410']);
+                                }
+                                if (sourceProjection && sourceProjection != 'EPSG:900913') {
+                                    //@if(debug)
+                                    console.log("Transforming from "+sourceProjection+" to EPSG:900913");
+                                    //@endif
+                                    c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                    feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                }
+                            } catch(e) {
+                                SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + e, "", "OK", this);
                             }
-                            if(sourceProjection) {
-                                var geom=feature.geometry.clone().transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
-                                feature.wgs84_geometry=geom.transform(Maps.projections['EPSG:900913'], Maps.projections['EPSG:3410']);
-                            }
-                            if (sourceProjection && sourceProjection != 'EPSG:900913') {
-                                //@if(debug)
-                                console.log("Transforming from "+sourceProjection+" to EPSG:900913");
-                                //@endif
-                                c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
-                                feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
-                            }
-                        } catch(e) {
-                            SC.AlertPane.warn("_query_error_title".loc(), "_query_error_detail".loc() + e, "", "OK", this);
                         }
+                        // save the centroid as a feature attibute, we'll need it later
+                        feature.data['x'] = c.x;
+                        feature.data['y'] = c.y;
+
+                        //@if(debug)
+                        console.log("Centroid after: "+ c.x+","+ c.y);
+                        //@endif
+
+                        var marker = new OpenLayers.Marker(new OpenLayers.LonLat(c.x, c.y), icon.clone());
+                        marker.data = {'feature':feature, 'idx':i};
+                        markersLayer.addMarker(marker);
+                        marker.events.register(
+                            'click',
+                            marker,
+                            function(e) {
+                                Maps.featureInfoController.toggleMarker(e, this, highlightLayer);
+                            });
                     }
-                    // save the centroid as a feature attibute, we'll need it later
-                    feature.data['x'] = c.x;
-                    feature.data['y'] = c.y;
-
-                    //@if(debug)
-                    console.log("Centroid after: "+ c.x+","+ c.y);
-                    //@endif
-
-                    var marker = new OpenLayers.Marker(new OpenLayers.LonLat(c.x, c.y), icon.clone());
-                    marker.data = {'feature':feature, 'idx':i};
-                    markersLayer.addMarker(marker);
-                    marker.events.register(
-                        'click',
-                        marker,
-                        function(e) {
-                            Maps.featureInfoController.toggleMarker(e, this, highlightLayer);
-                        });
                 }
                 markersLayer.redraw();
                 SC.RunLoop.begin();
