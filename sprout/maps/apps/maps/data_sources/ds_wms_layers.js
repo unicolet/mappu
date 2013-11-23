@@ -157,8 +157,9 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     } catch (e) {
                     }
 
+                    order++;
                     var record = {
-                        order: Maps.Session.getItem("Maps.Layer." + l.name + ".order",order++),
+                        order: Maps.Session.getItem("Maps.Layer." + l.name + ".order",order),
                         guid:i,
                         name:l.name,
                         title:l.title,

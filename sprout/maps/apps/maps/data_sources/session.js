@@ -10,8 +10,23 @@ Maps.Session = SC.Object.create({
         return window.localStorage !== null;
     }.property(),
 
+    _prefix:null,
+
+    propertyPrefix: function(k,v) {
+        if(v!=undefined) {
+            // setting
+            this.set("_prefix",v+".");
+        } else {
+            // getting
+            return this.get("_prefix");
+        }
+    }.property(),
+
     setItem: function(k,v) {
         if(window.localStorage) {
+            if(this.get("propertyPrefix")) {
+                k=this.get("propertyPrefix")+k;
+            }
             window.localStorage.setItem(k,v);
         }
     },
@@ -19,19 +34,19 @@ Maps.Session = SC.Object.create({
     getItem: function(k, defaultValue) {
         var v=null;
         if(window.localStorage) {
+            if(this.get("propertyPrefix")) {
+                k=this.get("propertyPrefix")+k;
+            }
             v=window.localStorage.getItem(k)!==null ? window.localStorage.getItem(k) :  defaultValue;
         }
         return v;
     },
 
     getItemAsBoolean: function(k, defaultValue) {
-        var v=null;
-        if(window.localStorage) {
-            v=window.localStorage.getItem(k)!==null ? window.localStorage.getItem(k) :  defaultValue;
-        }
-        return v=='true';
+        return this.getItem(k)=='true';
     },
 
+    /* TODO: clear only values owned by this module */
     clear: function() {
         if(window.localStorage) {
             window.localStorage.clear();
