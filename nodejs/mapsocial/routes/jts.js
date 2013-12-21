@@ -26,21 +26,41 @@ function extractGeometries(req) {
     var geometries=[];
     for(var i=0,l=wkt.length;i<l;i++){
         try {
-            if(wkt[i]!="")
-                geometries.push( selfSnap( reader.read(wkt[i]) ) );
-        } catch(e) {} // swallow
+            if(wkt[i]!="") {
+                var geom=reader.read(wkt[i]);
+                if(!geom.isValid()) {
+                    // try to clean it up
+                    geom=selfSnap(geom);
+                }
+                if(!geom.isValid()) {
+                    // log a message and carry on
+                    console.error("geom is still not valid: "+wkt[i]);
+                    return false;
+                } else {
+                    geometries.push( geom );
+                }
+            }
+        } catch(e) {
+            console.error("Error parsing WKT geometry: "+e);
+            return false;
+        } // swallow
     }
     return geometries;
 }
 
 function buffer(req,res, distance) {
-    var buffer = extractGeometries(req)[0].buffer(distance);
-    res.send(200,JSON.stringify({"geom":buffer.toString(),"area":buffer.getArea()}));
+    var geometries=extractGeometries(req);
+    if(geometries) {
+        var buffer = geometries[0].buffer(distance);
+        res.send(200,JSON.stringify({"geom":buffer.toString(),"area":buffer.getArea()}));
+    } else {
+        res.send(400,"Error processing geometries, data probably needs cleaning");
+    }
 }
 
 function intersection(req,res) {
     var geometries = extractGeometries(req);
-    if(geometries.length==2) {
+    if(geometries && geometries.length==2) {
         var intersection=geometries[0].intersection(geometries[1]);
         res.send(200,JSON.stringify({"geom":intersection.toString(),"area":intersection.getArea()}));
     } else {
@@ -50,7 +70,7 @@ function intersection(req,res) {
 
 function union(req,res) {
     var geometries = extractGeometries(req);
-    if(geometries.length==2) {
+    if(geometries && geometries.length==2) {
         var union=geometries[0].union(geometries[1]);
         res.send(200,JSON.stringify({"geom":union.toString(),"area":union.getArea()}));
     } else {
@@ -59,8 +79,13 @@ function union(req,res) {
 }
 
 function area(req,res) {
-    var feature = extractGeometries(req)[0];
-    res.send(200,JSON.stringify({"geom":feature.toString(),"area":feature.getArea()}));
+    var geometries = extractGeometries(req);
+    if(geometries) {
+        var feature = geometries[0];
+        res.send(200,JSON.stringify({"geom":feature.toString(),"area":feature.getArea()}));
+    } else {
+        res.send(400,"Error processing geometries, data probably needs cleaning");
+    }
 }
 
 function selfSnap(g) {
