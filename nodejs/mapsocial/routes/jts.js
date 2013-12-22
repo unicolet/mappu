@@ -29,6 +29,7 @@ function extractGeometries(req) {
             if(wkt[i]!="") {
                 var geom=reader.read(wkt[i]);
                 if(!geom.isValid()) {
+                    console.warn("geom is not valid, attempting to clean it up: "+wkt[i]);
                     // try to clean it up
                     geom=selfSnap(geom);
                 }
@@ -60,21 +61,29 @@ function buffer(req,res, distance) {
 
 function intersection(req,res) {
     var geometries = extractGeometries(req);
-    if(geometries && geometries.length==2) {
+    if(geometries) {
+        if(geometries.length==2) {
         var intersection=geometries[0].intersection(geometries[1]);
         res.send(200,JSON.stringify({"geom":intersection.toString(),"area":intersection.getArea()}));
+        } else {
+            res.send(400,"Please specify two geometries");
+        }
     } else {
-        res.send(400,"Please specify two geometries");
+        res.send(400,"Error processing geometries, data probably needs cleaning");
     }
 }
 
 function union(req,res) {
     var geometries = extractGeometries(req);
-    if(geometries && geometries.length==2) {
+    if(geometries) {
+        if(geometries.length==2) {
         var union=geometries[0].union(geometries[1]);
         res.send(200,JSON.stringify({"geom":union.toString(),"area":union.getArea()}));
+        } else {
+            res.send(400,"Please specify two geometries");
+        }
     } else {
-        res.send(400,"Please specify two geometries");
+        res.send(400,"Error processing geometries, data probably needs cleaning");
     }
 }
 
