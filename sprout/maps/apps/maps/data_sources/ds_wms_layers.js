@@ -162,7 +162,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                         guid:i,
                         name:l.name,
                         title:l.title,
-                        visible:l.keywords.contains("mappu_disable"),
+                        visible:l.keywords.contains("mappu_default"),
                         legendIcon:legend,
                         opacity:10,
                         description:l['abstract'],
