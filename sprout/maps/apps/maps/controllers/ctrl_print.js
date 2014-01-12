@@ -10,5 +10,10 @@ Maps.printController = SC.ObjectController.create({
     commentText: "",
 
     // controls the display of the 'please wait' overlay while printing
-    isPrinting: false
+    isPrinting: false,
+
+    // array of predefined available scales, as returned by mapfish-print
+    scales: null,
+    // the scale chosen by the user (if the boolean value 'false', then use best-fit)
+    scale: null
 });

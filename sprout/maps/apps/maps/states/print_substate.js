@@ -7,6 +7,15 @@
 
 Maps.printingMapState = SC.State.extend({
     enterState: function(ctx) {
+        var scales=Maps.printController.get("scales");
+        if(!scales) {
+            scales=[];
+            scales[0]={name: "_best_fit".loc(), value: false};
+            for(var i=0, l=printConfig.scales.length;i<l;i++) {
+                scales[i+1]=printConfig.scales[i];
+            }
+            Maps.printController.set("scales", scales);
+        }
         Maps.printSheetPane.append();
     },
 
@@ -63,18 +72,30 @@ Maps.printingMapState = SC.State.extend({
         Maps.set("isLoading", true);
         Maps.printController.set("isPrinting", true);
 
+        var scale=Maps.printController.get("scale");
+
         var map=Maps.openLayersController.getOLMAP();
         var printer=new mapfish.PrintProtocol(map,printConfig);
         printer.spec.layout="A4 landscape";
         printer.spec.pages=[
                 {
-                    bbox: map.getExtent().toBBOX().split(","),
                     dpi: 190,
-                    geodetic: false,
+                    geodetic: true,
                     comment: Maps.printController.get("commentText"),
                     mapTitle: Maps.printController.get("title")
                 }
             ];
+
+        // handle scale
+        if(scale) {
+            // try to print to scale chosen by user
+            var center=map.getCenter();
+            printer.spec.pages[0].scale=scale;
+            printer.spec.pages[0].center=[center.lon, center.lat];
+        } else {
+            // try a best-fit print
+            printer.spec.pages[0].bbox=map.getExtent().toBBOX().split(",");
+        }
         printer.createPDF(this.didMapfishPrint, this.didMapfishPrint, this.didMapfishPrintError, this);
     },
 

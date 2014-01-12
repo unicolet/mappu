@@ -6,10 +6,10 @@
  */
 
 Maps.printSheetPane = SC.SheetPane.design({
-    layout: {width:550, height:180, centerX:0},
+    layout: {width:550, height:220, centerX:0},
     contentView: SC.View.extend({
         layout: {top:10,bottom:5,left:5,right:10},
-        childViews: "icon title commentLbl commentText printBtn closeBtn printExtensionBtn workingoverlay".w(),
+        childViews: "icon title commentLbl commentText scaleLbl scale printBtn closeBtn printExtensionBtn workingoverlay".w(),
 
         workingoverlay: SC.LabelView.design({
             classNames: ["translucent"],
@@ -34,9 +34,20 @@ Maps.printSheetPane = SC.SheetPane.design({
             value: "_comment".loc()
         }),
         commentText: SC.TextFieldView.design({
-            layout: {left: 40, right: 0, top:50, bottom: 44 },
+            layout: {left: 40, right: 0, top:50, bottom: 84 },
             valueBinding: "Maps.printController.commentText",
             isTextArea: YES
+        }),
+        scaleLbl: SC.LabelView.design({
+            layout: {left: 40, width: 50, height:24, bottom: 41 },
+            value: "_scale".loc()
+        }),
+        scale: SC.SelectView.design({
+            layout: {left: 95, width: 145, height:24, bottom: 44 },
+            itemTitleKey: 'name',
+            itemValueKey: 'value',
+            itemsBinding: SC.Binding.oneWay("Maps.printController.scales"),
+            valueBinding: "Maps.printController.scale"
         }),
         printBtn: SC.ButtonView.design({
             layout: {width: 90, right: 100, height:24, bottom: 0 },
