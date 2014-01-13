@@ -49,7 +49,13 @@ Maps.Session = SC.Object.create({
     /* TODO: clear only values owned by this module */
     clear: function() {
         if(window.localStorage) {
-            window.localStorage.clear();
+            var pfix=this.get("propertyPrefix");
+            for(var i=window.localStorage.length;i>=0;i--) {
+                var key=window.localStorage.key(i);
+                if(key.indexOf(pfix)===0) {
+                    window.localStorage.removeItem(key);
+                }
+            }
         }
     }
 });

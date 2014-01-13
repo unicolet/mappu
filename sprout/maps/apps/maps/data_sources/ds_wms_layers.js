@@ -163,7 +163,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                         guid:i,
                         name:l.name,
                         title:l.title,
-                        visible: Maps.Session.getItemAsBoolean("Maps.Layer." + l.name + ".visible",l.keywords.contains("mappu_disable")),
+                        visible: Maps.Session.getItemAsBoolean("Maps.Layer." + l.name + ".visible",l.keywords.contains("mappu_default")),
                         legendIcon:legend,
                         opacity:Maps.Session.getItem("Maps.Layer." + l.name + ".opacity",10),
                         description:l['abstract'],
@@ -236,7 +236,7 @@ Maps.LayerDataSource = SC.DataSource.extend(
                 Maps.Session.setItem(recordType+"."+guid+".order", dataHash['order']);
                 Maps.Session.setItem(recordType+"."+guid+".opacity", dataHash['opacity']);
                 //@if(debug)
-                console.log("Saved order,visible to localStorage for guid="+guid);
+                console.log("Saved order,visible,opacity to localStorage for guid="+guid);
                 //@endif
             } catch(e) {
                 log.error(e);
