@@ -619,7 +619,7 @@ Maps.loginPage = SC.Page.design({
             childViews: 'title login password button message loading'.w(),
             title: SC.LabelView.design({
                 classNames: ["white"],
-                layout: {top:30, width:200, left:15, height:50},
+                layout: {top:30, width:380, left:15, height:50},
                 value: APPCONFIG.title,
                 controlSize: SC.HUGE_CONTROL_SIZE
             }),

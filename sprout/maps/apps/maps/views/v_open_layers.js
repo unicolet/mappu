@@ -423,6 +423,12 @@ Maps.OpenLayersLayer = SC.View.extend(SC.ContentDisplay, {
                     //'minExtent': new OpenLayers.Bounds(-1, -1, 1, 1)
                 }
             );
+
+            // merge custom option (one time only)
+            if(WMSCONFIG.wms_options) {
+                wms.mergeNewParams(WMSCONFIG.wms_options);
+            }
+
             // add to the map, the set index to preserve ordering
             map.addLayer(wms);
             //@if(debug)

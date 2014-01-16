@@ -12,6 +12,7 @@ var WMSCONFIG = {
     server_path : "/geoserver/wms",
     wfs_server_path : "/geoserver/wfs",
     server_cache_path : "/geoserver/gwc/service/wms",
+    wms_options: {tiled:'yes'},
 
 //    server_path : "/cgi-bin/wms",
 //    wfs_server_path : "/cgi-bin/wms",
