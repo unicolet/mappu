@@ -34,6 +34,7 @@ SC.stringsFor('en', {
     "_union" : "Union",
     "_area" : "Area",
     "_buffer5" : "Buffer 5m",
+    "_buffer10" : "Buffer 10m",
     "_buffer25" : "Buffer 25m",
     "_clear"  : "Clear",
     "_close"  : "Close",

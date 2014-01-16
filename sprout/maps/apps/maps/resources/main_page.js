@@ -231,7 +231,8 @@ Maps.mainPage = SC.Page.design({
                           { title: "_intersection", value: "Intersection", pos: 2},
                           { title: "_union", value: "Union", pos: 3 },
                           { title: "_buffer5", value: "Buffer5", pos: 4 },
-                          { title: "_buffer25", value: "Buffer25", pos: 5 }
+                          { title: "_buffer10", value: "Buffer10", pos: 5 },
+                          { title: "_buffer25", value: "Buffer25", pos: 6 }
                       ],
                       itemTitleKey: 'title',
                       itemValueKey: 'value',
