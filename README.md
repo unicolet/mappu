@@ -30,7 +30,7 @@ Screenshots are hosted in the media folder.
 
 A demo is available on a temporary cloud server:
 
-http://162.13.113.151/
+http://162.243.68.40
 
 login as demo/demo
 
