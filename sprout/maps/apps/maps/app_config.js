@@ -40,17 +40,10 @@ var APPCONFIG = {
     showTips: true,
     enablePrinting: true
 };
-/*
+
 var whiteTile=static_url('white.png');
-var BASELAYERS=[
-    {
-        name: "Google Streets",
-        layer: new OpenLayers.Layer.Google("Google Streets",{'sphericalMercator': true})
-    }, {
-        name: "Google Satellite",
-        layer: new OpenLayers.Layer.Google("Google Satellite",{'sphericalMercator': true})
-    },{
-        name: "_blank".loc(),
-        layer: new OpenLayers.Layer.OSM("_blank".loc(), whiteTile)
-    }
-];*/
+var MAPPU_BASELAYERS=[
+    {provider: 'OpenLayers.Layer.Google', args:["Streets",{'sphericalMercator': true}]},
+    {provider: 'OpenLayers.Layer.Google', args:["Satellite",{'type': "satellite",'sphericalMercator': true}]},
+    {provider: 'OpenLayers.Layer.OSM', args:["_blank", whiteTile]}
+];

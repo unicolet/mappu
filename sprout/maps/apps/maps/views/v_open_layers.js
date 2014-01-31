@@ -107,7 +107,7 @@ Maps.OpenLayers = SC.View.extend(
                 };
             var map = new OpenLayers.Map(options);
 
-            this.addGoogleLayers(map);
+            this.addBaseLayers(map);
             /*
              * Utility layers will be lazy-added at first use, see
              * Maps.openLayersController.getFeatureInfoLayer
@@ -157,25 +157,41 @@ Maps.OpenLayers = SC.View.extend(
             }
         }.observes("Maps.bbox"),
 
-        addGoogleLayers: function(map) {
-            // create Google Mercator layers
-            var googleStreets = new OpenLayers.Layer.Google(
-                "Google Streets",
-                {'sphericalMercator': true}
-            );
-            var googleHybrid = new OpenLayers.Layer.Google(
-                "Google Satellite",
-                {'type': google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true}
-            );
+        addBaseLayers: function(map) {
+            var layers=[];
+            if(MAPPU_BASELAYERS && MAPPU_BASELAYERS.length>0) {
+                for(var i=0,l=MAPPU_BASELAYERS.length;i<l;i++) {
+                    var layer=Maps.createLayer(MAPPU_BASELAYERS[i]);
+                    if(layer) {
+                        MAPPU_BASELAYERS[i].ready=true;
+                        layers.push(layer);
+                    } else {
+                        MAPPU_BASELAYERS[i].ready=false;
+                        console.log("Failed to create layer: "+MAPPU_BASELAYERS[i].name);
+                    }
+                }
+            } else {
+                // create standard Google Mercator layers
+                var googleStreets = new OpenLayers.Layer.Google(
+                    "Google Streets",
+                    {'sphericalMercator': true}
+                );
+                var googleHybrid = new OpenLayers.Layer.Google(
+                    "Google Satellite",
+                    {'type': google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true}
+                );
+            }
+            for(var i= 0, l=layers.length;i<l;i++) {
+                map.addLayer(layers[i]);
+                try {
+                    if(layers[i].mapObject && layers[i].mapObject.setTilt) {
+                        // disable tilt: need to do it this way until OL merges: http://trac.osgeo.org/openlayers/ticket/3615
+                        layers[i].mapObject.setTilt(0);
+                    }
+                } catch(e) {
+                    console.log("Error disabling Google Satellite imagery tilt");
+                }
 
-            map.addLayer(googleStreets);
-            map.addLayer(googleHybrid);
-
-            try {
-                // disable tilt: need to do it this way until OL merges: http://trac.osgeo.org/openlayers/ticket/3615
-                googleHybrid.mapObject.setTilt(0);
-            } catch(e) {
-                console.log("Error disabling Google Satellite imagery tilt");
             }
         },
 

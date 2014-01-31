@@ -120,6 +120,21 @@ Maps = SC.Application.create(
             }
         }
         return a + " " + unit +"<sup>2</sup>";
+    },
+
+    createLayer: function(options){
+        var theConstructor=SC.getPath(window, options.provider)
+            //theObject=null,
+            layer=null;
+        if(theConstructor) {
+            layer=new theConstructor(options.args[0],options.args[1]);
+            //layer=(theObject.apply( theObject, options.args ) || theObject);
+            //@if(debug)
+            console.log("Created layer: "+layer.name);
+            //@endif
+        }
+
+        return layer;
     }
 });
 
