@@ -288,11 +288,11 @@ Maps.openLayersController = SC.ArrayController.create(
         whichGoogleLayer: "Streets",
         switchGoogleLayer: function() {
             //@if(debug)
-            console.log("Selected new base layer: "+this.get("whichGoogleLayer"));
+            console.log("Selected new base layer: "+this.get("whichGoogleLayer").loc());
             //@endif
             if(MAPPU_BASELAYERS) {
                 var map = this.getOLMAP();
-                map.setBaseLayer(map.getLayersByName(this.get("whichGoogleLayer"))[0]);
+                map.setBaseLayer(map.getLayersByName(this.get("whichGoogleLayer").loc())[0]);
             } else {
                 var newBaseLayer = "Google " + this.get("whichGoogleLayer");
                 var map = this.getOLMAP();

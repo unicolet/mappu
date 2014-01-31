@@ -127,10 +127,10 @@ Maps = SC.Application.create(
             //theObject=null,
             layer=null;
         if(theConstructor) {
-            layer=new theConstructor(options.args[0],options.args[1]);
+            layer=new theConstructor(options.args[0].loc(),options.args[1]);
             //layer=(theObject.apply( theObject, options.args ) || theObject);
             //@if(debug)
-            console.log("Created layer: "+layer.name);
+            console.log("Created layer: "+layer.name.loc());
             //@endif
         }
 

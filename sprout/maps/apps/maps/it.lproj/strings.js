@@ -130,5 +130,6 @@ SC.stringsFor('it', {
     "_featureinfo_instructions": "Clicca sulla mappa per eseguire interrogazioni ed iniziare",
     "_no_queriable_layers_title": "Nessun livello attivo",
     "_no_queriable_layers_detail": "Non e' stato attivato nessun livello, quindi non e' possibile eseguire interrogazioni. Clicca OK per iniziare la scelta dei livelli",
-    "_no_tags": "Nessun tag trovato"
+    "_no_tags": "Nessun tag trovato",
+    "_blank":"Bianco"
 });
