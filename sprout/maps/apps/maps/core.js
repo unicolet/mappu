@@ -124,16 +124,18 @@ Maps = SC.Application.create(
 
     createLayer: function(options){
         var theConstructor=SC.getPath(window, options.provider)
-            //theObject=null,
             layer=null;
-        if(theConstructor) {
-            layer=new theConstructor(options.args[0].loc(),options.args[1]);
-            //layer=(theObject.apply( theObject, options.args ) || theObject);
-            //@if(debug)
-            console.log("Created layer: "+layer.name.loc());
-            //@endif
+        // following constructor code from: http://stackoverflow.com/a/1608546/887883
+        // now invoke it
+        function F() {
+            return theConstructor.apply(this, options.args);
         }
-
+        F.prototype = theConstructor.prototype;
+        layer = new F();
+        layer.name=options.name.loc();
+        //@if(debug)
+        console.log("Created layer: "+options.name.loc());
+        //@endif
         return layer;
     }
 });

@@ -43,7 +43,7 @@ var APPCONFIG = {
 
 var whiteTile=static_url('white.png');
 var MAPPU_BASELAYERS=[
-    {provider: 'OpenLayers.Layer.Google', args:["Streets",{'sphericalMercator': true}]},
-    {provider: 'OpenLayers.Layer.Google', args:["Satellite",{'type': "satellite",'sphericalMercator': true}]},
-    {provider: 'OpenLayers.Layer.OSM', args:["_blank", whiteTile]}
+    {name:"Streets", provider: 'OpenLayers.Layer.Google', args:["Streets",{'sphericalMercator': true}]},
+    {name:"Satellite", provider: 'OpenLayers.Layer.Google', args:["Satellite",{'type': "satellite",'sphericalMercator': true}]},
+    {name:"_blank", provider: 'OpenLayers.Layer.OSM', args:["_blank", whiteTile]}
 ];
