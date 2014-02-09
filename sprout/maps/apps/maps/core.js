@@ -11,6 +11,7 @@
 
  @extends SC.Object
  */
+
 Maps = SC.Application.create(
     /** @scope Maps.prototype */ {
 

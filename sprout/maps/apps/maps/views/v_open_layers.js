@@ -23,6 +23,10 @@ OpenLayers.ImgPath = 'source/resources/img/';
 OpenLayers.ImgPath = '';
 //@endif
 
+// backward compatility check (for mappu versions that do not define MAPPU_BASELAYERS in app_config.js)
+var MAPPU_BASELAYERS=MAPPU_BASELAYERS||null;
+
+
 var size = new OpenLayers.Size(21, 25);
 var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
 var iconSelected = new OpenLayers.Icon(sc_static('/images/pin_selected.png'), size, offset);
@@ -167,10 +171,16 @@ Maps.OpenLayers = SC.View.extend(
                         layers.push(layer);
                     } else {
                         MAPPU_BASELAYERS[i].ready=false;
+                        //@if(debug)
                         console.log("Failed to create layer: "+MAPPU_BASELAYERS[i].name);
+                        //@endif
                     }
                 }
             } else {
+                //@if(debug)
+                console.log("Creating standard google layers");
+                //@endif
+
                 // create standard Google Mercator layers
                 var googleStreets = new OpenLayers.Layer.Google(
                     "Google Streets",
@@ -180,6 +190,8 @@ Maps.OpenLayers = SC.View.extend(
                     "Google Satellite",
                     {'type': google.maps.MapTypeId.SATELLITE, 'sphericalMercator': true}
                 );
+                layers.push(googleStreets);
+                layers.push(googleHybrid);
             }
             for(var i= 0, l=layers.length;i<l;i++) {
                 map.addLayer(layers[i]);
