@@ -91,6 +91,8 @@ Maps.loggedInState = SC.State.extend({
     loadingWms:SC.State.extend({
 
         enterState:function () {
+            Maps.Session.set("propertyPrefix", Maps.authenticationManager.currentUsername());
+
             if (!Maps.progressPane) {
                 Maps.progressPane = SC.PanelPane.create({
                     layout:{ width:400, height:60, centerX:0, centerY:0 },
