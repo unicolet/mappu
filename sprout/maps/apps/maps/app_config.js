@@ -42,4 +42,17 @@ var APPCONFIG = {
     enablePrinting: true
 };
 
-
+var whiteTile=static_url('white.png');
+/*
+ Use this variable to customize the base layers used in the map.
+ 
+ Each layer should have a name attribute (used in the radio button label) and a provider,args
+ couple where the provider is the name of the OpenLayers layer subclass to use and args is the list of arguments
+ to the constructor. PLease note at this stage the OpenLayers objects have not been loaded yet and therefore
+ attempting to reference them will throw an error and break your Mappu app.
+*/
+var MAPPU_BASELAYERS=[
+    {name:"Streets", provider: 'OpenLayers.Layer.Google', args:["Streets",{'sphericalMercator': true}]},
+    {name:"Satellite", provider: 'OpenLayers.Layer.Google', args:["Satellite",{'type': "satellite",'sphericalMercator': true}]},
+    {name:"_blank", provider: 'OpenLayers.Layer.OSM', args:["_blank", whiteTile]}
+];

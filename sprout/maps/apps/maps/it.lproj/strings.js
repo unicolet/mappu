@@ -133,5 +133,6 @@ SC.stringsFor('it', {
     "_no_queriable_layers_detail": "Non e' stato attivato nessun livello, quindi non e' possibile eseguire interrogazioni. Clicca OK per iniziare la scelta dei livelli",
     "_no_tags": "Nessun tag trovato",
     "_scale": "Scala:",
-    "_best_fit": "Approssima"
+    "_best_fit": "Approssima",
+    "_blank":"Bianco"
 });

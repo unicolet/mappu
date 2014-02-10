@@ -123,5 +123,6 @@ SC.stringsFor('en', {
     "_no_queriable_layers_detail": "You have not enabled any layer, therefore it is not possibile to query the map. Click OK to open the layer palette.",
     "_no_tags": "No tags found",
     "_scale": "Scale:",
-    "_best_fit": "Best fit"
+    "_best_fit": "Best fit",
+    "_blank":"White"
 });

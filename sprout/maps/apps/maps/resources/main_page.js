@@ -442,9 +442,9 @@ Maps.mainPage = SC.Page.design({
             topToolbar: SC.ToolbarView.design({
                 childViews: "legendBtn googleView".w(),
                 googleView: SC.RadioView.design({
-                    layout: {centerY: 0, left: 30, width:200, height: 16},
-                    items: '_streets_satellite'.loc().w(),
-                    valueBinding: "Maps.openLayersController.whichGoogleLayer",
+                    layout: {centerY: 0, left: 15, width:400, height: 16},
+                    items: (MAPPU_BASELAYERS ? MAPPU_BASELAYERS.map(function(l){ return l.name.loc(); }) : ["Streets","Satellite"]),
+                    valueBinding: "Maps.openLayersController.whichBaseLayer",
                     height: 24,
                     layoutDirection: SC.LAYOUT_HORIZONTAL
                 }),

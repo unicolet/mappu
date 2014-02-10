@@ -158,19 +158,22 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     }
 
                     var record = {
-                        order:order++,
+                        order: Maps.Session.getItem("Maps.Layer." + l.name + ".order",order++),
                         guid:i,
                         name:l.name,
                         title:l.title,
-                        visible:l.keywords.contains("mappu_default"),
+                        visible: Maps.Session.getItemAsBoolean("Maps.Layer." + l.name + ".visible",l.keywords.contains("mappu_disable")),
                         legendIcon:legend,
-                        opacity:10,
+                        opacity:Maps.Session.getItem("Maps.Layer." + l.name + ".opacity",10),
                         description:l['abstract'],
                         cql_filter:null,
                         maxExtent:bounds,
                         srs:bbox.srs
                     };
                     records[records.length] = record;
+
+                    // save initial order
+                    Maps.Session.setItem("Maps.Layer." + l.name + ".order",order);
 
                     // if first layer then use it to zoom the map
                     if (i == 0) {
@@ -223,6 +226,21 @@ Maps.LayerDataSource = SC.DataSource.extend(
         updateRecord:function (store, storeKey) {
             var dataHash = store.readDataHash(storeKey);
             store.dataSourceDidComplete(storeKey, null);
+
+            // persist to localStorage
+            try {
+                var recordType=store.recordTypeFor(storeKey);
+                var guid=dataHash['name'];
+                Maps.Session.setItem(recordType+"."+guid+".visible", dataHash['visible']);
+                Maps.Session.setItem(recordType+"."+guid+".order", dataHash['order']);
+                Maps.Session.setItem(recordType+"."+guid+".opacity", dataHash['opacity']);
+                //@if(debug)
+                console.log("Saved order,visible to localStorage for guid="+guid);
+                //@endif
+            } catch(e) {
+                log.error(e);
+            }
+
             return YES;
         },
 

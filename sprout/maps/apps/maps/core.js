@@ -11,6 +11,7 @@
 
  @extends SC.Object
  */
+
 Maps = SC.Application.create(
     /** @scope Maps.prototype */ {
 
@@ -120,6 +121,23 @@ Maps = SC.Application.create(
             }
         }
         return a + " " + unit +"<sup>2</sup>";
+    },
+
+    createLayer: function(options){
+        var theConstructor=SC.getPath(window, options.provider)
+            layer=null;
+        // following constructor code from: http://stackoverflow.com/a/1608546/887883
+        // now invoke it
+        function F() {
+            return theConstructor.apply(this, options.args);
+        }
+        F.prototype = theConstructor.prototype;
+        layer = new F();
+        layer.name=options.name.loc();
+        //@if(debug)
+        console.log("Created layer: "+options.name.loc());
+        //@endif
+        return layer;
     }
 });
 
