@@ -443,7 +443,7 @@ Maps.mainPage = SC.Page.design({
                 googleView: SC.RadioView.design({
                     layout: {centerY: 0, left: 15, width:400, height: 16},
                     items: (MAPPU_BASELAYERS ? MAPPU_BASELAYERS.map(function(l){ return l.name.loc(); }) : ["Streets","Satellite"]),
-                    valueBinding: "Maps.openLayersController.whichGoogleLayer",
+                    valueBinding: "Maps.openLayersController.whichBaseLayer",
                     height: 24,
                     layoutDirection: SC.LAYOUT_HORIZONTAL
                 }),
