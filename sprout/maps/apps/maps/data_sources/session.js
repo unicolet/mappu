@@ -7,8 +7,8 @@
 
 Maps.Session = SC.Object.create({
     supportsLocalStorage: function(k,v) {
-        return window.localStorage !== null;
-    }.property(),
+        return APPCONFIG.enableSessionSaving && window.localStorage !== null;
+    }.property().cacheable(true),
 
     _prefix:null,
 
@@ -23,7 +23,7 @@ Maps.Session = SC.Object.create({
     }.property(),
 
     setItem: function(k,v) {
-        if(window.localStorage) {
+        if(this.get("supportsLocalStorage")) {
             if(this.get("propertyPrefix")) {
                 k=this.get("propertyPrefix")+k;
             }
@@ -33,7 +33,7 @@ Maps.Session = SC.Object.create({
 
     getItem: function(k, defaultValue) {
         var v=null;
-        if(window.localStorage) {
+        if(this.get("supportsLocalStorage")) {
             if(this.get("propertyPrefix")) {
                 k=this.get("propertyPrefix")+k;
             }
@@ -48,7 +48,7 @@ Maps.Session = SC.Object.create({
 
     /* TODO: clear only values owned by this module */
     clear: function() {
-        if(window.localStorage) {
+        if(this.get("supportsLocalStorage")) {
             var pfix=this.get("propertyPrefix");
             for(var i=(window.localStorage.length-1);i>=0;i--) {
                 var key=window.localStorage.key(i);

@@ -39,7 +39,8 @@ var APPCONFIG = {
     advanced_options: "/mapsocial/",
     // disable tips globally
     showTips: true,
-    enablePrinting: true
+    enablePrinting: true,
+    enableSessionSaving: true
 };
 
 var whiteTile=static_url('white.png');
