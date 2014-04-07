@@ -32,7 +32,7 @@ Maps.Session = SC.Object.create({
     },
 
     getItem: function(k, defaultValue) {
-        var v=null;
+        var v=defaultValue;
         if(this.get("supportsLocalStorage")) {
             if(this.get("propertyPrefix")) {
                 k=this.get("propertyPrefix")+k;
