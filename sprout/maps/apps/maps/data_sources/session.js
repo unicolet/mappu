@@ -43,7 +43,7 @@ Maps.Session = SC.Object.create({
     },
 
     getItemAsBoolean: function(k, defaultValue) {
-        return this.getItem(k)=='true';
+        return String(this.getItem(k, defaultValue))==='true';
     },
 
     /* TODO: clear only values owned by this module */
