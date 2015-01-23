@@ -179,9 +179,19 @@ Maps.openLayersController = SC.ArrayController.create(
                 for (var i = 0; i < event.features.length; i++) {
                     var feature = event.features[i];
                     if(feature.geometry!==null) {
-                        var c = feature.geometry.getCentroid();
+                        // sometimes centroid is not correctly calculated, use alternative
+                        // see: https://github.com/openlayers/openlayers/issues/910
+                        // var c = feature.geometry.getCentroid();
+                        var c = null;
+                        //if(feature.geometry.containsPoint && !feature.geometry.containsPoint(c)) {
+                        //   //@if(debug)
+                        //    console.log("Centroid is not inside polygon falling back to getBounds.getCenterLonLat (https://github.com/openlayers/openlayers/issues/910)");
+                        //    //@endif
+                        //    // falback when centroid does not appear to inside the polygon
+                        //    c = null;
+                        //}
                         //@if(debug)
-                        console.log("Centroid before: "+ c.x+","+ c.y);
+                        console.log("Centroid before: " + ( c==null ? 'getCentroid() failed' : c.x+","+ c.y ) );
                         //@endif
 
                         this.detectServerType(event);
@@ -202,7 +212,14 @@ Maps.openLayersController = SC.ArrayController.create(
                                     //@if(debug)
                                     console.log("Transforming from "+sourceProjection+" to EPSG:900913");
                                     //@endif
-                                    c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                    if(c==null) {
+                                        // getCentroid failed, fall back
+                                        c=feature.geometry.getBounds().getCenterLonLat();
+                                        c.transform(Maps.projections['EPSG:4326'],Maps.projections['EPSG:900913'] );
+                                        c=new OpenLayers.Geometry.Point(c.lon, c.lat);
+                                    } else {
+                                        c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                    }
                                     feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                                 }
                             } catch(e) {
