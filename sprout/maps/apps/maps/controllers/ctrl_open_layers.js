@@ -215,11 +215,12 @@ Maps.openLayersController = SC.ArrayController.create(
                                     if(c==null) {
                                         // getCentroid failed, fall back
                                         c=feature.geometry.getBounds().getCenterLonLat();
-                                        c.transform(Maps.projections['EPSG:4326'],Maps.projections['EPSG:900913'] );
                                         c=new OpenLayers.Geometry.Point(c.lon, c.lat);
-                                    } else {
-                                        c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
+                                        //@if(debug)
+                                        console.log("Centroid before transform: "+ c.x+","+ c.y);
+                                        //@endif
                                     }
+                                    c.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                                     feature.geometry.transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);
                                 }
                             } catch(e) {
