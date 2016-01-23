@@ -125,6 +125,7 @@ Maps.commentsTab = SC.View.design({
 });
 
 Maps.linksTab = SC.View.design({
+    backgroundColor: 'white',
     childViews: "links noLinks".w(),
     noLinks:  SC.LabelView.design({
         classNames: ["rotated_tip"],
@@ -135,7 +136,7 @@ Maps.linksTab = SC.View.design({
         value: "_select_above".loc()
     }),
     links: SC.ScrollView.design({
-        layout: {left: 0, top:0, right: 0, bottom:0},
+        layout: {left: 5, top:10, right: 5, bottom:0},
         backgroundColor: 'white',
         contentView: SC.ListView.design({
             rowHeight: 45,
