@@ -23,23 +23,25 @@ Maps.Feature = SC.Record.extend(
   name: SC.Record.attr(String),
 
   intelligentName: function() {
+      var title=this.get('_LAYER_TITLE') || this.get('name');
+
       var nameRegex=/n[ao]me/i;
       var namRegex=/n[ao]m/i;
       var descrRegex=/descr/i;
       var theAttributes=this.attributes();
       for(var k in theAttributes) {
-          if(nameRegex.test(k) && k.toLowerCase() != "name") {
-            return this.get("name")+" ("+ theAttributes[k]+")";
+          if(nameRegex.test(k)) {
+            return title+": "+ theAttributes[k];
           }
-          if(namRegex.test(k) && k.toLowerCase() != "name") {
-            return this.get("name")+" ("+ theAttributes[k]+")";
+          if(namRegex.test(k)) {
+            return title+": "+ theAttributes[k];
           }
           if(descrRegex.test(k)) {
-            return this.get("name")+" ("+ theAttributes[k]+")";
+            return title+": "+ theAttributes[k]+")";
           }
       }
       // fallback to name
-      return this.get("name");
+      return title;
   }.property("name").cacheable(true),
 
   isStarred: function(k,v) {

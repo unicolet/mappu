@@ -203,6 +203,10 @@ Maps.openLayersController = SC.ArrayController.create(
                                 var sourceProjection = WMSCONFIG.default_srs;
                                 if (ownerLayer) {
                                     var sourceProjection = ownerLayer.get("srs");
+                                    feature.data['_LAYER_TITLE']=ownerLayer.get('title');
+                                    //@if(debug)
+                                    console.log("Layer title set to: "+feature.data['_LAYER_TITLE']);
+                                    //@endif
                                 }
                                 if(sourceProjection) {
                                     var geom=feature.geometry.clone().transform(Maps.projections[sourceProjection], Maps.projections['EPSG:900913']);

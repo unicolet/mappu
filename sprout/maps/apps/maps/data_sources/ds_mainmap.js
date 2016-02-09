@@ -374,7 +374,7 @@ Maps.MapsDataSource = SC.DataSource.extend(
                 for (var j=0,l=keys.length;j<l;j++) {
                     var k=keys[j];
                     // skip Mappu internals
-                    if(k != 'guid' && k!='x' && k!='y' && k!='social' && k!='GROUP' && k!='LAYER' && k!='name') {
+                    if(k != 'guid' && k!='x' && k!='y' && k!='social' && k!='GROUP' && k!='LAYER' && k!='name' && k!='_LAYER_TITLE') {
                         records[records.length] = { 'guid': i++, property: k, value: attrs[k]};
                     }
                 }
