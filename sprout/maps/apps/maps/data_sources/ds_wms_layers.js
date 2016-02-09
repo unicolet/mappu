@@ -159,7 +159,6 @@ Maps.LayerDataSource = SC.DataSource.extend(
 
                     order++;
                     var record = {
-                        order: Maps.Session.getItem("Maps.Layer." + l.name + ".order",order),
                         guid:i,
                         name:l.name,
                         title:l.title,
@@ -173,8 +172,6 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     };
                     records[records.length] = record;
 
-                    // save initial order
-                    Maps.Session.setItem("Maps.Layer." + l.name + ".order",order);
 
                     // if first layer then use it to zoom the map
                     if (i == 0) {
@@ -186,6 +183,18 @@ Maps.LayerDataSource = SC.DataSource.extend(
                     }
                 }
             }
+            //@if(debug)
+            console.log("WMS Capabilities: reordering layers by title (NOT name)");
+            //@endif
+            records.sort(function(a,b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0);} );
+            // adjust order property
+            for(var i= 0, len=records.length; i<len;i++) {
+                records[i].order=Maps.Session.getItem("Maps.Layer." + records[i].name + ".order",i);
+                // save initial order
+                Maps.Session.setItem("Maps.Layer." + records[i].name + ".order",i);
+            }
+
+
             Maps.updateStateProgress(100);
             //@if(debug)
             console.log("WMS Capabilities loading completed.");
