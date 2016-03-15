@@ -40,10 +40,17 @@ var APPCONFIG = {
     // disable tips globally
     showTips: true,
     enablePrinting: true,
-    enableSessionSaving: true
+    enableSessionSaving: true,
+    /*
+     Use this variable to customize the logo shown on the right-hand part of the login page.
+     Recommended size: 400x100
+     */
+    custom_app_logo : static_url('images/app-logo-huge.png'),
+    attribution: 'mailto:umberto.nicoletti@gmail.com'
 };
 
 var whiteTile=static_url('white.png');
+
 /*
  Use this variable to customize the base layers used in the map.
  

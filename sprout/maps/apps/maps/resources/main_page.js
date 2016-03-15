@@ -16,7 +16,7 @@ SC.Binding.labelPrefix = function(prefix) {
     });
 };
 
-var app_logo_huge = static_url('images/app-logo-huge.png');
+var app_logo_huge = APPCONFIG.custom_app_logo || static_url('images/app-logo-huge.png');
 var icon_tools_16 = static_url('sc-icon-tools-16');
 
 // This page describes the main user interface for your application.  
@@ -616,7 +616,12 @@ Maps.loginPage = SC.Page.design({
             classNames:"loginform".w(),
 
             //childViews: 'labelU login labelP password button message loading'.w(),
-            childViews: 'title login password button message loading'.w(),
+            childViews: 'attribution title login password button message loading'.w(),
+            attribution: SC.LabelView.design({
+                layout:{bottom:3, left:15, width: 373,height:15},
+                value:'Creato da <a href="'+(APPCONFIG.attribution||'umberto.nicoletti@gmail.com')+'">'+(APPCONFIG.attribution||'umberto.nicoletti@gmail.com')+'</a>',
+                escapeHTML: false
+            }),
             title: SC.LabelView.design({
                 classNames: ["white"],
                 layout: {top:30, width:380, left:15, height:50},
