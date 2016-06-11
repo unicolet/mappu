@@ -30,14 +30,16 @@ Maps.Feature = SC.Record.extend(
       var descrRegex=/descr/i;
       var theAttributes=this.attributes();
       for(var k in theAttributes) {
-          if(nameRegex.test(k)) {
-            return title+": "+ theAttributes[k];
-          }
-          if(namRegex.test(k)) {
-            return title+": "+ theAttributes[k];
-          }
-          if(descrRegex.test(k)) {
-            return title+": "+ theAttributes[k]+")";
+          if(k!=='name' && k!=='_LAYER_TITLE') {
+              if(nameRegex.test(k)) {
+                return title+": "+ theAttributes[k];
+              }
+              if(namRegex.test(k)) {
+                return title+": "+ theAttributes[k];
+              }
+              if(descrRegex.test(k)) {
+                return title+" ("+ theAttributes[k]+")";
+              }
           }
       }
       // fallback to name

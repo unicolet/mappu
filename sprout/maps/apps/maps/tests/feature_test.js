@@ -22,7 +22,7 @@ test("feature.intelligent.name.withname", function () {
         Math.random(Math.floor(Math.random() * 99999999))
     );
 
-    equals(f.get("intelligentName"), "the_name (other)");
+    equals(f.get("intelligentName"), "the_name: other");
 });
 
 test("feature.intelligent.name.withSTATENAME", function () {
@@ -32,7 +32,7 @@ test("feature.intelligent.name.withSTATENAME", function () {
         Math.random(Math.floor(Math.random() * 99999999))
     );
 
-    equals(f.get("intelligentName"), "the_name (other)");
+    equals(f.get("intelligentName"), "the_name: other");
 });
 
 test("feature.intelligent.name.withdescr", function () {
@@ -52,7 +52,7 @@ test("feature.intelligent.name.withdescrandname", function () {
         Math.random(Math.floor(Math.random() * 99999999))
     );
 
-    equals(f.get("intelligentName"), "the_name (other)");
+    equals(f.get("intelligentName"), "the_name (descr)");
 });
 
 test("feature.intelligent.name.withdescrandnome", function () {
@@ -62,5 +62,5 @@ test("feature.intelligent.name.withdescrandnome", function () {
         Math.random(Math.floor(Math.random() * 99999999))
     );
 
-    equals(f.get("intelligentName"), "the_name (other)");
+    equals(f.get("intelligentName"), "the_name (descr)");
 });
